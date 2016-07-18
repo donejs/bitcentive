@@ -2,6 +2,8 @@
 
 > Royalties
 
+[![Build Status](https://travis-ci.org/donejs/bitcentive.svg?branch=master)](https://travis-ci.org/donejs/bitcentive)
+
 ## About
 
 This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
