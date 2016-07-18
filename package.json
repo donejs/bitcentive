@@ -1,0 +1,22 @@
+{
+  "name": "bitcentive",
+  "version": "0.0.1",
+  "description": "Royalties",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donejs/bitcentive.git"
+  },
+  "keywords": [
+    "DoneJS"
+  ],
+  "author": "Bitovi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donejs/bitcentive/issues"
+  },
+  "homepage": "https://github.com/donejs/bitcentive#readme"
+}
