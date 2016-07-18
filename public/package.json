@@ -1,0 +1,64 @@
+{
+  "name": "bitcentive",
+  "version": "0.0.1",
+  "description": "Royalties",
+  "homepage": "bitcentive.herokuapp.com",
+  "author": {
+    "name": "bitovi",
+    "email": "contact@bitovi.com",
+    "url": "bitovi.com"
+  },
+  "scripts": {
+    "test": "testee ./test.html --browsers firefox --reporter Spec",
+    "start": "done-serve --port 8080",
+    "develop": "done-serve --develop --port 8080",
+    "document": "documentjs",
+    "build": "node build"
+  },
+  "main": "bitcentive/index.stache!done-autorender",
+  "files": [
+    "."
+  ],
+  "keywords": [
+    "Done",
+    "JS"
+  ],
+  "system": {
+    "main": "bitcentive/index.stache!done-autorender",
+    "directories": {
+      "lib": "."
+    },
+    "configDependencies": [
+      "live-reload",
+      "node_modules/can-zone/register"
+    ],
+    "npmAlgorithm": "flat"
+  },
+  "dependencies": {
+    "can-component": "^3.0.0-pre.8",
+    "can-connect": "^0.6.0-pre.4",
+    "can-define": "^0.7.4",
+    "can-route": "^3.0.0-pre.5",
+    "can-route-pushstate": "^3.0.0-pre.3",
+    "can-stache": "^3.0.0-pre.6",
+    "can-view-autorender": "^3.0.0-pre.3",
+    "can-zone": "^0.5.5",
+    "done-autorender": "^0.9.0-pre.0",
+    "done-component": "^0.6.0-pre.1",
+    "done-css": "~2.1.0-pre.0",
+    "done-serve": "^0.3.0-pre.0",
+    "generator-donejs": "^0.10.0-pre.0",
+    "steal": "^0.16.0",
+    "steal-stache": "^3.0.0-pre.2"
+  },
+  "devDependencies": {
+    "can-fixture": "^0.4.0-pre.2",
+    "documentjs": "^0.4.2",
+    "donejs-cli": "^0.10.0-pre.0",
+    "donejs-deploy": "^0.4.0",
+    "funcunit": "~3.0.0",
+    "steal-qunit": "^0.1.1",
+    "steal-tools": "^0.16.0",
+    "testee": "^0.2.4"
+  }
+}
