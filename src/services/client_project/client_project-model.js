@@ -1,0 +1,19 @@
+'use strict';
+
+// client_project-model.js - A mongoose model
+//
+// See http://mongoosejs.com/docs/models.html
+// for more of what you can do here.
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const clientProjectSchema = new Schema({
+  name: { type: String, required: true },
+  createdAt: { type: Date, 'default': Date.now },
+  updatedAt: { type: Date, 'default': Date.now }
+});
+
+const clientProjectModel = mongoose.model('client_project', clientProjectSchema);
+
+module.exports = clientProjectModel;

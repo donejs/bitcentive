@@ -1,22 +1,46 @@
 {
   "name": "bitcentive",
-  "version": "0.0.1",
   "description": "Royalties",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/donejs/bitcentive.git"
-  },
+  "version": "0.0.0",
+  "homepage": "",
+  "main": "src/",
   "keywords": [
-    "DoneJS"
+    "feathers"
   ],
-  "author": "Bitovi",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/donejs/bitcentive/issues"
+  "repository": {},
+  "author": {},
+  "contributors": [],
+  "bugs": {},
+  "engines": {
+    "node": ">= 0.12.0"
   },
-  "homepage": "https://github.com/donejs/bitcentive#readme"
+  "scripts": {
+    "test": "npm run jshint && npm run mocha",
+    "jshint": "jshint src/. test/. --config",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cors": "^2.7.1",
+    "feathers": "^2.0.1",
+    "feathers-authentication": "^0.7.9",
+    "feathers-configuration": "^0.2.3",
+    "feathers-errors": "^2.4.0",
+    "feathers-hooks": "^1.5.4",
+    "feathers-mongoose": "^3.5.1",
+    "feathers-rest": "^1.4.3",
+    "feathers-socketio": "^1.4.1",
+    "mongoose": "^4.5.5",
+    "passport": "^0.3.2",
+    "serve-favicon": "^2.3.0",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.2",
+    "mocha": "^2.5.3",
+    "request": "^2.73.0"
+  }
 }
