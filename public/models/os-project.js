@@ -14,7 +14,7 @@ OsProject.List = DefineList.extend({
   '*': OsProject
 });
 
-export const os-projectConnection = superMap({
+export const osProjectConnection = superMap({
   url: '/api/os_projects',
   idProp: '_id',
   Map: OsProject,
@@ -22,6 +22,6 @@ export const os-projectConnection = superMap({
   name: 'os-project'
 });
 
-tag('os-project-model', os-projectConnection);
+tag('os-project-model', osProjectConnection);
 
 export default OsProject;
