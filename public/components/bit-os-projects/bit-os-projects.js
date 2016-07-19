@@ -6,7 +6,6 @@ import OSProjectModel from '../../models/os-project';
 import ContributionMonthModel from '../../models/contribution-month';
 import ContributionMonthModelFixture from '../../models/fixtures/contribution-month';
 
-
 // console.log(ContributionMonthModelFixture.findAll({url: "/api/contribution_months", dataType: "json"}, function() {
 //   console.log(arguments);
 // }));
