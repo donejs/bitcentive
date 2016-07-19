@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/donejs/bitcentive/issues"
   },
-  "homepage": "https://github.com/donejs/bitcentive#readme"
+  "homepage": "https://github.com/donejs/bitcentive#readme",
+  "dependencies": {
+  },
+  "system": {
+    "npmAlgorithm": "flat"
+  }
 }

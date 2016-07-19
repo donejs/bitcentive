@@ -35,11 +35,13 @@
     "npmAlgorithm": "flat"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "can-component": "^3.0.0-pre.8",
     "can-connect": "^0.6.0-pre.4",
-    "can-define": "^0.7.4",
+    "can-define": "file:///Users/john/Dropbox/Source/Workspace/can-define",
     "can-route": "^3.0.0-pre.5",
     "can-route-pushstate": "^3.0.0-pre.3",
+    "can-set": "^0.5.6",
     "can-stache": "^3.0.0-pre.6",
     "can-view-autorender": "^3.0.0-pre.3",
     "can-zone": "^0.5.5",
@@ -48,6 +50,7 @@
     "done-css": "~2.1.0-pre.0",
     "done-serve": "^0.3.0-pre.0",
     "generator-donejs": "^0.10.0-pre.0",
+    "jquery": "^3.1.0",
     "steal": "^0.16.0",
     "steal-stache": "^3.0.0-pre.2"
   },

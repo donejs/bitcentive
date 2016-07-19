@@ -14,4 +14,7 @@ const AppViewModel = DefineMap.extend({
   }
 });
 
+//var vm = new AppViewModel;
+//window.vm = vm;
+
 export default AppViewModel;
