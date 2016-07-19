@@ -25,9 +25,6 @@
   ],
   "system": {
     "main": "bitcentive/index.stache!done-autorender",
-    "directories": {
-      "lib": "."
-    },
     "configDependencies": [
       "live-reload",
       "node_modules/can-zone/register"
@@ -47,6 +44,7 @@
     "done-component": "^0.6.0-pre.1",
     "done-css": "~2.1.0-pre.0",
     "done-serve": "^0.3.0-pre.0",
+    "done-ssr-middleware": "^0.4.0-pre.0",
     "generator-donejs": "^0.10.0-pre.0",
     "steal": "^0.16.0",
     "steal-stache": "^3.0.0-pre.2"

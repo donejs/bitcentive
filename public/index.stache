@@ -5,8 +5,16 @@
   <body>
     <can-import from="bitcentive/styles.less" />
     <can-import from="bitcentive/app" export-as="viewModel" />
+    <can-import from="can-stache/helpers/route"/>
 
-    <h1>{{message}}</h1>
+    {{#eq page 'home'}}
+      <h1>Home Page</h1>
+      <a href="{{routeUrl page='projects'}}">Projects</a>
+    {{else}}
+      <h1>{{page}}</h1>
+      <a href="{{routeUrl page='home'}}">Home</a>
+    {{/eq}}
+
 
     {{#switch env.NODE_ENV}}
       {{#case "production"}}
