@@ -16,10 +16,10 @@ module.exports = function() {
   };
 
   // Initialize our service with any options it requires
-  app.use('/contribution_months', service(options));
+  app.use('/api/contribution_months', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const contributionMonthService = app.service('/contribution_months');
+  const contributionMonthService = app.service('/api/contribution_months');
 
   // Set up our before hooks
   contributionMonthService.before(hooks.before);
