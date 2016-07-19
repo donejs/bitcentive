@@ -1,7 +1,7 @@
 <can-component tag="bit-os-projects">
 
  <template>
-    {{#each projects}}
+    {{#each contributionMonth.osProjects}}
     <tr>
         <td>{{name}}</td>
         <td>Significance <input type="text" name="significance" {$value}="significance"/></td>

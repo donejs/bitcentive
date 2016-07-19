@@ -2,10 +2,12 @@ import fixture from 'can-fixture';
 
 const store = fixture.store([{
   _id: 0,
-  description: 'First item'
+  significance: 80,
+  commissioned: true
 }, {
   _id: 1,
-  description: 'Second item'
+  significance: 10,
+  commissioned: true
 }]);
 
 fixture({

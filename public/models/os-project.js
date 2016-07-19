@@ -6,7 +6,8 @@ import tag from 'can-connect/can/tag/';
 export const OsProject = DefineMap.extend({
   seal: false
 }, {
-  '_id': '*'
+  '_id': '*',
+  'name': 'string'
 });
 
 OsProject.List = DefineList.extend({
