@@ -9,7 +9,11 @@ export const ContributionMonth = DefineMap.extend({
   '_id': '*',
   'date': 'date',
   'clientProjects': 'observable',
-  'osProjects': 'observable',
+  'osProjects': {
+    set: function(raw) {
+      console.log(raw);
+    }
+  },
   'contributions': 'observable'
 });
 

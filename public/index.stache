@@ -15,6 +15,10 @@
       <a href="{{routeUrl page='home'}}">Home</a>
     {{/eq}}
 
+    <can-import from="components/bit-os-projects/bit-os-projects"/>
+    
+    <bit-os-projects {contribution-month}="contributionMonth"></bit-os-projects>
+
 
     {{#switch env.NODE_ENV}}
       {{#case "production"}}
