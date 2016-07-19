@@ -9,7 +9,7 @@
         {{#each projects.value}}
             <li>
                 <h2>{{name}}</h2>
-                <form ($submit)="editClientName(%event, _id)">
+                <form ($submit)="editClientName(%event, .)">
                     <input class="editInput" type="text" {($value)}="name" />
                 </form>
                 <a href="#" ($click)="toggleEditInput()">edit</a>

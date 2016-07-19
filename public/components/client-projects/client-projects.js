@@ -20,18 +20,12 @@ export const ClientProjectVM = DefineMap.extend({
     this.isEditing = !this.isEditing;
     console.log(this.isEditing);
   },
-  editClientName: function(event, id) {
+  editClientName: function(event, project) {
     if (event) {
       event.preventDefault();
-      event.stopPropagation();
+      //event.stopPropagation();
     }
-
-    return ClientProject.get({ _id: id}).then(function(project) {
-      if (project) {
-        return project.save();
-      }
-    });
-
+    project.save();
   }
   //clientProjectPromise: Promise
 });
