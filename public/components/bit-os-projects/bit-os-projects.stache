@@ -1,0 +1,13 @@
+<can-component tag="bit-os-projects">
+
+ <template>
+    {{#each projects}}
+    <tr>
+        <td>{{name}}</td>
+        <td>Significance <input type="text" name="significance" {$value}="significance"/></td>
+        <td><input type="checkbox" ($change)="toggle(.)" {{#if commissioned(.)}}checked{{/if}}/></td>
+        <td>Total: {{total}}</td>
+    </tr>
+    {{/each}}
+    </template>
+</can-component>
