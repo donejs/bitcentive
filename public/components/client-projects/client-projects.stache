@@ -1,16 +1,10 @@
 <ul>
-    {{#if projects.isPending}}
-        <li>Loading...</li>
-    {{/if}}
-    {{#if projects.isRejected}}
-        <li>{{projects.reason.message}}</li>
-    {{/if}}
-    {{#if projects.isResolved}}
-        {{#each projects.value}}
+    {{#if contributionMonth.monthlyClientProjects}}
+        {{#each contributionMonth.monthlyClientProjects}}
             <li>
-                <h2>{{name}}</h2>
+                <h2>{{clientProject.name}}</h2>
                 <form ($submit)="editClientName(%event, .)">
-                    <input class="editInput" type="text" {($value)}="name" />
+                    <input class="editInput" type="text" {($value)}="clientProject.name" />
                 </form>
                 <a href="#" ($click)="toggleEditInput()">edit</a>
 
@@ -25,9 +19,10 @@
                 <input type="text" id="hours" />
                 <p>Projects in use</p>
                 <fieldset class="projects">
-                    <input id="projectname1" type="checkbox" name="projects" value="CanJS"> <label for="projectname1">CanJS</label>
-                    <input type="checkbox" name="projects" value="DoneJS"> DoneJS
-                    <input type="checkbox" name="projects" value="StealJS"> StealJS
+                    {{#each ../contributionMonth.monthlyOSProjects}}
+                        <input id="{{osProject._id}}" type="checkbox" name="projects" value="CanJS"> 
+                        <label for="{{osProject._id}}">{{osProject.name}}</label>
+                    {{/each}}
                 </fieldset>
             </li>
         {{/each}}
