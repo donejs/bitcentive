@@ -10,9 +10,8 @@ export const ViewModel = DefineMap.extend({
         Value: ContributionMonthModel
     },
     contributionMonthPromise: {},
-    logIt: function(it) {
-        console.log('logging');
-        console.log(it);
+    logIt: function() {
+        console.log('logging', arguments);
     },
     toggle: function(monthlyOSProject) {
         console.log("toggle");
@@ -40,9 +39,9 @@ export const ViewModel = DefineMap.extend({
       let newOSProject = new OSProjectModel({
         name: this.newOSProjectName
       });
-
-      newOSProject.save().then(function() {
-        this.contributionMonth.addNewMonthlyOSProject(newOSProject);
+      
+      newOSProject.save().then(function(OSProject) {
+        this.contributionMonth.addNewMonthlyOSProject(OSProject);
       }.bind(this), function() {
         console.error("failed", arguments);
       });

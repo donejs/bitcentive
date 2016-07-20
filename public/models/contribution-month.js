@@ -48,7 +48,7 @@ var ContributionMonth = DefineMap.extend({
     });
 
     console.log("Monthly OS Project: ", monthlyOSProject);
-    this.monthlyOSProjects.push(newProject);
+    this.monthlyOSProjects.push(monthlyOSProject);
     this.save();
   }
 });
