@@ -22,7 +22,7 @@
                 <p>Projects in use</p>
                 <fieldset class="projects">
                     {{#each ../contributionMonth.monthlyOSProjects}}
-                        <input id="{{osProject._id}}" type="checkbox" {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}} name="projects" value="{{osProject.name}}">
+                        <input id="{{osProject._id}}" type="checkbox" {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}} name="projects" value="{{osProject.name}}" ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, .)">
                         <label for="{{osProject._id}}">{{osProject.name}}</label>
                     {{/each}}
                 </fieldset>

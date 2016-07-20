@@ -32,7 +32,6 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
     get: function(){
       var map = {};
       this.forEach(function(monthlyClientProjectOSProject){
-        console.log("hitting map function");
         map[monthlyClientProjectOSProject.osProjectId] = monthlyClientProjectOSProject;
       });
       return map;
@@ -40,6 +39,15 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
   },
   has: function(monthlyOsProject){
     return !!this.osProjectIdMap[monthlyOsProject.osProjectId];
+  },
+  addRemoveProjects: function(monthlyOSProject){
+    if(this.has(monthlyOSProject)) {
+      this.splice(this.indexOf(monthlyOSProject), 1);
+      delete this.osProjectIdMap[monthlyOSProject.osProjectId];
+    } else {
+      this.push(monthlyOSProject);
+      this.osProjectIdMap[monthlyOSProject.osProjectId] = monthlyOSProject;
+    }
   }
 });
 
