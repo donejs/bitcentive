@@ -12,10 +12,10 @@ export const ViewModel = DefineMap.extend({
     contributionMonthPromise: {},
     allOSProjects: {
       value: function() {
-        return OSProjectModel.getList({}).then(function(){
-          console.log("worked");
-        }, function() {
-          console.error('error', arguments);
+        return OSProjectModel.getList().then(function(items) {
+          console.log("items; ", items);
+        }, function(error) {
+          console.error("error: ", error);
         });
       }
     },
@@ -50,7 +50,6 @@ export const ViewModel = DefineMap.extend({
         let newOSProject = new OSProjectModel({
             name: this.newOSProjectName
         });
-
         newOSProject.save().then(function(OSProject) {
             this.toggleAddNewProject();
             this.contributionMonth.addNewMonthlyOSProject(OSProject);

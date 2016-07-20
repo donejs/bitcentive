@@ -16,15 +16,13 @@
 			<div class="panel-heading">Add Project</div>
 			<div class="panel-body">
 
-				{{logIt(allOSProjects)}}
 				{{#if allOSProjects.pending}}
 					Loading....
 				{{/if}}
 				{{#if allOSProjects.isResolved}}
 				{{#each allOSProjects.value}}
 					{{logIt(.)}}
-					<div>{{name}}</div>
-					}
+					<div>Name: {{name}}</div>
 				{{/each}}
 				{{/if}}
 				

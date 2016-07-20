@@ -7,7 +7,7 @@
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
   import ContributionMonth from 'bitcentive/models/contribution-month';
   import viewModel from 'can-view-model';
-  import fixtures from "bitcentive/models/fixtures/fixtures";
+  import contributionMonthStoreFixture from "bitcentive/models/fixtures/fixtures";
   import OSProject from 'bitcentive/models/os-project';
   import ClientProject from 'bitcentive/models/client-project';
 
@@ -41,7 +41,8 @@
         }]
     });
 
+    //contributionMonthsListData = contributionMonthStoreFixture.getList();
 
   viewModel($("#osProjects")[0]).set("contributionMonth", contributionMonth);
-  
+
 </script>
