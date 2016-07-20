@@ -19,6 +19,17 @@ export const ClientProjectVM = DefineMap.extend({
   toggleEditInput: function() {
     this.isEditing = !this.isEditing;
   },
+  isAddingClients: {
+    type: "boolean",
+    value: false
+  },
+  toggleClientInput: function(event){
+    if (event) {
+      event.preventDefault();
+    }
+    this.isAddingClients = !this.isAddingClients;
+  },
+
   editClientName: function(event, contributionMonth) {
     if (event) {
       event.preventDefault();
@@ -34,7 +45,8 @@ export const ClientProjectVM = DefineMap.extend({
   toggleUseProject: function(contributionMonth, monthlyClientProjectsOsProjects, monthlyOsProject) {
     monthlyClientProjectsOsProjects.addRemoveProjects(monthlyOsProject);
     contributionMonth.save();
-  }
+  },
+  
 });
 
 export default Component.extend({

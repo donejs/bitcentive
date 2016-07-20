@@ -30,4 +30,11 @@
         {{/each}}
     {{/if}}
 </ul>
-<a href="#">add client</a>
+<a href="#" ($click)="toggleClientInput(%event)">+ add client</a>
+{{#if isAddingClients}}
+<ul class="all-clients">
+    {{#each clients}}
+        <li ($click)="addClient(.)">{{name}}</li>
+    {{/each}}
+</div>
+{{/if}}

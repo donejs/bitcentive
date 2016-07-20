@@ -11,7 +11,7 @@ var clientProjectStore = fixture.store([
 
 fixture({
   'GET /api/client_projects': clientProjectStore.getListData,
-  'GET /api/client_projects{_id}': clientProjectStore.getData,
+  'GET /api/client_projects/{_id}': clientProjectStore.getData,
   'POST /api/client_projects': clientProjectStore.createData,
   'PUT /api/client_projects/{_id}': clientProjectStore.updateData,
   'DELETE /api/client_projects/{_id}': clientProjectStore.destroyData
