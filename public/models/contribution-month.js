@@ -42,6 +42,7 @@ var ContributionMonth = DefineMap.extend({
 
 
 ContributionMonth.connection = superMap({
+  idProp: "_id",
   Map: ContributionMonth,
   List: ContributionMonth.List,
   url: "/api/contribution_months",

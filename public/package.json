@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "can-component": "^3.0.0-pre.8",
-    "can-connect": "^0.6.0-pre.4",
+    "can-connect": "0.6.0-pre.4",
     "can-define": "^0.7.9",
     "can-route": "^3.0.0-pre.5",
     "can-route-pushstate": "^3.0.0-pre.3",

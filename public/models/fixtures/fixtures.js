@@ -35,10 +35,10 @@ var monthlyContributionStore = fixture.store([{
 
 fixture({
     'GET /api/contriubtion_months': monthlyContributionStore.getListData,
-    'GET /api/contriubtion_months{_id}': monthlyContributionStore.getData,
-    'POST /api/contriubtion_months': monthlyContributionStore.createData,
-    'PUT /api/contriubtion_months/{_id}': monthlyContributionStore.updateData,
-    'DELETE /api/contriubtion_months/{_id}': monthlyContributionStore.destroyData
+    'GET /api/contriubtion_months/{_id}': monthlyContributionStore.getData,
+    'POST /api/contriubtion_months': monthlyContributionStore.create,
+    'PUT /api/contribution_months/{_id}': monthlyContributionStore.update,
+    'DELETE /api/contriubtion_months/{_id}': monthlyContributionStore.destroy
 });
 
 window.fixture = fixture;
