@@ -4,7 +4,7 @@
     <td>{{osProject.name}}</td>
     <td>Significance <input type="text" {($value)}="significance"/></td>
     <td><input type="checkbox" ($change)="toggle(.)" {{#if commissioned(.)}}checked{{/if}}/> Commissioned</td>
-    <td>Total: {{total}}</td>
+    <td>Total: {{total(.)}}</td>
 </tr>
 {{/each}}
 </table>

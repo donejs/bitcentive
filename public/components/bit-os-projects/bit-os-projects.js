@@ -23,6 +23,9 @@ export const ViewModel = DefineMap.extend({
         }, function(err) {
             console.log('err', err);
         });
+    },
+    total: function(monthlyOSProject) {
+        return 0;
     }
 });
 
