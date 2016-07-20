@@ -1,34 +1,53 @@
-import DefineMap from 'can-define/map/';
-import DefineList from 'can-define/list/';
-import superMap from 'can-connect/can/super-map/';
-import tag from 'can-connect/can/tag/';
+import ClientProject from "./client-project";
+import OSProject from "./os-project";
+import Contributor from "./contributor";
 
-export const ContributionMonth = DefineMap.extend({
-  seal: false
-}, {
-  '_id': '*',
-  'date': 'date',
-  'clientProjects': 'observable',
-  'osProjects': {
-    set: function(raw) {
-      console.log(raw);
-    }
-  },
-  'contributions': 'observable'
+import set from "can-set";
+import DefineMap from "can-define/map/";
+import DefineList from "can-define/list/";
+import superMap from "can-connect/can/super-map/";
+
+
+var contributionMonthAlgebra = new set.Algebra(
+    set.comparators.id("_id")
+);
+
+var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
+  osProjectId: "string",
+  significance: "number",
+  commissioned: "boolean",
+  osProject: {
+    Type: OSProject
+  }
 });
 
-ContributionMonth.List = DefineList.extend({
-  '*': ContributionMonth
+var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsProject",{
+    osProjectId: "123123sdfasdf",
+    osProject: OSProject
 });
 
-export const contributionMonthConnection = superMap({
-  url: '/api/contribution_months',
-  idProp: '_id',
+var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
+  clientProjectId: "string",
+  clientProject: ClientProject,
+  hours: "number",
+  monthlyClientProjectsOsProjects: {Type: [MonthlyClientProjectsOsProject]},
+});
+
+
+var ContributionMonth = DefineMap.extend({
+  date: "date",
+  monthlyOSProjects: {Type: [MonthlyOSProject]},
+  monthlyClientProjects: {Type: [MonthlyClientProject]}
+});
+
+
+ContributionMonth.connection = superMap({
   Map: ContributionMonth,
   List: ContributionMonth.List,
-  name: 'contribution-month'
+  url: "/api/contribution_months",
+  name: "contributionMonth",
+  algebra: contributionMonthAlgebra
 });
-
-tag('contribution-month-model', contributionMonthConnection);
+ContributionMonth.algebra = contributionMonthAlgebra;
 
 export default ContributionMonth;
