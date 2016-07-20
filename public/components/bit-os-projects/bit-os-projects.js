@@ -10,6 +10,15 @@ export const ViewModel = DefineMap.extend({
         Value: ContributionMonthModel
     },
     contributionMonthPromise: {},
+    allOSProjects: {
+      value: function() {
+        return OSProjectModel.getList({}).then(function(){
+          console.log("worked");
+        }, function() {
+          console.error('error', arguments);
+        });
+      }
+    },
     logIt: function() {
         console.log('logging', arguments);
     },

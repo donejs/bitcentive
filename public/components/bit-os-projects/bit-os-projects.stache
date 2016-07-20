@@ -17,6 +17,17 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Project</div>
 			<div class="panel-body">
+				{{logIt(allOSProjects)}}
+				{{#if allOSProjects.pending}}
+					Loading....
+				{{/if}}
+				{{#if allOSProjects.isResolved}}
+				{{#each allOSProjects.value}}
+					{{logIt(.)}}
+					<div>{{name}}</div>
+					}
+				{{/each}}
+				{{/if}}
 				<input type="text" {($value)}="newOSProjectName"/>
 				<button class="btn" ($click)="addNewProject()">Add Project</button>
 			</div>

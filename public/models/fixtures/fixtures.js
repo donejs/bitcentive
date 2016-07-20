@@ -40,8 +40,18 @@ fixture({
     'GET /api/contriubtion_months': monthlyContributionStore.getListData,
     'GET /api/contriubtion_months/{_id}': monthlyContributionStore.getData,
     'POST /api/contriubtion_months': monthlyContributionStore.create,
-    'PUT /api/contribution_months/{_id}': monthlyContributionStore.update,
+    'PUT /api/contribution_months/{_id}': function(req) {
+      console.log("--> ", req.data);
+      // monthlyContributionStore.update();
+      return req.data;
+    },
     'DELETE /api/contriubtion_months/{_id}': monthlyContributionStore.destroy,
+    'GET /api/os_projects': function(req) {
+      console.log("get osProject request: ", req)
+      return req.data;
+    }
+      ,
+    'GET /api/os_projects/{_id}': osProjectStore.getData,
     'POST /api/os_projects': osProjectStore.create,
     'PUT /api/os_projects/{_id}': osProjectStore.update,
 });
