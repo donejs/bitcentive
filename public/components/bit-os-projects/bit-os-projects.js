@@ -41,10 +41,10 @@ export const ViewModel = DefineMap.extend({
         name: this.newOSProjectName
       });
 
-      this.contributionMonth.monthlyOSProjects.push(newOSProject);
-
-      this.contributionMonth.save().then(function(){
-        console.log("saved");
+      newOSProject.save().then(function() {
+        this.contributionMonth.addNewMonthlyOSProject(newOSProject);
+      }.bind(this), function() {
+        console.error("failed", arguments);
       });
 
     }

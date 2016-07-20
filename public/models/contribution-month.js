@@ -37,7 +37,20 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
 var ContributionMonth = DefineMap.extend({
   date: "date",
   monthlyOSProjects: {Type: [MonthlyOSProject]},
-  monthlyClientProjects: {Type: [MonthlyClientProject]}
+  monthlyClientProjects: {Type: [MonthlyClientProject]},
+  addNewMonthlyOSProject: function(newProject) {
+    console.log("adding new project to monthly OS project list", newProject);
+    let monthlyOSProject = new MonthlyOSProject({
+      significance: 0,
+      commissioned: false,
+      osProjectId: newProject._id,
+      osProject: newProject
+    });
+
+    console.log("Monthly OS Project: ", monthlyOSProject);
+    this.monthlyOSProjects.push(newProject);
+    this.save();
+  }
 });
 
 

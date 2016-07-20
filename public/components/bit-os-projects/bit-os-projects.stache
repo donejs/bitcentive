@@ -1,5 +1,8 @@
+
 <table>
+
 {{#each contributionMonth.monthlyOSProjects}}
+{{logIt(.)}}
 <tr>
     <td>{{osProject.name}}</td>
     <td>Significance <input type="text" {($value)}="significance"/></td>
