@@ -1,8 +1,8 @@
 import './fixtures/';
+
 import QUnit from "steal-qunit";
 import ContributionMonth from "./contribution-month";
 import ClientProject from "./client-project";
-import assign from "can-util/js/assign/";
 
 QUnit.module("models");
 
