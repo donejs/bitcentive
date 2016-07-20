@@ -11,12 +11,8 @@ export const ViewModel = DefineMap.extend({
     },
     contributionMonthPromise: {},
     allOSProjects: {
-      value: function() {
-        return OSProjectModel.getList().then(function(items) {
-          console.log("items; ", items);
-        }, function(error) {
-          console.error("error: ", error);
-        });
+      get: function() {
+        return OSProjectModel.getList();
       }
     },
     logIt: function() {
@@ -56,6 +52,20 @@ export const ViewModel = DefineMap.extend({
         }.bind(this), function() {
             console.error("failed", arguments);
         });
+    },
+    existingOSProject: 'string',
+    addingNewOSProject: {
+      type: "boolean",
+      value: false
+    },
+    toggleInput: function() {
+      if(this.existingOSProject === "__new__") {
+        this.addingNewOSProject = true;
+      }
+      else {
+        this.addingNewOSProject = false;
+      }
+      console.log("existingOSProject", this.existingOSProject);
     }
 });
 
