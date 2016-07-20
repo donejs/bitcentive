@@ -9,9 +9,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const clientProjectSchema = new Schema({
-  name: { type: String, required: true },
-  createdAt: { type: Date, 'default': Date.now },
-  updatedAt: { type: Date, 'default': Date.now }
+  name: { type: String, required: true }
 });
 
 const clientProjectModel = mongoose.model('client_project', clientProjectSchema);

@@ -16,14 +16,12 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProjectId: "string",
   significance: "number",
   commissioned: "boolean",
-  osProject: {
-    Type: OSProject
-  }
+  osProject: { type: OSProject.connection.hydrateInstance.bind(OSProject.connection) }
 });
 
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsProject",{
     osProjectId: "123123sdfasdf",
-    osProject: OSProject
+    osProject: {type: OSProject.connection.hydrateInstance.bind(OSProject.connection) }
 });
 
 MonthlyClientProjectsOsProject.List = DefineList.extend({

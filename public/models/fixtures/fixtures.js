@@ -3,15 +3,15 @@ import ContributionMonth from 'bitcentive/models/contribution-month';
 import OSProject from 'bitcentive/models/os-project';
 import ClientProject from 'bitcentive/models/client-project';
 
-var osProject = new OSProject({
+var osProject = {
     _id: "somethingCrazey",
     name: "CanJS"
-});
+};
 
-var clientProject = new ClientProject({
+var clientProject = {
     _id: "asl;dfal;sfj ;lakwj",
     name: "HaulHound"
-});
+};
 
 
 var osProjectStore = fixture.store([osProject], OSProject.algebra);
