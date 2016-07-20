@@ -1,7 +1,7 @@
 <script type="text/stache" can-autorender id="clientProjects">
   <can-import from="bitcentive/components/client-projects/" />
   <can-import from="bitcentive/models/fixtures/client-project" />
-  <bit-client-projects {contribution-month}="contributionMonth"/>
+  <bit-client-projects {contribution-month}="contributionMonth" {} />
 </script>
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
   import ContributionMonth from 'bitcentive/models/contribution-month';
@@ -21,6 +21,10 @@
   var clientProject = new ClientProject({
     _id: "asl;dfal;sfj ;lakwj",
     name: "HaulHound"
+  });
+  var clientProject2 = new ClientProject({
+    _id: "liuergkjbsdfkjfwh",
+    name: "Wal-Mart"
   });
 
   viewModel($("#clientProjects")[0]).set("contributionMonth", new ContributionMonth({
@@ -45,6 +49,14 @@
       hours: 70,
       clientProjectId: clientProject._id,
       clientProject: clientProject
+    },{
+      monthlyClientProjectsOsProjects: [{
+        osProjectId: osProject._id,
+        osProject: osProject
+      }],
+      hours: 40,
+      clientProjectId: clientProject2._id,
+      clientProject: clientProject2
     }]
   }))
 </script>

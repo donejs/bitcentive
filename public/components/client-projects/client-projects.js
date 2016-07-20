@@ -29,7 +29,12 @@ export const ClientProjectVM = DefineMap.extend({
     }
     this.isAddingClients = !this.isAddingClients;
   },
+  addClient: function(clientProject, monthlyClientProjects) {
+    window.clientProject = clientProject;
+    window.monthlyClientProjects = monthlyClientProjects;
 
+    monthlyClientProjects.addRemoveProjects(clientProject);
+  },
   editClientName: function(event, contributionMonth) {
     if (event) {
       event.preventDefault();
@@ -46,7 +51,7 @@ export const ClientProjectVM = DefineMap.extend({
     monthlyClientProjectsOsProjects.addRemoveProjects(monthlyOsProject);
     contributionMonth.save();
   },
-  
+
 });
 
 export default Component.extend({

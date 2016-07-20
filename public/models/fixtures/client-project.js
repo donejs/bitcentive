@@ -3,7 +3,7 @@ import ClientProject from '../client-project';
 
 var clientProjectStore = fixture.store([
   { _id: "1", name: "Levi's" },
-  { _id: "2", name: "Wal-Mart" },
+  { _id: "liuergkjbsdfkjfwh", name: "Wal-Mart" },
   { _id: "3", name: "Lowe's" },
   { _id: "4", name: "Apple" },
   { _id: "5", name: "Microsoft" }

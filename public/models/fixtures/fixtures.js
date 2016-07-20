@@ -10,7 +10,7 @@ var osProject = new OSProject({
 
 var clientProject = new ClientProject({
     _id: "asl;dfal;sfj ;lakwj",
-    name: "HualHound"
+    name: "HaulHound"
 });
 
 var monthlyContributionStore = fixture.store([{
@@ -34,11 +34,11 @@ var monthlyContributionStore = fixture.store([{
 }], ContributionMonth.algebra);
 
 fixture({
-    'GET /api/contriubtion_months': monthlyContributionStore.getListData,
-    'GET /api/contriubtion_months/{_id}': monthlyContributionStore.getData,
-    'POST /api/contriubtion_months': monthlyContributionStore.create,
+    'GET /api/contribution_months': monthlyContributionStore.getListData,
+    'GET /api/contribution_months/{_id}': monthlyContributionStore.getData,
+    'POST /api/contribution_months': monthlyContributionStore.create,
     'PUT /api/contribution_months/{_id}': monthlyContributionStore.update,
-    'DELETE /api/contriubtion_months/{_id}': monthlyContributionStore.destroy
+    'DELETE /api/contribution_months/{_id}': monthlyContributionStore.destroy
 });
 
 window.fixture = fixture;

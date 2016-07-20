@@ -58,6 +58,30 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
   monthlyClientProjectsOsProjects: MonthlyClientProjectsOsProject.List,
 });
 
+MonthlyClientProject.List = DefineList.extend({
+  "*": MonthlyClientProject,
+  monthlyProjectIdMap: {
+    get: function() {
+      var map = {};
+      this.forEach(function(monthlyClientProject) {
+        map[monthlyClientProject.clientProjectId] = monthlyClientProject;
+      });
+    }
+  },
+  has: function(clientProject) {
+    return !!this.monthlyProjectIdMap[clientProject.clientProjectId];
+  },
+  addRemoveProjects: function(monthlyClientProject){
+    if(this.has(monthlyClientProject)) {
+      this.splice(this.indexOf(monthlyClientProject), 1);
+      delete this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
+    } else {
+      this.push(monthlyClientProject);
+      this.monthlyProjectIdMap[monthlyOSProject.clientProjectId] = monthlyClientProject;
+    }
+  }
+});
+
 
 var ContributionMonth = DefineMap.extend({
   date: "date",
