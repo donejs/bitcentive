@@ -6,26 +6,9 @@
 <script src="../../../node_modules/steal/steal.js"
         main="can-view-autorender">
     import viewModel from "can-view-model";
-    import ContributionMonth from "bitcentive/models/contribution-month";
+    import ContributionMonth from "../../models/contribution-month";
+    import fixture from "../..//models/fixtures/fixtures";
 
-    viewModel( $("#main")[0] ).set("contributionMonth", new ContributionMonth({
-        date: 1468939205417,
-        clientProjects: [{
-            clientProjectId: "123131321",
-            openSourceProjects: [{
-                openSourceProjectId: "23i1yoi31h31hn2"
-            }]
-        }],
-        osProjects: [{
-            osProjectId: "0",
-            significance: 80,
-            commissioned: true
-        }],
-        contributions: [{
-            osProjectId: "0",
-            points: 13,
-            contributor: "xcvbxcvbxdfasdf",
-            contribution: "I did https://github.com/canjs/canjs/issues/2437"
-        }]
-    }));
+    console.log(fixture);
+    viewModel( $("#main")[0] ).set("contributionMonth", new ContributionMonth({}));
 </script>
