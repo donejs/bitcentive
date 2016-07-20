@@ -6,23 +6,49 @@
 
 ## About
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+Bitcentive uses [DoneJS](http://donejs.com) and  [Feathers](http://feathersjs.com), two open source web frameworks for building modern real-time applications.
 
 ## Getting Started
 
 Getting up and running is as easy as 1, 2, 3.
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
+1. Make sure you have [NodeJS](https://nodejs.org/), [npm](https://www.npmjs.com/) and [MongoDb](https://www.mongodb.com/) installed.
+
+#### Installing MongoDB on OSX
+
+On a Mac, the easiest way to install and configure [MongoDB](https://www.mongodb.com/)
+is using the [brew](https://brew.sh/) utility:
+
+```
+brew install mongodb
+```
+
+Pay special attention to the end of the [brew](https://brew.sh/) command's
+output, which includes instructions on how to start `mongodb`:
+
+To have launchd start mongodb now and restart at login:
+  ```brew services start mongodb```
+Or, if you don't want/need a background service you can just run:
+  ``mongod --config /usr/local/etc/mongod.conf```
+
+We recommend the `brew services` option. If desired, `mongodb` can be
+stopped and uninstalled by running:
+
+```
+brew uninstall mongodb
+```
+
+
 2. Install your dependencies
     
     ```
     cd path/to/bitcentive; npm install
-    ```
+    ```     
 
 3. Start your app
     
     ```
-    npm start
+    npm run develop
     ```
 
 ## Testing
