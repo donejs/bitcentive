@@ -9,9 +9,15 @@ export const ViewModel = DefineMap.extend({
     contributionMonth: {
         Value: ContributionMonthModel
     },
+    contributionMonthPromise: {},
     logIt: function(it) {
         console.log('logging');
         console.log(it);
+    },
+    toggle: function(monthlyOSProject) {
+      console.log("toggle");
+      monthlyOSProject.commissioned = !monthlyOSProject.commissioned;
+      this.contributionMonth[0].save();
     }
 });
 

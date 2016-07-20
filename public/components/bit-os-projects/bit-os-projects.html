@@ -1,14 +1,28 @@
-<script type="text/stache" can-autorender id="main">
-    <can-import from="bitcentive/components/os-projects/" />
-    <bit-os-projects {contribution-month}="contributionMonth"></bit-os-projects>
+<script type="text/stache" can-autorender id="osProjects">
+  <can-import from="bitcentive/components/bit-os-projects/" />
+  <can-import from="bitcentive/models/fixtures/fixtures" />
+  <bit-os-projects {contribution-month}="contributionMonth"/>
 </script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+  import ContributionMonth from 'bitcentive/models/contribution-month';
+  import viewModel from 'can-view-model';
+  import assign from "can-util/js/assign/";
+  import fixtures from "bitcentive/models/fixtures/fixtures";
 
-<script src="../../../node_modules/steal/steal.js"
-        main="can-view-autorender">
-    import viewModel from "can-view-model";
-    import ContributionMonth from "../../models/contribution-month";
-    import fixture from "../..//models/fixtures/fixtures";
+  var osProject = {
+    _id: "somethingCrazey",
+    name: "CanJS"
+  };
+  var osProject2 = {
+    _id: "232131",
+    name: "DoneJS"
+  };
+  var clientProject = {
+    _id: "asl;dfal;sfj ;lakwj",
+    name: "HaulHound"
+  };
 
-    console.log(fixture);
-    viewModel( $("#main")[0] ).set("contributionMonth", new ContributionMonth({}));
+  
+
+  viewModel($("#osProjects")[0]).set("contributionMonth", ContributionMonth.getList({}));
 </script>
