@@ -52,7 +52,7 @@
     "steal-stache": "^3.0.0-pre.2"
   },
   "devDependencies": {
-    "can-fixture": "^0.4.0-pre.2",
+    "can-fixture": "^0.4.0-pre.8",
     "documentjs": "^0.4.2",
     "donejs-cli": "^0.10.0-pre.0",
     "donejs-deploy": "^0.4.0",
