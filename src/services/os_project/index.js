@@ -16,10 +16,10 @@ module.exports = function() {
   };
 
   // Initialize our service with any options it requires
-  app.use('/os_projects', service(options));
+  app.use('/api/os_projects', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const osProjectService = app.service('/os_projects');
+  const osProjectService = app.service('/api/os_projects');
 
   // Set up our before hooks
   osProjectService.before(hooks.before);
