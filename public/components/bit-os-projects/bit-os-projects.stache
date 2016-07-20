@@ -10,7 +10,7 @@
 {{/each}}
 <tr>
 	<td colspan="4">
-		<a href="#" ($click)="toggleAddNewProject()">Add Project</a>
+		<a href="javascript://" ($click)="toggleAddNewProject()">Add Project</a>
 		{{#if adding}}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Project</div>
