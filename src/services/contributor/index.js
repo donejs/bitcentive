@@ -16,10 +16,10 @@ module.exports = function() {
   };
 
   // Initialize our service with any options it requires
-  app.use('/contributors', service(options));
+  app.use('/api/contributors', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const contributorService = app.service('/contributors');
+  const contributorService = app.service('/api/contributors');
 
   // Set up our before hooks
   contributorService.before(hooks.before);
