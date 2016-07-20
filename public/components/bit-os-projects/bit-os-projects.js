@@ -15,9 +15,14 @@ export const ViewModel = DefineMap.extend({
         console.log(it);
     },
     toggle: function(monthlyOSProject) {
-      console.log("toggle");
-      monthlyOSProject.commissioned = !monthlyOSProject.commissioned;
-      this.contributionMonth[0].save();
+        console.log("toggle");
+        monthlyOSProject.commissioned = !monthlyOSProject.commissioned;
+
+        this.contributionMonth.save().then(function() {
+            console.log(monthlyOSProject.commissioned);
+        }, function(err) {
+            console.log('err', err);
+        });
     }
 });
 

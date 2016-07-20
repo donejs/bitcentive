@@ -1,9 +1,5 @@
-{{#if contributionMonth.isPending}}
-Loading...
-{{/if}}
 <table>
-{{#if contributionMonth.isResolved}}
-{{#each contributionMonth.value.0.monthlyOSProjects}}
+{{#each contributionMonth.monthlyOSProjects}}
 <tr>
     <td>{{osProject.name}}</td>
     <td>Significance <input type="text" {($value)}="significance"/></td>
@@ -11,5 +7,4 @@ Loading...
     <td>Total: {{total}}</td>
 </tr>
 {{/each}}
-{{/if}}
 </table>
