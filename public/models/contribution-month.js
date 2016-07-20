@@ -66,9 +66,11 @@ MonthlyClientProject.List = DefineList.extend({
       this.forEach(function(monthlyClientProject) {
         map[monthlyClientProject.clientProjectId] = monthlyClientProject;
       });
+      return map;
     }
   },
   has: function(clientProject) {
+    window.clientProject = clientProject;
     return !!this.monthlyProjectIdMap[clientProject.clientProjectId];
   },
   addRemoveProjects: function(monthlyClientProject){
@@ -77,7 +79,7 @@ MonthlyClientProject.List = DefineList.extend({
       delete this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
     } else {
       this.push(monthlyClientProject);
-      this.monthlyProjectIdMap[monthlyOSProject.clientProjectId] = monthlyClientProject;
+      this.monthlyProjectIdMap[monthlyClientProject.clientProjectId] = monthlyClientProject;
     }
   }
 });
@@ -86,7 +88,7 @@ MonthlyClientProject.List = DefineList.extend({
 var ContributionMonth = DefineMap.extend({
   date: "date",
   monthlyOSProjects: {Type: [MonthlyOSProject]},
-  monthlyClientProjects: {Type: [MonthlyClientProject]}
+  monthlyClientProjects: MonthlyClientProject.List
 });
 
 
@@ -95,7 +97,8 @@ ContributionMonth.connection = superMap({
   List: ContributionMonth.List,
   url: "/api/contribution_months",
   name: "contributionMonth",
-  algebra: contributionMonthAlgebra
+  algebra: contributionMonthAlgebra,
+  idProp: "_id"
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 

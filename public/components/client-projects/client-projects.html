@@ -1,7 +1,8 @@
 <script type="text/stache" can-autorender id="clientProjects">
   <can-import from="bitcentive/components/client-projects/" />
   <can-import from="bitcentive/models/fixtures/client-project" />
-  <bit-client-projects {contribution-month}="contributionMonth" {} />
+  <can-import from="bitcentive/models/fixtures/fixtures" />
+  <bit-client-projects {contribution-month}="contributionMonth"/>
 </script>
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
   import ContributionMonth from 'bitcentive/models/contribution-month';

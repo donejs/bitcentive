@@ -13,6 +13,9 @@ var clientProject = new ClientProject({
     name: "HaulHound"
 });
 
+
+var osProjectStore = fixture.store([osProject], OSProject.algebra);
+
 var monthlyContributionStore = fixture.store([{
     _id: "aslkfalsjklas",
     date: 124234211310000,
@@ -37,8 +40,20 @@ fixture({
     'GET /api/contribution_months': monthlyContributionStore.getListData,
     'GET /api/contribution_months/{_id}': monthlyContributionStore.getData,
     'POST /api/contribution_months': monthlyContributionStore.create,
-    'PUT /api/contribution_months/{_id}': monthlyContributionStore.update,
-    'DELETE /api/contribution_months/{_id}': monthlyContributionStore.destroy
+    'PUT /api/contribution_months/{_id}': function(req) {
+      //console.log("--> ", req.data);
+      // monthlyContributionStore.update();
+      return req.data;
+    },
+    'DELETE /api/contribution_months/{_id}': monthlyContributionStore.destroy,
+    'GET /api/os_projects': function(req) {
+      //console.log("get osProject request: ", req)
+      return req.data;
+    }
+      ,
+    'GET /api/os_projects/{_id}': osProjectStore.getData,
+    'POST /api/os_projects': osProjectStore.create,
+    'PUT /api/os_projects/{_id}': osProjectStore.update,
 });
 
 window.fixture = fixture;

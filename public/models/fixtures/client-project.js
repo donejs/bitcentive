@@ -16,3 +16,4 @@ fixture({
   'PUT /api/client_projects/{_id}': clientProjectStore.updateData,
   'DELETE /api/client_projects/{_id}': clientProjectStore.destroyData
 });
+
