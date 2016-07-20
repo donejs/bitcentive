@@ -34,10 +34,12 @@
   "dependencies": {
     "can-component": "^3.0.0-pre.8",
     "can-connect": "^0.6.0-pre.4",
-    "can-define": "^0.7.4",
+    "can-define": "^0.7.9",
     "can-route": "^3.0.0-pre.5",
     "can-route-pushstate": "^3.0.0-pre.3",
+    "can-set": "^0.6.0-pre.5",
     "can-stache": "^3.0.0-pre.6",
+    "can-util": "^3.0.0-pre.31",
     "can-view-autorender": "^3.0.0-pre.3",
     "can-zone": "^0.5.5",
     "done-autorender": "^0.9.0-pre.0",
