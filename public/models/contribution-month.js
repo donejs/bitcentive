@@ -71,7 +71,8 @@ ContributionMonth.connection = superMap({
   List: ContributionMonth.List,
   url: "/api/contribution_months",
   name: "contributionMonth",
-  algebra: contributionMonthAlgebra
+  algebra: contributionMonthAlgebra,
+  idProp: "_id"
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 
