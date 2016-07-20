@@ -2,7 +2,7 @@
 
 const app = require('./app');
 const port = app.get('port');
-const server = app.listen(port);
+const server = app.listen(process.env.PORT || port);
 const path = require("path");
 const exec = require( "child_process" ).exec;
 
