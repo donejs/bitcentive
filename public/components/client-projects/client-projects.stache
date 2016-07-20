@@ -15,12 +15,14 @@
                     Rate <span class="rate"></span>
                     Total <span class="total"></span>
                 </p>
-                <label for="hours">Hours for (month)</label>
-                <input type="text" id="hours" />
+                <form ($submit)="editClientProjectHours(%event, ../contributionMonth)">
+                    <label for="{{clientProjectId}}-hours">Hours for (month)</label>
+                    <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" />
+                </form>
                 <p>Projects in use</p>
                 <fieldset class="projects">
                     {{#each ../contributionMonth.monthlyOSProjects}}
-                        <input id="{{osProject._id}}" type="checkbox" name="projects" value="CanJS"> 
+                        <input id="{{osProject._id}}" type="checkbox" {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}} name="projects" value="{{osProject.name}}">
                         <label for="{{osProject._id}}">{{osProject.name}}</label>
                     {{/each}}
                 </fieldset>

@@ -19,11 +19,17 @@ export const ClientProjectVM = DefineMap.extend({
   toggleEditInput: function() {
     this.isEditing = !this.isEditing;
   },
-  editClientName: function(event, project) {
+  editClientName: function(event, contributionMonth) {
     if (event) {
       event.preventDefault();
     }
-    project.clientProject.save();
+    contributionMonth.clientProject.save();
+  },
+  editClientProjectHours: function(event, contributionMonth) {
+    if (event) {
+      event.preventDefault();
+    }
+    contributionMonth.save();
   }
 });
 

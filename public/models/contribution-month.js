@@ -26,11 +26,28 @@ var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsPro
     osProject: OSProject
 });
 
+MonthlyClientProjectsOsProject.List = DefineList.extend({
+  "*": MonthlyClientProjectsOsProject,
+  osProjectIdMap: {
+    get: function(){
+      var map = {};
+      this.forEach(function(monthlyClientProjectOSProject){
+        console.log("hitting map function");
+        map[monthlyClientProjectOSProject.osProjectId] = monthlyClientProjectOSProject;
+      });
+      return map;
+    }
+  },
+  has: function(monthlyOsProject){
+    return !!this.osProjectIdMap[monthlyOsProject.osProjectId];
+  }
+});
+
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
   clientProjectId: "string",
   clientProject: ClientProject,
   hours: "number",
-  monthlyClientProjectsOsProjects: {Type: [MonthlyClientProjectsOsProject]},
+  monthlyClientProjectsOsProjects: MonthlyClientProjectsOsProject.List,
 });
 
 
