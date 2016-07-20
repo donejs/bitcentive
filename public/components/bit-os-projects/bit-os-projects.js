@@ -56,7 +56,7 @@ export const ViewModel = DefineMap.extend({
     existingOSProject: 'string',
     addingNewOSProject: {
       type: "boolean",
-      value: false
+      value: true
     },
     toggleInput: function() {
       if(this.existingOSProject === "__new__") {
