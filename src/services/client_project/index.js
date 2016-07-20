@@ -16,10 +16,10 @@ module.exports = function() {
   };
 
   // Initialize our service with any options it requires
-  app.use('/client_projects', service(options));
+  app.use('/api/client_projects', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const clientProjectService = app.service('/client_projects');
+  const clientProjectService = app.service('/api/client_projects');
 
   // Set up our before hooks
   clientProjectService.before(hooks.before);
