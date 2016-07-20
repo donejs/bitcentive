@@ -7,4 +7,18 @@
     <td>Total: {{total(.)}}</td>
 </tr>
 {{/each}}
+<tr>
+	<td colspan="4">
+		<a href="#" ($click)="toggleAddNewProject()">Add Project</a>
+		{{#if adding}}
+		<div class="panel panel-default">
+			<div class="panel-heading">Add Project</div>
+			<div class="panel-body">
+				<input type="text" {($value)}="newOSProjectName"/>
+				<button class="btn" ($click)="addNewProject()">Add Project</button>
+			</div>
+		</div>
+		{{/if}}
+	</td>
+</tr>
 </table>

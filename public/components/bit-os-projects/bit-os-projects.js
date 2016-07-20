@@ -26,6 +26,27 @@ export const ViewModel = DefineMap.extend({
     },
     total: function(monthlyOSProject) {
         return 0;
+    },
+    adding: {
+      type: 'boolean',
+      value: false
+    },
+    newOSProjectName: '',
+    toggleAddNewProject: function() {
+      this.adding = !this.adding;
+    },
+    addNewProject: function() {
+      console.log("Creating a new OS Project " + this.newOSProjectName);
+      let newOSProject = new OSProjectModel({
+        name: this.newOSProjectName
+      });
+
+      this.contributionMonth.monthlyOSProjects.push(newOSProject);
+
+      this.contributionMonth.save().then(function(){
+        console.log("saved");
+      });
+
     }
 });
 
