@@ -1,8 +1,6 @@
-
 <table>
 
 {{#each contributionMonth.monthlyOSProjects}}
-{{logIt(.)}}
 <tr>
     <td>{{osProject.name}}</td>
     <td>Significance <input type="text" {($value)}="significance"/></td>
@@ -17,8 +15,10 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Project</div>
 			<div class="panel-body">
-				<input type="text" {($value)}="newOSProjectName"/>
-				<button class="btn" ($click)="addNewProject()">Add Project</button>
+                <form ($submit)="addNewProject(%event)" id="new-os-project">
+                    <input type="text" placeholder="Open Source Project" {($value)}="newOSProjectName">
+                </form>
+                <button class="btn" type="submit" form="new-os-project" value="Submit">Add Project</button>
 			</div>
 		</div>
 		{{/if}}

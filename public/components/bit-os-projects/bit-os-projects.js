@@ -9,7 +9,6 @@ export const ViewModel = DefineMap.extend({
     contributionMonth: {
         Value: ContributionMonthModel
     },
-    contributionMonthPromise: {},
     logIt: function() {
         console.log('logging', arguments);
     },
@@ -37,6 +36,7 @@ export const ViewModel = DefineMap.extend({
     },
     addNewProject: function(ev) {
         console.log("Creating a new OS Project " + this.newOSProjectName);
+        ev.preventDefault();
         let newOSProject = new OSProjectModel({
             name: this.newOSProjectName
         });
@@ -49,7 +49,6 @@ export const ViewModel = DefineMap.extend({
         });
     }
 });
-
 
 export default Component.extend({
     tag: 'bit-os-projects',
