@@ -36,31 +36,32 @@ export const ViewModel = DefineMap.extend({
         return 0;
     },
     adding: {
-      type: 'boolean',
-      value: false
+        type: 'boolean',
+        value: false
     },
     newOSProjectName: '',
     toggleAddNewProject: function() {
-      this.adding = !this.adding;
+        this.newOSProjectName = '';
+        this.adding = !this.adding;
     },
-    addNewProject: function() {
-      console.log("Creating a new OS Project " + this.newOSProjectName);
-      let newOSProject = new OSProjectModel({
-        name: this.newOSProjectName
-      });
-      
-      newOSProject.save().then(function(OSProject) {
-        this.contributionMonth.addNewMonthlyOSProject(OSProject);
-      }.bind(this), function() {
-        console.error("failed", arguments);
-      });
+    addNewProject: function(ev) {
+        console.log("Creating a new OS Project " + this.newOSProjectName);
+        ev.preventDefault();
+        let newOSProject = new OSProjectModel({
+            name: this.newOSProjectName
+        });
 
+        newOSProject.save().then(function(OSProject) {
+            this.toggleAddNewProject();
+            this.contributionMonth.addNewMonthlyOSProject(OSProject);
+        }.bind(this), function() {
+            console.error("failed", arguments);
+        });
     }
 });
 
-
 export default Component.extend({
-  tag: 'bit-os-projects',
-  ViewModel: ViewModel,
-  template: template
+    tag: 'bit-os-projects',
+    ViewModel: ViewModel,
+    template: template
 });
