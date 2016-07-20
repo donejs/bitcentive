@@ -86,7 +86,7 @@ MonthlyClientProject.List = DefineList.extend({
 var ContributionMonth = DefineMap.extend({
   date: "date",
   monthlyOSProjects: {Type: [MonthlyOSProject]},
-  monthlyClientProjects: MonthlyClientProject.List
+  monthlyClientProjects: MonthlyClientProject.List,
   addNewMonthlyOSProject: function(newProject) {
     console.log("adding new project to monthly OS project list", newProject);
     let monthlyOSProject = new MonthlyOSProject({
