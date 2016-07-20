@@ -1,7 +1,8 @@
+import set from "can-set";
 import DefineMap from "can-define/map/";
 import superMap from "can-connect/can/super-map/";
 
-var OSProject = DefineMap.extend({
+var OSProject =  DefineMap.extend("OSProject", {
   _id: "string",
   name: "string"
 });
@@ -11,7 +12,6 @@ var osProjectAlgebra = new set.Algebra(
 );
 
 OSProject.connection = superMap({
-  idProp: "_id",
   Map: OSProject,
   List: OSProject.List,
   url: "/api/os_projects",

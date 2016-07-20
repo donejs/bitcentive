@@ -10,9 +10,7 @@ const Schema = mongoose.Schema;
 
 const contributorSchema = new Schema({
   name: { type: String, required: true },
-  email: { type: String },
-  createdAt: { type: Date, 'default': Date.now },
-  updatedAt: { type: Date, 'default': Date.now }
+  email: { type: String }
 });
 
 const contributorModel = mongoose.model('contributor', contributorSchema);

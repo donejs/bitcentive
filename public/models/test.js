@@ -6,12 +6,15 @@ import ClientProject from "./client-project";
 
 QUnit.module("models");
 
-QUnit.asyncTest("basics of ContributionMonth", function(){
-  ContributionMonth.getList({}).then(function(contributionMonths){
+QUnit.asyncTest("getList of ContributionMonth", function() {
+	ContributionMonth.getList({}).then(function(contributionMonths) {
 
-    QUnit.ok( contributionMonths[0].monthlyClientProjects[0].clientProject instanceof ClientProject );
-    QUnit.start();
-  }, function(err){
-    debugger;
-  });
+		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProject instanceof ClientProject);
+		var first = contributionMonths[0].monthlyOSProjects[0].osProject,
+			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOsProjects[0].osProject;
+		QUnit.ok(first  ===second);
+		QUnit.start();
+	}, function(err) {
+		debugger;
+	});
 });

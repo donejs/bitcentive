@@ -5,6 +5,6 @@ const app = require('../../../src/app');
 
 describe('contributor service', function() {
   it('registered the contributors service', () => {
-    assert.ok(app.service('contributors'));
+    assert.ok(app.service('/api/contributors'));
   });
 });
