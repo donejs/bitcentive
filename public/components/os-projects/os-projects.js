@@ -35,6 +35,7 @@ export const ViewModel = DefineMap.extend({
         }
     },
 
+
     // Methods
     toggleAddNewMonthlyOSProject: function() {
         this.newOSProjectName = '';
