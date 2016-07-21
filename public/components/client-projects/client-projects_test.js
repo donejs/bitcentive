@@ -19,7 +19,7 @@ QUnit.module('bitcentive/components/client-projects');
 //     _id: "asl;dfal;sfj ;lakwj",
 //     name: "HaulHound"
 //   });
-//
+
 //   var vm = new ClientProjectVM({
 //     new ContributionMonth({
 //       _id: "aslkfalsjklas",
@@ -45,8 +45,8 @@ QUnit.module('bitcentive/components/client-projects');
 //         clientProject: clientProject
 //       }]
 //     })
-//
-//
+
+
 //   });
 //   // QUnit.equal(vm.message, 'This is the bit-client-projects component');
 // });
