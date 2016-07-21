@@ -1,5 +1,4 @@
 <table>
-{{contributionMonth.calculations}}
     {{#each contributionMonth.monthlyOSProjects}}
         <tr>
             <td>{{osProject.name}}</td>
