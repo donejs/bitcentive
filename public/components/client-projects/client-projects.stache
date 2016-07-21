@@ -27,7 +27,7 @@
                     <input id="{{osProject._id}}" type="checkbox"
                           {{#if monthlyClientProjectsOsProjects.has(monthlyOSProject) }}checked{{/if}}
                           name="projects" value="{{osProject.name}}"
-                          ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyClientProject)"
+                          ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyOSProject)"
                           ($change)="contributionMonth.getRate(monthlyClientProject)"
                           {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
                           />
