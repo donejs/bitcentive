@@ -55,7 +55,6 @@ QUnit.asyncTest('Can create new OS Project', function() {
   fixture({
         "POST /api/os_projects": (req, res) => {
             QUnit.equal(req.data.name , "something");
-            debugger;
             res({_id: "oaidhfoshf", name: req.data.name});
         },
         "PUT /api/contribution_months/{_id}": (req, res) => {
@@ -83,7 +82,7 @@ QUnit.asyncTest('Can add an existing OSProject to Monthly Contribution', functio
   fixture({
         "GET /api/os_projects": (req, res) => {
           console.log("getting os projects");
-          return new DefineList([osProject]);
+          return {data: [osProject]};
         },
         "PUT /api/contribution_months/{_id}": (req, res) => {
           console.log('Monthly os project: ', req.data.monthlyOSProjects);
@@ -91,6 +90,6 @@ QUnit.asyncTest('Can add an existing OSProject to Monthly Contribution', functio
           res(res.data);
         }
   });
-  debugger;
+  
   vm.addNewMonthlyOSProject();
 });
