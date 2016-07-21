@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class='container'>
+    <script type="text/stache" can-autorender id='main'>
+      <can-import from="bitcentive/components/contribution-month/" />
+      <bit-contribution-month {contribution-month-id}="contributionMonthId"/>
+    </script>
+  </div>
+    <script src="../../../node_modules/steal/steal.js"
+            main="can-view-autorender">
+          import "bitcentive/models/fixtures/";
+          import viewModel from 'can-view-model';
+
+          viewModel($("#main")[0]).set("contributionMonthId","aslkfalsjklas");
+          window.viewModel = viewModel;
+    </script>
+  </body>
+</html>
