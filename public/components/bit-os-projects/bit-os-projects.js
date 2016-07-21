@@ -1,5 +1,6 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
+import DefineList from 'can-define/list/';
 import './bit-os-projects.less';
 import template from './bit-os-projects.stache';
 import OSProject from '../../models/os-project';
@@ -18,40 +19,62 @@ export const ViewModel = DefineMap.extend({
         value: false
     },
     newOSProjectName: 'string',
-    selectedOSProjectId: {type: 'string', value: '__new__'},
+    selectedOSProjectId: {
+        type: 'string',
+        value: '__new__'
+    },
 
     allOSProjects: {
-      value: function() {
-        return OSProject.getList();
-      }
+        value: function() {
+            return OSProject.getList().then((osProjects) => {
+                let allOSProjects = [];
+                osProjects.each((osProject) => {
+                    this.contributionMonth.monthlyOSProjects.each((monthlyOSProject) => {
+                        if (osProject._id !== monthlyOSProject.osProjectId) {
+                            allOSProjects.push(osProject);
+                        }
+                    });
+                });
+                return new DefineList(allOSProjects);
+            });
+        }
     },
     // Derived properties
     creatingNewOSProject: {
-      get: function(){
-        return this.selectedOSProjectId === "__new__";
-      }
+        get: function() {
+            return this.selectedOSProjectId === "__new__";
+        }
     },
 
-
     // Methods
-    toggleAddNewProject: function() {
+    toggleAddNewMonthlyOSProject: function() {
         this.newOSProjectName = '';
         this.adding = !this.adding;
     },
-    addNewProject: function(ev) {
-        console.log("Creating a new OS Project " + this.newOSProjectName);
+    addNewMonthlyOSProject: function(ev) {
         ev.preventDefault();
-        let newOSProject = new OSProject({
-            name: this.newOSProjectName
-        });
-        return this.activePromise = newOSProject.save().then((osProject) => {
-            this.toggleAddNewProject();
-            this.selectedOSProjectId = "__new__";
-            return this.contributionMonth.addNewMonthlyOSProject(osProject);
-        });
-    },
-    logIt: function() {
-        console.log('logging', arguments);
+        if (this.selectedOSProjectId === '__new__') {
+            let newOSProject = new OSProject({
+                name: this.newOSProjectName
+            });
+
+            this.activePromise = newOSProject.save().then((osProject) => {
+                this.toggleAddNewMonthlyOSProject();
+                return this.contributionMonth.addNewMonthlyOSProject(osProject);
+            });
+            return this.activePromise;
+
+        } else {
+            this.activePromise = this.allOSProjects.then((projects) => {
+                projects.each((proj) => {
+                    if (this.selectedOSProjectId === proj._id) {
+                        this.contributionMonth.addNewMonthlyOSProject(proj);
+                        this.toggleAddNewMonthlyOSProject();
+                    }
+                });
+            });
+            return this.activePromise;
+        }
     },
     updateComissionedForMonthlyOSProject: function(monthlyOSProject, commissioned) {
         monthlyOSProject.commissioned = commissioned;
