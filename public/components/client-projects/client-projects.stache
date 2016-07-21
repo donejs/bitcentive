@@ -13,7 +13,7 @@
             <a href="javascript://" ($click)="toggleEditMonthlyClientProject(monthlyClientProject)">
             {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>
 
-            <a href="javascript://" ($click)="deleteClientProject(%event, contributionMonth, monthlyClientProject)">delete</a>
+            <a href="javascript://" ($click)="deleteClientProject(contributionMonth, monthlyClientProject)">delete</a>
             {{#if isEditingMonthlyClientProject(.)}}
                 <label for="{{clientProjectId}}-hours">Hours for (month)</label>
                 <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
@@ -37,13 +37,12 @@
     {{/each}}
 </ul>
 <a href="javascript://" ($click)="toggleClientInput(%event)">+ add client</a>
-
 {{#if isAddingClients}}
     <ul class="all-clients">
         {{#if projects.isResolved}}
             {{#each projects.value}}
-                {{^if ../contributionMonth.monthyClientProjects.has(monthlyClientProject)}}
-                    <li ($click)="addClient(monthlyClientProject, ../contributionMonth.monthlyClientProjects)">{{name}}</li>
+                {{^if ../contributionMonth.monthlyClientProjects.has(.)}}
+                    <li ($click)="addClient(., ../contributionMonth.monthlyClientProjects)">{{name}}</li>
                 {{/if}}
             {{/each}}
         {{/if}}

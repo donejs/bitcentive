@@ -85,9 +85,31 @@ MonthlyClientProject.List = DefineList.extend({
     }
   },
   has: function(clientProject) {
-    return clientProject.clientProjectId in this.monthlyProjectIdMap;
+    let monthlyClientProject;
+    if (!!clientProject._id) {
+      monthlyClientProject = new MonthlyClientProject({
+        clientProjectId: clientProject._id,
+        clientProject: clientProject,
+        hours: 0
+      });
+    }
+    else {
+      monthlyClientProject = clientProject;
+    }
+    return monthlyClientProject.clientProjectId in this.monthlyProjectIdMap;
   },
-  toggleProject: function(monthlyClientProject){
+  toggleProject: function(clientProject){
+    let monthlyClientProject;
+    if (!!clientProject._id) {
+      monthlyClientProject = new MonthlyClientProject({
+        clientProjectId: clientProject._id,
+        clientProject: clientProject,
+        hours: 0
+      });
+    }
+    else {
+      monthlyClientProject = clientProject;
+    }
     var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
     if(index != null) {
       this.splice(index, 1);
