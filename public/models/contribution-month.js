@@ -7,6 +7,8 @@ import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superMap from "can-connect/can/super-map/";
 
+import "../lib/prefilter";
+
 
 var contributionMonthAlgebra = new set.Algebra(
     set.comparators.id("_id")
@@ -44,22 +46,23 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
   osProjectIdMap: {
     get: function(){
       var map = {};
-      this.forEach(function(monthlyClientProjectOSProject){
-        map[monthlyClientProjectOSProject.osProjectId] = monthlyClientProjectOSProject;
+      this.forEach(function(monthlyClientProjectOSProject, index){
+        map[monthlyClientProjectOSProject.osProjectId] = index;
       });
       return map;
     }
   },
   has: function(monthlyOsProject){
-    return !!this.osProjectIdMap[monthlyOsProject.osProjectId];
+    return monthlyOsProject.osProjectId in this.osProjectIdMap;
   },
   addRemoveProjects: function(monthlyOSProject){
-    if(this.has(monthlyOSProject)) {
-      this.splice(this.indexOf(monthlyOSProject), 1);
-      delete this.osProjectIdMap[monthlyOSProject.osProjectId];
+    var index = this.osProjectIdMap[monthlyOSProject.osProjectId];
+
+    if(index != undefined) {
+      console.log(index);
+      this.splice(index, 1);
     } else {
       this.push(monthlyOSProject);
-      this.osProjectIdMap[monthlyOSProject.osProjectId] = monthlyOSProject;
     }
   }
 });
@@ -76,23 +79,21 @@ MonthlyClientProject.List = DefineList.extend({
   monthlyProjectIdMap: {
     get: function() {
       var map = {};
-      this.forEach(function(monthlyClientProject) {
-        map[monthlyClientProject.clientProjectId] = monthlyClientProject;
+      this.forEach(function(monthlyClientProject, index) {
+        map[monthlyClientProject.clientProjectId] = index;
       });
       return map;
     }
   },
   has: function(clientProject) {
-    window.clientProject = clientProject;
-    return !!this.monthlyProjectIdMap[clientProject.clientProjectId];
+    return clientProject.clientProjectId in this.monthlyProjectIdMap;
   },
   addRemoveProjects: function(monthlyClientProject){
-    if(this.has(monthlyClientProject)) {
-      this.splice(this.indexOf(monthlyClientProject), 1);
-      delete this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
+    var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
+    if(index != null) {
+      this.splice(index, 1);
     } else {
       this.push(monthlyClientProject);
-      this.monthlyProjectIdMap[monthlyClientProject.clientProjectId] = monthlyClientProject;
     }
   }
 });
