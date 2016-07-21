@@ -7,8 +7,6 @@ import $ from 'jquery';
 
 
 export const ClientProjectVM = DefineMap.extend({
-  // Passed Props
-
   // Stateful Props
   projects: {
     value() {
@@ -24,11 +22,6 @@ export const ClientProjectVM = DefineMap.extend({
   },
 
   // Derived props
-  rate: {
-    get: function(){
-      return "2";
-    }
-  },
   total: {
     get: function() {
       return "222";
