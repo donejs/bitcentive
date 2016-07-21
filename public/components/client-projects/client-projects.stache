@@ -13,7 +13,7 @@
             <a href="javascript://" ($click)="toggleEditMonthlyClientProject(monthlyClientProject)">
             {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>
 
-            <a href="javascript://" ($click)="deleteClientProject(%event, contributionMonth, monthlyClientProject)">delete</a>
+            <a href="javascript://" ($click)="deleteClientProject(contributionMonth, monthlyClientProject)">delete</a>
             {{#if isEditingMonthlyClientProject(.)}}
                 <label for="{{clientProjectId}}-hours">Hours for (month)</label>
                 <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
@@ -23,9 +23,9 @@
             {{/if}}
             <p>Projects in use</p>
             <fieldset class="projects">
-                {{#each ../contributionMonth.monthlyOSProjects}}
+                {{#each ../contributionMonth.monthlyOSProjects as monthlyOSProject}}
                     <input id="{{osProject._id}}" type="checkbox"
-                          {{#if monthlyClientProjectsOsProjects.has(monthlyClientProject) }}checked{{/if}}
+                          {{#if monthlyClientProjectsOsProjects.has(monthlyOSProject) }}checked{{/if}}
                           name="projects" value="{{osProject.name}}"
                           ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyClientProject)"
                           {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
