@@ -8,10 +8,13 @@ import DefineList from "can-define/list/";
 import superMap from "can-connect/can/super-map/";
 
 import "../lib/prefilter";
-
+import moment from "moment";
 
 var contributionMonthAlgebra = new set.Algebra(
-    set.comparators.id("_id")
+  set.comparators.id("_id"),
+  set.comparators.sort("$sort", function(set, cm1, cm2){
+    return moment(cm1.date).toDate() - moment(cm2.date).toDate();
+  })
 );
 
 var makeOSProject = function(props){
@@ -34,6 +37,26 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   significance: "number",
   commissioned: "boolean",
   osProject: { type: makeOSProject }
+});
+
+MonthlyOSProject.List = DefineList.extend({
+  "*": MonthlyOSProject,
+  monthlyOSProjectIdMap: {
+    get: function() {
+      var map = {};
+      this.forEach((monthlyOSProject) => {
+        map[monthlyOSProject.osProjectId] = monthlyOSProject;
+      });
+      return map;
+    }
+  },
+  has: function(osProject){
+    return osProject._id in this.monthlyOSProjectIdMap;
+  },
+  getSignificance: function(osProjectId) {
+    var osProject = this.monthlyOSProjectIdMap[osProjectId];
+    return osProject ? osProject.significance : 0;
+  }
 });
 
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsProject",{
@@ -120,20 +143,35 @@ MonthlyClientProject.List = DefineList.extend({
 });
 
 
-var ContributionMonth = DefineMap.extend({
+var ContributionMonth = DefineMap.extend("ContributionMonth",{
+  _id: "string",
   date: "date",
-  monthlyOSProjects: {Type: [MonthlyOSProject]},
+  monthlyOSProjects: MonthlyOSProject.List,
   monthlyClientProjects: MonthlyClientProject.List,
+  calculations: {
+    get: function() {
+      var calculations = {};
+
+      this.monthlyClientProjects.forEach((monthlyClientProject) => {
+        calculations[monthlyClientProject.clientProjectId] = {
+          significance: 0
+        };
+        monthlyClientProject.monthlyClientProjectsOsProjects.forEach((monthlyOSProject) => {
+          calculations[monthlyClientProject.clientProjectId].significance =+ this.monthlyOSProjects.getSignificance(monthlyOSProject.osProjectId);
+
+        });
+      });
+
+      return calculations;
+    }
+  },
   addNewMonthlyOSProject: function(newProject) {
-    console.log("adding new project to monthly OS project list", newProject);
     let monthlyOSProject = new MonthlyOSProject({
       significance: 0,
       commissioned: false,
       osProjectId: newProject._id,
       osProject: newProject
     });
-
-    console.log("Monthly OS Project: ", monthlyOSProject);
     this.monthlyOSProjects.push(monthlyOSProject);
     this.save().then(function() { console.info("contributionMonth saved"); }, function() {
       console.error("Failed saving the contributionMonth obj: ", arguments);
@@ -172,7 +210,6 @@ ContributionMonth.connection = superMap({
   url: "/api/contribution_months",
   name: "contributionMonth",
   algebra: contributionMonthAlgebra,
-  idProp: "_id"
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 
