@@ -4,7 +4,10 @@
         <tr>
             <td>{{osProject.name}}</td>
             <td>Significance
-                <input type="text" {($value)}="significance" />
+                <input type="text"
+                       {($value)}="significance"
+                       ($blur)="contributionMonth.save()"
+                       {{#if contributionMonth.isSaving}} disabled {{/if}}/>
             </td>
             <td>
                 <input type="checkbox" ($change)="updateComissionedForMonthlyOSProject(., %element.checked)" {{#if commissioned}} checked {{/if}} {{#if contributionMonth.isSaving}} disabled {{/if}} /> Commissioned

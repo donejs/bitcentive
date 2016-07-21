@@ -51,7 +51,6 @@ export const ViewModel = DefineMap.extend({
             });
 
             this.activePromise = newOSProject.save().then((osProject) => {
-                debugger;
                 this.toggleAddNewMonthlyOSProject();
                 return this.contributionMonth.addNewMonthlyOSProject(osProject);
             });
