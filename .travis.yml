@@ -3,8 +3,8 @@ node_js: node
 services:
   - mongodb
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - 'export DISPLAY=:99.0'
+  - sh -e /etc/init.d/xvfb start
 before_deploy:
   - node public/build
   - git add public/dist/ --force
@@ -13,6 +13,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: heroku
-  app: pacific-crag-24804
+  app: bitcentive
   api_key:
-    - secure: j3PmnzBbKGA9+5vbU+NeYcYUqXYR0LVGHxP2Ct3TEMPxlULTvREw612/5XN0CHAUFWoPEtFHehXXkli28V0vZT1XgVlFmYru5EFOjMOtMVacQfbhoddHybda2U9XiRBez9s0YH963Fc47L/ecfe5pPDjIekiU+CjQJ4CQ5L1QYR7W93/TFc29WGdPnv6VbJICAsLkWiWBuoNWpL5zmlFxIa8LLdsAadQN7mT+2rpXMXGdDpeCvYVWTKgvNAiMtzTagrfV9K+pHgFALnEGe905SpzENLShn8SBZDz1ulJYC9cSWOlNhTNKtCI2koJwh66puvq4gDvV20i+0sOBnUehHUNU3BnZmBkEKJiTBuUGGREUcrBtFIQclw2l8c8id3InQf2l58dXhhlARVuXPfH+s1ET1D38CVV9rATlrqh02MsXPY0HwUcvoTkbc8Sw0IN68ywvtLSjelzW8bUTB46BP1Ae3mlS3HAvBGTSC/iz4bACB4c7VcV3a2EN3LCeXdDuzSr6DUBuzJJ0HIuT7dYF+e8t8Nbdrwp+OhmCPt8cfcqMRIjx4G8fynSyleLQ5vwXh6HRnenfPXKqFz5nWpewoQ4ku/k7AxhELFvK0iswV64s2OVUbxVpPk6ymmK4/jHfRZ/+VtJmIo/PqlgGDz+BlSANu5BBW+k8Ph7hh8BLxg=
+    - secure: >-
+        SJwpb2JGhgov3dGnDIDXa4z8tQJPOf7/JYtB2PO020p2Xl4J20vVpCMifQ+BVyXPiQpAd41CKESiw5cxM7gtJ+EcF1jM/RhaR8an/kUqyF5AjbvIQHiRVAzYj0LNBYeSEejOz8WLRofFfD/0Aly3MhWHEoA4BCPFYDap+wskd+LZKyFfpw/eJjANbaHNYWbTHS1TNNtpgznd2tC+SCiU0ih0Xz9HolI8TBquRZ7yMPhjtYbOlm8RRR4XSxKjW0cS4pGA0zNBqhYz4F9eXm9TGR7M9bWY1EVgomUKSek1LOEqTpd5z+KYPWsNKjWZ2tjNVhZ76DC0yISxVc2KOr//n19Y4tYM7KmG9vE+jDdhiVhSCEavyP7swW57syrNg1NeHyS03sDgoeNZSaRzQ+yvO3BRQ6N77VNoYmSv51yXLOjveH6FxqS2a+MZMKgodTswS3Pqe/E40rKt6rbHleNznEWolTaOT7eD8VZSVPtBVTG9MDkczSThsUsGf4w8Zy5ey97psmtE+WwCqwRrl0qSK4IHmLcIOj+tLR0llG96l1OITntZOW2RQ7dlXOMGMkEwJsXJybGWxVq7gLQwNkfohi8nIJ6aQvog22ndUu0Eo228NyBCpay3/0a65iv7OTMhZ72dn7oe7y8hoLX7QBiZLT7qHtV5lYYWeZClASlTMXs=
