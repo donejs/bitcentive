@@ -40,6 +40,10 @@
     "serve-favicon": "^2.3.0",
     "winston": "^2.2.0"
   },
+  "homepage": "https://github.com/donejs/bitcentive#readme",
+  "system": {
+    "npmAlgorithm": "flat"
+  },
   "devDependencies": {
     "jshint": "^2.9.2",
     "mocha": "^2.5.3",
