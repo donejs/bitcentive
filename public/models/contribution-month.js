@@ -68,19 +68,14 @@ var ContributionMonth = DefineMap.extend({
   monthlyOSProjects: MonthlyOSProject.List,
   monthlyClientProjects: {Type: [MonthlyClientProject]},
   addNewMonthlyOSProject: function(newProject) {
-    console.log("adding new project to monthly OS project list", newProject);
     let monthlyOSProject = new MonthlyOSProject({
       significance: 0,
       commissioned: false,
       osProjectId: newProject._id,
       osProject: newProject
     });
-
-    console.log("Monthly OS Project: ", monthlyOSProject);
     this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() { console.info("contributionMonth saved"); }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
-    });
+    this.save();
   }
 });
 
