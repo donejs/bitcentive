@@ -143,6 +143,7 @@ var ContributionMonth = DefineMap.extend({
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
+    console.log(monthlyClientProject);
     const monthlyOSProjects = this.monthlyOSProjects;
     const map = {};
     let totalSignificance = 0;
@@ -157,7 +158,9 @@ var ContributionMonth = DefineMap.extend({
         usedSignificance += map[usedOSProject.osProjectId].significance;
       }
     });
-    return 4 - 2 * (usedSignificance / totalSignificance);
+    let rate = 4 - 2 * (usedSignificance / totalSignificance);
+    console.log(rate);
+    return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
   }
 });
 

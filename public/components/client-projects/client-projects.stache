@@ -28,6 +28,7 @@
                           {{#if monthlyClientProjectsOsProjects.has(monthlyOSProject) }}checked{{/if}}
                           name="projects" value="{{osProject.name}}"
                           ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyClientProject)"
+                          ($change)="contributionMonth.getRate(monthlyClientProject)"
                           {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
                           />
                     <label for="{{osProject._id}}">{{osProject.name}}</label>
