@@ -10,11 +10,6 @@ export const ClientProjectVM = DefineMap.extend({
   // Passed Props
 
   // Stateful Props
-
-  // Derived props
-
-  // Methods
-
   projects: {
     value() {
       return ClientProject.getList({});
@@ -23,17 +18,24 @@ export const ClientProjectVM = DefineMap.extend({
   editingClientProjectIds: {
     Value: DefineMap.extend({seal: false},{}),
   },
-
-  toggleEditInput: function(event) {
-    if(event) {
-      event.preventDefault();
-    }
-    this.isEditing = !this.isEditing;
-  },
   isAddingClients: {
     type: "boolean",
     value: false
   },
+
+  // Derived props
+  rate: {
+    get: function(){
+      return "122";
+    }
+  },
+  total: {
+    get: function() {
+      return "222";
+    }
+  },
+
+  // Methods
   toggleClientInput: function(event){
     if (event) {
       event.preventDefault();
@@ -42,15 +44,15 @@ export const ClientProjectVM = DefineMap.extend({
   },
 
   addClient: function(clientProject, monthlyClientProjects) {
-    monthlyClientProjects.addRemoveProjects(clientProject);
+    monthlyClientProjects.toggleProject(clientProject);
   },
-  editClientName: function(event, contributionMonth) {
+  updateClientName: function(event, contributionMonth) {
     if (event) {
       event.preventDefault();
     }
     contributionMonth.clientProject.save();
   },
-  editClientProjectHours: function(event, contributionMonth) {
+  updateClientProjectHours: function(event, contributionMonth) {
     if (event) {
       event.preventDefault();
     }
@@ -60,7 +62,7 @@ export const ClientProjectVM = DefineMap.extend({
 
   },
   toggleUseProject: function(contributionMonth, monthlyClientProjectsOsProjects, monthlyOsProject) {
-    monthlyClientProjectsOsProjects.addRemoveProjects(monthlyOsProject);
+    monthlyClientProjectsOsProjects.toggleProject(monthlyOsProject);
     contributionMonth.save();
   },
   toggleEditMonthlyClientProject: function(monthlyClientProject) {
@@ -71,6 +73,7 @@ export const ClientProjectVM = DefineMap.extend({
     }
   },
   isEditingMonthlyClientProject: function(monthlyClientProject){
+    console.log(monthlyClientProject);
     return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId)
   }
 });
