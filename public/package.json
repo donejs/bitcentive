@@ -32,8 +32,9 @@
     "npmAlgorithm": "flat"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "can-component": "^3.0.0-pre.8",
-    "can-connect": "^0.6.0-pre.11",
+    "can-connect": "^0.6.0-pre.12",
     "can-define": "^0.7.9",
     "can-route": "^3.0.0-pre.5",
     "can-route-pushstate": "^3.0.0-pre.3",
@@ -48,6 +49,7 @@
     "done-serve": "^0.3.0-pre.0",
     "done-ssr-middleware": "^0.4.0-pre.0",
     "generator-donejs": "^0.10.0-pre.0",
+    "jquery": "^3.1.0",
     "steal": "^0.16.0",
     "steal-stache": "^3.0.0-pre.2"
   },
