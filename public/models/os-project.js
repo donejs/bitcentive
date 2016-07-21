@@ -4,6 +4,7 @@ import superMap from "can-connect/can/super-map/";
 
 var OSProject =  DefineMap.extend("OSProject", {
   _id: "string",
+  __v: 'number',
   name: "string"
 });
 

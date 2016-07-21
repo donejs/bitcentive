@@ -35,7 +35,7 @@ export const ViewModel = DefineMap.extend({
     }
   },
   contributionMonthsPromise: {
-    value: ContributionMonth.getList.bind(ContributionMonth,{$sort: {date: -1}})
+    value: ContributionMonth.getList.bind(ContributionMonth,{$sort: {date: 1}})
   },
 
   contributionMonths: {
@@ -47,14 +47,18 @@ export const ViewModel = DefineMap.extend({
     get: function(){
       if(this.contributionMonths && this.contributionMonths.length) {
         return this.contributionMonths[this.contributionMonths.length - 1];
+      } else {
+        return new ContributionMonth({
+          monthlyClientProjects: [],
+          monthlyOSProjects:[],
+          date: moment().add(-1,'months').startOf('month').toDate()
+        });
       }
     }
   },
   nextMonth: {
     get: function(){
-      if(this.lastMonth) {
-        return moment(this.lastMonth.date).add(1,'months').startOf('month').toDate();
-      }
+      return moment(this.lastMonth.date).add(1,'months').startOf('month').toDate();
     }
   },
 

@@ -2,6 +2,7 @@ import fixture from "can-fixture";
 import ContributionMonth from 'bitcentive/models/contribution-month';
 import OSProject from 'bitcentive/models/os-project';
 import ClientProject from 'bitcentive/models/client-project';
+import "./client-project";
 
 var osProject = {
     _id: "somethingCrazey",
