@@ -26,7 +26,7 @@ export const ClientProjectVM = DefineMap.extend({
   // Derived props
   rate: {
     get: function(){
-      return "122";
+      return "2";
     }
   },
   total: {
