@@ -1,7 +1,7 @@
 <ul>
     {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
         <li>
-            {{#if isEditingMonthlyClientProject(.)}}
+            {{#if isEditingMonthlyClientProject(monthlyClientProject)}}
                 <input class="editInput" type="text" {($value)}="clientProject.name" ($change)="contributionMonth.save"/>
             {{else}}
                 <h2>{{clientProject.name}}</h2>
@@ -10,10 +10,10 @@
                 Rate <span class="rate">${{rate}}</span>
                 Total <span class="total">${{total}}</span>
             </p>
-            <a href="javascript://" ($click)="toggleEditMonthlyClientProject(.)">
+            <a href="javascript://" ($click)="toggleEditMonthlyClientProject(monthlyClientProject)">
             {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>
 
-            <a href="javascript://" ($click)="deleteClientProject(%event, .)">delete</a>
+            <a href="javascript://" ($click)="deleteClientProject(%event, contributionMonth, monthlyClientProject)">delete</a>
             {{#if isEditingMonthlyClientProject(.)}}
                 <label for="{{clientProjectId}}-hours">Hours for (month)</label>
                 <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
@@ -25,9 +25,9 @@
             <fieldset class="projects">
                 {{#each ../contributionMonth.monthlyOSProjects}}
                     <input id="{{osProject._id}}" type="checkbox"
-                          {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}}
+                          {{#if monthlyClientProjectsOsProjects.has(monthlyClientProject) }}checked{{/if}}
                           name="projects" value="{{osProject.name}}"
-                          ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, .)"
+                          ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyClientProject)"
                           {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
                           />
                     <label for="{{osProject._id}}">{{osProject.name}}</label>
@@ -42,8 +42,8 @@
     <ul class="all-clients">
         {{#if projects.isResolved}}
             {{#each projects.value}}
-                {{^if ../contributionMonth.monthyClientProjects.has(.)}}
-                    <li ($click)="addClient(., ../contributionMonth.monthlyClientProjects)">{{name}}</li>
+                {{^if ../contributionMonth.monthyClientProjects.has(monthlyClientProject)}}
+                    <li ($click)="addClient(monthlyClientProject, ../contributionMonth.monthlyClientProjects)">{{name}}</li>
                 {{/if}}
             {{/each}}
         {{/if}}
