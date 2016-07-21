@@ -87,7 +87,7 @@ MonthlyClientProject.List = DefineList.extend({
   has: function(clientProject) {
     return clientProject.clientProjectId in this.monthlyProjectIdMap;
   },
-  addRemoveProjects: function(monthlyClientProject){
+  toggleProject: function(monthlyClientProject){
     var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
     if(index != null) {
       this.splice(index, 1);
