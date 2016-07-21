@@ -34,6 +34,22 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProject: { type: makeOSProject }
 });
 
+MonthlyOSProject.List = DefineList.extend({
+  "*": MonthlyOSProject,
+  monthlyOSProjectIdMap: {
+    get: function() {
+      var map = {};
+      this.forEach((monthlyOSProject) => {
+        map[monthlyOSProject.osProjectId] = monthlyOSProject;
+      });
+      return map;
+    }
+  },
+  has: function(osProject){
+    return osProject._id in this.monthlyOSProjectIdMap;
+  }
+});
+
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsProject",{
     osProjectId: "123123sdfasdf",
     osProject: {type: makeOSProject }
@@ -49,7 +65,7 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
 
 var ContributionMonth = DefineMap.extend({
   date: "date",
-  monthlyOSProjects: {Type: [MonthlyOSProject]},
+  monthlyOSProjects: MonthlyOSProject.List,
   monthlyClientProjects: {Type: [MonthlyClientProject]},
   addNewMonthlyOSProject: function(newProject) {
     console.log("adding new project to monthly OS project list", newProject);

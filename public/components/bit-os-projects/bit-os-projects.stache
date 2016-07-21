@@ -12,40 +12,40 @@
             <td>Total: {{totalForMonthlyOSProject(.)}}</td>
         </tr>
     {{/each}}
-    <tr>
-        <td colspan="4">
-            <a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
-                {{#if adding}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Add Project</div>
-                        <div class="panel-body">
-                            <form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
-                                {{#if allOSProjects.pending}}
-                                    <p>Loading...</p>
-                                {{/if}}
-                                {{#if allOSProjects.isResolved}}
-                                    <label>Select an existing project: </label>
-                                    <select {($value)}="selectedOSProjectId">
-                                        {{#each allOSProjects.value}}
-                                            <option value="{{_id}}">{{name}}</option>
-                                        {{/each}}
-                                        <option value="__new__">Create New Project</option>
-                                    </select>
-                                {{/if}}
-                                {{#if creatingNewOSProject}}
-                                    <label>Or create a new project</label>
-                                    <input  type="text"
-                                            placeholder="Open Source Project"
-                                            {($value)}="newOSProjectName">
-                                {{/if}}
-                            </form>
-                        <button class="btn" type="submit" form="new-os-project" value="Submit">Add Project</button>
-                    </div>
-                </div>
-            {{/if}}
-        </td>
-    </tr>
+
 </table>
+
+<a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
+{{#if adding}}
+<div class="panel panel-default">
+    <div class="panel-heading">Add Project</div>
+        <div class="panel-body">
+            <form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
+                {{#if allOSProjects.pending}}
+                    <p>Loading...</p>
+                {{/if}}
+                {{#if allOSProjects.isResolved}}
+                    <label>Select an existing project: </label>
+                    <select {($value)}="selectedOSProjectId">
+                        {{#each allOSProjects.value}}
+                            {{^if contributionMonth.monthlyOSProjects.has(.)}}
+                                <option value="{{_id}}">{{name}}</option>
+                            {{/if}}
+                        {{/each}}
+                        <option value="__new__">Create New Project</option>
+                    </select>
+                {{/if}}
+                {{#if creatingNewOSProject}}
+                    <label>Or create a new project</label>
+                    <input  type="text"
+                            placeholder="Open Source Project"
+                            {($value)}="newOSProjectName">
+                {{/if}}
+            </form>
+        <button class="btn" type="submit" form="new-os-project" value="Submit">Add Project</button>
+    </div>
+</div>
+{{/if}}
 {{#activePromise}}
     {{#if isRejected}}
         <div class='warning'>{{reason.message}}</div>

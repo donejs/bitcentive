@@ -26,17 +26,7 @@ export const ViewModel = DefineMap.extend({
 
     allOSProjects: {
         value: function() {
-            return OSProject.getList().then((osProjects) => {
-                let allOSProjects = [];
-                osProjects.each((osProject) => {
-                    this.contributionMonth.monthlyOSProjects.each((monthlyOSProject) => {
-                        if (osProject._id !== monthlyOSProject.osProjectId) {
-                            allOSProjects.push(osProject);
-                        }
-                    });
-                });
-                return new DefineList(allOSProjects);
-            });
+            return OSProject.getList();
         }
     },
     // Derived properties
