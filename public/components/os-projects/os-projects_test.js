@@ -1,12 +1,12 @@
 import QUnit from 'steal-qunit';
-import { ViewModel } from './bit-os-projects';
+import { ViewModel } from './os-projects';
 import fixture from 'can-fixture';
 import OSProject from 'bitcentive/models/os-project';
 import ClientProject from 'bitcentive/models/client-project';
 import ContributionMonth from 'bitcentive/models/contribution-month';
 import DefineList from 'can-define/list/';
 // ViewModel unit tests
-QUnit.module('bitcentive/components/bit-os-projects');
+QUnit.module('bitcentive/components/os-projects');
 
 var osProject = {
     _id: "somethingCrazey",

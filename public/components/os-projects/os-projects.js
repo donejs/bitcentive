@@ -1,8 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import DefineList from 'can-define/list/';
-import './bit-os-projects.less';
-import template from './bit-os-projects.stache';
+import './os-projects.less';
+import template from './os-projects.stache';
 import OSProject from '../../models/os-project';
 import ContributionMonth from '../../models/contribution-month';
 
@@ -83,7 +82,7 @@ export const ViewModel = DefineMap.extend({
 });
 
 export default Component.extend({
-    tag: 'bit-os-projects',
+    tag: 'os-projects',
     ViewModel: ViewModel,
     template: template
 });
