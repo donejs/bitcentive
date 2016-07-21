@@ -10,10 +10,15 @@ QUnit.module("models");
 QUnit.asyncTest("getList of ContributionMonth", function() {
 	ContributionMonth.getList({}).then(function(contributionMonths) {
 
+	  console.log(contributionMonths);
 		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProject instanceof ClientProject);
 		var first = contributionMonths[0].monthlyOSProjects[0].osProject,
 			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOsProjects[0].osProject;
-		QUnit.ok(first  ===second);
+
+    console.log(first);
+    console.log(second);
+
+		QUnit.ok(first === second);
 		QUnit.start();
 	}, function(err) {
 		debugger;

@@ -1,0 +1,46 @@
+<ul>
+    {{#if contributionMonth.monthlyClientProjects}}
+        {{#each contributionMonth.monthlyClientProjects}}
+            <li>
+                {{.}}
+                <!--<h2>{{clientProject.name}}</h2>-->
+                <!--<form ($submit)="editClientName(%event, .)">-->
+                    <!--<input class="editInput" type="text" {($value)}="clientProject.name" />-->
+                <!--</form>-->
+                <!--<a href="#" ($click)="toggleEditInput(%event)">edit</a>-->
+                <!--{{#if isEditing}}-->
+                    <!--<input id="active" type="checkbox" />-->
+                    <!--<label for="active">active</label>-->
+                    <!--<a href="#" ($click)="deleteClientProject(%event, .)">delete</a>-->
+                    <!--<p>-->
+                        <!--Rate <span class="rate"></span>-->
+                        <!--Total <span class="total"></span>-->
+                    <!--</p>-->
+                    <!--<form ($submit)="editClientProjectHours(%event, ../contributionMonth)">-->
+                        <!--<label for="{{clientProjectId}}-hours">Hours for (month)</label>-->
+                        <!--<input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" />-->
+                    <!--</form>-->
+                    <!--<p>Projects in use</p>-->
+                    <!--<fieldset class="projects">-->
+                        <!--{{#each ../contributionMonth.monthlyOSProjects}}-->
+                            <!--<input id="{{osProject._id}}" type="checkbox" {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}} name="projects" value="{{osProject.name}}" ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, .)">-->
+                            <!--<label for="{{osProject._id}}">{{osProject.name}}</label>-->
+                        <!--{{/each}}-->
+                    <!--</fieldset>-->
+                <!--{{/if}}-->
+            </li>
+        {{/each}}
+    {{/if}}
+</ul>
+<a href="#" ($click)="toggleClientInput(%event)">+ add client</a>
+{{#if isAddingClients}}
+<ul class="all-clients">
+    {{#if projects.isResolved}}
+      {{#each projects.value}}
+        {{^if ../contributionMonth.monthyClientProjects.has(.)}}
+            <li ($click)="addClient(., ../contributionMonth.monthlyClientProjects)">{{name}}</li>
+        {{/if}}
+      {{/each}}
+    {{/if}}
+</ul>
+{{/if}}
