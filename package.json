@@ -2,7 +2,7 @@
   "name": "bitcentive",
   "description": "Royalties",
   "version": "0.0.0",
-  "homepage": "",
+  "homepage": "https://github.com/donejs/bitcentive#readme",
   "main": "src/",
   "keywords": [
     "feathers"
@@ -16,7 +16,7 @@
     "node": ">= 0.12.0"
   },
   "scripts": {
-    "test": "npm run jshint && npm run mocha && cd public && npm run test",
+    "test": "npm run jshint && npm run mocha && cd public && npm run test && npm run firebase",
     "jshint": "jshint src/. test/. --config",
     "develop": "node src/ --develop",
     "start": "node src/",
@@ -40,7 +40,6 @@
     "serve-favicon": "^2.3.0",
     "winston": "^2.2.0"
   },
-  "homepage": "https://github.com/donejs/bitcentive#readme",
   "system": {
     "npmAlgorithm": "flat"
   },
