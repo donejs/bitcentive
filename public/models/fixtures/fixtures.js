@@ -44,7 +44,6 @@ fixture({
     'GET /api/contribution_months/{_id/{_id}': monthlyContributionStore.getData,
     'POST /api/contribution_months': monthlyContributionStore.createData,
     'PUT /api/contribution_months/{_id}': function(req) {
-      console.log(req.data.monthlyOSProjects)
       return req.data;
     },
     'DELETE /api/contribution_months/{_id}': monthlyContributionStore.destroyData,

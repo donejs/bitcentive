@@ -42,6 +42,7 @@ export const ViewModel = DefineMap.extend({
         this.adding = !this.adding;
     },
     addNewMonthlyOSProject: function(ev) {
+
         if (ev) {
             ev.preventDefault();
         }
@@ -51,10 +52,11 @@ export const ViewModel = DefineMap.extend({
             });
 
             this.activePromise = newOSProject.save().then((osProject) => {
+                debugger;
                 this.toggleAddNewMonthlyOSProject();
                 return this.contributionMonth.addNewMonthlyOSProject(osProject);
             });
-            return this.activePromise;
+
 
         } else {
             this.activePromise = this.allOSProjects.then((projects) => {
@@ -65,8 +67,10 @@ export const ViewModel = DefineMap.extend({
                     }
                 });
             });
-            return this.activePromise;
+
         }
+
+        return this.activePromise;
     },
     updateComissionedForMonthlyOSProject: function(monthlyOSProject, commissioned) {
         monthlyOSProject.commissioned = commissioned;
