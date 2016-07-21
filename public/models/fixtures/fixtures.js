@@ -7,12 +7,17 @@ var osProject = {
     name: "CanJS"
 };
 
+var osProjectAlt = {
+    _id: "anotheraskjldf",
+    name: "DoneJS"
+};
+
 var clientProject = {
     _id: "asl;dfal;sfj ;lakwj",
     name: "HualHound"
 };
 
-var osProjectStore = fixture.store([osProject], OSProject.algebra);
+var osProjectStore = fixture.store([osProject, osProjectAlt], OSProject.algebra);
 
 var monthlyContributionStore = fixture.store([{
     _id: "aslkfalsjklas",
