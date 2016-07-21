@@ -42,7 +42,9 @@ export const ViewModel = DefineMap.extend({
         this.adding = !this.adding;
     },
     addNewMonthlyOSProject: function(ev) {
-        ev.preventDefault();
+        if (ev) {
+            ev.preventDefault();
+        }
         if (this.selectedOSProjectId === '__new__') {
             let newOSProject = new OSProject({
                 name: this.newOSProjectName
