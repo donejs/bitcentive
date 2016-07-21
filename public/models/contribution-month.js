@@ -39,18 +39,69 @@ var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsPro
     osProject: {type: makeOSProject }
 });
 
+MonthlyClientProjectsOsProject.List = DefineList.extend({
+  "*": MonthlyClientProjectsOsProject,
+  osProjectIdMap: {
+    get: function(){
+      var map = {};
+      this.forEach(function(monthlyClientProjectOSProject){
+        map[monthlyClientProjectOSProject.osProjectId] = monthlyClientProjectOSProject;
+      });
+      return map;
+    }
+  },
+  has: function(monthlyOsProject){
+    return !!this.osProjectIdMap[monthlyOsProject.osProjectId];
+  },
+  addRemoveProjects: function(monthlyOSProject){
+    if(this.has(monthlyOSProject)) {
+      this.splice(this.indexOf(monthlyOSProject), 1);
+      delete this.osProjectIdMap[monthlyOSProject.osProjectId];
+    } else {
+      this.push(monthlyOSProject);
+      this.osProjectIdMap[monthlyOSProject.osProjectId] = monthlyOSProject;
+    }
+  }
+});
+
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
   clientProjectId: "string",
   clientProject: {type: makeClientProject},
   hours: "number",
-  monthlyClientProjectsOsProjects: {Type: [MonthlyClientProjectsOsProject]},
+  monthlyClientProjectsOsProjects: MonthlyClientProjectsOsProject.List,
+});
+
+MonthlyClientProject.List = DefineList.extend({
+  "*": MonthlyClientProject,
+  monthlyProjectIdMap: {
+    get: function() {
+      var map = {};
+      this.forEach(function(monthlyClientProject) {
+        map[monthlyClientProject.clientProjectId] = monthlyClientProject;
+      });
+      return map;
+    }
+  },
+  has: function(clientProject) {
+    window.clientProject = clientProject;
+    return !!this.monthlyProjectIdMap[clientProject.clientProjectId];
+  },
+  addRemoveProjects: function(monthlyClientProject){
+    if(this.has(monthlyClientProject)) {
+      this.splice(this.indexOf(monthlyClientProject), 1);
+      delete this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
+    } else {
+      this.push(monthlyClientProject);
+      this.monthlyProjectIdMap[monthlyClientProject.clientProjectId] = monthlyClientProject;
+    }
+  }
 });
 
 
 var ContributionMonth = DefineMap.extend({
   date: "date",
   monthlyOSProjects: {Type: [MonthlyOSProject]},
-  monthlyClientProjects: {Type: [MonthlyClientProject]},
+  monthlyClientProjects: MonthlyClientProject.List,
   addNewMonthlyOSProject: function(newProject) {
     console.log("adding new project to monthly OS project list", newProject);
     let monthlyOSProject = new MonthlyOSProject({
@@ -75,7 +126,8 @@ ContributionMonth.connection = superMap({
   List: ContributionMonth.List,
   url: "/api/contribution_months",
   name: "contributionMonth",
-  algebra: contributionMonthAlgebra
+  algebra: contributionMonthAlgebra,
+  idProp: "_id"
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 

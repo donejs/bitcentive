@@ -1,6 +1,7 @@
 import fixture from "can-fixture";
 import ContributionMonth from 'bitcentive/models/contribution-month';
 import OSProject from 'bitcentive/models/os-project';
+import ClientProject from 'bitcentive/models/client-project';
 
 var osProject = {
     _id: "somethingCrazey",
@@ -9,7 +10,7 @@ var osProject = {
 
 var clientProject = {
     _id: "asl;dfal;sfj ;lakwj",
-    name: "HualHound"
+    name: "HaulHound"
 };
 
 var osProjectStore = fixture.store([osProject], OSProject.algebra);
