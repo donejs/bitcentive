@@ -1,71 +1,88 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
+import DefineList from 'can-define/list/';
 import './bit-os-projects.less';
 import template from './bit-os-projects.stache';
-import OSProjectModel from '../../models/os-project';
-import ContributionMonthModel from '../../models/contribution-month';
+import OSProject from '../../models/os-project';
+import ContributionMonth from '../../models/contribution-month';
 
 export const ViewModel = DefineMap.extend({
+    // Passed properties
     contributionMonth: {
-        Value: ContributionMonthModel
+        Value: ContributionMonth
     },
-    contributionMonthPromise: {},
-    allOSProjects: {
-      get: function() {
-        return OSProjectModel.getList();
-      }
-    },
-    logIt: function() {
-        console.log('logging', arguments);
-    },
-    toggle: function(monthlyOSProject) {
-        console.log("toggle");
-        monthlyOSProject.commissioned = !monthlyOSProject.commissioned;
 
-        this.contributionMonth.save().then(function() {
-            console.log(monthlyOSProject.commissioned);
-        }, function(err) {
-            console.log('err', err);
-        });
-    },
-    total: function(monthlyOSProject) {
-        return 0;
-    },
+    // Stateful properties
+    activePromise: "*",
     adding: {
         type: 'boolean',
         value: false
     },
-    newOSProjectName: '',
-    toggleAddNewProject: function() {
+    newOSProjectName: 'string',
+    selectedOSProjectId: {
+        type: 'string',
+        value: '__new__'
+    },
+
+    allOSProjects: {
+        value: function() {
+            return OSProject.getList().then((osProjects) => {
+                let allOSProjects = [];
+                osProjects.each((osProject) => {
+                    this.contributionMonth.monthlyOSProjects.each((monthlyOSProject) => {
+                        if (osProject._id !== monthlyOSProject.osProjectId) {
+                            allOSProjects.push(osProject);
+                        }
+                    });
+                });
+                return new DefineList(allOSProjects);
+            });
+        }
+    },
+    // Derived properties
+    creatingNewOSProject: {
+        get: function() {
+            return this.selectedOSProjectId === "__new__";
+        }
+    },
+
+    // Methods
+    toggleAddNewMonthlyOSProject: function() {
         this.newOSProjectName = '';
         this.adding = !this.adding;
     },
-    addNewProject: function(ev) {
-        console.log("Creating a new OS Project " + this.newOSProjectName);
+    addNewMonthlyOSProject: function(ev) {
         ev.preventDefault();
-        let newOSProject = new OSProjectModel({
-            name: this.newOSProjectName
-        });
-        newOSProject.save().then(function(OSProject) {
-            this.toggleAddNewProject();
-            this.contributionMonth.addNewMonthlyOSProject(OSProject);
-        }.bind(this), function() {
-            console.error("failed", arguments);
-        });
+        if (this.selectedOSProjectId === '__new__') {
+            let newOSProject = new OSProject({
+                name: this.newOSProjectName
+            });
+
+            this.activePromise = newOSProject.save().then((osProject) => {
+                this.toggleAddNewMonthlyOSProject();
+                return this.contributionMonth.addNewMonthlyOSProject(osProject);
+            });
+            return this.activePromise;
+
+        } else {
+            this.activePromise = this.allOSProjects.then((projects) => {
+                projects.each((proj) => {
+                    if (this.selectedOSProjectId === proj._id) {
+                        this.contributionMonth.addNewMonthlyOSProject(proj);
+                        this.toggleAddNewMonthlyOSProject();
+                    }
+                });
+            });
+            return this.activePromise;
+        }
     },
-    existingOSProject: 'string',
-    addingNewOSProject: {
-      type: "boolean",
-      value: true
+    updateComissionedForMonthlyOSProject: function(monthlyOSProject, commissioned) {
+        monthlyOSProject.commissioned = commissioned;
+
+        this.activePromise = this.contributionMonth.save();
     },
-    toggleInput: function() {
-      if(this.existingOSProject === "__new__") {
-        this.addingNewOSProject = true;
-      }
-      else {
-        this.addingNewOSProject = false;
-      }
-      console.log("existingOSProject", this.existingOSProject);
+    totalForMonthlyOSProject: function(monthlyOSProject) {
+        return 0;
     }
 });
 

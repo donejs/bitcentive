@@ -1,42 +1,53 @@
 <table>
 
-{{#each contributionMonth.monthlyOSProjects}}
-<tr>
-    <td>{{osProject.name}}</td>
-    <td>Significance <input type="text" {($value)}="significance"/></td>
-    <td><input type="checkbox" ($change)="toggle(.)" {{#if commissioned(.)}}checked{{/if}}/> Commissioned</td>
-    <td>Total: {{total(.)}}</td>
-</tr>
-{{/each}}
-<tr>
-	<td colspan="4">
-		<a href="javascript://" ($click)="toggleAddNewProject()">Add Project</a>
-		{{#if adding}}
-		<div class="panel panel-default">
-			<div class="panel-heading">Add Project</div>
-			<div class="panel-body">
-				<form ($submit)="addNewProject(%event)" id="new-os-project">
-					{{#if allOSProjects.pending}}
-						Loading....
-					{{/if}}
-					{{#if allOSProjects.isResolved}}
-					<label>Select an existing project: </label>
-					<select {($value)}="existingOSProject" ($change)="toggleInput(%event)">
-					{{#each allOSProjects.value}}
-						<option value="{{_id}}" selected>{{name}}</option>
-					{{/each}}
-						<option value="__new__">Create New Project</option>
-					</select>
-					{{/if}}
-					{{#if addingNewOSProject}}
-					<label>Or create a new project</label>
-                    <input type="text" placeholder="Open Source Project" {($value)}="newOSProjectName">
-                    {{/if}}
-                </form>
-                <button class="btn" type="submit" form="new-os-project" value="Submit">Add Project</button>
-			</div>
-		</div>
-		{{/if}}
-	</td>
-</tr>
+    {{#each contributionMonth.monthlyOSProjects}}
+        <tr>
+            <td>{{osProject.name}}</td>
+            <td>Significance
+                <input type="text" {($value)}="significance" />
+            </td>
+            <td>
+                <input type="checkbox" ($change)="updateComissionedForMonthlyOSProject(., %element.checked)" {{#if commissioned}} checked {{/if}} {{#if contributionMonth.isSaving}} disabled {{/if}} /> Commissioned
+            </td>
+            <td>Total: {{totalForMonthlyOSProject(.)}}</td>
+        </tr>
+    {{/each}}
+    <tr>
+        <td colspan="4">
+            <a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
+                {{#if adding}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Add Project</div>
+                        <div class="panel-body">
+                            <form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
+                                {{#if allOSProjects.pending}}
+                                    <p>Loading...</p>
+                                {{/if}}
+                                {{#if allOSProjects.isResolved}}
+                                    <label>Select an existing project: </label>
+                                    <select {($value)}="selectedOSProjectId">
+                                        {{#each allOSProjects.value}}
+                                            <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                        <option value="__new__">Create New Project</option>
+                                    </select>
+                                {{/if}}
+                                {{#if creatingNewOSProject}}
+                                    <label>Or create a new project</label>
+                                    <input  type="text"
+                                            placeholder="Open Source Project"
+                                            {($value)}="newOSProjectName">
+                                {{/if}}
+                            </form>
+                        <button class="btn" type="submit" form="new-os-project" value="Submit">Add Project</button>
+                    </div>
+                </div>
+            {{/if}}
+        </td>
+    </tr>
 </table>
+{{#activePromise}}
+    {{#if isRejected}}
+        <div class='warning'>{{reason.message}}</div>
+        {{/if}}
+{{/activePromise}}
