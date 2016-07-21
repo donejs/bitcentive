@@ -8,7 +8,7 @@
     <can-import from="can-stache/helpers/route"/>
 
     {{#eq page 'home'}}
-      <h1>Home Page</h1>
+      <h1>Home Page fer Real</h1>
       <a href="{{routeUrl page='projects'}}">Projects</a>
     {{else}}
       <h1>{{page}}</h1>

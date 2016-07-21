@@ -48,7 +48,7 @@
     "done-serve": "^0.3.0-pre.0",
     "done-ssr-middleware": "^0.4.0-pre.0",
     "generator-donejs": "^0.10.0-pre.0",
-    "steal": "^0.16.0",
+    "steal": "^0.16.27",
     "steal-stache": "^3.0.0-pre.2"
   },
   "devDependencies": {
