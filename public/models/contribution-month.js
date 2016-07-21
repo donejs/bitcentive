@@ -12,21 +12,36 @@ var contributionMonthAlgebra = new set.Algebra(
     set.comparators.id("_id")
 );
 
+var makeOSProject = function(props){
+  if(props instanceof OSProject) {
+    return props;
+  } else {
+    return OSProject.connection.hydrateInstance(props);
+  }
+};
+var makeClientProject = function(props){
+  if(props instanceof ClientProject) {
+    return props;
+  } else {
+    return ClientProject.connection.hydrateInstance(props);
+  }
+};
+
 var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProjectId: "string",
   significance: "number",
   commissioned: "boolean",
-  osProject: { type: OSProject.connection.hydrateInstance.bind(OSProject.connection) }
+  osProject: { type: makeOSProject }
 });
 
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsProject",{
     osProjectId: "123123sdfasdf",
-    osProject: {type: OSProject.connection.hydrateInstance.bind(OSProject.connection) }
+    osProject: {type: makeOSProject }
 });
 
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
   clientProjectId: "string",
-  clientProject: ClientProject,
+  clientProject: {type: makeClientProject},
   hours: "number",
   monthlyClientProjectsOsProjects: {Type: [MonthlyClientProjectsOsProject]},
 });
@@ -35,11 +50,27 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
 var ContributionMonth = DefineMap.extend({
   date: "date",
   monthlyOSProjects: {Type: [MonthlyOSProject]},
-  monthlyClientProjects: {Type: [MonthlyClientProject]}
+  monthlyClientProjects: {Type: [MonthlyClientProject]},
+  addNewMonthlyOSProject: function(newProject) {
+    console.log("adding new project to monthly OS project list", newProject);
+    let monthlyOSProject = new MonthlyOSProject({
+      significance: 0,
+      commissioned: false,
+      osProjectId: newProject._id,
+      osProject: newProject
+    });
+
+    console.log("Monthly OS Project: ", monthlyOSProject);
+    this.monthlyOSProjects.push(monthlyOSProject);
+    this.save().then(function() { console.info("contributionMonth saved"); }, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
+  }
 });
 
 
 ContributionMonth.connection = superMap({
+  idProp: "_id",
   Map: ContributionMonth,
   List: ContributionMonth.List,
   url: "/api/contribution_months",
@@ -47,6 +78,5 @@ ContributionMonth.connection = superMap({
   algebra: contributionMonthAlgebra
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
-
 
 export default ContributionMonth;
