@@ -1,10 +1,8 @@
 <ul>
-    {{#each contributionMonth.monthlyClientProjects}}
+    {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
         <li>
             {{#if isEditingMonthlyClientProject(.)}}
-                <form ($submit)="updateClientName(%event, .)">
-                    <input class="editInput" type="text" {($value)}="clientProject.name" />
-                </form>
+                <input class="editInput" type="text" {($value)}="clientProject.name" ($change)="contributionMonth.save"/>
             {{else}}
                 <h2>{{clientProject.name}}</h2>
             {{/if}}
@@ -13,12 +11,12 @@
                 Total <span class="total">${{total}}</span>
             </p>
             <a href="javascript://" ($click)="toggleEditMonthlyClientProject(.)">
-            {{#if isEditingMonthlyClientProject(.)}}hide{{else}}edit{{/if}}</a>
+            {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>
 
             <a href="javascript://" ($click)="deleteClientProject(%event, .)">delete</a>
             {{#if isEditingMonthlyClientProject(.)}}
                 <label for="{{clientProjectId}}-hours">Hours for (month)</label>
-                <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="hours.save()"/>
+                <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
             {{else}}
                 <span>Hours for (month)</span>
                 {{hours}}
@@ -30,7 +28,7 @@
                           {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}}
                           name="projects" value="{{osProject.name}}"
                           ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, .)"
-                          {{^if isEditingMonthlyClientProject(../clientProject)}} disabled{{/if}}
+                          {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
                           />
                     <label for="{{osProject._id}}">{{osProject.name}}</label>
                 {{/each}}

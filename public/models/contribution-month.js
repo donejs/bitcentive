@@ -55,11 +55,10 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
   has: function(monthlyOsProject){
     return monthlyOsProject.osProjectId in this.osProjectIdMap;
   },
-  addRemoveProjects: function(monthlyOSProject){
+  toggleProject: function(monthlyOSProject){
     var index = this.osProjectIdMap[monthlyOSProject.osProjectId];
 
     if(index != undefined) {
-      console.log(index);
       this.splice(index, 1);
     } else {
       this.push(monthlyOSProject);
