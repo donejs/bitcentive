@@ -63,7 +63,7 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
     } else {
       this.push(monthlyOSProject);
     }
-  }
+  },
 });
 
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
@@ -116,6 +116,9 @@ var ContributionMonth = DefineMap.extend({
     this.save().then(function() { console.info("contributionMonth saved"); }, function() {
       console.error("Failed saving the contributionMonth obj: ", arguments);
     });
+  },
+  removeClientProject: function(clientProject) {
+    this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   }
 });
 
