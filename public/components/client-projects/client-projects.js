@@ -7,15 +7,23 @@ import $ from 'jquery';
 
 
 export const ClientProjectVM = DefineMap.extend({
+  // Passed Props
+
+  // Stateful Props
+
+  // Derived props
+
+  // Methods
+
   projects: {
     value() {
       return ClientProject.getList({});
     }
   },
-  isEditing: {
-    type: "boolean",
-    value: false
+  editingClientProjectIds: {
+    Value: DefineMap.extend({seal: false},{}),
   },
+
   toggleEditInput: function(event) {
     if(event) {
       event.preventDefault();
@@ -32,6 +40,7 @@ export const ClientProjectVM = DefineMap.extend({
     }
     this.isAddingClients = !this.isAddingClients;
   },
+
   addClient: function(clientProject, monthlyClientProjects) {
     monthlyClientProjects.addRemoveProjects(clientProject);
   },
@@ -54,7 +63,16 @@ export const ClientProjectVM = DefineMap.extend({
     monthlyClientProjectsOsProjects.addRemoveProjects(monthlyOsProject);
     contributionMonth.save();
   },
-
+  toggleEditMonthlyClientProject: function(monthlyClientProject) {
+    if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectId) ) {
+      this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, undefined);
+    } else {
+      this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, true);
+    }
+  },
+  isEditingMonthlyClientProject: function(monthlyClientProject){
+    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId)
+  }
 });
 
 export default Component.extend({
