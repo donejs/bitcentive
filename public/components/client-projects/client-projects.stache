@@ -37,13 +37,12 @@
     {{/each}}
 </ul>
 <a href="javascript://" ($click)="toggleClientInput(%event)">+ add client</a>
-
 {{#if isAddingClients}}
     <ul class="all-clients">
         {{#if projects.isResolved}}
             {{#each projects.value}}
-                {{^if ../contributionMonth.monthyClientProjects.has(monthlyClientProject)}}
-                    <li ($click)="addClient(monthlyClientProject, ../contributionMonth.monthlyClientProjects)">{{name}}</li>
+                {{^if ../contributionMonth.monthlyClientProjects.has(.)}}
+                    <li ($click)="addClient(., ../contributionMonth.monthlyClientProjects)">{{name}}</li>
                 {{/if}}
             {{/each}}
         {{/if}}
