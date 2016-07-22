@@ -1,11 +1,16 @@
 language: node_js
 node_js: node
-services:
-  - mongodb
+addons:
+  firefox: latest
+  mongodb: '3.2.8'
+install:
+  - npm install
 before_install:
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
 before_deploy:
+  - 'git config --global user.email "mike@bitovi.com"'
+  - 'git config --global user.name "Bitcentive Deploy Bot"'
   - node public/build
   - git add public/dist/ --force
   - git commit -m "Updating build."
