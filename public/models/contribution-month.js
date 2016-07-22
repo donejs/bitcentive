@@ -45,7 +45,14 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProjectId: "string",
   significance: "number",
   commissioned: "boolean",
-  osProject: { type: makeOSProject }
+  osProject: { type: makeOSProject },
+  osProjectRef: {type: function(ref){
+    if(typeof ref === "string") {
+      OSProject.Ref.hydrateInstance({_id: ref})
+    } else {
+      OSProject.Ref.hydrateInstance({_id: ref._id, value: OSProject.hydrateInstance(ref)})
+    }
+  }}
 });
 
 MonthlyOSProject.List = DefineList.extend({
@@ -156,7 +163,16 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
   __v:"number",
   date: "date",
-  monthlyOSProjects: MonthlyOSProject.List,
+  monthlyOSProjects: {
+    Type: MonthlyOSProject.List,
+    set: function(newVal){
+      //debugger;
+
+
+
+      return newVal;
+    }
+  },
   monthlyClientProjects: MonthlyClientProject.List,
   calculations: {
     get: function() {
@@ -235,14 +251,13 @@ ContributionMonth.connection = superMap({
     responseData.monthlyOSProjects.forEach(dataMassage("osProject"));
 
     responseData.monthlyClientProjects.forEach( (monthlyClientProject) => {
-      dataMassage("clientProject")(monthlyClientProject)
-      monthlyClientProject.monthlyClientProjectsOsProjects.forEach(dataMassage("osProject"))
+      dataMassage("clientProject")(monthlyClientProject);
+      monthlyClientProject.monthlyClientProjectsOsProjects.forEach(dataMassage("osProject"));
     });
 
     console.log(responseData);
 
     return responseData;
-
   }
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
