@@ -3,10 +3,15 @@ import DefineMap from 'can-define/map/';
 import './client-projects.less';
 import view from './client-projects.stache';
 import ClientProject from '../../models/client-project';
+import ContributionMonth from '../../models/contribution-month';
 import $ from 'jquery';
 
 
 export const ClientProjectVM = DefineMap.extend({
+  // Passed properties
+    contributionMonth: {
+        Value: ContributionMonth
+    },
   // Stateful Props
   projects: {
     value() {
@@ -43,23 +48,28 @@ export const ClientProjectVM = DefineMap.extend({
     if(event) {
       event.preventDefault();
     }
+    let promise;
+    let selectedClientId = this.selectedClientId;
     if(this.selectedClientId === "__new__") {
       let newClientProject = new ClientProject({
         "name": this.newClientName
       });
 
-      newClientProject.save().then((clientProject) => {
+      promise = newClientProject.save().then((clientProject) => {
         monthlyClientProjects.toggleProject(clientProject);
+        this.contributionMonth.save();
         this.newClientName = "";
         this.toggleClientInput();
         this.selectedClientId = "__new__";
+
       });
     }
     else {
-      this.projects.then(projects => {
+      promise = this.projects.then(projects => {
         projects.forEach(project => {
-          if( project._id === this.selectedClientId ) {
+          if( project._id === selectedClientId ) {
             monthlyClientProjects.toggleProject(project);
+            this.contributionMonth.save();
             this.toggleClientInput();
             this.selectedClientId = "__new__";
           }
@@ -69,6 +79,7 @@ export const ClientProjectVM = DefineMap.extend({
 
 
 
+    return promise;
   },
   updateClientName: function(event, contributionMonth) {
     if (event) {
