@@ -9,9 +9,9 @@ import $ from 'jquery';
 
 export const ClientProjectVM = DefineMap.extend({
   // Passed properties
-    contributionMonth: {
-        Value: ContributionMonth
-    },
+  contributionMonth: {
+      Value: ContributionMonth
+  },
   // Stateful Props
   projects: {
     value() {
@@ -99,7 +99,7 @@ export const ClientProjectVM = DefineMap.extend({
   },
   toggleUseProject: function(contributionMonth, monthlyClientProjectsOsProjects, monthlyOsProject) {
     monthlyClientProjectsOsProjects.toggleProject(monthlyOsProject);
-    contributionMonth.save();
+    return contributionMonth.save();
   },
   toggleEditMonthlyClientProject: function(monthlyClientProject) {
     if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectId) ) {

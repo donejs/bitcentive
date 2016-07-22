@@ -30,6 +30,11 @@ QUnit.module('bitcentive/components/client-projects', {
             name: "Our New Test Client"
         };
 
+        this.osProjectAlt = {
+          _id: "__bitballs",
+          name: "Bit Balls"
+        };
+
         this.contributionMonth = new ContributionMonth({
             _id: "aslkfalsjklas",
             date: 124234211310000,
@@ -68,7 +73,6 @@ QUnit.asyncTest('Can add existing Client Project to contribution month', functio
         }
     });
 
-
     vm.addClient(false, this.contributionMonth.monthlyClientProjects).then(function(){
         QUnit.equal(vm.contributionMonth.monthlyClientProjects[1].clientProject._id , "testClient");
         QUnit.start();
@@ -95,6 +99,27 @@ QUnit.asyncTest('Add an new Client Project to contribution month', function() {
     vm.addClient(false, this.contributionMonth.monthlyClientProjects).then(() => {
         QUnit.equal(vm.contributionMonth.monthlyClientProjects[1].clientProject.name , 'test client');
 
+        QUnit.start();
+    });
+});
+
+QUnit.asyncTest('Add an OS project to a monthly client project', function() {
+    var vm = new ClientProjectVM();
+    const newMonthlyOSProject = { 
+        osProjectId: this.osProjectAlt._id,
+        osProject: this.osProjectAlt
+    };
+    vm.contributionMonth = this.contributionMonth;
+
+    fixture({
+        "PUT /api/contribution_months/{_id}": (req, res) => {
+            res(req.data);
+        }
+    });
+    const monthlyClientProjectsOsProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects;
+    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then(() => {
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 2);
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectId , newMonthlyOSProject.osProjectId);
         QUnit.start();
     });
 });
