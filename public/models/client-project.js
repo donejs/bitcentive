@@ -9,6 +9,7 @@ var clientProjectAlgebra = new set.Algebra(
 
 var ClientProject = DefineMap.extend({
   _id: 'string',
+  __v: 'number',
   name: 'string',
 });
 

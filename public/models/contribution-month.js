@@ -12,8 +12,17 @@ import moment from "moment";
 
 var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
-  set.comparators.sort("$sort", function(set, cm1, cm2){
-    return moment(cm1.date).toDate() - moment(cm2.date).toDate();
+  set.comparators.sort("$sort", function($sort, cm1, cm2){
+    if($sort.date) {
+      if($sort.date == 1) {
+        return moment(cm1.date).toDate() - moment(cm2.date).toDate();
+      } else {
+        return moment(cm2.date).toDate() - moment(cm1.date).toDate();
+      }
+    } else {
+      throw "can't sort that way";
+    }
+
   })
 );
 
@@ -145,6 +154,7 @@ MonthlyClientProject.List = DefineList.extend({
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
+  __v:"number",
   date: "date",
   monthlyOSProjects: MonthlyOSProject.List,
   monthlyClientProjects: MonthlyClientProject.List,
