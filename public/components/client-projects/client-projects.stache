@@ -1,8 +1,8 @@
-<ul>
+<ul class="list-unstyled">
     {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
         <li>
             {{#if isEditingMonthlyClientProject(monthlyClientProject)}}
-                <input class="editInput" type="text" {($value)}="clientProject.name" ($change)="contributionMonth.save"/>
+                <input class="editInput" class="form-control" type="text" {($value)}="clientProject.name" ($change)="contributionMonth.save"/>
             {{else}}
                 <h2>{{clientProject.name}}</h2>
             {{/if}}
@@ -17,7 +17,7 @@
 
             {{#if isEditingMonthlyClientProject(.)}}
                 <label for="{{clientProjectId}}-hours">Hours for (month)</label>
-                <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
+                <input type="text" class="form-control" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
             {{else}}
                 <span>Hours for (month)</span>
                 {{hours}}
@@ -26,14 +26,17 @@
             <p>Projects in use</p>
             <fieldset class="projects">
                 {{#each ../contributionMonth.monthlyOSProjects as monthlyOSProject}}
-                    <input id="{{osProject._id}}" type="checkbox"
-                          {{#if monthlyClientProjectsOsProjects.has(monthlyOSProject) }}checked{{/if}}
-                          name="projects" value="{{osProject.name}}"
-                          ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyOSProject)"
-                          ($change)="contributionMonth.getRate(monthlyClientProject)"
-                          {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
-                          />
-                    <label for="{{osProject._id}}">{{osProject.name}}</label>
+
+                    <label for="{{osProject._id}}">
+                        <input id="{{osProject._id}}" type="checkbox"
+                              {{#if monthlyClientProjectsOsProjects.has(monthlyOSProject) }}checked{{/if}}
+                              name="projects" value="{{osProject.name}}"
+                              ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyOSProject)"
+                              ($change)="contributionMonth.getRate(monthlyClientProject)"
+                              {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
+                              />
+                              {{osProject.name}}
+                         </label>
                 {{/each}}
             </fieldset>
             {{/if}}
@@ -68,7 +71,7 @@
                             {($value)}="newClientName">
                 {{/if}}
             </form>
-        <button class="btn" type="submit" form="new-client" value="Submit">Add Client</button>
+        <button class="btn btn-success" type="submit" form="new-client" value="Submit">Add Client</button>
     </div>
 </div>
 {{/if}}
