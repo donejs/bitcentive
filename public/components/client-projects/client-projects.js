@@ -20,19 +20,33 @@ export const ClientProjectVM = DefineMap.extend({
     type: "boolean",
     value: false
   },
-
-  // Derived props
-
-  // Methods
-  toggleClientInput: function(event){
-    if (event) {
-      event.preventDefault();
-    }
-    this.isAddingClients = !this.isAddingClients;
+  selectedClientId: {
+    type: 'string',
+    value: '__new__'
   },
 
-  addClient: function(clientProject, monthlyClientProjects) {
-    monthlyClientProjects.toggleProject(clientProject);
+  // Derived props
+  creatingNewClientProject: {
+    get: function() {
+      return this.selectedClientId === "__new__";
+    }
+  },
+
+  // Methods
+  toggleClientInput: function() {
+    this.isAddingClients = !this.isAddingClients;
+  },
+  addClient: function(event, monthlyClientProjects) {
+    if(event) {
+      event.preventDefault();
+    }
+    this.projects.then(projects => {
+      projects.forEach(project => {
+        if( project._id === this.selectedClientId ) {
+          monthlyClientProjects.toggleProject(project);    
+        }
+      });
+    });
   },
   updateClientName: function(event, contributionMonth) {
     if (event) {
