@@ -216,7 +216,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       osProject: newProject
     });
     this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() { console.info("contributionMonth saved"); }, function() {
+    this.save().then(function() {}, function() {
       console.error("Failed saving the contributionMonth obj: ", arguments);
     });
   },
