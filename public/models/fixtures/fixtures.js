@@ -8,12 +8,22 @@ var osProject = {
     name: "CanJS"
 };
 
+var osProjectAlt = {
+    _id: "anotheraskjldf",
+    name: "DoneJS"
+};
+
 var clientProject = {
-    _id: "asl;dfal;sfj ;lakwj",
+    _id: "3-Haulhound",
     name: "HaulHound"
 };
 
-var osProjectStore = fixture.store([osProject], OSProject.algebra);
+var clientProject2 = {
+  _id: "2-Walmart",
+  name: "Wal-Mart"
+};
+
+var osProjectStore = fixture.store([osProject, osProjectAlt], OSProject.algebra);
 
 var monthlyContributionStore = fixture.store([{
     _id: "aslkfalsjklas",
@@ -32,6 +42,14 @@ var monthlyContributionStore = fixture.store([{
         hours: 100,
         clientProjectId: clientProject._id,
         clientProject: clientProject
+    },{
+      monthlyClientProjectsOsProjects: [{
+        osProjectId: osProject._id,
+        osProject: osProject
+      }],
+      hours: 40,
+      clientProjectId: clientProject2._id,
+      clientProject: clientProject2
     }]
 }], ContributionMonth.algebra);
 
