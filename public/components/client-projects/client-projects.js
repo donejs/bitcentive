@@ -76,9 +76,6 @@ export const ClientProjectVM = DefineMap.extend({
         });
       });
     }
-
-
-
     return promise;
   },
   updateClientName: function(event, contributionMonth) {
