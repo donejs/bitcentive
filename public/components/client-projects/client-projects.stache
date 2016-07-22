@@ -7,8 +7,8 @@
                 <h2>{{clientProject.name}}</h2>
             {{/if}}
             <p>
-                Rate <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}</span>
-                Total <span class="total">${{total}}</span>
+                Rate <span class="rate">${{getRate(monthlyClientProject)}}</span>
+                Total <span class="total">${{getTotal(monthlyClientProject)}}</span>
             </p>
             <a href="javascript://" ($click)="toggleEditMonthlyClientProject(monthlyClientProject)">
             {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>

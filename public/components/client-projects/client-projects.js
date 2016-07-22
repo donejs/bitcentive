@@ -68,6 +68,14 @@ export const ClientProjectVM = DefineMap.extend({
   },
   isEditingMonthlyClientProject: function(monthlyClientProject){
     return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId)
+  },
+  getRate: function(monthlyClientProject){
+    const calc = this.contributionMonth.getCalculations(monthlyClientProject);
+    return calc.rate;
+  },
+  getTotal: function(monthlyClientProject){
+    const calc = this.contributionMonth.getCalculations(monthlyClientProject);
+    return calc.total;
   }
 });
 
