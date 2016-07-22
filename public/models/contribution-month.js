@@ -23,7 +23,12 @@ var contributionMonthAlgebra = new set.Algebra(
       throw "can't sort that way";
     }
 
-  })
+  }),
+  {
+    "$populate": function(){
+      return true;
+    }
+  }
 );
 
 var makeOSProject = function(props){
@@ -247,7 +252,6 @@ ContributionMonth.connection = superMap({
   name: "contributionMonth",
   algebra: contributionMonthAlgebra,
   parseInstanceData(responseData) {
-
     responseData.monthlyOSProjects.forEach(dataMassage("osProject"));
 
     responseData.monthlyClientProjects.forEach( (monthlyClientProject) => {

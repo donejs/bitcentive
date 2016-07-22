@@ -21,7 +21,11 @@ QUnit.asyncTest('No contribution months', function(){
   vm.on("nextMonth", function(){});
 
   fixture("POST /api/contribution_months", function(req){
-    return {_id: "fake id"}
+    return {
+      _id: "fake id",
+      monthlyOSProjects: [],
+      monthlyClientProjects: []
+    }
   });
 
   vm.contributionMonthsPromise.then(function(contributionMonths){
@@ -30,12 +34,15 @@ QUnit.asyncTest('No contribution months', function(){
       vm.selectedContributionMonthId = "__new__";
 
       contributionMonths.on("length", function(ev, newLength){
+
+        console.log("length of contributionMonths is changing");
+
         QUnit.equal(newLength, 1, "got an item");
         QUnit.equal(contributionMonths[0]._id, "fake id");
         QUnit.equal(moment(contributionMonths[0].date).toDate().getTime(),
             moment().startOf('month').toDate().getTime(), "created with the right date");
         QUnit.start();
-      })
+      });
   });
 
 });
