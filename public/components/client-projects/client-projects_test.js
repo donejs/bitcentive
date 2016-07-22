@@ -54,6 +54,8 @@ QUnit.module('bitcentive/components/client-projects', {
                 clientProject: this.clientProject
             }]
         });
+
+
     }
 });
 
@@ -105,7 +107,7 @@ QUnit.asyncTest('Add an new Client Project to contribution month', function() {
 
 QUnit.asyncTest('Add an OS project to a monthly client project', function() {
     var vm = new ClientProjectVM();
-    const newMonthlyOSProject = { 
+    const newMonthlyOSProject = {
         osProjectId: this.osProjectAlt._id,
         osProject: this.osProjectAlt
     };
@@ -120,6 +122,26 @@ QUnit.asyncTest('Add an OS project to a monthly client project', function() {
     vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then(() => {
         QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 2);
         QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectId , newMonthlyOSProject.osProjectId);
+        QUnit.start();
+    });
+});
+
+QUnit.asyncTest('Remove an OS project to a monthly client project', function() {
+    var vm = new ClientProjectVM();
+    const newMonthlyOSProject = {
+        osProjectId: this.osProject._id,
+        osProject: this.osProject
+    };
+    vm.contributionMonth = this.contributionMonth;
+
+    fixture({
+        "PUT /api/contribution_months/{_id}": (req, res) => {
+            res(req.data);
+        }
+    });
+    const monthlyClientProjectsOsProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects;
+    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then(() => {
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 0);
         QUnit.start();
     });
 });
