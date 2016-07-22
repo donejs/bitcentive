@@ -31,25 +31,20 @@ var monthlyContributionStore = fixture.store([{
     monthlyOSProjects: [{
         significance: 80,
         commissioned: true,
-        osProjectId: osProject._id,
-        osProject: osProject
+        osProjectId: osProject
     }],
     monthlyClientProjects: [{
         monthlyClientProjectsOsProjects: [{
-            osProjectId: osProject._id,
-            osProject: osProject
+            osProjectId: osProject
         }],
         hours: 100,
-        clientProjectId: clientProject._id,
-        clientProject: clientProject
+        clientProjectId: clientProject
     },{
       monthlyClientProjectsOsProjects: [{
-        osProjectId: osProject._id,
-        osProject: osProject
+        osProjectId: osProject._id
       }],
       hours: 40,
-      clientProjectId: clientProject2._id,
-      clientProject: clientProject2
+      clientProjectId: clientProject2._id
     }]
 }], ContributionMonth.algebra);
 

@@ -19,6 +19,8 @@ QUnit.asyncTest("getList of ContributionMonth", function() {
     console.log(second);
 
 		QUnit.ok(first === second);
+    QUnit.ok(first);
+
 		QUnit.start();
 	}, function(err) {
 		debugger;

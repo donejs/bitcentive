@@ -181,27 +181,37 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
-    console.log(monthlyClientProject);
-    const monthlyOSProjects = this.monthlyOSProjects;
-    const map = {};
-    let totalSignificance = 0;
+    // console.log(monthlyClientProject);
+    // const monthlyOSProjects = this.monthlyOSProjects;
+    // const map = {};
+    // let totalSignificance = 0;
+    //
+    // monthlyOSProjects.forEach( osProject =>{
+    //   totalSignificance += osProject.significance;
+    //   map[osProject.osProjectId] = osProject;
+    // });
+    // let usedSignificance = 0;
+    // monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+    //   if(!!map[usedOSProject.osProjectId]) {
+    //     usedSignificance += map[usedOSProject.osProjectId].significance;
+    //   }
+    // });
+    // let rate = 4 - 2 * (usedSignificance / totalSignificance);
+    // console.log(rate);
+    // return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
 
-    monthlyOSProjects.forEach( osProject =>{
-      totalSignificance += osProject.significance;
-      map[osProject.osProjectId] = osProject;
-    });
-    let usedSignificance = 0;
-    monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
-      if(!!map[usedOSProject.osProjectId]) {
-        usedSignificance += map[usedOSProject.osProjectId].significance;
-      }
-    });
-    let rate = 4 - 2 * (usedSignificance / totalSignificance);
-    console.log(rate);
-    return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
+    return 2;
   }
 });
 
+var dataMassage = function(oType) {
+  return function(item) {
+    if (typeof item[oType + 'Id'] === 'object') {
+      item[oType] = item[oType + 'Id'];
+      item[oType + 'Id'] = item[oType]._id;
+    }
+  }
+};
 
 ContributionMonth.connection = superMap({
   idProp: "_id",
@@ -210,6 +220,20 @@ ContributionMonth.connection = superMap({
   url: "/api/contribution_months",
   name: "contributionMonth",
   algebra: contributionMonthAlgebra,
+  parseInstanceData(responseData) {
+
+    responseData.monthlyOSProjects.forEach(dataMassage("osProject"));
+
+    responseData.monthlyClientProjects.forEach( (monthlyClientProject) => {
+      dataMassage("clientProject")(monthlyClientProject)
+      monthlyClientProject.monthlyClientProjectsOsProjects.forEach(dataMassage("osProject"))
+    });
+
+    console.log(responseData);
+
+    return responseData;
+
+  }
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 
