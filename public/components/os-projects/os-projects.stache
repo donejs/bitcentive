@@ -11,7 +11,8 @@
             <td>
                 <input type="checkbox" ($change)="updateComissionedForMonthlyOSProject(., %element.checked)" {{#if commissioned}} checked {{/if}} {{#if contributionMonth.isSaving}} disabled {{/if}} /> Commissioned
             </td>
-            <td>Total: {{totalForMonthlyOSProject(.)}}</td>
+
+            <td>Total: {{getTotal(osProjectId)}}</td>
         </tr>
     {{/each}}
 
