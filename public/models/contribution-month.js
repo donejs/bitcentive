@@ -78,16 +78,15 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
   has: function(monthlyOsProject){
     return monthlyOsProject.osProjectId in this.osProjectIdMap;
   },
-  addRemoveProjects: function(monthlyOSProject){
+  toggleProject: function(monthlyOSProject){
     var index = this.osProjectIdMap[monthlyOSProject.osProjectId];
 
     if(index != undefined) {
-      console.log(index);
       this.splice(index, 1);
     } else {
       this.push(monthlyOSProject);
     }
-  }
+  },
 });
 
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
@@ -109,9 +108,31 @@ MonthlyClientProject.List = DefineList.extend({
     }
   },
   has: function(clientProject) {
-    return clientProject.clientProjectId in this.monthlyProjectIdMap;
+    let monthlyClientProject;
+    if (!!clientProject._id) {
+      monthlyClientProject = new MonthlyClientProject({
+        clientProjectId: clientProject._id,
+        clientProject: clientProject,
+        hours: 0
+      });
+    }
+    else {
+      monthlyClientProject = clientProject;
+    }
+    return monthlyClientProject.clientProjectId in this.monthlyProjectIdMap;
   },
-  addRemoveProjects: function(monthlyClientProject){
+  toggleProject: function(clientProject){
+    let monthlyClientProject;
+    if (!!clientProject._id) {
+      monthlyClientProject = new MonthlyClientProject({
+        clientProjectId: clientProject._id,
+        clientProject: clientProject,
+        hours: 0
+      });
+    }
+    else {
+      monthlyClientProject = clientProject;
+    }
     var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
     if(index != null) {
       this.splice(index, 1);
@@ -152,7 +173,32 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       osProject: newProject
     });
     this.monthlyOSProjects.push(monthlyOSProject);
-    this.save();
+    this.save().then(function() { console.info("contributionMonth saved"); }, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
+  },
+  removeClientProject: function(clientProject) {
+    this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
+  },
+  getRate: function(monthlyClientProject) {
+    console.log(monthlyClientProject);
+    const monthlyOSProjects = this.monthlyOSProjects;
+    const map = {};
+    let totalSignificance = 0;
+
+    monthlyOSProjects.forEach( osProject =>{
+      totalSignificance += osProject.significance;
+      map[osProject.osProjectId] = osProject;
+    });
+    let usedSignificance = 0;
+    monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+      if(!!map[usedOSProject.osProjectId]) {
+        usedSignificance += map[usedOSProject.osProjectId].significance;
+      }
+    });
+    let rate = 4 - 2 * (usedSignificance / totalSignificance);
+    console.log(rate);
+    return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
   }
 });
 

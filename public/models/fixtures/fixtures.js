@@ -14,8 +14,13 @@ var osProjectAlt = {
 };
 
 var clientProject = {
-    _id: "asl;dfal;sfj ;lakwj",
+    _id: "3-Haulhound",
     name: "HaulHound"
+};
+
+var clientProject2 = {
+  _id: "2-Walmart",
+  name: "Wal-Mart"
 };
 
 var osProjectStore = fixture.store([osProject, osProjectAlt], OSProject.algebra);
@@ -37,6 +42,14 @@ var monthlyContributionStore = fixture.store([{
         hours: 100,
         clientProjectId: clientProject._id,
         clientProject: clientProject
+    },{
+      monthlyClientProjectsOsProjects: [{
+        osProjectId: osProject._id,
+        osProject: osProject
+      }],
+      hours: 40,
+      clientProjectId: clientProject2._id,
+      clientProject: clientProject2
     }]
 }], ContributionMonth.algebra);
 
