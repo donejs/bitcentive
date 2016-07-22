@@ -22,11 +22,6 @@ export const ClientProjectVM = DefineMap.extend({
   },
 
   // Derived props
-  total: {
-    get: function() {
-      return "222";
-    }
-  },
 
   // Methods
   toggleClientInput: function(event){

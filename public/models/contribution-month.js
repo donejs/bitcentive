@@ -150,16 +150,45 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   monthlyClientProjects: MonthlyClientProject.List,
   calculations: {
     get: function() {
-      var calculations = {};
+      var calculations = {
+          clientProjects: {},
+          totalDollarForAllClientProjects: 0,
+          osProjects: {}
+      };
+
+
 
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
-        calculations[monthlyClientProject.clientProjectId] = {
-          significance: 0
-        };
-        monthlyClientProject.monthlyClientProjectsOsProjects.forEach((monthlyOSProject) => {
-          calculations[monthlyClientProject.clientProjectId].significance =+ this.monthlyOSProjects.getSignificance(monthlyOSProject.osProjectId);
+        const monthlyOSProjects = this.monthlyOSProjects;
+        const map = {};
+        let totalSignificance = 0;
 
+        monthlyOSProjects.forEach( osProject =>{
+          totalSignificance += osProject.significance;
+          map[osProject.osProjectId] = osProject;
         });
+        let usedSignificance = 0;
+
+        let osProjectsUsed = {};
+
+        monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+          if(!!map[usedOSProject.osProjectId]) {
+            usedSignificance += map[usedOSProject.osProjectId].significance;
+            osProjectsUsed[usedOSProject.osProjectId] = usedOSProject;
+          }
+        });
+
+        let rate = 4 - 2 * (usedSignificance / totalSignificance);
+        let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100).toFixed(2);
+
+        calculations.totalDollarForAllClientProjects =+ totalAmount;
+        calculations.clientProjects[monthlyClientProject.clientProjectId] = {
+          rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2),
+          totalAmount,
+          totalSignificance,
+          osProjectsUsed
+        };
+
       });
 
       return calculations;
@@ -180,30 +209,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   removeClientProject: function(clientProject) {
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
-  getCalculations: function(monthlyClientProject) {
-    const monthlyOSProjects = this.monthlyOSProjects;
-    const map = {};
-    let totalSignificance = 0;
-
-    monthlyOSProjects.forEach( osProject =>{
-      totalSignificance += osProject.significance;
-      map[osProject.osProjectId] = osProject;
-    });
-    let usedSignificance = 0;
-
-    monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
-      if(!!map[usedOSProject.osProjectId]) {
-        usedSignificance += map[usedOSProject.osProjectId].significance;
-      }
-    });
-    let rate = 4 - 2 * (usedSignificance / totalSignificance);
-    let total = rate * monthlyClientProject.hours;
-    return { 
-      rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2), 
-      total: parseFloat(Math.round(total * 100) / 100).toFixed(2),
-    }
-    
+  getRate: function(monthlyClientProject) {
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
   },
+  getTotal: function(monthlyClientProject) {
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
+  }
 });
 
 
