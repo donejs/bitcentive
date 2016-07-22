@@ -208,10 +208,18 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
+    if(this.calculations.clientProjects[monthlyClientProject.clientProjectId]) {
+        return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
+    }
+    return 0;
+
   },
   getTotal: function(monthlyClientProject) {
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
+    if(this.calculations.clientProjects[monthlyClientProject.clientProjectId]) {
+        return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
+    }
+    return 0;
+
   }
 });
 

@@ -92,7 +92,7 @@ export const ClientProjectVM = DefineMap.extend({
   },
   deleteClientProject: function(contributionMonth, clientProject) {
     contributionMonth.removeClientProject(clientProject);
-    contributionMonth.save();
+    return contributionMonth.save();
   },
   toggleUseProject: function(contributionMonth, monthlyClientProjectsOsProjects, monthlyOsProject) {
     monthlyClientProjectsOsProjects.toggleProject(monthlyOsProject);

@@ -145,3 +145,31 @@ QUnit.asyncTest('Remove an OS project to a monthly client project', function() {
         QUnit.start();
     });
 });
+
+QUnit.asyncTest('Create new monthly client from empty list', function() {
+    var vm = new ClientProjectVM();
+    vm.contributionMonth = this.contributionMonth;
+
+    fixture({
+        "GET /api/client_projects": (req, res) => {
+            res({data: [this.clientProject, this.clientProjectAlt]});
+        },
+        "PUT /api/contribution_months/{_id}": (req, res) => {
+            res(req.data);
+        }
+    });
+
+    vm.deleteClientProject(this.contributionMonth, this.clientProject).then(()=>{
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects.length , 0, "Successfully removed all monthly client projects");
+        //QUnit.start();
+        //QUnit.stop();
+    });
+
+
+
+    vm.selectedClientId = this.clientProjectAlt._id;
+    vm.addClient(false, this.contributionMonth.monthlyClientProjects).then(function(){
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].clientProject._id , "testClient", "Successfully add monthly client project to an empty list");
+        QUnit.start();
+    });
+});
