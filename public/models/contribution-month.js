@@ -12,9 +12,23 @@ import moment from "moment";
 
 var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
-  set.comparators.sort("$sort", function(set, cm1, cm2){
-    return moment(cm1.date).toDate() - moment(cm2.date).toDate();
-  })
+  set.comparators.sort("$sort", function($sort, cm1, cm2){
+    if($sort.date) {
+      if($sort.date == 1) {
+        return moment(cm1.date).toDate() - moment(cm2.date).toDate();
+      } else {
+        return moment(cm2.date).toDate() - moment(cm1.date).toDate();
+      }
+    } else {
+      throw "can't sort that way";
+    }
+
+  }),
+  {
+    "$populate": function(){
+      return true;
+    }
+  }
 );
 
 var makeOSProject = function(props){
@@ -36,7 +50,14 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProjectId: "string",
   significance: "number",
   commissioned: "boolean",
-  osProject: { type: makeOSProject }
+  osProject: { type: makeOSProject },
+  osProjectRef: {type: function(ref){
+    if(typeof ref === "string") {
+      OSProject.Ref.hydrateInstance({_id: ref})
+    } else {
+      OSProject.Ref.hydrateInstance({_id: ref._id, value: OSProject.hydrateInstance(ref)})
+    }
+  }}
 });
 
 MonthlyOSProject.List = DefineList.extend({
@@ -145,8 +166,18 @@ MonthlyClientProject.List = DefineList.extend({
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
+  __v:"number",
   date: "date",
-  monthlyOSProjects: MonthlyOSProject.List,
+  monthlyOSProjects: {
+    Type: MonthlyOSProject.List,
+    set: function(newVal){
+      //debugger;
+
+
+
+      return newVal;
+    }
+  },
   monthlyClientProjects: MonthlyClientProject.List,
   calculations: {
     get: function() {
@@ -181,27 +212,37 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
-    console.log(monthlyClientProject);
-    const monthlyOSProjects = this.monthlyOSProjects;
-    const map = {};
-    let totalSignificance = 0;
+    // console.log(monthlyClientProject);
+    // const monthlyOSProjects = this.monthlyOSProjects;
+    // const map = {};
+    // let totalSignificance = 0;
+    //
+    // monthlyOSProjects.forEach( osProject =>{
+    //   totalSignificance += osProject.significance;
+    //   map[osProject.osProjectId] = osProject;
+    // });
+    // let usedSignificance = 0;
+    // monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+    //   if(!!map[usedOSProject.osProjectId]) {
+    //     usedSignificance += map[usedOSProject.osProjectId].significance;
+    //   }
+    // });
+    // let rate = 4 - 2 * (usedSignificance / totalSignificance);
+    // console.log(rate);
+    // return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
 
-    monthlyOSProjects.forEach( osProject =>{
-      totalSignificance += osProject.significance;
-      map[osProject.osProjectId] = osProject;
-    });
-    let usedSignificance = 0;
-    monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
-      if(!!map[usedOSProject.osProjectId]) {
-        usedSignificance += map[usedOSProject.osProjectId].significance;
-      }
-    });
-    let rate = 4 - 2 * (usedSignificance / totalSignificance);
-    console.log(rate);
-    return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
+    return 2;
   }
 });
 
+var dataMassage = function(oType) {
+  return function(item) {
+    if (typeof item[oType + 'Id'] === 'object') {
+      item[oType] = item[oType + 'Id'];
+      item[oType + 'Id'] = item[oType]._id;
+    }
+  }
+};
 
 ContributionMonth.connection = superMap({
   idProp: "_id",
@@ -210,6 +251,18 @@ ContributionMonth.connection = superMap({
   url: "/api/contribution_months",
   name: "contributionMonth",
   algebra: contributionMonthAlgebra,
+  parseInstanceData(responseData) {
+    responseData.monthlyOSProjects.forEach(dataMassage("osProject"));
+
+    responseData.monthlyClientProjects.forEach( (monthlyClientProject) => {
+      dataMassage("clientProject")(monthlyClientProject);
+      monthlyClientProject.monthlyClientProjectsOsProjects.forEach(dataMassage("osProject"));
+    });
+
+    console.log(responseData);
+
+    return responseData;
+  }
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 

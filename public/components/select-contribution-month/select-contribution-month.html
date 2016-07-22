@@ -1,10 +1,22 @@
-<script type="text/stache" can-autorender>
+<script type="text/stache" can-autorender id="main">
   <can-import from="bitcentive/components/select-contribution-month/" />
   <can-import from="bitcentive/models/fixtures/" />
-  <bit-select-contribution-month/>
+
 </script>
 <script src="../../../node_modules/steal/steal.js"
         main="can-view-autorender">
         import viewModel from 'can-view-model';
-        window.viewModel = viewModel;
+        import "bitcentive/models/fixtures/";
+        import "bitcentive/components/select-contribution-month/";
+
+
+        import $ from "jquery";
+        import DefineMap from "can-define/map/";
+        import stache from "can-stache";
+
+        window.vm = new DefineMap({contributionMonthId: "aslkfalsjklas"})
+
+        var template = stache('<bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>')
+        document.body.appendChild( template(vm) );
+
 </script>
