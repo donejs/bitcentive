@@ -24,7 +24,10 @@ export const ClientProjectVM = DefineMap.extend({
     type: 'string',
     value: '__new__'
   },
-
+  newClientName: {
+    type: "string",
+    value: ""
+  },
   // Derived props
   creatingNewClientProject: {
     get: function() {
@@ -40,13 +43,32 @@ export const ClientProjectVM = DefineMap.extend({
     if(event) {
       event.preventDefault();
     }
-    this.projects.then(projects => {
-      projects.forEach(project => {
-        if( project._id === this.selectedClientId ) {
-          monthlyClientProjects.toggleProject(project);    
-        }
+    if(this.selectedClientId === "__new__") {
+      let newClientProject = new ClientProject({
+        "name": this.newClientName
       });
-    });
+
+      newClientProject.save().then((clientProject) => {
+        monthlyClientProjects.toggleProject(clientProject);
+        this.newClientName = "";
+        this.toggleClientInput();
+        this.selectedClientId = "__new__";
+      });
+    }
+    else {
+      this.projects.then(projects => {
+        projects.forEach(project => {
+          if( project._id === this.selectedClientId ) {
+            monthlyClientProjects.toggleProject(project);
+            this.toggleClientInput();
+            this.selectedClientId = "__new__";
+          }
+        });
+      });
+    }
+
+
+
   },
   updateClientName: function(event, contributionMonth) {
     if (event) {

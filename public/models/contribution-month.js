@@ -156,8 +156,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           osProjects: {}
       };
 
-
-
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
         const monthlyOSProjects = this.monthlyOSProjects;
         const map = {};
