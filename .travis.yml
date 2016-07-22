@@ -1,5 +1,7 @@
 language: node_js
 node_js: node
+services:
+  - mongodb
 addons:
   firefox: latest
   mongodb: '3.2.8'
