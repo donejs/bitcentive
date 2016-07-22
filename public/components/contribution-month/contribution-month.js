@@ -24,7 +24,7 @@ export const ViewModel = DefineMap.extend({
     get: function(initialValue, resolve){
       if(this.contributionMonthPromise) {
         this.contributionMonthPromise.then(resolve, function(err){
-          debugger;
+          //debugger;
         });
       }
     }
