@@ -1,8 +1,10 @@
 language: node_js
 node_js: node
+services:
+  - mongodb
 addons:
   firefox: latest
-  mongodb: '3.2.8'
+  # mongodb: '3.2.8'
 install:
   - npm install
 before_install:
@@ -14,6 +16,7 @@ before_deploy:
   - node public/build
   - git add public/dist/ --force
   - git commit -m "Updating build."
+  - donejs deploy
 deploy:
   skip_cleanup: true
   provider: heroku
