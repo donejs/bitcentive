@@ -156,8 +156,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           osProjects: {}
       };
 
-
-
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
         const monthlyOSProjects = this.monthlyOSProjects;
         const map = {};
@@ -188,7 +186,23 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           totalSignificance,
           osProjectsUsed
         };
+      });
 
+      this.monthlyOSProjects.forEach(function(osProject) {
+        var totalClientProjectSignificance = 0;
+        var osProjectTotalSignificance = 0;
+
+        for(var projKey in calculations.clientProjects) {
+          var clientProj = calculations.clientProjects[projKey];
+          totalClientProjectSignificance += clientProj.totalSignificance;
+          if (clientProj.osProjectsUsed[osProject.osProjectId]) {
+            osProjectTotalSignificance += osProject.significance;
+          }
+        }
+        var total = (osProjectTotalSignificance /
+                    totalClientProjectSignificance) *
+                    calculations.totalDollarForAllClientProjects;
+        calculations.osProjects[osProject.osProjectId] = total;
       });
 
       return calculations;
