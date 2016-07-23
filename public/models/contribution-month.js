@@ -14,7 +14,7 @@ var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
   set.comparators.sort("$sort", function($sort, cm1, cm2){
     if($sort.date) {
-      if($sort.date == 1) {
+      if(parseInt($sort.date) === 1) {
         return moment(cm1.date).toDate() - moment(cm2.date).toDate();
       } else {
         return moment(cm2.date).toDate() - moment(cm1.date).toDate();
@@ -53,9 +53,9 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProject: { type: makeOSProject },
   osProjectRef: {type: function(ref){
     if(typeof ref === "string") {
-      OSProject.Ref.hydrateInstance({_id: ref})
+      OSProject.Ref.hydrateInstance({_id: ref});
     } else {
-      OSProject.Ref.hydrateInstance({_id: ref._id, value: OSProject.hydrateInstance(ref)})
+      OSProject.Ref.hydrateInstance({_id: ref._id, value: OSProject.hydrateInstance(ref)});
     }
   }}
 });
@@ -100,12 +100,17 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
     return monthlyOsProject.osProjectId in this.osProjectIdMap;
   },
   toggleProject: function(monthlyOSProject){
-    var index = this.osProjectIdMap[monthlyOSProject.osProjectId];
+
+    let newMonthlyOSProject = new MonthlyClientProjectsOsProject({
+      osProjectId: monthlyOSProject.osProjectId,
+      osProject: monthlyOSProject.osProject
+    });
+    var index = this.osProjectIdMap[newMonthlyOSProject.osProjectId];
 
     if(index != undefined) {
       this.splice(index, 1);
     } else {
-      this.push(monthlyOSProject);
+      this.push(newMonthlyOSProject);
     }
   },
 });
@@ -143,17 +148,12 @@ MonthlyClientProject.List = DefineList.extend({
     return monthlyClientProject.clientProjectId in this.monthlyProjectIdMap;
   },
   toggleProject: function(clientProject){
-    let monthlyClientProject;
-    if (!!clientProject._id) {
-      monthlyClientProject = new MonthlyClientProject({
+    let monthlyClientProject = new MonthlyClientProject({
         clientProjectId: clientProject._id,
         clientProject: clientProject,
-        hours: 0
+        hours: 0,
+        monthlyClientProjectsOsProjects: []
       });
-    }
-    else {
-      monthlyClientProject = clientProject;
-    }
     var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
     if(index != null) {
       this.splice(index, 1);
@@ -181,16 +181,72 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   monthlyClientProjects: MonthlyClientProject.List,
   calculations: {
     get: function() {
-      var calculations = {};
-
+      var calculations = {
+          clientProjects: {},
+          totalDollarForAllClientProjects: 0,
+          osProjects: {}
+      };
+      var clientProjectsUsingOSProject = {};
+      var monthlyOSProjectMap = {};
+      var totalCommissionedSignificance = 0;
+      this.monthlyOSProjects.forEach( osProject =>{
+        monthlyOSProjectMap[osProject.osProjectId] = osProject;
+        if(osProject.commissioned) {
+          totalCommissionedSignificance += osProject.significance;
+        }
+      });
+      // for each client project, calculate out:
+      // - rate (based on how many commissioned projects it uses)
+      // - total - (rate * hours)
+      // - totalSignificance - the total significance for this project
+      // - osProjectsUsed - a map of the OS projects used
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
-        calculations[monthlyClientProject.clientProjectId] = {
-          significance: 0
-        };
-        monthlyClientProject.monthlyClientProjectsOsProjects.forEach((monthlyOSProject) => {
-          calculations[monthlyClientProject.clientProjectId].significance =+ this.monthlyOSProjects.getSignificance(monthlyOSProject.osProjectId);
 
+        let totalSignificance = 0;
+        let usedCommissionedSignificance = 0;
+
+        monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+          var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectId];
+          if(monthlyOSProject) {
+            // calculate needed significances
+            if(monthlyOSProject.commissioned) {
+              usedCommissionedSignificance += monthlyOSProject.significance;
+            }
+            totalSignificance += monthlyOSProject.significance;
+
+            // for an OS project, make it possible to get the clients using it
+            if(!clientProjectsUsingOSProject[usedOSProject.osProjectId]) {
+              clientProjectsUsingOSProject[usedOSProject.osProjectId] = [];
+            }
+            clientProjectsUsingOSProject[usedOSProject.osProjectId].push(monthlyClientProject);
+          }
         });
+
+        let rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance);
+        let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100).toFixed(2);
+
+        calculations.totalDollarForAllClientProjects =+ totalAmount;
+
+        calculations.clientProjects[monthlyClientProject.clientProjectId] = {
+          rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2),
+          totalAmount,
+          totalSignificance
+        };
+      });
+
+      // once the rates are calculated, calculates for each OS project:
+      // - total - for each clientProject using this project, take it's share
+      this.monthlyOSProjects.forEach(function(osProject) {
+
+        var clientProjects = clientProjectsUsingOSProject[osProject.osProjectId];
+        if(clientProjects) {
+          calculations.osProjects[osProject.osProjectId] = clientProjects.reduce(function(prev, monthlyClientProject){
+            var clientProjectCalc = calculations.clientProjects[monthlyClientProject.clientProjectId];
+            return prev + (clientProjectCalc.totalAmount * osProject.significance / clientProjectCalc.totalSignificance);
+          },0)
+        } else {
+          calculations.osProjects[osProject.osProjectId] = 0;
+        }
       });
 
       return calculations;
@@ -204,7 +260,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       osProject: newProject
     });
     this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() { console.info("contributionMonth saved"); }, function() {
+    this.save().then(function() {}, function() {
       console.error("Failed saving the contributionMonth obj: ", arguments);
     });
   },
@@ -212,26 +268,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
-    // console.log(monthlyClientProject);
-    // const monthlyOSProjects = this.monthlyOSProjects;
-    // const map = {};
-    // let totalSignificance = 0;
-    //
-    // monthlyOSProjects.forEach( osProject =>{
-    //   totalSignificance += osProject.significance;
-    //   map[osProject.osProjectId] = osProject;
-    // });
-    // let usedSignificance = 0;
-    // monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
-    //   if(!!map[usedOSProject.osProjectId]) {
-    //     usedSignificance += map[usedOSProject.osProjectId].significance;
-    //   }
-    // });
-    // let rate = 4 - 2 * (usedSignificance / totalSignificance);
-    // console.log(rate);
-    // return parseFloat(Math.round(rate * 100) / 100).toFixed(2);
-
-    return 2;
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
+  },
+  getTotal: function(monthlyClientProject) {
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
   }
 });
 
@@ -241,7 +281,7 @@ var dataMassage = function(oType) {
       item[oType] = item[oType + 'Id'];
       item[oType + 'Id'] = item[oType]._id;
     }
-  }
+  };
 };
 
 ContributionMonth.connection = superMap({

@@ -45,7 +45,7 @@ var monthlyContributionStore = fixture.store([{
         osProjectId: osProject._id
       }],
       hours: 40,
-      clientProjectId: clientProject2._id
+      clientProjectId: clientProject2
     }]
 }], ContributionMonth.algebra);
 

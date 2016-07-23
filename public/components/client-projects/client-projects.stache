@@ -8,12 +8,13 @@
             {{/if}}
             <p>
                 Rate <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}</span>
-                Total <span class="total">${{total}}</span>
+                Total <span class="total">${{contributionMonth.getTotal(monthlyClientProject)}}</span>
             </p>
             <a href="javascript://" ($click)="toggleEditMonthlyClientProject(monthlyClientProject)">
             {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>
 
             <a href="javascript://" ($click)="deleteClientProject(contributionMonth, monthlyClientProject)">delete</a>
+
             {{#if isEditingMonthlyClientProject(.)}}
                 <label for="{{clientProjectId}}-hours">Hours for (month)</label>
                 <input type="text" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
@@ -21,6 +22,7 @@
                 <span>Hours for (month)</span>
                 {{hours}}
             {{/if}}
+            {{#if isEditingMonthlyClientProject(.)}}
             <p>Projects in use</p>
             <fieldset class="projects">
                 {{#each ../contributionMonth.monthlyOSProjects as monthlyOSProject}}
@@ -34,6 +36,7 @@
                     <label for="{{osProject._id}}">{{osProject.name}}</label>
                 {{/each}}
             </fieldset>
+            {{/if}}
         </li>
     {{/each}}
 </ul>

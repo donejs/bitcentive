@@ -25,7 +25,7 @@ export const ViewModel = DefineMap.extend({
 
     allOSProjects: {
         value: function() {
-            return OSProject.getList();
+          return OSProject.getList();
         }
     },
     // Derived properties
@@ -76,8 +76,8 @@ export const ViewModel = DefineMap.extend({
 
         this.activePromise = this.contributionMonth.save();
     },
-    totalForMonthlyOSProject: function(monthlyOSProject) {
-        return 0;
+    getTotal: function(osProjectId) {
+      return this.contributionMonth.calculations.osProjects[osProjectId].toFixed(2);
     }
 });
 
