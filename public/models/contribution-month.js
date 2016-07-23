@@ -186,6 +186,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           totalDollarForAllClientProjects: 0,
           osProjects: {}
       };
+
       var clientProjectsUsingOSProject = {};
       var monthlyOSProjectMap = {};
       var totalCommissionedSignificance = 0;
@@ -200,6 +201,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       // - total - (rate * hours)
       // - totalSignificance - the total significance for this project
       // - osProjectsUsed - a map of the OS projects used
+
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
 
         let totalSignificance = 0;
@@ -268,10 +270,18 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
+    if(this.calculations.clientProjects[monthlyClientProject.clientProjectId]) {
+        return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
+    }
+    return 0;
+
   },
   getTotal: function(monthlyClientProject) {
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
+    if(this.calculations.clientProjects[monthlyClientProject.clientProjectId]) {
+        return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
+    }
+    return 0;
+
   }
 });
 
