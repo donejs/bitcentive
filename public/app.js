@@ -1,28 +1,20 @@
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
-import 'can-route-pushstate';
-
+import viewModel from 'can-view-model';
 import ContributionMonth from 'models/contribution-month';
+
+window.viewModel = viewModel;
 
 const AppViewModel = DefineMap.extend({
   route: "string",
-  page: "string",
-  message: {
-    value: 'Hello World!',
-    serialize: false
-  },
+  contributionMonthId: "string",
   title: {
     value: 'bitcentive',
     serialize: false
-  },
-  contributionMonthPromise: {
-      get: function() {
-          return ContributionMonth.getList({});
-      }
   }
 });
 
-route(":page",{page: "home"});
+route(":contributionMonthId");
 
 export default AppViewModel;
 

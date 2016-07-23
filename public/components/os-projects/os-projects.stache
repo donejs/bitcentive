@@ -1,4 +1,4 @@
-<table>
+<table class='table'>
     {{#each contributionMonth.monthlyOSProjects}}
         <tr>
             <td>{{osProject.name}}</td>
