@@ -25,6 +25,9 @@ export const ClientProjectVM = DefineMap.extend({
     type: "boolean",
     value: false
   },
+  activeOSProjectList: {
+    type: '*',
+  },
   selectedClientId: {
     type: 'string',
     value: '__new__'
@@ -33,6 +36,7 @@ export const ClientProjectVM = DefineMap.extend({
     type: "string",
     value: ""
   },
+
   // Derived props
   creatingNewClientProject: {
     get: function() {
@@ -94,9 +98,9 @@ export const ClientProjectVM = DefineMap.extend({
     contributionMonth.removeClientProject(clientProject);
     return contributionMonth.save();
   },
-  toggleUseProject: function(contributionMonth, monthlyClientProjectsOsProjects, monthlyOsProject) {
+  toggleUseProject: function(monthlyClientProjectsOsProjects, monthlyOsProject) {
     monthlyClientProjectsOsProjects.toggleProject(monthlyOsProject);
-    return contributionMonth.save();
+    return this.contributionMonth.save();
   },
   toggleEditMonthlyClientProject: function(monthlyClientProject) {
     if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectId) ) {
@@ -105,8 +109,17 @@ export const ClientProjectVM = DefineMap.extend({
       this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, true);
     }
   },
+  setActiveOSProjectList: function(monthlyClientProject) {
+    this.activeOSProjectList = monthlyClientProject;
+  },
+  checkActiveOSProjectList: function(monthlyClientProject) {
+    return this.activeOSProjectList === monthlyClientProject;
+  },
   isEditingMonthlyClientProject: function(monthlyClientProject){
     return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId);
+  },
+  logIt: function(it) {
+    console.log('it', it);
   }
 });
 
