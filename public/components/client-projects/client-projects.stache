@@ -12,7 +12,10 @@
     {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
         <tr>
             <td>
-              {{clientProject.name}}
+              <input type="text"
+                     {($value)}="clientProject.name"
+                     ($blur)="clientProject.save()"
+                     {{#if contributionMonth.isSaving}} disabled {{/if}}/>
             </td>
             <td>
                 <input type="text" class="form-control" {($value)}="hours" ($change)="contributionMonth.save"/>
