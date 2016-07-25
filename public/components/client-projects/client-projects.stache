@@ -1,53 +1,48 @@
-<ul class="list-unstyled">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Hours</th>
+      <th>Commissioned + Uncommissioned</th>
+      <th>Hourly Tax</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
     {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
-        <li>
-            {{#if isEditingMonthlyClientProject(monthlyClientProject)}}
-                <input class="editInput" class="form-control" type="text" {($value)}="clientProject.name" ($change)="contributionMonth.save"/>
-            {{else}}
-                <h2>{{clientProject.name}}</h2>
-            {{/if}}
-            <p>
-                Rate <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}</span>
-                Total <span class="total">${{contributionMonth.getTotal(monthlyClientProject)}}</span>
-            </p>
-            <a href="javascript://" ($click)="toggleEditMonthlyClientProject(monthlyClientProject)">
-            {{#if isEditingMonthlyClientProject(monthlyClientProject)}}hide{{else}}edit{{/if}}</a>
-
-            <a href="javascript://" ($click)="deleteClientProject(contributionMonth, monthlyClientProject)">delete</a>
-
-            {{#if isEditingMonthlyClientProject(.)}}
-                <label for="{{clientProjectId}}-hours">Hours for (month)</label>
-                <input type="text" class="form-control" id="{{clientProjectId}}-hours" {($value)}="hours" ($change)="contributionMonth.save"/>
-            {{else}}
-                <span>Hours for (month)</span>
-                {{hours}}
-            {{/if}}
-            {{#if isEditingMonthlyClientProject(.)}}
-            <p>Projects in use</p>
-            <fieldset class="projects">
-                {{#each ../contributionMonth.monthlyOSProjects as monthlyOSProject}}
-
-                    <label for="{{osProject._id}}">
-                        <input id="{{osProject._id}}" type="checkbox"
-                              {{#if monthlyClientProjectsOsProjects.has(monthlyOSProject) }}checked{{/if}}
-                              name="projects" value="{{osProject.name}}"
-                              ($click)="toggleUseProject(../contributionMonth, monthlyClientProjectsOsProjects, monthlyOSProject)"
-                              ($change)="contributionMonth.getRate(monthlyClientProject)"
-                              {{^if isEditingMonthlyClientProject(monthlyClientProject)}} disabled{{/if}}
-                              />
-                              {{osProject.name}}
-                         </label>
-                {{/each}}
-            </fieldset>
-            {{/if}}
-        </li>
+        <tr>
+            <td>
+              {{clientProject.name}}
+            </td>
+            <td>
+                <input type="text" class="form-control" {($value)}="hours" ($change)="contributionMonth.save"/>
+            </td>
+            <td>
+              {{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} /
+              {{contributionMonth.monthlyOSProjects.commissioned.length}} +
+              {{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+            </td>
+            <td>
+               <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}
+            </td>
+            <td>
+              <span class="total">${{contributionMonth.getTotal(monthlyClientProject)}}</span>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger btn-xs"
+                  ($click)="deleteClientProject(contributionMonth, monthlyClientProject)">
+                <span class="glyphicon glyphicon-remove"/>
+              </button>
+            </td>
+        </tr>
     {{/each}}
-</ul>
+  </tbody>
+</table>
 
-<a href="javascript://" ($click)="toggleClientInput()">{{#if isAddingClients}}- hide{{else}}+ add{{/if}} client</a>
+
 {{#if isAddingClients}}
 <div class="panel panel-default">
-    <div class="panel-heading">Add Project</div>
+    <div class="panel-heading">Add Client</div>
         <div class="panel-body">
             <form ($submit)="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
                 {{#if projects.pending}}
@@ -71,7 +66,10 @@
                             {($value)}="newClientName">
                 {{/if}}
             </form>
-        <button class="btn btn-success" type="submit" form="new-client" value="Submit">Add Client</button>
+        <button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>
+        <button class="btn btn-default" ($click)="toggleClientInput()">Cancel</button>
     </div>
 </div>
+{{else}}
+  <a href="javascript://" ($click)="toggleClientInput()">Add Client</a>
 {{/if}}

@@ -77,6 +77,11 @@ MonthlyOSProject.List = DefineList.extend({
   getSignificance: function(osProjectId) {
     var osProject = this.monthlyOSProjectIdMap[osProjectId];
     return osProject ? osProject.significance : 0;
+  },
+  commissioned: {
+    get: function(){
+      return this.filter({commissioned: true})
+    }
   }
 });
 
@@ -206,6 +211,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 
         let totalSignificance = 0;
         let usedCommissionedSignificance = 0;
+        let commissionedMonthlyOSProjects = [];
+        let uncommissionedMonthlyOSProjects = [];
 
         monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
           var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectId];
@@ -213,6 +220,9 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
             // calculate needed significances
             if(monthlyOSProject.commissioned) {
               usedCommissionedSignificance += monthlyOSProject.significance;
+              commissionedMonthlyOSProjects.push(monthlyOSProject);
+            } else {
+              uncommissionedMonthlyOSProjects.push(monthlyOSProject);
             }
             totalSignificance += monthlyOSProject.significance;
 
@@ -232,7 +242,9 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         calculations.clientProjects[monthlyClientProject.clientProjectId] = {
           rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2),
           totalAmount,
-          totalSignificance
+          totalSignificance,
+          commissionedMonthlyOSProjects,
+          uncommissionedMonthlyOSProjects
         };
       });
 
@@ -253,6 +265,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 
       return calculations;
     }
+  },
+  commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject){
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].commissionedMonthlyOSProjects.length;
+  },
+  uncommissionedMonthlyOSProjectsCountFor: function(monthlyClientProject){
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].uncommissionedMonthlyOSProjects.length;
   },
   addNewMonthlyOSProject: function(newProject) {
     let monthlyOSProject = new MonthlyOSProject({
