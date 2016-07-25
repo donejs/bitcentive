@@ -5,7 +5,11 @@ import ContributionMonth from "./contribution-month";
 import ClientProject from "./client-project";
 import OSProject from "./os-project";
 
-QUnit.module("models");
+QUnit.module("models", {
+	setup: function(){
+		localStorage.clear();
+	}
+});
 
 QUnit.asyncTest("getList of ContributionMonth", function() {
 	ContributionMonth.getList({}).then(function(contributionMonths) {
@@ -19,6 +23,8 @@ QUnit.asyncTest("getList of ContributionMonth", function() {
     console.log(second);
 
 		QUnit.ok(first === second);
+    QUnit.ok(first);
+
 		QUnit.start();
 	}, function(err) {
 		debugger;

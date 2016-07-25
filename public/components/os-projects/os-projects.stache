@@ -1,23 +1,34 @@
-<table>
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Significance</th>
+      <th>Commissioned</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
     {{#each contributionMonth.monthlyOSProjects}}
         <tr>
             <td>{{osProject.name}}</td>
-            <td>Significance
+            <td>
                 <input type="text"
                        {($value)}="significance"
                        ($blur)="contributionMonth.save()"
                        {{#if contributionMonth.isSaving}} disabled {{/if}}/>
             </td>
             <td>
-                <input type="checkbox" ($change)="updateComissionedForMonthlyOSProject(., %element.checked)" {{#if commissioned}} checked {{/if}} {{#if contributionMonth.isSaving}} disabled {{/if}} /> Commissioned
+                <input type="checkbox" ($change)="updateComissionedForMonthlyOSProject(., %element.checked)"
+                    {{#if commissioned}} checked {{/if}}
+                    {{#if contributionMonth.isSaving}} disabled {{/if}} />
             </td>
-            <td>Total: {{totalForMonthlyOSProject(.)}}</td>
+
+            <td>Total: {{getTotal(osProjectId)}}</td>
         </tr>
     {{/each}}
-
+  </tbody>
 </table>
 
-<a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
 {{#if adding}}
 <div class="panel panel-default">
     <div class="panel-heading">Add Project</div>
@@ -44,9 +55,12 @@
                             {($value)}="newOSProjectName">
                 {{/if}}
             </form>
-        <button class="btn" type="submit" form="new-os-project" value="Submit">Add Project</button>
+        <button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">Add Project</button>
+        <button class="btn btn-default" ($click)="toggleAddNewMonthlyOSProject()">Cancel</button>
     </div>
 </div>
+{{else}}
+  <a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
 {{/if}}
 {{#activePromise}}
     {{#if isRejected}}

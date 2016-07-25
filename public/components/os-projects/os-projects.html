@@ -16,6 +16,11 @@
         name: "CanJS"
     });
 
+    var osProject2 = new OSProject({
+        _id: "12476712612671247676124",
+        name: "DoneJS"
+    });
+
     var clientProject = new ClientProject({
         _id: "asl;dfal;sfj ;lakwj",
         name: "HualHound"
@@ -24,17 +29,31 @@
     var contributionMonth = new ContributionMonth({
         _id: "aslkfalsjklas",
         date: 124234211310000,
-        monthlyOSProjects: [{
+        monthlyOSProjects: [
+          {
             significance: 80,
             commissioned: true,
             osProjectId: osProject._id,
             osProject: osProject
-        }],
+          },
+          {
+            significance: 15,
+            commissioned: true,
+            osProjectId: osProject2._id,
+            osProject: osProject2
+          }
+        ],
         monthlyClientProjects: [{
-            monthlyClientProjectsOsProjects: [{
+            monthlyClientProjectsOsProjects: [
+              {
                 osProjectId: osProject._id,
                 osProject: osProject
-            }],
+              },
+              {
+                osProjectId: osProject2._id,
+                osProject: osProject2
+              },
+            ],
             hours: 100,
             clientProjectId: clientProject._id,
             clientProject: clientProject
