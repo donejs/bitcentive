@@ -29,7 +29,10 @@
                              {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}}
                              value="{{osProject.name}}"
                              ($click)="toggleUseProject(monthlyClientProjectsOsProjects, .)">
-                      <label for="{{osProject._id}}">{{osProject.name}}</label>
+                      <label for="{{osProject._id}}"
+                             {{#if commissioned}} class="commissioned" {{/if}}>
+                        {{osProject.name}}
+                      </label>
                   {{/each}}
                 </div>
               {{/if}}
