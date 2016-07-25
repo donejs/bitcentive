@@ -234,6 +234,11 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           }
         });
 
+        // Don't divide by 0 if there are no commissioned projects
+        if (totalCommissionedSignificance === 0) {
+          totalCommissionedSignificance = 1;
+        }
+
         let rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance);
         let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100).toFixed(2);
 
