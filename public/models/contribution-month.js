@@ -286,6 +286,9 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   },
   removeMonthlyOSProject: function(osProject) {
     this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(osProject), 1);
+    this.monthlyClientProjects.forEach((clientProject) => {
+      clientProject.monthlyClientProjectsOsProjects.splice(clientProject.monthlyClientProjectsOsProjects.indexOf(osProject), 1);
+    });
   },
   removeClientProject: function(clientProject) {
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
