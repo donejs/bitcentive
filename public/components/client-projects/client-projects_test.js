@@ -119,9 +119,9 @@ QUnit.asyncTest('Add an OS project to a monthly client project', function() {
         }
     });
     const monthlyClientProjectsOsProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects;
-    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then(() => {
+    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then( () => {
         QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 2);
-        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectRef._id , newMonthlyOSProject.osProjectRef._id);
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectRef._id , newMonthlyOSProject.osProjectRef);
         QUnit.start();
     });
 });

@@ -10,7 +10,7 @@
   <tbody>
     {{#each contributionMonth.monthlyOSProjects}}
         <tr>
-            <td>{{osProjectRef.value.name}} {{logIt(osProjectRef.name)}}</td>
+            <td>{{osProjectRef.value.name}}</td>
             <td>
                 <input type="text"
                        {($value)}="significance"

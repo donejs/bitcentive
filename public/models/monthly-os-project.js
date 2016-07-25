@@ -5,7 +5,13 @@ import OSProject  from "./os-project";
 var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   significance: "number",
   commissioned: "boolean",
-  osProjectRef: { type: OSProject.Ref.type }
+  osProjectRef: {
+    type: OSProject.Ref.type,
+    serialize: function(ref) {
+      debugger;
+      return ref._id;
+    }
+  }
 });
 
 MonthlyOSProject.List = DefineList.extend({

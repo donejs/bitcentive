@@ -12,7 +12,7 @@
     {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
         <tr>
             <td>
-              {{clientProject.name}}
+              {{#clientProjectRef.value}}{{name}}{{/}}
             </td>
             <td>
                 <input type="text" class="form-control" {($value)}="hours" ($change)="contributionMonth.save"/>
