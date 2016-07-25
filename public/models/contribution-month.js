@@ -41,9 +41,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     Type: MonthlyOSProject.List,
     set: function(newVal){
       //debugger;
-
-
-
       return newVal;
     }
   },
@@ -59,7 +56,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       var clientProjectsUsingOSProject = {};
       var monthlyOSProjectMap = {};
       var totalCommissionedSignificance = 0;
-      this.monthlyOSProjects.forEach( osProject =>{
+      this.monthlyOSProjects.forEach( osProject => {
         monthlyOSProjectMap[osProject.osProjectRef._id] = osProject;
         if(osProject.commissioned) {
           totalCommissionedSignificance += osProject.significance;

@@ -1,10 +1,15 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import OSProject  from "./os-project";
+import ClientProject from "./client-project";
 
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectsOsProject",{
-    clientProjectRef: "123123sdfasdf",
-    osProjectRef: { type: OSProject.Ref.type }
+    clientProjectRef: {
+      type: ClientProject.Ref.type
+    },
+    osProjectRef: {
+      type: OSProject.Ref.type
+    }
 });
 
 MonthlyClientProjectsOsProject.List = DefineList.extend({

@@ -13,6 +13,7 @@ MonthlyOSProject.List = DefineList.extend({
   monthlyOSProjectIdMap: {
     get: function() {
       var map = {};
+      debugger;
       this.forEach((monthlyOSProject) => {
         map[monthlyOSProject.osProjectRef._id] = monthlyOSProject;
       });
