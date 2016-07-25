@@ -23,7 +23,7 @@
                     {{#if contributionMonth.isSaving}} disabled {{/if}} />
             </td>
 
-            <td>Total: {{getTotal(osProjectId)}}</td>
+            <td>Total: {{getTotal(osProjectRef._id)}}</td>
         </tr>
     {{/each}}
   </tbody>

@@ -27,16 +27,16 @@ QUnit.module('bitcentive/components/os-projects', {
       monthlyOSProjects: [{
         significance: 80,
         commissioned: true,
-        osProjectId: this.osProject._id,
+        osProjectRef: this.osProject._id,
         osProject: this.osProject
       }],
       monthlyClientProjects: [{
         monthlyClientProjectsOsProjects: [{
-          osProjectId: this.osProject._id,
+          osProjectRef: this.osProject._id,
           osProject: this.osProject
         }],
         hours: 100,
-        clientProjectId: this.clientProject._id,
+        clientProjectRef: this.clientProject._id,
         clientProject: this.clientProject
       }]
     });

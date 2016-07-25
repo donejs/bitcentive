@@ -9,6 +9,8 @@ import superMap from "can-connect/can/super-map/";
 
 import "../lib/prefilter";
 import moment from "moment";
+import MonthlyOSProject from "./monthly-os-project";
+import MonthlyClientProject from "./monthly-client-project";
 
 var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
@@ -30,144 +32,6 @@ var contributionMonthAlgebra = new set.Algebra(
     }
   }
 );
-
-var makeOSProject = function(props){
-  if(props instanceof OSProject) {
-    return props;
-  } else {
-    return OSProject.connection.hydrateInstance(props);
-  }
-};
-var makeClientProject = function(props){
-  if(props instanceof ClientProject) {
-    return props;
-  } else {
-    return ClientProject.connection.hydrateInstance(props);
-  }
-};
-
-var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
-  osProjectId: "string",
-  significance: "number",
-  commissioned: "boolean",
-  osProject: { type: makeOSProject },
-  osProjectRef: {type: function(ref){
-    if(typeof ref === "string") {
-      OSProject.Ref.hydrateInstance({_id: ref});
-    } else {
-      OSProject.Ref.hydrateInstance({_id: ref._id, value: OSProject.hydrateInstance(ref)});
-    }
-  }}
-});
-
-MonthlyOSProject.List = DefineList.extend({
-  "*": MonthlyOSProject,
-  monthlyOSProjectIdMap: {
-    get: function() {
-      var map = {};
-      this.forEach((monthlyOSProject) => {
-        map[monthlyOSProject.osProjectId] = monthlyOSProject;
-      });
-      return map;
-    }
-  },
-  has: function(osProject){
-    return osProject._id in this.monthlyOSProjectIdMap;
-  },
-  getSignificance: function(osProjectId) {
-    var osProject = this.monthlyOSProjectIdMap[osProjectId];
-    return osProject ? osProject.significance : 0;
-  },
-  commissioned: {
-    get: function(){
-      return this.filter({commissioned: true})
-    }
-  }
-});
-
-var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectOsProject",{
-    osProjectId: "123123sdfasdf",
-    osProject: {type: makeOSProject }
-});
-
-MonthlyClientProjectsOsProject.List = DefineList.extend({
-  "*": MonthlyClientProjectsOsProject,
-  osProjectIdMap: {
-    get: function(){
-      var map = {};
-      this.forEach(function(monthlyClientProjectOSProject, index){
-        map[monthlyClientProjectOSProject.osProjectId] = index;
-      });
-      return map;
-    }
-  },
-  has: function(monthlyOsProject){
-    return monthlyOsProject.osProjectId in this.osProjectIdMap;
-  },
-  toggleProject: function(monthlyOSProject){
-
-    let newMonthlyOSProject = new MonthlyClientProjectsOsProject({
-      osProjectId: monthlyOSProject.osProjectId,
-      osProject: monthlyOSProject.osProject
-    });
-    var index = this.osProjectIdMap[newMonthlyOSProject.osProjectId];
-
-    if(index != undefined) {
-      this.splice(index, 1);
-    } else {
-      this.push(newMonthlyOSProject);
-    }
-  },
-});
-
-var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
-  clientProjectId: "string",
-  clientProject: {type: makeClientProject},
-  hours: "number",
-  monthlyClientProjectsOsProjects: MonthlyClientProjectsOsProject.List,
-});
-
-MonthlyClientProject.List = DefineList.extend({
-  "*": MonthlyClientProject,
-  monthlyProjectIdMap: {
-    get: function() {
-      var map = {};
-      this.forEach(function(monthlyClientProject, index) {
-        map[monthlyClientProject.clientProjectId] = index;
-      });
-      return map;
-    }
-  },
-  has: function(clientProject) {
-    let monthlyClientProject;
-    if (!!clientProject._id) {
-      monthlyClientProject = new MonthlyClientProject({
-        clientProjectId: clientProject._id,
-        clientProject: clientProject,
-        hours: 0
-      });
-    }
-    else {
-      monthlyClientProject = clientProject;
-    }
-    return monthlyClientProject.clientProjectId in this.monthlyProjectIdMap;
-  },
-  toggleProject: function(clientProject){
-    let monthlyClientProject = new MonthlyClientProject({
-        clientProjectId: clientProject._id,
-        clientProject: clientProject,
-        hours: 0,
-        monthlyClientProjectsOsProjects: []
-      });
-    var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectId];
-    if(index != null) {
-      this.splice(index, 1);
-    } else {
-      this.push(monthlyClientProject);
-    }
-  }
-});
-
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
@@ -196,7 +60,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       var monthlyOSProjectMap = {};
       var totalCommissionedSignificance = 0;
       this.monthlyOSProjects.forEach( osProject =>{
-        monthlyOSProjectMap[osProject.osProjectId] = osProject;
+        monthlyOSProjectMap[osProject.osProjectRef._id] = osProject;
         if(osProject.commissioned) {
           totalCommissionedSignificance += osProject.significance;
         }
@@ -215,7 +79,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         let uncommissionedMonthlyOSProjects = [];
 
         monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
-          var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectId];
+          var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectRef._id];
           if(monthlyOSProject) {
             // calculate needed significances
             if(monthlyOSProject.commissioned) {
@@ -227,10 +91,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
             totalSignificance += monthlyOSProject.significance;
 
             // for an OS project, make it possible to get the clients using it
-            if(!clientProjectsUsingOSProject[usedOSProject.osProjectId]) {
-              clientProjectsUsingOSProject[usedOSProject.osProjectId] = [];
+            if(!clientProjectsUsingOSProject[usedOSProject.osProjectRef._id]) {
+              clientProjectsUsingOSProject[usedOSProject.osProjectRef._id] = [];
             }
-            clientProjectsUsingOSProject[usedOSProject.osProjectId].push(monthlyClientProject);
+            clientProjectsUsingOSProject[usedOSProject.osProjectRef._id].push(monthlyClientProject);
           }
         });
 
@@ -239,7 +103,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 
         calculations.totalDollarForAllClientProjects =+ totalAmount;
 
-        calculations.clientProjects[monthlyClientProject.clientProjectId] = {
+        calculations.clientProjects[monthlyClientProject.clientProjectRef._id] = {
           rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2),
           totalAmount,
           totalSignificance,
@@ -252,14 +116,14 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       // - total - for each clientProject using this project, take it's share
       this.monthlyOSProjects.forEach(function(osProject) {
 
-        var clientProjects = clientProjectsUsingOSProject[osProject.osProjectId];
+        var clientProjects = clientProjectsUsingOSProject[osProject.osProjectRef._id];
         if(clientProjects) {
-          calculations.osProjects[osProject.osProjectId] = clientProjects.reduce(function(prev, monthlyClientProject){
-            var clientProjectCalc = calculations.clientProjects[monthlyClientProject.clientProjectId];
+          calculations.osProjects[osProject.osProjectRef._id] = clientProjects.reduce(function(prev, monthlyClientProject){
+            var clientProjectCalc = calculations.clientProjects[monthlyClientProject.clientProjectRef._id];
             return prev + (clientProjectCalc.totalAmount * osProject.significance / clientProjectCalc.totalSignificance);
-          },0)
+          },0);
         } else {
-          calculations.osProjects[osProject.osProjectId] = 0;
+          calculations.osProjects[osProject.osProjectRef._id] = 0;
         }
       });
 
@@ -267,16 +131,16 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     }
   },
   commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject){
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].commissionedMonthlyOSProjects.length;
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].commissionedMonthlyOSProjects.length;
   },
   uncommissionedMonthlyOSProjectsCountFor: function(monthlyClientProject){
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectId].uncommissionedMonthlyOSProjects.length;
+    return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].uncommissionedMonthlyOSProjects.length;
   },
   addNewMonthlyOSProject: function(newProject) {
     let monthlyOSProject = new MonthlyOSProject({
       significance: 0,
       commissioned: false,
-      osProjectId: newProject._id,
+      osProjectRef: newProject._id,
       osProject: newProject
     });
     this.monthlyOSProjects.push(monthlyOSProject);
@@ -288,15 +152,15 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
-    if(this.calculations.clientProjects[monthlyClientProject.clientProjectId]) {
-        return this.calculations.clientProjects[monthlyClientProject.clientProjectId].rate;
+    if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
+        return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].rate;
     }
     return 0;
 
   },
   getTotal: function(monthlyClientProject) {
-    if(this.calculations.clientProjects[monthlyClientProject.clientProjectId]) {
-        return this.calculations.clientProjects[monthlyClientProject.clientProjectId].totalAmount;
+    if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
+        return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].totalAmount;
     }
     return 0;
 
@@ -318,19 +182,7 @@ ContributionMonth.connection = superMap({
   List: ContributionMonth.List,
   url: "/api/contribution_months",
   name: "contributionMonth",
-  algebra: contributionMonthAlgebra,
-  parseInstanceData(responseData) {
-    responseData.monthlyOSProjects.forEach(dataMassage("osProject"));
-
-    responseData.monthlyClientProjects.forEach( (monthlyClientProject) => {
-      dataMassage("clientProject")(monthlyClientProject);
-      monthlyClientProject.monthlyClientProjectsOsProjects.forEach(dataMassage("osProject"));
-    });
-
-    console.log(responseData);
-
-    return responseData;
-  }
+  algebra: contributionMonthAlgebra
 });
 ContributionMonth.algebra = contributionMonthAlgebra;
 
