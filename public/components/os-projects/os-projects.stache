@@ -10,7 +10,12 @@
   <tbody>
     {{#each contributionMonth.monthlyOSProjects}}
         <tr>
-            <td>{{osProject.name}}</td>
+            <td>
+              <input type="text"
+                     {($value)}="osProject.name"
+                     ($blur)="updateNameForMonthlyOSProject(osProject)"
+                     {{#if contributionMonth.isSaving}} disabled {{/if}}/>
+            </td>
             <td>
                 <input type="text"
                        {($value)}="significance"
@@ -24,6 +29,12 @@
             </td>
 
             <td>Total: {{getTotal(osProjectId)}}</td>
+            <td>
+              <button type="button" class="btn btn-danger btn-xs"
+                  ($click)="removeMonthlyOSProject(.)">
+                <span class="glyphicon glyphicon-remove"/>
+              </button>
+            </td>
         </tr>
     {{/each}}
   </tbody>

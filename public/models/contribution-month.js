@@ -284,6 +284,9 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       console.error("Failed saving the contributionMonth obj: ", arguments);
     });
   },
+  removeMonthlyOSProject: function(osProject) {
+    this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(osProject), 1);
+  },
   removeClientProject: function(clientProject) {
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },

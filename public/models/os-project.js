@@ -13,6 +13,7 @@ var osProjectAlgebra = new set.Algebra(
 );
 
 OSProject.connection = superMap({
+  idProp: "_id",
   Map: OSProject,
   List: OSProject.List,
   url: "/api/os_projects",
