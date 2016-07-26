@@ -6,11 +6,7 @@ import ClientProject from "./client-project";
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectsOsProject",{
     osProjectId: "string",
     osProjectRef: {
-      type: OSProject.Ref.type,
-      serialize: function(ref) {
-        debugger;
-        return ref._id;
-      }
+      type: OSProject.Ref.type
     }
 });
 

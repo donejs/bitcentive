@@ -60,7 +60,7 @@ QUnit.asyncTest('Can create new OS Project', function() {
   });
 
   vm.addNewMonthlyOSProject().then(() => {
-    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProject.name , 'something');
+    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , 'something');
     QUnit.start();
   });
 });
@@ -83,7 +83,7 @@ QUnit.asyncTest('Can add an existing OS Project to Monthly Contribution', functi
 
   vm.addNewMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects.length, 2);
-    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProject.name , projectToAdd.name);
+    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , projectToAdd.name);
     QUnit.start();
   });
 });

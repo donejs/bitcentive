@@ -73,11 +73,10 @@ export const ViewModel = DefineMap.extend({
     },
     updateComissionedForMonthlyOSProject: function(monthlyOSProject, commissioned) {
         monthlyOSProject.commissioned = commissioned;
-
         this.activePromise = this.contributionMonth.save();
     },
-    getTotal: function(osProjectRef) {
-        return this.contributionMonth.calculations.osProjects[osProjectRef._id].toFixed(2);
+    getTotal: function(osProject) {
+        return this.contributionMonth.calculations.osProjects[osProject._id].toFixed(2);
     }
 });
 

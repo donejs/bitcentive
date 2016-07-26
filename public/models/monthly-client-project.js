@@ -4,7 +4,9 @@ import MonthlyClientProjectsOsProject from "./monthly-client-projects-os-project
 import ClientProject from "./client-project";
 
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
-  clientProjectRef: {type: ClientProject.Ref.type},
+  clientProjectRef: {
+    type: ClientProject.Ref.type
+  },
   hours: "number",
   monthlyClientProjectsOsProjects: MonthlyClientProjectsOsProject.List,
 });

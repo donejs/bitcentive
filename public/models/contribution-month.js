@@ -45,8 +45,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     }
   },
   monthlyClientProjects: MonthlyClientProject.List,
+  monthlyContributions: DefineList.List,
   calculations: {
     get: function() {
+      console.log("Calculating..");
       var calculations = {
           clientProjects: {},
           totalDollarForAllClientProjects: 0,
@@ -137,8 +139,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     let monthlyOSProject = new MonthlyOSProject({
       significance: 0,
       commissioned: false,
-      osProjectRef: newProject._id,
-      osProject: newProject
+      osProjectRef: newProject,
+      osProject: newProject._id
     });
     this.monthlyOSProjects.push(monthlyOSProject);
     this.save().then(function() {}, function() {

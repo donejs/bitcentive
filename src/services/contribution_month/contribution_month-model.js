@@ -9,9 +9,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const osProjectSchema = new Schema({
-  clientProjectRef: { type: Schema.Types.ObjectId, ref: 'os_project' },
+  osProjectRef: { type: Schema.Types.ObjectId, ref: 'os_project' },
   significance: Number,
-  commisioned: { type: Boolean, default: false }
+  commissioned: { type: Boolean, default: false }
 });
 
 const clientProjectSchema = new Schema({

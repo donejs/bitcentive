@@ -8,7 +8,6 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   osProjectRef: {
     type: OSProject.Ref.type,
     serialize: function(ref) {
-      debugger;
       return ref._id;
     }
   }
@@ -19,7 +18,6 @@ MonthlyOSProject.List = DefineList.extend({
   monthlyOSProjectIdMap: {
     get: function() {
       var map = {};
-      debugger;
       this.forEach((monthlyOSProject) => {
         map[monthlyOSProject.osProjectRef._id] = monthlyOSProject;
       });
