@@ -36,8 +36,7 @@ export const ViewModel = DefineMap.extend({
   },
   contributionMonthsPromise: {
     value: ContributionMonth.getList.bind(ContributionMonth, {
-      $sort: {date: 1},
-      //$populate: ["monthlyOSProjects.osProjectRef._id"]
+      $sort: {date: 1}
     })
   },
 
