@@ -6,10 +6,7 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   significance: "number",
   commissioned: "boolean",
   osProjectRef: {
-    type: OSProject.Ref.type,
-    serialize: function(ref) {
-      return ref._id;
-    }
+    type: OSProject.Ref.type
   }
 });
 

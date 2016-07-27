@@ -68,7 +68,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       // - total - (rate * hours)
       // - totalSignificance - the total significance for this project
       // - osProjectsUsed - a map of the OS projects used
-
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
 
         let totalSignificance = 0;
@@ -97,6 +96,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         });
 
         let rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance);
+        rate = isNaN(rate) ? 0 : rate; //handle the situation where there is not significance
         let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100).toFixed(2);
 
         calculations.totalDollarForAllClientProjects =+ totalAmount;
@@ -108,6 +108,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           commissionedMonthlyOSProjects,
           uncommissionedMonthlyOSProjects
         };
+
+
       });
 
       // once the rates are calculated, calculates for each OS project:
@@ -150,6 +152,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
   getRate: function(monthlyClientProject) {
+
     if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
         return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].rate;
     }
