@@ -15,6 +15,7 @@ export const ViewModel = DefineMap.extend({
         var last = this.lastMonth.serialize();
         last.date = this.nextMonth;
         delete last._id;
+        debugger;
         new ContributionMonth(last).save((newContributionMonth) => {
           this.selectedContributionMonthId = newContributionMonth._id;
         });
@@ -25,7 +26,6 @@ export const ViewModel = DefineMap.extend({
     type: "string",
     value: null,
     get: function(lastSet, resolve){
-
       if(lastSet) {
         return lastSet;
       }
@@ -36,8 +36,7 @@ export const ViewModel = DefineMap.extend({
   },
   contributionMonthsPromise: {
     value: ContributionMonth.getList.bind(ContributionMonth, {
-      $sort: {date: 1},
-      $populate: ["monthlyOSProjects.osProjectId"]
+      $sort: {date: 1}
     })
   },
 
@@ -54,6 +53,7 @@ export const ViewModel = DefineMap.extend({
         return new ContributionMonth({
           monthlyClientProjects: [],
           monthlyOSProjects:[],
+          monthlyContributions: [],
           date: moment().add(-1,'months').startOf('month').toDate()
         });
       }

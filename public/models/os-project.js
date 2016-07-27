@@ -17,7 +17,8 @@ OSProject.connection = superMap({
   List: OSProject.List,
   url: "/api/os_projects",
   name: "osProject",
-  algebra: osProjectAlgebra
+  algebra: osProjectAlgebra,
+  idProp: "_id"
 });
 OSProject.algebra = osProjectAlgebra;
 

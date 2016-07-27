@@ -41,16 +41,16 @@ QUnit.module('bitcentive/components/client-projects', {
             monthlyOSProjects: [{
                 significance: 80,
                 commissioned: true,
-                osProjectId: this.osProject._id,
+                osProjectRef: this.osProject._id,
                 osProject: this.osProject
             }],
             monthlyClientProjects: [{
                 monthlyClientProjectsOsProjects: [{
-                    osProjectId: this.osProject._id,
+                    osProjectRef: this.osProject._id,
                     osProject: this.osProject
                 }],
                 hours: 100,
-                clientProjectId: this.clientProject._id,
+                clientProjectRef: this.clientProject._id,
                 clientProject: this.clientProject
             }]
         });
@@ -108,7 +108,7 @@ QUnit.asyncTest('Add an new Client Project to contribution month', function() {
 QUnit.asyncTest('Add an OS project to a monthly client project', function() {
     var vm = new ClientProjectVM();
     const newMonthlyOSProject = {
-        osProjectId: this.osProjectAlt._id,
+        osProjectRef: this.osProjectAlt._id,
         osProject: this.osProjectAlt
     };
     vm.contributionMonth = this.contributionMonth;
@@ -119,9 +119,9 @@ QUnit.asyncTest('Add an OS project to a monthly client project', function() {
         }
     });
     const monthlyClientProjectsOsProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects;
-    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then(() => {
+    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then( () => {
         QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 2);
-        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectId , newMonthlyOSProject.osProjectId);
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectRef._id , newMonthlyOSProject.osProjectRef);
         QUnit.start();
     });
 });
@@ -129,7 +129,7 @@ QUnit.asyncTest('Add an OS project to a monthly client project', function() {
 QUnit.asyncTest('Remove an OS project to a monthly client project', function() {
     var vm = new ClientProjectVM();
     const newMonthlyOSProject = {
-        osProjectId: this.osProject._id,
+        osProjectRef: this.osProject._id,
         osProject: this.osProject
     };
     vm.contributionMonth = this.contributionMonth;

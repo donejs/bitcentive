@@ -10,7 +10,7 @@
   <tbody>
     {{#each contributionMonth.monthlyOSProjects}}
         <tr>
-            <td>{{osProject.name}}</td>
+            <td>{{osProjectRef.value.name}}</td>
             <td>
                 <input type="text"
                        {($value)}="significance"
@@ -23,7 +23,7 @@
                     {{#if contributionMonth.isSaving}} disabled {{/if}} />
             </td>
 
-            <td>Total: {{getTotal(osProjectId)}}</td>
+            <td>Total: {{getTotal(osProjectRef)}}</td>
         </tr>
     {{/each}}
   </tbody>

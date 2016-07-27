@@ -99,14 +99,14 @@ export const ClientProjectVM = DefineMap.extend({
     return contributionMonth.save();
   },
   toggleEditMonthlyClientProject: function(monthlyClientProject) {
-    if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectId) ) {
-      this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, undefined);
+    if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectRef._id) ) {
+      this.editingClientProjectIds.set(monthlyClientProject.clientProjectRef._id, undefined);
     } else {
-      this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, true);
+      this.editingClientProjectIds.set(monthlyClientProject.clientProjectRef._id, true);
     }
   },
   isEditingMonthlyClientProject: function(monthlyClientProject){
-    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId);
+    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectRef._id);
   }
 });
 
