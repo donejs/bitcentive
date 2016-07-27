@@ -14,17 +14,20 @@ export const ViewModel = DefineMap.extend({
   contributionMonthPromise: {
     get: function(){
       if(this.contributionMonthId) {
-        return ContributionMonth.get({_id: this.contributionMonthId,
-          $populate: [
-            "monthlyOSProjects.osProjectId"]});
+        return ContributionMonth.get({_id: this.contributionMonthId
+          //,$populate: ["monthlyOSProjects.osProjectRef._id"]
+          });
       }
     }
   },
   contributionMonth: {
     get: function(initialValue, resolve){
       if(this.contributionMonthPromise) {
-        this.contributionMonthPromise.then(resolve, function(err){
-          //debugger;
+
+        this.contributionMonthPromise.then(function(res) {
+          resolve(res);
+        }, function(err){
+          // debugger;
         });
       }
     }
