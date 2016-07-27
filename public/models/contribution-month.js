@@ -48,7 +48,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   monthlyContributions: DefineList.List,
   calculations: {
     get: function() {
-      console.log("Calculating..");
       var calculations = {
           clientProjects: {},
           totalDollarForAllClientProjects: 0,
