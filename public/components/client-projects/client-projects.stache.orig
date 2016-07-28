@@ -33,9 +33,9 @@
                   {{#each contributionMonth.monthlyOSProjects}}
                       <input id="{{osProject._id}}"
                              type="checkbox"
-                             {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}}
+                             {{#if monthlyClientProjectsOSProjects.has(.) }}checked{{/if}}
                              value="{{osProject.name}}"
-                             ($click)="toggleUseProject(monthlyClientProjectsOsProjects, .)">
+                             ($click)="toggleUseProject(monthlyClientProjectsOSProjects, .)">
                       <label for="{{osProject._id}}"
                              {{#if commissioned}} class="commissioned" {{/if}}>
                         {{osProject.name}}

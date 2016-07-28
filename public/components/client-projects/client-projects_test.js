@@ -45,7 +45,7 @@ QUnit.module('bitcentive/components/client-projects', {
                 osProject: this.osProject
             }],
             monthlyClientProjects: [{
-                monthlyClientProjectsOsProjects: [{
+                monthlyClientProjectsOSProjects: [{
                     osProjectRef: this.osProject._id,
                     osProject: this.osProject
                 }],
@@ -118,10 +118,10 @@ QUnit.asyncTest('Add an OS project to a monthly client project', function() {
             res(req.data);
         }
     });
-    const monthlyClientProjectsOsProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects;
-    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then( () => {
-        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 2);
-        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects[1].osProjectRef._id , newMonthlyOSProject.osProjectRef);
+    const monthlyClientProjectsOSProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOSProjects;
+    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOSProjects, newMonthlyOSProject).then( () => {
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOSProjects.length , 2);
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOSProjects[1].osProjectRef._id , newMonthlyOSProject.osProjectRef);
         QUnit.start();
     });
 });
@@ -139,9 +139,9 @@ QUnit.asyncTest('Remove an OS project to a monthly client project', function() {
             res(req.data);
         }
     });
-    const monthlyClientProjectsOsProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects;
-    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOsProjects, newMonthlyOSProject).then(() => {
-        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOsProjects.length , 0);
+    const monthlyClientProjectsOSProjects = vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOSProjects;
+    vm.toggleUseProject(vm.contributionMonth, monthlyClientProjectsOSProjects, newMonthlyOSProject).then(() => {
+        QUnit.equal(vm.contributionMonth.monthlyClientProjects[0].monthlyClientProjectsOSProjects.length , 0);
         QUnit.start();
     });
 });

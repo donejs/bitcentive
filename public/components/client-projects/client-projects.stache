@@ -13,7 +13,7 @@
         <tr>
             <td>
               <input type="text"
-                     {($value)}="clientProject.name"
+                     value="{{clientProjectRef.value.name}}"
                      ($blur)="clientProject.save()"
                      {{#if contributionMonth.isSaving}} disabled {{/if}}/>
             </td>
@@ -27,14 +27,14 @@
               {{#if checkActiveOSProjectList(monthlyClientProject)}}
                 <div class="os-project-list">
                   {{#each contributionMonth.monthlyOSProjects}}
-                      <input id="{{osProject._id}}"
+                      <input id="{{osProjectRef._id}}"
                              type="checkbox"
-                             {{#if monthlyClientProjectsOsProjects.has(.) }}checked{{/if}}
-                             value="{{osProject.name}}"
-                             ($click)="toggleUseProject(monthlyClientProjectsOsProjects, .)">
-                      <label for="{{osProject._id}}"
+                             {{#if monthlyClientProjectsOSProjects.has(.) }}checked{{/if}}
+                             value="{{osProjectRef.value.name}}"
+                             ($click)="toggleUseProject(monthlyClientProjectsOSProjects, .)">
+                      <label for="{{osProjectRef._id}}"
                              {{#if commissioned}} class="commissioned" {{/if}}>
-                        {{osProject.name}}
+                        {{osProjectRef.value.name}}
                       </label>
                   {{/each}}
                 </div>

@@ -75,7 +75,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         let commissionedMonthlyOSProjects = [];
         let uncommissionedMonthlyOSProjects = [];
 
-        monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+        monthlyClientProject.monthlyClientProjectsOSProjects.forEach( usedOSProject => {
           var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectRef._id];
           if(monthlyOSProject) {
             // calculate needed significances
@@ -156,7 +156,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   removeMonthlyOSProject: function(osProject) {
     this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(osProject), 1);
     this.monthlyClientProjects.forEach((clientProject) => {
-      clientProject.monthlyClientProjectsOsProjects.splice(clientProject.monthlyClientProjectsOsProjects.indexOf(osProject), 1);
+      clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(osProject), 1);
     });
   },
   removeClientProject: function(clientProject) {

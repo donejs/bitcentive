@@ -35,13 +35,13 @@ var monthlyContributionStore = fixture.store([{
         osProjectRef: osProject
     }],
     monthlyClientProjects: [{
-        monthlyClientProjectsOsProjects: [{
+        monthlyClientProjectsOSProjects: [{
             osProjectRef: osProject
         }],
         hours: 100,
         clientProjectRef: clientProject
     },{
-      monthlyClientProjectsOsProjects: [{
+      monthlyClientProjectsOSProjects: [{
         osProjectRef: osProject._id
       }],
       hours: 40,
