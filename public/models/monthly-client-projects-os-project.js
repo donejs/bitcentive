@@ -20,17 +20,18 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
       return map;
     }
   },
-  serialize: function() {
-    let osProjectIds = [];
-    for(var i in this.osProjectIdMap) {
-      osProjectIds.push(i);
-    }
-    return osProjectIds;
-  },
+  // serialize: function() {
+  //   let osProjectIds = [];
+  //   for(var i in this.osProjectIdMap) {
+  //     osProjectIds.push(i);
+  //   }
+  //   return osProjectIds;
+  // },
   has: function(monthlyOsProject){
     return monthlyOsProject.osProjectRef._id in this.osProjectIdMap;
   },
   toggleProject: function(monthlyOSProject){
+    debugger;
     let newMonthlyOSProject = new MonthlyClientProjectsOsProject({
       osProjectRef: monthlyOSProject.osProjectRef
     });

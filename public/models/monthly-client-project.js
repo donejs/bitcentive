@@ -8,7 +8,10 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
     type: ClientProject.Ref.type
   },
   hours: "number",
-  monthlyClientProjectsOSProjects: MonthlyClientProjectsOsProject.List
+  monthlyClientProjectsOSProjects: {
+    Type: MonthlyClientProjectsOsProject.List,
+    Value: MonthlyClientProjectsOsProject.List
+  }
 });
 
 MonthlyClientProject.List = DefineList.extend({
