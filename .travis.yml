@@ -11,6 +11,8 @@ before_deploy:
   - git add public/dist/ --force
   - git commit -m "Updating build."
   - donejs deploy
+addons:
+  firefox: "latest"
 deploy:
   skip_cleanup: true
   provider: heroku
