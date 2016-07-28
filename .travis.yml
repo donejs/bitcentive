@@ -4,6 +4,7 @@ services:
   - mongodb
 before_install:
   - "export DISPLAY=:99.0"
+  - "export DEBUG=testee:*"
   - "sh -e /etc/init.d/xvfb start"
 before_deploy:
   - node public/build
