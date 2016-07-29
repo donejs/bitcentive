@@ -59,7 +59,7 @@ QUnit.asyncTest('Check if the correct contribution month is loaded', function(){
 
     vm.contributionMonthPromise.then((contributionMonth) => {
       QUnit.equal(contributionMonth.monthlyClientProjects.length, 1, 'Loaded correct monthly client projects');
-      QUnit.equal(contributionMonth.monthlyOSProjects.length, 1, 'Loaded correct os projects');
+      QUnit.equal(contributionMonth.monthlyOSProjects.length, 2, 'Loaded correct os projects');
       QUnit.start();
     });
 
