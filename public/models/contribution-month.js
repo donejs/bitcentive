@@ -75,7 +75,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         let commissionedMonthlyOSProjects = [];
         let uncommissionedMonthlyOSProjects = [];
 
-        monthlyClientProject.monthlyClientProjectsOsProjects.forEach( usedOSProject => {
+        monthlyClientProject.monthlyClientProjectsOSProjects.forEach( usedOSProject => {
           var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectRef._id];
           if(monthlyOSProject) {
             // calculate needed significances
@@ -94,6 +94,11 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
             clientProjectsUsingOSProject[usedOSProject.osProjectRef._id].push(monthlyClientProject);
           }
         });
+
+        // Don't divide by 0 if there are no commissioned projects
+        if (totalCommissionedSignificance === 0) {
+          totalCommissionedSignificance = 1;
+        }
 
         let rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance);
         rate = isNaN(rate) ? 0 : rate; //handle the situation where there is not significance
@@ -146,6 +151,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyOSProjects.push(monthlyOSProject);
     this.save().then(function() {}, function() {
       console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
+  },
+  removeMonthlyOSProject: function(osProject) {
+    this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(osProject), 1);
+    this.monthlyClientProjects.forEach((clientProject) => {
+      clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(osProject), 1);
     });
   },
   removeClientProject: function(clientProject) {

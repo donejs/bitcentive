@@ -71,6 +71,15 @@ export const ViewModel = DefineMap.extend({
 
         return this.activePromise;
     },
+    removeMonthlyOSProject: function(osProject) {
+      this.contributionMonth.removeMonthlyOSProject(osProject);
+
+      this.activePromise = this.contributionMonth.save();
+    },
+    updateNameForMonthlyOSProject: function(event, osProject) {
+        osProject.name = event.target.value;
+        this.activePromise = osProject.save();
+    },
     updateComissionedForMonthlyOSProject: function(monthlyOSProject, commissioned) {
         monthlyOSProject.commissioned = commissioned;
         this.activePromise = this.contributionMonth.save();

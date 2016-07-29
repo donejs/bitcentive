@@ -24,8 +24,9 @@ QUnit.asyncTest('No contribution months', function(){
     return {
       _id: "fake id",
       monthlyOSProjects: [],
-      monthlyClientProjects: []
-    }
+      monthlyClientProjects: [],
+      monthlyContributions: []
+    };
   });
 
   vm.contributionMonthsPromise.then(function(contributionMonths){

@@ -116,10 +116,14 @@ export const ClientProjectVM = DefineMap.extend({
     return this.activeOSProjectList === monthlyClientProject;
   },
   isEditingMonthlyClientProject: function(monthlyClientProject){
+<<<<<<< HEAD
     return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId);
   },
   logIt: function(it) {
     console.log('it', it);
+=======
+    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectRef._id);
+>>>>>>> staging
   }
 });
 

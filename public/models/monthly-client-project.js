@@ -8,10 +8,10 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
     type: ClientProject.Ref.type
   },
   hours: "number",
-  monthlyClientProjectsOsProjects: {
+  monthlyClientProjectsOSProjects: {
     Type: MonthlyClientProjectsOsProject.List,
     Value: MonthlyClientProjectsOsProject.List
-  },
+  }
 });
 
 MonthlyClientProject.List = DefineList.extend({
@@ -39,12 +39,12 @@ MonthlyClientProject.List = DefineList.extend({
     }
     return monthlyClientProject.clientProjectRef._id in this.monthlyProjectIdMap;
   },
-  toggleProject: function(clientProject){
+  toggleProject: function(clientProjectRef){
     let monthlyClientProject = new MonthlyClientProject({
-        clientProjectRef: clientProject._id,
-        clientProject: clientProject,
+        clientProjectRef: clientProjectRef._id,
+        clientProject: clientProjectRef,
         hours: 0,
-        monthlyClientProjectsOsProjects: []
+        monthlyClientProjectsOSProjects: []
       });
     var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectRef._id];
     if(index != null) {

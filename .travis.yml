@@ -4,12 +4,15 @@ services:
   - mongodb
 before_install:
   - "export DISPLAY=:99.0"
+  - "export DEBUG=testee:*"
   - "sh -e /etc/init.d/xvfb start"
 before_deploy:
   - node public/build
   - git add public/dist/ --force
   - git commit -m "Updating build."
   - donejs deploy
+addons:
+  firefox: "latest"
 deploy:
   skip_cleanup: true
   provider: heroku

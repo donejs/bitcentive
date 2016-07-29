@@ -3,7 +3,7 @@ import { ViewModel } from './os-projects';
 import fixture from 'can-fixture';
 import ContributionMonth from 'bitcentive/models/contribution-month';
 
-// ViewModel unit tests
+//ViewModel unit tests
 QUnit.module('bitcentive/components/os-projects', {
   beforeEach: function() {
     this.osProject = {
@@ -31,7 +31,7 @@ QUnit.module('bitcentive/components/os-projects', {
         osProject: this.osProject
       }],
       monthlyClientProjects: [{
-        monthlyClientProjectsOsProjects: [{
+        monthlyClientProjectsOSProjects: [{
           osProjectRef: this.osProject._id,
           osProject: this.osProject
         }],

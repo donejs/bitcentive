@@ -4,7 +4,6 @@ import OSProject  from "./os-project";
 import ClientProject from "./client-project";
 
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectsOsProject",{
-    osProjectId: "string",
     osProjectRef: {
       type: OSProject.Ref.type
     }
@@ -21,12 +20,19 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
       return map;
     }
   },
+  // serialize: function() {
+  //   let osProjectIds = [];
+  //   for(var i in this.osProjectIdMap) {
+  //     osProjectIds.push(i);
+  //   }
+  //   return osProjectIds;
+  // },
   has: function(monthlyOsProject){
     return monthlyOsProject.osProjectRef._id in this.osProjectIdMap;
   },
   toggleProject: function(monthlyOSProject){
+    debugger;
     let newMonthlyOSProject = new MonthlyClientProjectsOsProject({
-      osProjectId: monthlyOSProject.osProject._id,
       osProjectRef: monthlyOSProject.osProjectRef
     });
     var index = this.osProjectIdMap[newMonthlyOSProject.osProjectRef._id];
