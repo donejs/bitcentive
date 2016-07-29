@@ -5,7 +5,7 @@ import OSProject from 'bitcentive/models/client-project';
 import ContributionMonth from 'bitcentive/models/contribution-month';
 import fixture from 'can-fixture';
 
-ViewModel unit tests
+//ViewModel unit tests
 QUnit.module('bitcentive/components/client-projects', {
 
     beforeEach: function() {
