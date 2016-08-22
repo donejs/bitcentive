@@ -1,12 +1,9 @@
+import moment from 'moment';
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './select-contribution-month.less';
 import template from './select-contribution-month.stache';
-
-import moment from 'moment';
 import ContributionMonth from 'bitcentive/models/contribution-month';
-import "bootstrap/dist/css/bootstrap.css";
-
 
 export const ViewModel = DefineMap.extend({
   init: function(){

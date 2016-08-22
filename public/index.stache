@@ -3,6 +3,7 @@
     <title>{{title}}</title>
   </head>
   <body>
+    <can-import from="bootstrap/dist/css/bootstrap.css" />
     <can-import from="bitcentive/styles.less" />
     <can-import from="bitcentive/app" export-as="viewModel" />
     <can-import from="can-stache/helpers/route"/>

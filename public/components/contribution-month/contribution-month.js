@@ -3,8 +3,6 @@ import DefineMap from 'can-define/map/';
 import './contribution-month.less';
 import template from './contribution-month.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month';
-import "bootstrap/dist/css/bootstrap.css";
-
 
 export const ViewModel = DefineMap.extend({
   // Passed props

@@ -7,6 +7,8 @@
   <body>
     <div class='container'>
     <script type="text/stache" can-autorender id='main'>
+      <can-import from="bootstrap/dist/css/bootstrap.css" />
+      <can-import from="bitcentive/styles.less" />
       <can-import from="bitcentive/components/contribution-month/" />
       <bit-contribution-month {contribution-month-id}="contributionMonthId"/>
     </script>

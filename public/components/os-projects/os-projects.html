@@ -1,7 +1,9 @@
 <script type="text/stache" can-autorender id="osProjects">
-    <can-import from="bitcentive/models/fixtures/fixtures" />
-    <can-import from="bitcentive/components/os-projects/" />
-    <os-projects {contribution-month}="contributionMonth"/>
+  <can-import from="bootstrap/dist/css/bootstrap.css" />
+  <can-import from="bitcentive/styles.less" />
+  <can-import from="bitcentive/models/fixtures/fixtures" />
+  <can-import from="bitcentive/components/os-projects/" />
+  <os-projects {contribution-month}="contributionMonth"/>
 </script>
 
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
