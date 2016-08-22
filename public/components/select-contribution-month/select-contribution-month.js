@@ -15,7 +15,6 @@ export const ViewModel = DefineMap.extend({
         var last = this.lastMonth.serialize();
         last.date = this.nextMonth;
         delete last._id;
-        debugger;
         new ContributionMonth(last).save((newContributionMonth) => {
           this.selectedContributionMonthId = newContributionMonth._id;
         });
