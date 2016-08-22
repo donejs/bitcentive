@@ -10,6 +10,7 @@
   import ContributionMonth from 'bitcentive/models/contribution-month';
   import OSProject from 'bitcentive/models/os-project';
   import ClientProject from 'bitcentive/models/client-project';
+  import clientProjects from "bitcentive/models/fixtures/client-projects.json";
   import viewModel from 'can-view-model';
   import assign from "can-util/js/assign/";
 
@@ -21,14 +22,8 @@
     _id: "232131",
     name: "DoneJS"
   });
-  var clientProject = new ClientProject({
-    _id: "3-Haulhound",
-    name: "HaulHound"
-  });
-  var clientProject2 = new ClientProject({
-    _id: "2-Walmart",
-    name: "Wal-Mart"
-  });
+  var clientProject = new ClientProject(clientProjects[1]);
+  var clientProject2 = new ClientProject(clientProjects[2]);
 
   viewModel($("#clientProjects")[0]).set("contributionMonth", new ContributionMonth({
     _id: "aslkfalsjklas",
