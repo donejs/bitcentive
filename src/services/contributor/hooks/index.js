@@ -19,7 +19,7 @@ exports.before = {
 };
 
 exports.after = {
-  all: [],
+  all: [hooks.remove('__v')],
   find: [],
   get: [],
   create: [],

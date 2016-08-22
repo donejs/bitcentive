@@ -12,6 +12,9 @@ import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 
+import feathers from "./feathers";
+
+
 var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
   set.comparators.sort("$sort", function($sort, cm1, cm2){
@@ -155,7 +158,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       osProject: newProject._id
     });
     this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() {}, function() {
+    this.save().then(function() {
+    }, function() {
       console.error("Failed saving the contributionMonth obj: ", arguments);
     });
   },
@@ -195,10 +199,12 @@ var dataMassage = function(oType) {
 };
 
 ContributionMonth.connection = superMap({
+  parseInstanceProp: "data",
   idProp: "_id",
   Map: ContributionMonth,
   List: ContributionMonth.List,
-  url: "/api/contribution_months",
+  url: feathers.rest("/api/contribution_months"),
+  // url: "/api/contribution_months",
   name: "contributionMonth",
   algebra: contributionMonthAlgebra
 });

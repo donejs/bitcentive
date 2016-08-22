@@ -24,7 +24,7 @@ export const ViewModel = DefineMap.extend({
   },
   allOSProjects: {
     value: function() {
-      return OSProject.getList();
+      return OSProject.connection.getList();
     }
   },
 

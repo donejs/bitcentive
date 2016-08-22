@@ -1,5 +1,6 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
+import DefineList from 'can-define/list/list';
 import './client-projects.less';
 import view from './client-projects.stache';
 import ClientProject from '../../models/client-project';
