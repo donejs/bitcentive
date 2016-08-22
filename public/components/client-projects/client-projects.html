@@ -36,30 +36,24 @@
     monthlyOSProjects: [{
       significance: 80,
       commissioned: true,
-      osProjectRef: osProject._id,
-      osProject: osProject
+      osProjectRef: osProject,
     },{
       significance: 10,
       commissioned: true,
-      osProjectRef: osProject2._id,
-      osProject: osProject2
+      osProjectRef: osProject2,
     }],
     monthlyClientProjects: [{
       monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject._id,
-        osProject: osProject
+        osProjectRef: osProject,
       }],
       hours: 70,
-      clientProjectRef: clientProject._id,
-      clientProject: clientProject
+      clientProjectRef: clientProject,
     },{
       monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject._id,
-        osProject: osProject
+        osProjectRef: osProject,
       }],
       hours: 40,
-      clientProjectRef: clientProject2._id,
-      clientProject: clientProject2
+      clientProjectRef: clientProject2,
     }]
   }));
   window.viewModel = viewModel;
