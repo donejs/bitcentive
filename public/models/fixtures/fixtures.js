@@ -2,50 +2,36 @@ import fixture from "can-fixture";
 import ContributionMonth from 'bitcentive/models/contribution-month';
 import OSProject from 'bitcentive/models/os-project';
 import ClientProject from 'bitcentive/models/client-project';
+
 import "./client-project";
+import clientProjects from "./client-projects.json";
+import "./os-project";
+import osProjects from "./os-projects.json";
 
-var osProject = {
-    _id: "somethingCrazey",
-    name: "CanJS"
-};
-
-var osProjectAlt = {
-    _id: "anotheraskjldf",
-    name: "DoneJS"
-};
-
-var clientProject = {
-    _id: "3-Haulhound",
-    name: "HaulHound"
-};
-
-var clientProject2 = {
-  _id: "2-Walmart",
-  name: "Wal-Mart"
-};
-
-var osProjectStore = fixture.store([osProject, osProjectAlt], OSProject.algebra);
+const osProject = new OSProject(osProjects[0]);
+const clientProject1 = new ClientProject(clientProjects[1]);
+const clientProject2 = new ClientProject(clientProjects[2]);
 
 var monthlyContributionStore = fixture.store([{
-    _id: "aslkfalsjklas",
-    date: 124234211310000,
+    _id: "1-MonthlyContribution-08-2016",
+    date: 1470009600000,
     monthlyOSProjects: [{
-        significance: 80,
-        commissioned: true,
-        osProjectRef: osProject
+      significance: 80,
+      commissioned: true,
+      osProjectRef: osProject,
     }],
     monthlyClientProjects: [{
-        monthlyClientProjectsOSProjects: [{
-            osProjectRef: osProject
-        }],
-        hours: 100,
-        clientProjectRef: clientProject
+      monthlyClientProjectsOSProjects: [{
+        osProjectRef: osProject,
+      }],
+      hours: 100,
+      clientProjectRef: clientProject1,
     },{
       monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject._id
+        osProjectRef: osProject,
       }],
       hours: 40,
-      clientProjectRef: clientProject2
+      clientProjectRef: clientProject2,
     }]
 }], ContributionMonth.algebra);
 
@@ -57,10 +43,6 @@ fixture({
       return req.data;
     },
     'DELETE /api/contribution_months/{_id}': monthlyContributionStore.destroyData,
-    'GET /api/os_projects': osProjectStore.getListData,
-    'GET /api/os_projects/{_id}': osProjectStore.getData,
-    'POST /api/os_projects': osProjectStore.createData,
-    'PUT /api/os_projects/{_id}': osProjectStore.updateData,
 });
 
 export default monthlyContributionStore;
