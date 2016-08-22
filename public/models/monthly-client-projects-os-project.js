@@ -31,7 +31,6 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
     return monthlyOsProject.osProjectRef._id in this.osProjectIdMap;
   },
   toggleProject: function(monthlyOSProject){
-    debugger;
     let newMonthlyOSProject = new MonthlyClientProjectsOsProject({
       osProjectRef: monthlyOSProject.osProjectRef
     });
