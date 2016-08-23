@@ -67,13 +67,12 @@ export const ClientProjectVM = DefineMap.extend({
       });
     } else {
       promise = this.projects.then((projects) => {
-        const self = this;
         projects.forEach((project) => {
           if(project._id === selectedClientId) {
             monthlyClientProjects.toggleProject(project);
-            self.contributionMonth.save();
-            self.toggleClientInput();
-            self.selectedClientId = "__new__";
+            this.contributionMonth.save();
+            this.toggleClientInput();
+            this.selectedClientId = "__new__";
           }
         });
       });

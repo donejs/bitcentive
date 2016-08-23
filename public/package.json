@@ -52,7 +52,7 @@
     "generator-donejs": "^0.10.0-pre.0",
     "jquery": "^2.1.4",
     "moment": "^2.14.1",
-    "steal": "^0.16.27",
+    "steal": "^1.0.0-rc.2",
     "steal-stache": "^3.0.0-pre.2"
   },
   "devDependencies": {
