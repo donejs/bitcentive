@@ -9,57 +9,41 @@
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
   import ContributionMonth from 'bitcentive/models/contribution-month';
   import OSProject from 'bitcentive/models/os-project';
+  import osProjects from 'bitcentive/models/fixtures/os-projects.json';
   import ClientProject from 'bitcentive/models/client-project';
+  import clientProjects from "bitcentive/models/fixtures/client-projects.json";
   import viewModel from 'can-view-model';
   import assign from "can-util/js/assign/";
 
-  var osProject = new OSProject({
-    _id: "somethingCrazey",
-    name: "CanJS"
-  });
-  var osProject2 = new OSProject({
-    _id: "232131",
-    name: "DoneJS"
-  });
-  var clientProject = new ClientProject({
-    _id: "3-Haulhound",
-    name: "HaulHound"
-  });
-  var clientProject2 = new ClientProject({
-    _id: "2-Walmart",
-    name: "Wal-Mart"
-  });
+  var osProject = new OSProject(osProjects[0]);
+  var osProject2 = new OSProject(osProjects[1]);
+  var clientProject = new ClientProject(clientProjects[1]);
+  var clientProject2 = new ClientProject(clientProjects[2]);
 
   viewModel($("#clientProjects")[0]).set("contributionMonth", new ContributionMonth({
-    _id: "aslkfalsjklas",
-    date: 124234211310000,
+    _id: "1-MonthlyContribution-08-2016",
+    date: 1470009600000,
     monthlyOSProjects: [{
       significance: 80,
       commissioned: true,
-      osProjectRef: osProject._id,
-      osProject: osProject
+      osProjectRef: osProject,
     },{
       significance: 10,
       commissioned: true,
-      osProjectRef: osProject2._id,
-      osProject: osProject2
+      osProjectRef: osProject2,
     }],
     monthlyClientProjects: [{
       monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject._id,
-        osProject: osProject
+        osProjectRef: osProject,
       }],
       hours: 70,
-      clientProjectRef: clientProject._id,
-      clientProject: clientProject
+      clientProjectRef: clientProject,
     },{
       monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject._id,
-        osProject: osProject
+        osProjectRef: osProject,
       }],
       hours: 40,
-      clientProjectRef: clientProject2._id,
-      clientProject: clientProject2
+      clientProjectRef: clientProject2,
     }]
   }));
   window.viewModel = viewModel;

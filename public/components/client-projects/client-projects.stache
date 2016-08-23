@@ -9,24 +9,26 @@
     </tr>
   </thead>
   <tbody>
-    {{#each contributionMonth.monthlyClientProjects as monthlyClientProject}}
+    {{#with contributionMonth}}
+    {{#each monthlyClientProjects as monthlyClientProject}}
         <tr>
             <td>
               <input type="text"
+                     class="form-control"
                      value="{{clientProjectRef.value.name}}"
                      ($blur)="clientProject.save()"
-                     {{#if contributionMonth.isSaving}} disabled {{/if}}/>
+                     {{#if isSaving}} disabled {{/if}}/>
             </td>
             <td>
-                <input type="text" class="form-control" {($value)}="hours" ($change)="contributionMonth.save"/>
+                <input type="number" class="form-control" {($value)}="hours" ($change)="save"/>
             </td>
             <td ($mouseenter)="setActiveOSProjectList(monthlyClientProject)" ($mouseleave)="setActiveOSProjectList(null)">
-              {{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} /
-              {{contributionMonth.monthlyOSProjects.commissioned.length}} +
-              {{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+              {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} /
+              {{monthlyOSProjects.commissioned.length}} +
+              {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
               {{#if checkActiveOSProjectList(monthlyClientProject)}}
                 <div class="os-project-list">
-                  {{#each contributionMonth.monthlyOSProjects}}
+                  {{#each monthlyOSProjects}}
                       <input id="{{osProjectRef._id}}"
                              type="checkbox"
                              {{#if monthlyClientProjectsOSProjects.has(.) }}checked{{/if}}
@@ -41,19 +43,20 @@
               {{/if}}
             </td>
             <td>
-               <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}
+               <span class="rate">${{getRate(monthlyClientProject)}}
             </td>
             <td>
-              <span class="total">${{contributionMonth.getTotal(monthlyClientProject)}}</span>
+              <span class="total">${{getTotal(monthlyClientProject)}}</span>
             </td>
             <td>
               <button type="button" class="btn btn-danger btn-xs"
-                  ($click)="deleteClientProject(contributionMonth, monthlyClientProject)">
+                  ($click)="deleteClientProject(., monthlyClientProject)">
                 <span class="glyphicon glyphicon-remove"/>
               </button>
             </td>
         </tr>
     {{/each}}
+    {{/with}}
   </tbody>
 </table>
 
@@ -67,7 +70,7 @@
                 {{/if}}
                 {{#if projects.isResolved}}
                     <label>Select a client: </label>
-                    <select {($value)}="selectedClientId">
+                    <select {($value)}="selectedClientId" class="form-control">
                         {{#each projects.value}}
                             {{^if contributionMonth.monthlyClientProjects.has(.)}}
                                 <option value="{{_id}}">{{name}}</option>
@@ -77,10 +80,11 @@
                     </select>
                 {{/if}}
                 {{#if creatingNewClientProject}}
-                    <label>Or add a new client</label>
-                    <input  type="text"
-                            placeholder="Client Name"
-                            {($value)}="newClientName">
+                    <label>Or add a new client:</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Client Name"
+                           {($value)}="newClientName">
                 {{/if}}
             </form>
         <button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>

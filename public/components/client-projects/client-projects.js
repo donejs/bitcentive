@@ -6,12 +6,11 @@ import ClientProject from '../../models/client-project';
 import ContributionMonth from '../../models/contribution-month';
 import $ from 'jquery';
 
-
 export const ClientProjectVM = DefineMap.extend({
   // Passed properties
-    contributionMonth: {
-        Value: ContributionMonth
-    },
+  contributionMonth: {
+    Type: ContributionMonth
+  },
   // Stateful Props
   projects: {
     value() {
@@ -65,13 +64,11 @@ export const ClientProjectVM = DefineMap.extend({
         this.newClientName = "";
         this.toggleClientInput();
         this.selectedClientId = "__new__";
-
       });
-    }
-    else {
-      promise = this.projects.then(projects => {
-        projects.forEach(project => {
-          if( project._id === selectedClientId ) {
+    } else {
+      promise = this.projects.then((projects) => {
+        projects.forEach((project) => {
+          if(project._id === selectedClientId) {
             monthlyClientProjects.toggleProject(project);
             this.contributionMonth.save();
             this.toggleClientInput();
@@ -118,9 +115,6 @@ export const ClientProjectVM = DefineMap.extend({
   isEditingMonthlyClientProject: function(monthlyClientProject){
     return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId);
   },
-  logIt: function(it) {
-    console.log('it', it);
-  }
 });
 
 export default Component.extend({

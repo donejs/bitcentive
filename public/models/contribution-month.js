@@ -135,11 +135,17 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       return calculations;
     }
   },
-  commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject){
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].commissionedMonthlyOSProjects.length;
+  commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
+    if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
+      return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].commissionedMonthlyOSProjects.length;
+    }
+    return 0;
   },
-  uncommissionedMonthlyOSProjectsCountFor: function(monthlyClientProject){
-    return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].uncommissionedMonthlyOSProjects.length;
+  uncommissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
+    if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
+      return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].uncommissionedMonthlyOSProjects.length;
+    }
+    return 0;
   },
   addNewMonthlyOSProject: function(newProject) {
     let monthlyOSProject = new MonthlyOSProject({
