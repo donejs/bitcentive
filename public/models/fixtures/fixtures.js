@@ -13,26 +13,26 @@ const clientProject1 = new ClientProject(clientProjects[1]);
 const clientProject2 = new ClientProject(clientProjects[2]);
 
 var monthlyContributionStore = fixture.store([{
-    _id: "1-MonthlyContribution-08-2016",
-    date: 1470009600000,
-    monthlyOSProjects: [{
-      significance: 80,
-      commissioned: true,
+  _id: "1-MonthlyContribution-08-2016",
+  date: 1470009600000,
+  monthlyOSProjects: [{
+    significance: 80,
+    commissioned: true,
+    osProjectRef: osProject,
+  }],
+  monthlyClientProjects: [{
+    monthlyClientProjectsOSProjects: [{
       osProjectRef: osProject,
     }],
-    monthlyClientProjects: [{
-      monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject,
-      }],
-      hours: 100,
-      clientProjectRef: clientProject1,
-    },{
-      monthlyClientProjectsOSProjects: [{
-        osProjectRef: osProject,
-      }],
-      hours: 40,
-      clientProjectRef: clientProject2,
-    }]
+    hours: 100,
+    clientProjectRef: clientProject1,
+  },{
+    monthlyClientProjectsOSProjects: [{
+      osProjectRef: osProject,
+    }],
+    hours: 40,
+    clientProjectRef: clientProject2,
+  }]
 }], ContributionMonth.algebra);
 
 fixture({

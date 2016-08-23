@@ -1,9 +1,12 @@
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
-import viewModel from 'can-view-model';
-import ContributionMonth from 'models/contribution-month';
 
+// viewmodel debugging
+import viewModel from 'can-view-model';
 window.viewModel = viewModel;
+
+// use fixtures
+// import 'bitcentive/models/fixtures/';
 
 const AppViewModel = DefineMap.extend({
   route: "string",
@@ -17,4 +20,3 @@ const AppViewModel = DefineMap.extend({
 route(":contributionMonthId");
 
 export default AppViewModel;
-
