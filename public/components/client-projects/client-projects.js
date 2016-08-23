@@ -79,9 +79,9 @@ export const ClientProjectVM = DefineMap.extend({
     }
     return promise;
   },
-  deleteClientProject: function(contributionMonth, clientProject) {
-    contributionMonth.removeClientProject(clientProject);
-    return contributionMonth.save();
+  deleteClientProject: function(clientProject) {
+    this.contributionMonth.removeClientProject(clientProject);
+    return this.contributionMonth.save();
   },
   toggleUseProject: function(monthlyClientProjectsOSProjects, monthlyOsProject) {
     monthlyClientProjectsOSProjects.toggleProject(monthlyOsProject);

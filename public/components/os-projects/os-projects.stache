@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each contributionMonth.monthlyOSProjects}}
+    {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
         <tr>
             <td>
               <input type="text"
@@ -18,7 +18,7 @@
             </td>
             <td>
                 <input type="text"
-                       {($value)}="significance"
+                       {($value)}="monthlyOSProject.significance"
                        ($blur)="contributionMonth.save()"
                        {{#if contributionMonth.isSaving}} disabled {{/if}}/>
             </td>

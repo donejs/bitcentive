@@ -9,48 +9,51 @@
     </tr>
   </thead>
   <tbody>
-    {{#with contributionMonth}}
-    {{#each monthlyClientProjects as monthlyClientProject}}
-        <tr>
-            <td>{{clientProjectRef.value.name}}</td>
-            <td>
-                <input type="number" class="form-control" {($value)}="monthlyClientProject.hours" ($change)="save()"/>
-            </td>
-            <td ($mouseenter)="setActiveOSProjectList(monthlyClientProject)" ($mouseleave)="setActiveOSProjectList(null)">
-              {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} /
-              {{monthlyOSProjects.commissioned.length}} +
-              {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
-              {{#if checkActiveOSProjectList(monthlyClientProject)}}
-                <div class="os-project-list">
-                  {{#each monthlyOSProjects}}
-                      <input id="{{osProjectRef._id}}"
-                             type="checkbox"
-                             {{#if monthlyClientProjectsOSProjects.has(.) }}checked{{/if}}
-                             value="{{osProjectRef.value.name}}"
-                             ($click)="toggleUseProject(monthlyClientProjectsOSProjects, .)">
-                      <label for="{{osProjectRef._id}}"
-                             {{#if commissioned}} class="commissioned" {{/if}}>
-                        {{osProjectRef.value.name}}
-                      </label>
-                  {{/each}}
-                </div>
-              {{/if}}
-            </td>
-            <td>
-               <span class="rate">${{getRate(monthlyClientProject)}}
-            </td>
-            <td>
-              <span class="total">${{getTotal(monthlyClientProject)}}</span>
-            </td>
-            <td>
-              <button type="button" class="btn btn-danger btn-xs"
-                  ($click)="deleteClientProject(., monthlyClientProject)">
-                <span class="glyphicon glyphicon-remove"/>
-              </button>
-            </td>
-        </tr>
-    {{/each}}
-    {{/with}}
+  {{#with contributionMonth}}
+  {{#each monthlyClientProjects as monthlyClientProject}}
+    <tr>
+      <td>{{clientProjectRef.value.name}}</td>
+      <td>
+        <input type="number" class="form-control hours-input" {($value)}="monthlyClientProject.hours" ($change)="save()"/>
+      </td>
+      <td ($mouseenter)="setActiveOSProjectList(monthlyClientProject)" ($mouseleave)="setActiveOSProjectList(null)">
+        {{! Count of commissioned projects }}
+        {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{monthlyOSProjects.commissioned.length}}
+        +
+        {{! Count of uncommisioned projects }}
+        {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+
+        {{! Toggle of OS projects }}
+        {{#if checkActiveOSProjectList(monthlyClientProject)}}
+          <div class="os-project-list">
+            {{#each monthlyOSProjects as monthlyOSProject}}
+                <input id="{{osProjectRef._id}}"
+                       type="checkbox"
+                       {{#if monthlyClientProjectsOSProjects.has(monthlyOSProject) }}checked{{/if}}
+                       value="{{osProjectRef.value.name}}"
+                       ($click)="toggleUseProject(monthlyClientProjectsOSProjects, monthlyOSProject)">
+                <label for="{{osProjectRef._id}}"
+                       {{#if commissioned}} class="commissioned" {{/if}}>
+                  {{osProjectRef.value.name}}
+                </label>
+            {{/each}}
+          </div>
+        {{/if}}
+      </td>
+      <td>
+         <span class="rate">${{getRate(monthlyClientProject)}}
+      </td>
+      <td>
+        <span class="total">${{getTotal(monthlyClientProject)}}</span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger btn-xs" ($click)="deleteClientProject(monthlyClientProject)">
+          <span class="glyphicon glyphicon-remove"/>
+        </button>
+      </td>
+    </tr>
+  {{/each}}
+  {{/with}}
   </tbody>
 </table>
 
