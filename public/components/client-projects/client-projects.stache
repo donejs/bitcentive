@@ -14,7 +14,10 @@
     <tr>
       <td>{{clientProjectRef.value.name}}</td>
       <td>
-        <input type="number" class="form-control hours-input" {($value)}="monthlyClientProject.hours" ($change)="save()"/>
+        <input type="number" class="form-control hours-input"
+               {($value)}="monthlyClientProject.hours"
+               ($change)="save()"
+               {{#if isSaving}} disabled {{/if}}/>
       </td>
       <td ($mouseenter)="setActiveOSProjectList(monthlyClientProject)" ($mouseleave)="setActiveOSProjectList(null)">
         {{! Count of commissioned projects }}
@@ -31,7 +34,8 @@
                        type="checkbox"
                        {{#if monthlyClientProjectsOSProjects.has(monthlyOSProject) }}checked{{/if}}
                        value="{{osProjectRef.value.name}}"
-                       ($click)="toggleUseProject(monthlyClientProjectsOSProjects, monthlyOSProject)">
+                       ($click)="toggleUseProject(monthlyClientProjectsOSProjects, monthlyOSProject)"
+                       {{#if isSaving}} disabled{{/if}}/>
                 <label for="{{osProjectRef._id}}"
                        {{#if commissioned}} class="commissioned" {{/if}}>
                   {{osProjectRef.value.name}}

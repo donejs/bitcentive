@@ -4,7 +4,6 @@ import './client-projects.less';
 import view from './client-projects.stache';
 import ClientProject from '../../models/client-project';
 import ContributionMonth from '../../models/contribution-month';
-import $ from 'jquery';
 
 export const ClientProjectVM = DefineMap.extend({
   // Passed properties
