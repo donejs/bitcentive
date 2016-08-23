@@ -12,15 +12,9 @@
     {{#with contributionMonth}}
     {{#each monthlyClientProjects as monthlyClientProject}}
         <tr>
+            <td>{{clientProjectRef.value.name}}</td>
             <td>
-              <input type="text"
-                     class="form-control"
-                     value="{{clientProjectRef.value.name}}"
-                     ($blur)="clientProject.save()"
-                     {{#if isSaving}} disabled {{/if}}/>
-            </td>
-            <td>
-                <input type="number" class="form-control" {($value)}="hours" ($change)="save"/>
+                <input type="number" class="form-control" {($value)}="monthlyClientProject.hours" ($change)="save()"/>
             </td>
             <td ($mouseenter)="setActiveOSProjectList(monthlyClientProject)" ($mouseleave)="setActiveOSProjectList(null)">
               {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} /

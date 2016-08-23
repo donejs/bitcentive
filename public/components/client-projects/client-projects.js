@@ -79,18 +79,6 @@ export const ClientProjectVM = DefineMap.extend({
     }
     return promise;
   },
-  updateClientName: function(event, contributionMonth) {
-    if (event) {
-      event.preventDefault();
-    }
-    contributionMonth.clientProject.save();
-  },
-  updateClientProjectHours: function(event, contributionMonth) {
-    if (event) {
-      event.preventDefault();
-    }
-    contributionMonth.save();
-  },
   deleteClientProject: function(contributionMonth, clientProject) {
     contributionMonth.removeClientProject(clientProject);
     return contributionMonth.save();
