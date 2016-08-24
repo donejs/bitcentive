@@ -1,0 +1,41 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Active</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each contributors as contributor}}
+    <tr>
+      <td>{{name}}</td>
+      <td></td>
+      <td>
+        <input type="checkbox" {$checked}="active" ($change)="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} /></td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+{{#if isAddingContributor}}
+<div class="panel panel-default">
+  <div class="panel-heading">Add Contributor</div>
+    <div class="panel-body">
+      <form ($submit)="addContributor(%event)" id="new-contributor">
+        <label>Name:</label>
+        <input type="text"
+               class="form-control"
+               placeholder="Name" />
+        <br />
+        <label>Active?</label>
+        <input type="checkbox" name="active" checked/>
+      </form>
+      <button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
+      <button class="btn btn-default" ($click)="toggleContributorInput()">Cancel</button>
+    </div>
+  </div>
+</div>
+{{else}}
+  <a href="javascript://" ($click)="toggleContributorInput()">Add Contributor</a>
+{{/if}}
