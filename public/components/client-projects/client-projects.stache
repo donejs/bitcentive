@@ -1,4 +1,4 @@
-{{#if monthlyClientProjects.length}}
+{{#if contributionMonth.monthlyClientProjects.length}}
 <table class="table">
   <thead>
     <tr>
