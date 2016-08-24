@@ -17,9 +17,6 @@ QUnit.asyncTest('No contribution months', function(){
 
   var vm = new ViewModel();
 
-  vm.on("selectedContributionMonthId", function(){});
-  vm.on("nextMonth", function(){});
-
   fixture("POST /api/contribution_months", function(req){
     return {
       _id: "fake id",
@@ -35,9 +32,6 @@ QUnit.asyncTest('No contribution months', function(){
       vm.selectedContributionMonthId = "__new__";
 
       contributionMonths.on("length", function(ev, newLength){
-
-        console.log("length of contributionMonths is changing");
-
         QUnit.equal(newLength, 1, "got an item");
         QUnit.equal(contributionMonths[0]._id, "fake id");
         QUnit.equal(moment(contributionMonths[0].date).toDate().getTime(),

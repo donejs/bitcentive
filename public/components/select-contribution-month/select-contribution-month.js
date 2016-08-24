@@ -6,27 +6,27 @@ import template from './select-contribution-month.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month';
 
 export const ViewModel = DefineMap.extend({
-  init: function(){
-    this.on("selectedContributionMonthId", (ev, newVal) => {
-      if(newVal === "__new__") {
-        var last = this.lastMonth.serialize();
-        last.date = this.nextMonth;
-        delete last._id;
-        new ContributionMonth(last).save((newContributionMonth) => {
-          this.selectedContributionMonthId = newContributionMonth._id;
-        });
-      }
-    });
-  },
   selectedContributionMonthId: {
     type: "string",
     value: null,
-    get: function(lastSet, resolve){
+    get: function(lastSet){
       if(lastSet) {
         return lastSet;
       }
       if(this.lastMonth) {
         return this.lastMonth._id;
+      }
+    },
+    set: function(newVal, setVal) {
+      if(newVal === "__new__") {
+        var last = this.lastMonth.serialize();
+        last.date = this.nextMonth;
+        delete last._id;
+        new ContributionMonth(last).save((newContributionMonth) => {
+          setVal(newContributionMonth._id);
+        });
+      } else {
+        setVal(newVal);
       }
     }
   },

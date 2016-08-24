@@ -21,9 +21,11 @@ export const ViewModel = DefineMap.extend({
   contributionMonth: {
     get: function(initialValue, resolve){
       if(this.contributionMonthPromise) {
-        this.contributionMonthPromise.then(resolve, function(err){
-          console.error("Error loading contribution month: ", err);
-        });
+        this.contributionMonthPromise
+          .then(resolve)
+          .catch((err) => {
+            console.error("Error loading contribution month: ", err);
+          });
       }
     }
   }
