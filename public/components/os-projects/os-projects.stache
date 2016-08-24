@@ -23,7 +23,7 @@
                {{#if commissioned}} checked {{/if}}
                {{#if contributionMonth.isSaving}} disabled {{/if}} />
       </td>
-      <td>Total: {{getTotal(osProjectRef)}}</td>
+      <td>${{getTotal(osProjectRef)}}</td>
       <td>
         <button type="button" class="btn btn-danger btn-xs"
             ($click)="removeMonthlyOSProject(monthlyOSProject)">
