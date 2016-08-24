@@ -1,0 +1,71 @@
+{{#if contributionMonth.monthlyContributions.length}}
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Open Source Project</th>
+      <th>Description</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each contributionMonth.monthlyContributions as monthlyContribution}}
+    <tr>
+      <td>{{monthlyContribution.contributorRef.value.name}}</td>
+      <td>{{monthlyContribution.osProjectRef.value.name}}</td>
+      <td>{{monthlyContribution.descriptions}}</td>
+      <td>{{monthlyContribution.points}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+{{/if}}
+
+{{#if adding}}
+<div class="panel panel-default">
+  <div class="panel-heading">Add Project</div>
+    <div class="panel-body">
+      <form ($submit)="addContribution(%event)">
+        {{#if activeContributors.isPending}}
+          <p>Loading...</p>
+        {{else}}
+          <label>User: </label>
+          <select {($value)}="selectedContributorId" class="form-control">
+          {{#each activeContributors.value}}
+            <option value="{{_id}}">{{name}}</option>
+          {{/each}}
+          </select>
+        {{/if}}
+
+        {{#if osProjects.isPending}}
+          <p>Loading...</p>
+        {{else}}
+          <label>Open Source Project: </label>
+          <select {($value)}="selectedOSProjectId" class="form-control">
+          {{#each osProjects.value}}
+            <option value="{{_id}}">{{name}}</option>
+          {{/each}}
+          </select>
+        {{/if}}
+
+        <label>Description:</label>
+        <input type="textarea" {($value)}="description"></input>
+
+        <label>Points:</label>
+        <input type="number" {($value)}="points"></input>
+
+        <button
+          class="btn btn-primary"
+          type="submit"
+          value="Submit">Add Contribution</button>
+
+        <button
+          class="btn btn-default"
+          ($click)="toggleAddNewContribution()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+{{else}}
+  <a href="javascript://" ($click)="toggleAddNewContribution()">Add Contribution</a>
+{{/if}}

@@ -1,5 +1,6 @@
 <can-import from="../os-projects/"/>
 <can-import from="../client-projects/"/>
+<can-import from="../contributions/"/>
 
 {{#if contributionMonth}}
   <div class='callout'>
@@ -9,5 +10,9 @@
   <div class='callout'>
     <h2>Client Projects</h2>
     <bit-client-projects {contribution-month}="contributionMonth"/>
+  </div>
+  <div class='callout'>
+    <h2>Contributions</h2>
+    <bit-contributions {contribution-month}="contributionMonth"/>
   </div>
 {{/if}}

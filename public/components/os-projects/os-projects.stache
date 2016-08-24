@@ -1,3 +1,4 @@
+{{#if contributionMonth.monthlyOSProjects.length}}
 <table class='table'>
   <thead>
     <tr>
@@ -34,16 +35,16 @@
   {{/each}}
   </tbody>
 </table>
+{{/if}}
 
 {{#if adding}}
 <div class="panel panel-default">
   <div class="panel-heading">Add Project</div>
     <div class="panel-body">
       <form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
-      {{#if allOSProjects.pending}}
-          <p>Loading...</p>
-      {{/if}}
-      {{#if allOSProjects.isResolved}}
+      {{#if allOSProjects.ispending}}
+        <p>Loading...</p>
+      {{else}}
         <label>Select an existing project: </label>
         <select {($value)}="selectedOSProjectId" class="form-control">
         {{#each allOSProjects.value}}

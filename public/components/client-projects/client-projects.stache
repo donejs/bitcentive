@@ -1,3 +1,4 @@
+{{#if monthlyClientProjects.length}}
 <table class="table">
   <thead>
     <tr>
@@ -60,6 +61,7 @@
   {{/with}}
   </tbody>
 </table>
+{{/if}}
 
 {{#if isAddingClients}}
 <div class="panel panel-default">
