@@ -13,7 +13,7 @@
     <tr>
       <td>{{monthlyContribution.contributorRef.value.name}}</td>
       <td>{{monthlyContribution.osProjectRef.value.name}}</td>
-      <td>{{monthlyContribution.descriptions}}</td>
+      <td>{{monthlyContribution.description}}</td>
       <td>{{monthlyContribution.points}}</td>
     </tr>
   {{/each}}

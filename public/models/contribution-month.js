@@ -186,6 +186,13 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     }
     return 0;
 
+  },
+
+  addContribution(newContribution) {
+    this.monthlyContributions.push(newContribution);
+    this.save().then(function() {}, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
   }
 });
 

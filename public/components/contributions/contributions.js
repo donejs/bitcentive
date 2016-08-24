@@ -6,6 +6,12 @@ import Contribution from '../../models/contribution';
 import ContributionMonth from '../../models/contribution-month';
 
 export const ViewModel = DefineMap.extend({
+  // Passed properties
+  contributionMonth: {
+    Type: ContributionMonth
+  },
+
+  // Stateful properties
   selectedContributorId: 'string',
   selectedOSProjectId: 'string',
   description: 'string',
@@ -33,17 +39,15 @@ export const ViewModel = DefineMap.extend({
   addContribution(ev) {
     ev.preventDefault();
 
-    new Contribution({
+    let contribution = new Contribution({
       description: this.description,
       points: this.points,
       osProject: this.selectedOSProjectId,
       contributor: this.selectedContributorId
-    })
-    .save()
-    .then((contribution) => {
-      this.toggleAddNewContribution();
-      // return this.contributionMonth.addContribution(contribution);
     });
+
+    this.toggleAddNewContribution();
+    this.contributionMonth.addContribution(contribution);
   }
 });
 
