@@ -8,6 +8,9 @@ import isEmptyObject from 'can-util/js/is-empty-object/is-empty-object';
 import "bootstrap/dist/css/bootstrap.css";
 
 export const ViewModel = DefineMap.extend({
+  session: {
+    type: "*"
+  },
   email:{
     value:""
   },
@@ -18,6 +21,7 @@ export const ViewModel = DefineMap.extend({
     value:""
   },
   doRegister(defineMap, el, ev){
+    let session = this.session;
     if(ev && ev.preventDefault){
       ev.preventDefault();
     }
@@ -26,8 +30,16 @@ export const ViewModel = DefineMap.extend({
         email: this.email,
         password: this.password
       }).save().then((res) => {
-        console.log("save successful", res);
-        window.location.hash = route.url({ page: "login" });
+        session.login({
+          email: this.email,
+          password: this.password
+        }).then((res) => {
+          window.location.hash = route.url({ page: "contribution-month" });
+        },(err) => {
+          //TODO: global error handler
+          console.log("Login error:", err);
+        });
+        
       }, (err) => {
         console.log("error saving", err);
         if(!err || !err.responseJSON){
