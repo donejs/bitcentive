@@ -2,7 +2,7 @@
   <style type="less"></style>
   <template>
     <can-import from="bitcentive/components/contributors/"/>
-    <bit-contributors {(contributors)}="contributors" />
+    <bit-contributors {(contributors)}="contributors.value" />
   </template>
   <script type="view-model">
     import DefineMap from 'can-define/map/';
