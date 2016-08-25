@@ -46,8 +46,14 @@ export const ViewModel = DefineMap.extend({
       contributor: this.selectedContributorId
     });
 
-    this.toggleAddNewContribution();
     this.contributionMonth.addContribution(contribution);
+    this.reset();
+  },
+
+  reset() {
+    this.adding = false;
+    this.description = null;
+    this.points = null;
   }
 });
 

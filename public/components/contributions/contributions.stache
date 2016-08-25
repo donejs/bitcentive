@@ -23,7 +23,7 @@
 
 {{#if adding}}
 <div class="panel panel-default">
-  <div class="panel-heading">Add Project</div>
+  <div class="panel-heading">Add Contribution</div>
     <div class="panel-body">
       <form ($submit)="addContribution(%event)">
         {{#if activeContributors.isPending}}
@@ -37,16 +37,14 @@
           </select>
         {{/if}}
 
-        {{#if osProjects.isPending}}
-          <p>Loading...</p>
-        {{else}}
-          <label>Open Source Project: </label>
-          <select {($value)}="selectedOSProjectId" class="form-control">
-          {{#each osProjects.value}}
-            <option value="{{_id}}">{{name}}</option>
-          {{/each}}
-          </select>
-        {{/if}}
+        <label>Open Source Project: </label>
+        <select {($value)}="selectedOSProjectId" class="form-control">
+        {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+          <option value="{{monthlyOSProject.osProjectRef._id}}">
+            {{monthlyOSProject.osProjectRef.value.name}}
+          </option>
+        {{/each}}
+        </select>
 
         <label>Description:</label>
         <input type="textarea" {($value)}="description"></input>

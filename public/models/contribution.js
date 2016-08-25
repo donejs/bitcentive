@@ -8,10 +8,10 @@ var Contribution =  DefineMap.extend("Contribution", {
   description: "string",
   points: "number",
   osProject: {
-    Type: OSProject
+    Type: OSProject.Ref.type
   },
   contributor: {
-    Type: Contributor
+    Type: Contributor.Ref.type
   }
 });
 
