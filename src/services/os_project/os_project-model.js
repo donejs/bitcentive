@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const osProjectSchema = new Schema({
-  name: { type: String, required: true }
+  name: { type: String, required: true, unique: true }
 });
 
 const osProjectModel = mongoose.model('os_project', osProjectSchema);
