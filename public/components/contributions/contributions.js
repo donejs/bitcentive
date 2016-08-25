@@ -2,8 +2,9 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './contributions.less';
 import template from './contributions.stache';
-import Contribution from '../../models/contribution';
+import MonthlyContribution from '../../models/monthly-contributions';
 import ContributionMonth from '../../models/contribution-month';
+import Contributors from '../../models/contributor';
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
@@ -24,11 +25,9 @@ export const ViewModel = DefineMap.extend({
 
   activeContributors: {
     get() {
-    }
-  },
-
-  osProjects: {
-    get() {
+      return Contributors.getList({
+        active: true
+      });
     }
   },
 
@@ -39,11 +38,11 @@ export const ViewModel = DefineMap.extend({
   addContribution(ev) {
     ev.preventDefault();
 
-    let contribution = new Contribution({
+    let contribution = new MonthlyContribution({
       description: this.description,
       points: this.points,
-      osProject: this.selectedOSProjectId,
-      contributor: this.selectedContributorId
+      osProjectRef: this.selectedOSProjectId,
+      //contributorRef: this.selectedContributorId
     });
 
     this.contributionMonth.addContribution(contribution);
