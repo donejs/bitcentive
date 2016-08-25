@@ -6,6 +6,7 @@ import feathers from "./feathers";
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
   name: "string",
+  email: "string",
   active: "boolean"
 });
 

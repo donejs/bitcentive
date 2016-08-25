@@ -10,7 +10,7 @@
   {{#each contributors as contributor}}
     <tr>
       <td>{{name}}</td>
-      <td></td>
+      <td>{{email}}</td>
       <td>
         <input type="checkbox" {$checked}="active" ($change)="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} /></td>
     </tr>
@@ -25,11 +25,18 @@
       <form ($submit)="addContributor(%event)" id="new-contributor">
         <label>Name:</label>
         <input type="text"
+               {($value)}="newContributorName"
                class="form-control"
                placeholder="Name" />
         <br />
+        <label>Email:</label>
+        <input type="text"
+               {($value)}="newContributorEmail"
+               class="form-control"
+               placeholder="Email Address" />
+        <br />
         <label>Active?</label>
-        <input type="checkbox" name="active" checked/>
+        <input type="checkbox" {($checked)}="newContributorActive" />
       </form>
       <button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
       <button class="btn btn-default" ($click)="toggleContributorInput()">Cancel</button>

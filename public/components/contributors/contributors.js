@@ -14,6 +14,18 @@ export const ContributorsVM = DefineMap.extend({
     type: "boolean",
     value: false
   },
+  newContributorName: {
+    type: "string",
+    value: "",
+  },
+  newContributorEmail: {
+    type: "string",
+    value: "",
+  },
+  newContributorActive: {
+    type: "boolean",
+    value: true,
+  },
   // Methods
   toggleContributorInput() {
     this.isAddingContributor = !this.isAddingContributor;
@@ -26,13 +38,16 @@ export const ContributorsVM = DefineMap.extend({
     if(event) {
       event.preventDefault();
     }
-    let values = $(ev.target);
-    // console.log(values.find("input[name='name']"));
-    // console.log(values.find("[name='name']").val(), !!values.find("[name='active']").is('checked'));
-    // return new Contributor({
-    //   name: values.find('[name="name"]').val(),
-    //   active: !!values.find('[name="active"').is('checked')
-    // });
+    console.log(ev.target);
+    return new Contributor({
+      name: this.newContributorName,
+      email: this.newContributorEmail,
+      active: this.newContributorActive,
+    }).save().then(() => {
+      this.newContributorName = '';
+      this.newContributorEmail = '';
+      this.newContributorActive = true;
+    });
   }
 });
 
