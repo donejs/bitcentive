@@ -4,6 +4,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Active</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -12,7 +13,13 @@
       <td>{{name}}</td>
       <td>{{email}}</td>
       <td>
-        <input type="checkbox" {$checked}="active" ($change)="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} /></td>
+        <input type="checkbox" {$checked}="active" ($change)="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} />
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger btn-xs" ($click)="contributor.destroy()">
+          <span class="glyphicon glyphicon-remove"/>
+        </button>
+      </td>
     </tr>
   {{/each}}
   </tbody>
@@ -23,20 +30,26 @@
   <div class="panel-heading">Add Contributor</div>
     <div class="panel-body">
       <form ($submit)="addContributor(%event)" id="new-contributor">
-        <label>Name:</label>
-        <input type="text"
-               {($value)}="newContributorName"
-               class="form-control"
-               placeholder="Name" />
-        <br />
-        <label>Email:</label>
-        <input type="text"
-               {($value)}="newContributorEmail"
-               class="form-control"
-               placeholder="Email Address" />
-        <br />
-        <label>Active?</label>
-        <input type="checkbox" {($checked)}="newContributorActive" />
+        {{#if newContributorError}}<div class="alert alert-danger" role="alert">Name and Email Address are required.</div>{{/if}}
+        <div class="row">
+          <div class="col-xs-5">
+            <label>Name:</label>
+            <input type="text"
+                   {($value)}="newContributorName"
+                   class="form-control"
+                   placeholder="Name" />
+          </div>
+          <div class="col-xs-5">
+            <label>Email:</label>
+            <input type="text"
+                   {($value)}="newContributorEmail"
+                   class="form-control"
+                   placeholder="Email Address" />
+          </div>
+          <div class="col-xs-2">
+            <label>Active?</label>
+            <input type="checkbox" class="form-control" {($checked)}="newContributorActive" />
+          </div>
       </form>
       <button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
       <button class="btn btn-default" ($click)="toggleContributorInput()">Cancel</button>

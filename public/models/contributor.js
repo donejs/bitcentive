@@ -24,7 +24,6 @@ Contributor.connection = superMap({
   List: Contributor.List,
   url: feathers.rest("/api/contributors"),
   name: "contributor",
-  idProp: "_id"
 });
 Contributor.algebra = contributorAlgebra;
 

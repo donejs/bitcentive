@@ -6,6 +6,7 @@
       <th>Open Source Project</th>
       <th>Description</th>
       <th>Points</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -32,31 +33,41 @@
   <div class="panel-heading">Add Contribution</div>
     <div class="panel-body">
       <form ($submit)="addContribution(%event)" id="contributions-form">
-        {{#if activeContributors.isPending}}
-          <p>Loading...</p>
-        {{else}}
-          <label>User: </label>
-          <select {($value)}="selectedContributorId" class="form-control">
-          {{#each activeContributors.value}}
-            <option value="{{_id}}">{{name}}</option>
-          {{/each}}
-          </select>
-        {{/if}}
+        <div class="row">
+          <div class="col-xs-6">
+          {{#if activeContributors.isPending}}
+            <p>Loading...</p>
+          {{else}}
+            <label>User: </label>
+            <select {($value)}="selectedContributorId" class="form-control">
+            {{#each activeContributors.value}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+            </select>
+          {{/if}}
+          </div>
+          <div class="col-xs-6">
+            <label>Open Source Project: </label>
+            <select {($value)}="selectedOSProjectId" class="form-control">
+            {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+              <option value="{{monthlyOSProject.osProjectRef._id}}">
+                {{monthlyOSProject.osProjectRef.value.name}}
+              </option>
+            {{/each}}
+            </select>
+          </div>
+        </div>
 
-        <label>Open Source Project: </label>
-        <select {($value)}="selectedOSProjectId" class="form-control">
-        {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
-          <option value="{{monthlyOSProject.osProjectRef._id}}">
-            {{monthlyOSProject.osProjectRef.value.name}}
-          </option>
-        {{/each}}
-        </select>
-
-        <label>Description:</label>
-        <input type="textarea" {($value)}="description"></input>
-
-        <label>Points:</label>
-        <input type="number" {($value)}="points"></input>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>Description:</label>
+            <input type="textarea" class="form-control" {($value)}="description"></input>
+          </div>
+          <div class="col-xs-3">
+            <label>Points:</label>
+            <input type="number" class="form-control" {($value)}="points" min="0"></input>
+          </div>
+        </div>
       </form>
 
       <button

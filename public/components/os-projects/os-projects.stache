@@ -6,6 +6,7 @@
       <th>Significance</th>
       <th>Commissioned</th>
       <th>Total</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -42,26 +43,32 @@
   <div class="panel-heading">Add Project</div>
     <div class="panel-body">
       <form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
-      {{#if allOSProjects.ispending}}
-        <p>Loading...</p>
-      {{else}}
-        <label>Select an existing project: </label>
-        <select {($value)}="selectedOSProjectId" class="form-control">
-        {{#each allOSProjects.value}}
-        {{^if contributionMonth.monthlyOSProjects.has(.)}}
-          <option value="{{_id}}">{{name}}</option>
+        <div class="row">
+          <div class="col-xs-6">
+          {{#if allOSProjects.ispending}}
+            <p>Loading...</p>
+          {{else}}
+            <label>Select an existing project: </label>
+            <select {($value)}="selectedOSProjectId" class="form-control">
+            {{#each allOSProjects.value}}
+            {{^if contributionMonth.monthlyOSProjects.has(.)}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/if}}
+            {{/each}}
+              <option value="__new__">Create New Project</option>
+            </select>
+          {{/if}}
+          </div>
+        {{#if creatingNewOSProject}}
+          <div class="col-xs-6">
+            <label>New project name:</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Open Source Project"
+                   {($value)}="newOSProjectName"/>
+          </div>
         {{/if}}
-        {{/each}}
-          <option value="__new__">Create New Project</option>
-        </select>
-      {{/if}}
-      {{#if creatingNewOSProject}}
-        <label>Or add a new project:</label>
-        <input type="text"
-               class="form-control"
-               placeholder="Open Source Project"
-               {($value)}="newOSProjectName"/>
-      {{/if}}
+        </div>
       </form>
       <button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">Add Project</button>
       <button class="btn btn-default" ($click)="toggleAddNewMonthlyOSProject()">Cancel</button>

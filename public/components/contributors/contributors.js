@@ -26,8 +26,19 @@ export const ContributorsVM = DefineMap.extend({
     type: "boolean",
     value: true,
   },
+  newContributorError: {
+    type: "boolean",
+    value: false,
+  },
   // Methods
+  resetNewContributorFields() {
+    this.newContributorError = false;
+    this.newContributorName = '';
+    this.newContributorEmail = '';
+    this.newContributorActive = true;
+  },
   toggleContributorInput() {
+    this.resetNewContributorFields();
     this.isAddingContributor = !this.isAddingContributor;
   },
   setActive(contributor, state) {
@@ -38,15 +49,18 @@ export const ContributorsVM = DefineMap.extend({
     if(event) {
       event.preventDefault();
     }
-    console.log(ev.target);
+    const inputs = $(ev.target).find(":input");
+    inputs.prop("disabled", true);
     return new Contributor({
       name: this.newContributorName,
       email: this.newContributorEmail,
       active: this.newContributorActive,
     }).save().then(() => {
-      this.newContributorName = '';
-      this.newContributorEmail = '';
-      this.newContributorActive = true;
+      this.resetNewContributorFields();
+      inputs.prop("disabled", false);
+    }, (e) => {
+      this.newContributorError = true;
+      inputs.prop("disabled", false);
     });
   }
 });

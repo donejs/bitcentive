@@ -7,6 +7,7 @@
       <th>Commissioned + Uncommissioned</th>
       <th>Hourly Tax</th>
       <th>Total</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -68,27 +69,33 @@
   <div class="panel-heading">Add Client</div>
     <div class="panel-body">
       <form ($submit)="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
-      {{#if projects.pending}}
-        <p>Loading...</p>
-      {{/if}}
-      {{#if projects.isResolved}}
-        <label>Select a client: </label>
-        <select {($value)}="selectedClientId" class="form-control">
-        {{#each projects.value}}
-        {{^if contributionMonth.monthlyClientProjects.has(.)}}
-          <option value="{{_id}}">{{name}}</option>
+        <div class="row">
+          <div class="col-xs-6">
+          {{#if projects.pending}}
+            <p>Loading...</p>
+          {{/if}}
+          {{#if projects.isResolved}}
+            <label>Select a client: </label>
+            <select {($value)}="selectedClientId" class="form-control">
+            {{#each projects.value}}
+            {{^if contributionMonth.monthlyClientProjects.has(.)}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/if}}
+            {{/each}}
+              <option value="__new__">Add New Client</option>
+            </select>
+          {{/if}}
+          </div>
+        {{#if creatingNewClientProject}}
+          <div class="col-xs-6">
+            <label>New client name:</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Client Name"
+                   {($value)}="newClientName"/>
+          </div>
         {{/if}}
-        {{/each}}
-          <option value="__new__">Add New Client</option>
-        </select>
-      {{/if}}
-      {{#if creatingNewClientProject}}
-        <label>Or add a new client:</label>
-        <input type="text"
-               class="form-control"
-               placeholder="Client Name"
-               {($value)}="newClientName"/>
-      {{/if}}
+        </div>
       </form>
       <button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>
       <button class="btn btn-default" ($click)="toggleClientInput()">Cancel</button>
