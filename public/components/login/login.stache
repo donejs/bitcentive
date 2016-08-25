@@ -2,38 +2,40 @@
   <div class="panel-heading">
     <div class="panel-title">
       <h3>Bitcentive</h3>
+      <h4>Login</h4>
     </div>
-    <h4>Login</h4>
   </div>
-  <form class="panel-body" ($submit)={doLogin}>
-    <div class="row">
-        <div class="col-lg-12">
-          <label>Email</label>
-          <input type="text" class="input-control" {($value)}="email"/>
-          {{#if errors.email}}
-            <div class="error">
-              {{errors.email}}
-            </div>
-          {{/if}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-          <label>Password</label>
-          <input type="password" class="input-control" {($value)}="password"/>
-          {{#if errors.password}}
-            <div class="error">
-              {{errors.password}}
-            </div>
-          {{/if}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-          <button>Login</button>
-        </div>
-    </div>
-  </form>
+  <div class="panel-body">
+    <form class="form" ($submit)={doLogin}>
+      <div class="row">
+          <div class="col-lg-12">
+            <label class="control-label">Email</label>
+            <input type="text" class="form-control" {($value)}="email"/>
+            {{#if errors.email}}
+              <div class="error">
+                {{errors.email}}
+              </div>
+            {{/if}}
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+            <label class="control-label">Password</label>
+            <input type="password" class="form-control" {($value)}="password"/>
+            {{#if errors.password}}
+              <div class="error">
+                {{errors.password}}
+              </div>
+            {{/if}}
+          </div>
+      </div>
+      <div class="row" style="margin-top: 10px;">
+          <div class="col-lg-12">
+            <button class="btn btn-primary">Login</button>
+          </div>
+      </div>
+    </form>
+  </div>
   <div class="panel-footer">
     <content></content>
   </div>
