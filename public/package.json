@@ -35,7 +35,7 @@
     "bootstrap": "^3.3.6",
     "can-component": "^3.0.0-pre.8",
     "can-connect": "^0.6.0-pre.16",
-    "can-connect-feathers": "git+https://github.com/obaidott/can-connect-feathers.git",
+    "can-connect-feathers": "^0.6.7",
     "can-define": "^0.7.9",
     "can-route": "^3.0.0-pre.5",
     "can-route-pushstate": "^3.0.0-pre.3",
