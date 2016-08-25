@@ -40,8 +40,8 @@
           {{else}}
             <label>User: </label>
             <select {($value)}="selectedContributorId" class="form-control">
-            {{#each activeContributors.value}}
-              <option value="{{_id}}">{{name}}</option>
+            {{#each activeContributors.value as contributor}}
+              <option value="{{contributor._id}}">{{contributor.name}}</option>
             {{/each}}
             </select>
           {{/if}}
