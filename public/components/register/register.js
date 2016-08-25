@@ -30,16 +30,13 @@ export const ViewModel = DefineMap.extend({
         email: this.email,
         password: this.password
       }).save().then((res) => {
-        debugger;
         session.login({
           email: this.email,
           password: this.password
         }).then((res) => {
-          debugger;
           window.location.hash = route.url({ page: "contribution-month" });
         },(err) => {
           //TODO: global error handler
-          debugger;
           console.log("Login error:", err);
         });
         
