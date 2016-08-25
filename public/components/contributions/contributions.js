@@ -31,7 +31,8 @@ export const ViewModel = DefineMap.extend({
     }
   },
 
-  toggleAddNewContribution() {
+  toggleAddNewContribution(ev) {
+    ev.preventDefault();
     this.adding = !this.adding;
   },
 

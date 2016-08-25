@@ -59,11 +59,11 @@
 
         <button
           class="btn btn-default"
-          ($click)="toggleAddNewContribution()">Cancel</button>
+          ($click)="toggleAddNewContribution(%event)">Cancel</button>
       </form>
     </div>
   </div>
 </div>
 {{else}}
-  <a href="javascript://" ($click)="toggleAddNewContribution()">Add Contribution</a>
+  <a href="javascript://" ($click)="toggleAddNewContribution(%event)">Add Contribution</a>
 {{/if}}
