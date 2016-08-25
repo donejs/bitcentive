@@ -50,6 +50,10 @@ export const ViewModel = DefineMap.extend({
     this.reset();
   },
 
+  removeContribution(ev, contribution) {
+    this.contributionMonth.removeContribution(contribution);
+  },
+
   reset() {
     this.adding = false;
     this.description = null;

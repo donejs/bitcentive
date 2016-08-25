@@ -15,6 +15,12 @@
       <td>{{monthlyContribution.osProjectRef.value.name}}</td>
       <td>{{monthlyContribution.description}}</td>
       <td>{{monthlyContribution.points}}</td>
+      <td>
+        <button type="button" class="btn btn-danger btn-xs"
+            ($click)="removeContribution(%event, monthlyContribution)">
+          <span class="glyphicon glyphicon-remove"/>
+        </button>
+      </td>
     </tr>
   {{/each}}
   </tbody>
@@ -25,7 +31,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">Add Contribution</div>
     <div class="panel-body">
-      <form ($submit)="addContribution(%event)">
+      <form ($submit)="addContribution(%event)" id="contributions-form">
         {{#if activeContributors.isPending}}
           <p>Loading...</p>
         {{else}}
@@ -51,16 +57,17 @@
 
         <label>Points:</label>
         <input type="number" {($value)}="points"></input>
-
-        <button
-          class="btn btn-primary"
-          type="submit"
-          value="Submit">Add Contribution</button>
-
-        <button
-          class="btn btn-default"
-          ($click)="toggleAddNewContribution(%event)">Cancel</button>
       </form>
+
+      <button
+        class="btn btn-primary"
+        type="submit"
+        form="contributions-form"
+        value="Submit">Add Contribution</button>
+
+      <button
+        class="btn btn-default"
+        ($click)="toggleAddNewContribution(%event)">Cancel</button>
     </div>
   </div>
 </div>
