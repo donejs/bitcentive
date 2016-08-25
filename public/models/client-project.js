@@ -2,6 +2,7 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import superMap from 'can-connect/can/super-map/';
 import set from 'can-set';
+import feathers from './feathers';
 
 var clientProjectAlgebra = new set.Algebra(
   set.comparators.id('_id')
@@ -9,7 +10,6 @@ var clientProjectAlgebra = new set.Algebra(
 
 var ClientProject = DefineMap.extend({
   _id: 'string',
-  __v: 'number',
   name: 'string',
 });
 
@@ -18,9 +18,10 @@ ClientProject.List = DefineList.extend({
 });
 
 ClientProject.connection = superMap({
+  parseInstanceProp: "data",
   Map: ClientProject,
   List: ClientProject.List,
-  url: '/api/client_projects',
+  url: feathers.rest('/api/client_projects'),
   name: "client-projects",
   algebra: clientProjectAlgebra,
   idProp: "_id"

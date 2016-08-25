@@ -3,9 +3,16 @@
     <div class="panel-title">
       <h3>Bitcentive</h3>
     </div>
-    <h4>Login</h4>
+    <h4>Register</h4>
   </div>
-  <form class="panel-body" ($submit)={doLogin}>
+  <form class="panel-body" ($submit)={doRegister}>
+    {{#if serverError}}
+    <div class="row">
+      <div class="error">
+        {{serverError}}
+      </div>
+    </div>
+    {{/if}}
     <div class="row">
         <div class="col-lg-12">
           <label>Email</label>
@@ -30,7 +37,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-          <button>Login</button>
+          <button>Register</button>
         </div>
     </div>
   </form>

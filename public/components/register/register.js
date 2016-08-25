@@ -1,52 +1,48 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './login.less';
-import template from './login.stache';
-import Session from 'bitcentive/models/session';
 import route from 'can-route';
+import './register.less';
+import template from './register.stache';
+import User from 'bitcentive/models/user';
 import isEmptyObject from 'can-util/js/is-empty-object/is-empty-object';
 import "bootstrap/dist/css/bootstrap.css";
 
-const LoginViewModel = DefineMap.extend({
-  session: {
-    type: "*"
-  },
-  // session: {
-  //   Type: Session,
-  //   set() {
-  //     debugger;
-  //     console.log("setting session: ", arguments);
-  //   }
-  // },
+export const ViewModel = DefineMap.extend({
   email:{
-    type: "string"
+    value:""
   },
   password:{
-    type: "string"
+    value:""
   },
-  doLogin(defineMap, el, ev){
+  serverError:{
+    value:""
+  },
+  doRegister(defineMap, el, ev){
     if(ev && ev.preventDefault){
       ev.preventDefault();
     }
-
-    if(!this.session){
-      alert("login vm - must have session");
-    }
-
     if(this.validate()) {
-
-      this.session.login({
+      new User({
         email: this.email,
         password: this.password
-      }).then((res) => {
-        // update my ui
-        console.log("session save success", res);
-        window.location.hash = route.url({ page: "contribution-month" });
-      },(err) => {
-        //TODO: global error handler
-        console.log("Login error:", err);
+      }).save().then((res) => {
+        console.log("save successful", res);
+        window.location.hash = route.url({ page: "login" });
+      }, (err) => {
+        console.log("error saving", err);
+        if(!err || !err.responseJSON){
+          this.serverError = "Something went wrong. Please try again.";
+          return;
+        }
+        switch(err.responseJSON.code){
+          case 409: //Duplicate key error
+            this.serverError = "There is already a user with that email.";
+            break;
+          default:
+            this.serverError = "Something went wrong. Please try again.";
+            break;
+        }
       });
-
     }
   },
 
@@ -75,13 +71,14 @@ const LoginViewModel = DefineMap.extend({
   },
   validate(){
     this.hasValidated = true;
+    this.serverError = "";
     return isEmptyObject(this.errors);
   }
   //---- end validation ----//
 });
 
 export default Component.extend({
-  tag: 'bit-login',
-  ViewModel: LoginViewModel,
+  tag: 'bit-register',
+  ViewModel: ViewModel,
   template
 });
