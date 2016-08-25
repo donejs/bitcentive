@@ -43,7 +43,7 @@ export const ViewModel = DefineMap.extend({
       description: this.description,
       points: this.points,
       osProjectRef: this.selectedOSProjectId,
-      //contributorRef: this.selectedContributorId
+      contributorRef: this.selectedContributorId
     });
 
     this.contributionMonth.addContribution(contribution);
