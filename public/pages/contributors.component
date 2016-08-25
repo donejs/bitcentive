@@ -1,0 +1,21 @@
+<can-component tag="pages-contributors">
+  <style type="less"></style>
+  <template>
+    <can-import from="bitcentive/components/contributors/"/>
+    <bit-contributors {(contributors)}="contributors" />
+  </template>
+  <script type="view-model">
+    import DefineMap from 'can-define/map/';
+    import Contributor from 'bitcentive/models/contributor';
+
+    export default DefineMap.extend({
+      // Passed properties
+      contributors: {
+        Type: Contributor.List,
+        get() {
+          return Contributor.getList({});
+        }
+      },
+    });
+  </script>
+</can-component>

@@ -5,7 +5,6 @@ import superMap from "can-connect/can/super-map/";
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
   name: "string",
-  email: "string",
   active: "boolean"
 });
 
@@ -16,7 +15,6 @@ var contributorAlgebra = new set.Algebra(
 Contributor.List = DefineList.extend({
   "*": Contributor
 });
-
 
 Contributor.connection = superMap({
   idProp: "_id",

@@ -24,16 +24,18 @@
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+              <span class="icon-bar">
+                <a class="logout" href="#" ($click)="doLogout">Logout</a>
+              </span>
             </button>
-            <a class="navbar-brand" href="#">Bitcentive</a>
+            <a class="navbar-brand" href="{{routeUrl}}">Bitcentive</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav pull-right">
               {{#if session.isUserLoggedIn}}
-                <li><a href="javascript://">{{session.user.email}}</a></li>
+                <li><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
                 <li><a class="logout" href="#" ($click)="doLogout">Logout</a></li>
               {{/if}}
             </ul>
@@ -44,13 +46,13 @@
       <div class="content container">
         {{#if session.isUserLoggedIn}}
           {{#switch page}}
+            {{#case 'contributors'}}
+              <can-import from="bitcentive/pages/contributors.component"/>
+              <pages-contributors/>
+            {{/case}}
             {{#default}}
-            <can-import from="bitcentive/components/select-contribution-month/"/>
-            <can-import from="bitcentive/components/contribution-month/"/>
-            <bit-select-contribution-month {(selected-contribution-month-id)}="pageId"/>
-          {{#if pageId}}
-            <bit-contribution-month {contribution-month-id}="pageId"/>
-          {{/if}}
+              <can-import from="bitcentive/pages/home.component"/>
+              <pages-home {(contribution-month-id)}="pageId"/>
             {{/default}}
           {{/switch}}
         {{else}}

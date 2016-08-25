@@ -63,6 +63,7 @@
     "donejs-cli": "^0.10.0-pre.0",
     "donejs-deploy": "^0.4.0",
     "funcunit": "~3.0.0",
+    "generator-donejs": "^0.10.0-pre.4",
     "steal-qunit": "^0.1.1",
     "steal-tools": "^0.16.0",
     "testee": "^0.2.4"
