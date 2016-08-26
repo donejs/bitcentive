@@ -11,11 +11,19 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
   monthlyClientProjectsOSProjects: {
     Type: MonthlyClientProjectsOsProject.List,
     Value: MonthlyClientProjectsOsProject.List
+  },
+  accessList:{
+    type: DefineList.List,
+    serialize:false
   }
 });
 
 MonthlyClientProject.List = DefineList.extend({
   "*": MonthlyClientProject,
+  accessList:{
+    type: DefineList.List,
+    serialize:false
+  },
   monthlyProjectIdMap: {
     get: function() {
       var map = {};

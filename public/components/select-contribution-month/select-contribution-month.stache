@@ -1,12 +1,15 @@
 <can-import from="bitcentive/lib/stache-helpers/pretty-date"/>
+<can-import from="bitcentive/lib/stache-helpers/access"/>
 
 {{#if contributionMonths}}
-<select {($value)}="selectedContributionMonthId">
-  {{#each contributionMonths}}
-    <option value="{{_id}}">{{prettyDate(date)}}</option>
-  {{/each}}
-  <option value="__new__">+ Create {{prettyDate(nextMonth)}}</option>
-</select>
+  <select {($value)}="selectedContributionMonthId">
+    {{#each contributionMonths}}
+      <option value="{{_id}}">{{prettyDate(date)}}</option>
+    {{/each}}
+    {{#accessCanCreate contributionMonths}}
+      <option value="__new__">+ Create {{prettyDate(nextMonth)}}</option>
+    {{/if}}
+  </select>
 {{else}}
   Loading...
 {{/if}}

@@ -40,6 +40,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
   __v:"number",
   date: "date",
+  accessList:{
+    type: DefineList.List,
+    serialize:false
+  },
   monthlyOSProjects: {
     Type: MonthlyOSProject.List,
     set: function(newVal){
@@ -188,6 +192,14 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 
   }
 });
+
+ContributionMonth.List = DefineList.extend({
+  accessList:{
+    type: DefineList.List,
+    serialize:false
+  }
+});
+
 
 var dataMassage = function(oType) {
   return function(item) {

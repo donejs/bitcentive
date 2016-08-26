@@ -14,6 +14,13 @@ var User = DefineMap.extend("User", {
   },
   password: {
     type: "string"
+  },
+  role: {
+    type: "string"
+  },
+  accessList:{
+    type: DefineList.List,
+    serialize:false
   }
 });
 

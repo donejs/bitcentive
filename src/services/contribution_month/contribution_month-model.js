@@ -31,7 +31,8 @@ const contributionMonthSchema = new Schema({
   date: { type: Date, default: Date.now },
   monthlyOSProjects: [ osProjectSchema ],
   monthlyClientProjects: [ clientProjectSchema ],
-  monthlyContributions: [ contributionSchema ]
+  monthlyContributions: [ contributionSchema ],
+  accessList: [{ type: String }]
 });
 
 const contributionMonthModel = mongoose.model('contribution_month', contributionMonthSchema);
