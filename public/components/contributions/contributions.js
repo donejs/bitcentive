@@ -4,7 +4,8 @@ import './contributions.less';
 import template from './contributions.stache';
 import MonthlyContribution from '../../models/monthly-contributions';
 import ContributionMonth from '../../models/contribution-month';
-import Contributors from '../../models/contributor';
+import Contributor from '../../models/contributor';
+import OSProject from '../../models/os-project';
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
@@ -25,9 +26,15 @@ export const ViewModel = DefineMap.extend({
 
   activeContributors: {
     get() {
-      return Contributors.getList({
+      return Contributor.getList({
         active: true
       });
+    }
+  },
+
+  osProjects: {
+    get() {
+      return OSProject.getList({});
     }
   },
 
