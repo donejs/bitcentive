@@ -1,0 +1,20 @@
+<can-component tag="pages-home">
+  <style type="less"></style>
+  <template>
+    <can-import from="bitcentive/components/select-contribution-month/"/>
+    <can-import from="bitcentive/components/contribution-month/"/>
+    <bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>
+  {{#if contributionMonthId}}
+    <bit-contribution-month {(contribution-month-id)}="contributionMonthId"/>
+  {{/if}}
+  </template>
+  <script type="view-model">
+    import DefineMap from 'can-define/map/';
+
+    export default DefineMap.extend({
+      contributionMonthId: {
+        type: "string",
+      },
+    });
+  </script>
+</can-component>

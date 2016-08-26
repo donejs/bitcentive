@@ -10,7 +10,8 @@ const Schema = mongoose.Schema;
 
 const contributorSchema = new Schema({
   name: { type: String, required: true },
-  email: { type: String }
+  email: { type: String, required: true, unique: true },
+  active: { type: Boolean }
 });
 
 const contributorModel = mongoose.model('contributor', contributorSchema);

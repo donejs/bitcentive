@@ -21,10 +21,10 @@ const clientProjectSchema = new Schema({
 });
 
 const contributionSchema = new Schema({
-  clientProjectRef: { type: Schema.Types.ObjectId, ref: 'os_project' },
-  points: Number,
-  contributor: { type: Schema.Types.ObjectId, ref: 'contributor' },
-  contribution: String
+  osProjectRef: { type: Schema.Types.ObjectId, ref: 'os_project' },
+  contributorRef: { type: Schema.Types.ObjectId, ref: 'contributor' },
+  description: String,
+  points: Number
 });
 
 const contributionMonthSchema = new Schema({

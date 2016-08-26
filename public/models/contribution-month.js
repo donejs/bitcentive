@@ -11,6 +11,7 @@ import "../lib/prefilter";
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
+import MonthlyContributions from "./monthly-contributions";
 
 import feathers from "./feathers";
 
@@ -43,12 +44,11 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   monthlyOSProjects: {
     Type: MonthlyOSProject.List,
     set: function(newVal){
-      //debugger;
       return newVal;
     }
   },
   monthlyClientProjects: MonthlyClientProject.List,
-  monthlyContributions: DefineList.List,
+  monthlyContributions: MonthlyContributions.List,
   calculations: {
     get: function() {
       var calculations = {
@@ -186,6 +186,21 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     }
     return 0;
 
+  },
+
+  addContribution(newContribution) {
+    this.monthlyContributions.push(newContribution);
+    this.save().then(function() {}, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
+  },
+
+  removeContribution(contribution) {
+    const index = this.monthlyContributions.indexOf(contribution);
+    this.monthlyContributions.splice(index, 1);
+    this.save().then(function() {}, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
   }
 });
 

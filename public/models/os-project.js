@@ -9,7 +9,7 @@ var OSProject =  DefineMap.extend("OSProject", {
 });
 
 var osProjectAlgebra = new set.Algebra(
-    set.comparators.id("_id")
+  set.comparators.id("_id")
 );
 
 OSProject.connection = superMap({
