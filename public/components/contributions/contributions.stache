@@ -12,10 +12,14 @@
   <tbody>
   {{#each contributionMonth.monthlyContributions as monthlyContribution}}
     <tr>
-      <td>{{monthlyContribution.contributorRef.value.name}}</td>
-      <td>{{monthlyContribution.osProjectRef.value.name}}</td>
-      <td>{{monthlyContribution.description}}</td>
-      <td>{{monthlyContribution.points}}</td>
+      <td>
+        {{monthlyContribution.contributorRef.value.name}}
+      </td>
+      <td>
+        {{monthlyContribution.osProjectRef.value.name}}
+      </td>
+      <td><input type="textarea" {($value)}="monthlyContribution.description" ($change)="contributionMonth.save()"></input></td>
+      <td><input type="number" {($value)}="monthlyContribution.points" ($change)="contributionMonth.save()"></input></td>
       <td>
         <button type="button" class="btn btn-danger btn-xs"
             ($click)="removeContribution(%event, monthlyContribution)">
