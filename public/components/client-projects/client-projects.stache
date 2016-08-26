@@ -1,3 +1,5 @@
+<can-import from="bitcentive/lib/stache-helpers/access"/>
+
 <table class="table">
   <thead>
     <tr>
@@ -50,11 +52,13 @@
       <td>
         <span class="total">${{getTotal(monthlyClientProject)}}</span>
       </td>
+      {{#accessCanDelete ../}}
       <td>
         <button type="button" class="btn btn-danger btn-xs" ($click)="deleteClientProject(monthlyClientProject)">
           <span class="glyphicon glyphicon-remove"/>
         </button>
       </td>
+      {{/accessCanDelete}}
     </tr>
   {{/each}}
   {{/with}}
@@ -94,5 +98,7 @@
   </div>
 </div>
 {{else}}
-  <a href="javascript://" ($click)="toggleClientInput()">Add Client</a>
+  {{#accessCanCreate contributionMonth}}
+    <a href="javascript://" ($click)="toggleClientInput()">Add Client</a>
+  {{/accessCanCreate}}
 {{/if}}

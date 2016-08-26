@@ -6,6 +6,10 @@ import ClientProject from "./client-project";
 var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectsOsProject",{
     osProjectRef: {
       type: OSProject.Ref.type
+    },
+    accessList:{
+      type: DefineList.List,
+    serialize:false
     }
 });
 
@@ -18,6 +22,10 @@ MonthlyClientProjectsOsProject.List = DefineList.extend({
         map[monthlyClientProjectOSProject.osProjectRef._id] = index;
       });
       return map;
+    },
+    accessList:{
+      type: DefineList.List,
+    serialize:false
     }
   },
   // serialize: function() {

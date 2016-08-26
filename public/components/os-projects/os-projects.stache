@@ -1,3 +1,5 @@
+<can-import from="bitcentive/lib/stache-helpers/access"/>
+
 <table class='table'>
   <thead>
     <tr>
@@ -68,5 +70,7 @@
   </div>
 </div>
 {{else}}
-  <a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
+  {{#accessCanCreate contributionMonth}}
+    <a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
+  {{/accessCanCreate}}
 {{/if}}

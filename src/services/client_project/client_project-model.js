@@ -7,6 +7,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const roles = require('../../lib/roles');
 
 const clientProjectSchema = new Schema({
   name: { type: String, required: true }
