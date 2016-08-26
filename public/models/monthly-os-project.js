@@ -7,11 +7,19 @@ var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
   commissioned: "boolean",
   osProjectRef: {
     type: OSProject.Ref.type
+  },
+  accessList:{
+    type: DefineList.List,
+    serialize:false
   }
 });
 
 MonthlyOSProject.List = DefineList.extend({
   "*": MonthlyOSProject,
+  accessList:{
+    type: DefineList.List,
+    serialize:false
+  },
   monthlyOSProjectIdMap: {
     get: function() {
       var map = {};

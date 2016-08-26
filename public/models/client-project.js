@@ -11,10 +11,18 @@ var clientProjectAlgebra = new set.Algebra(
 var ClientProject = DefineMap.extend({
   _id: 'string',
   name: 'string',
+  accessList:{
+    type: DefineList.List,
+    serialize:false
+  }
 });
 
 ClientProject.List = DefineList.extend({
-  "*": ClientProject
+  "*": ClientProject,
+  accessList:{
+    type: DefineList.List,
+    serialize:false
+  }
 });
 
 ClientProject.connection = superMap({
