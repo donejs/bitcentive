@@ -3,6 +3,8 @@ import DefineList from "can-define/list/";
 import superMap from "can-connect/can/super-map/";
 import feathers from "./feathers";
 
+import set from "can-set"
+
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
   name: "string",
