@@ -1,51 +1,40 @@
-import fixture from "can-fixture";
-import ContributionMonth from 'bitcentive/models/contribution-month';
-import OSProject from 'bitcentive/models/os-project';
-import ClientProject from 'bitcentive/models/client-project';
+// Main file that loads all model fixtures
+import fixture from 'can-fixture';
 
-import "./contributor";
-import "./client-project";
-import clientProjects from "./client-projects.json";
-import "./os-project";
-import osProjects from "./os-projects.json";
-
-const osProject = new OSProject(osProjects[0]);
-const clientProject1 = new ClientProject(clientProjects[1]);
-const clientProject2 = new ClientProject(clientProjects[2]);
-
-var monthlyContributionStore = fixture.store([{
-  _id: "1-MonthlyContribution-08-2016",
-  date: 1470009600000,
-  monthlyOSProjects: [{
-    significance: 80,
-    commissioned: true,
-    osProjectRef: osProject,
-  }],
-  monthlyClientProjects: [{
-    monthlyClientProjectsOSProjects: [{
-      osProjectRef: osProject,
-    }],
-    hours: 100,
-    clientProjectRef: clientProject1,
-  },{
-    monthlyClientProjectsOSProjects: [{
-      osProjectRef: osProject,
-    }],
-    hours: 40,
-    clientProjectRef: clientProject2,
-  }]
-}], ContributionMonth.algebra);
-
-fixture({
-    'GET /api/contribution_months': monthlyContributionStore.getListData,
-    'GET /api/contribution_months/{_id}': monthlyContributionStore.getData,
-    'POST /api/contribution_months': monthlyContributionStore.createData,
-    'PUT /api/contribution_months/{_id}': function(req) {
-      return req.data;
-    },
-    'DELETE /api/contribution_months/{_id}': monthlyContributionStore.destroyData,
+// Fixtures for token login when the idProp is `_id`.
+fixture("OPTIONS /auth/token", function(request, response, headers, ajaxSettings){
+  return response(200, "", `HTTP/1.1 204 No Content
+    Access-Control-Allow-Origin: *
+    Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE
+    Access-Control-Allow-Headers: content-type
+    Connection: keep-alive`
+  );
+});
+fixture("POST /auth/token", function(request, response, headers, ajaxSettings){
+  return {
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjI1MzcwNzEyMDAsIl9pZCI6MX0.6SbVcUHJjbbzJ0Kt6x3iOSnTUms7EqO0MGkMp8m6OTg',
+    data: {
+      _id: 1,
+      email: 'user@example.com'
+    }
+  };
 });
 
-export default monthlyContributionStore;
-
-window.fixture = fixture;
+// Fixtures for username/password login when the idProp is `_id`.
+fixture("OPTIONS /auth/local", function(request, response, headers, ajaxSettings){
+  return response(200, "", `HTTP/1.1 204 No Content
+    Access-Control-Allow-Origin: *
+    Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE
+    Access-Control-Allow-Headers: content-type
+    Connection: keep-alive`
+  );
+});
+fixture("POST /auth/local", function(request, response, headers, ajaxSettings){
+  return {
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjI1MzcwNzEyMDAsIl9pZCI6MX0.6SbVcUHJjbbzJ0Kt6x3iOSnTUms7EqO0MGkMp8m6OTg',
+    data: {
+      _id: 1,
+      email: 'user@example.com'
+    }
+  };
+});

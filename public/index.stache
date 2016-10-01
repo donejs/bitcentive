@@ -1,68 +1,38 @@
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>{{title}}</title>
   </head>
   <body>
+    <can-import from="bootstrap" />
     <can-import from="bootstrap/dist/css/bootstrap.css" />
-    <can-import from="bitcentive/styles.less" />
+    <can-import from="bitcentive/styles.less!" />
     <can-import from="bitcentive/app" export-as="viewModel" />
-    <can-import from="can-stache/helpers/route"/>
+    <can-import from="bitcentive/components/main-nav/" />
+    <can-import from="bitcentive/components/page-home/" />
+    <can-import from="bitcentive/components/page-auth/" />
+    <can-import from="bitcentive/components/page-dashboard/" />
+    <can-import from="bitcentive/components/page-four-oh-four/" />
 
-    {{#is sessionPromiseStatus "pending"}}
-      <div class="loader">
-        Loading...
-      </div>
-    {{/is}}
+    <main-nav {(session)}="session" {(page)}="page" {(subpage)}="subpage"></main-nav>
 
-    {{#is sessionPromiseStatus "resolved"}}
-
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar">
-                <a class="logout" href="#" ($click)="doLogout">Logout</a>
-              </span>
-            </button>
-            <a class="navbar-brand" href="{{routeUrl}}">Bitcentive</a>
-          </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav pull-right">
-              {{#if session.isUserLoggedIn}}
-                <li><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
-                <li><a class="logout" href="#" ($click)="doLogout">Logout</a></li>
-              {{/if}}
-            </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-      </nav>
-
-      <div class="content container">
-        {{#if session.isUserLoggedIn}}
-          {{#switch page}}
-            {{#case 'contributors'}}
-              <can-import from="bitcentive/pages/contributors.component"/>
-              <pages-contributors/>
-            {{/case}}
-            {{#default}}
-              <can-import from="bitcentive/pages/home.component"/>
-              <pages-home {(contribution-month-id)}="pageId"/>
-            {{/default}}
-          {{/switch}}
-        {{else}}
-          <can-import from="bitcentive/components/auth/"/>
-          <bit-auth {(session)}="session" {(page)}="page" />
-        {{/if}}
-      </div>
-
-      <div class="footer"></div>
-    {{/is}}
+    {{#switch page}}
+      {{#case 'home'}}
+        <page-home></page-home>
+      {{/case}}
+      {{#case 'auth'}}
+        <page-auth {(session)}="session" {(page)}="page" {(subpage)}="subpage"></page-auth>
+      {{/case}}
+      {{#case 'dashboard'}}
+        <page-dashboard></page-dashboard>
+      {{/case}}
+      {{#case 'four-oh-four'}}
+        <page-four-oh-four></page-four-oh-four>
+      {{/case}}
+    {{/switch}}
 
     {{#switch env.NODE_ENV}}
       {{#case "production"}}

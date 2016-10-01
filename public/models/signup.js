@@ -27,33 +27,23 @@ var behaviors = [
   realtime
 ];
 
-export const Session = DefineMap.extend('Session', {
-  seal:false
-}, {
+export const Signup = DefineMap.extend('Signup', {
   _id: '*',
   email: 'string',
   password: 'string'
 });
 
-Session.List = DefineList.extend({
-  '*': Session
+Signup.List = DefineList.extend({
+  '*': Signup
 });
 
-export const sessionConnection = connect(behaviors, {
-  url: {
-    createData: data => feathers.authenticate(data).then(response => response.data),
-    destroyData: () => feathers.logout().then(() => {
-      if(!window.doneSsr){
-        window.localStorage.clear();
-        window.location.href = '/';
-      }
-      return;
-    })
-  },
+export const signupConnection = connect(behaviors, {
+  parseInstanceProp: 'data',
+  url: '/signup',
   idProp: '_id',
-  Map: Session,
-  List: Session.List,
-  name: 'session'
+  Map: Signup,
+  List: Signup.List,
+  name: 'signup'
 });
 
-export default Session;
+export default Signup;

@@ -1,0 +1,12 @@
+<can-import from="auth-component" />
+<can-import from="can-stache/helpers/route" />
+<can-import from="bitcentive/models/session" {^@value}="*Session"/>
+
+<auth-component local="password" 
+    local-signup="true"
+    {(subpage)}="subpage"
+    {(session)}="session"
+    {session-model}="@*Session.default"
+    providers="local,github">
+  <img src="/img/bitcentive-logo.png" alt="" class="logo">
+</auth-component>
