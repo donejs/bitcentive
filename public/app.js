@@ -4,7 +4,11 @@ import route from 'can-route';
 import 'can-route-pushstate';
 import Session from 'bitcentive/models/session';
 import feathers from 'bitcentive/models/feathers';
-import 'bitcentive/models/fixtures/';
+// import 'bitcentive/models/fixtures/';
+
+// viewmodel debugging
+import viewModel from 'can-view-model';
+window.viewModel = viewModel;
 
 const AppViewModel = DefineMap.extend({
 
@@ -48,6 +52,10 @@ const AppViewModel = DefineMap.extend({
       return this.routePage(page);
     }
   },
+
+  pageId: {
+    type: "string"
+  },
   
   /**
    * The auth page uses the subpage attribute to switch between the 'login'
@@ -62,9 +70,7 @@ const AppViewModel = DefineMap.extend({
    * The `title` attribute is used in index.stache as the HTML title.
    */
   title: {
-    value(){
-      return 'bitcentive';
-    }
+    value: 'Bitcentive'
   },
 
   /**
@@ -78,7 +84,8 @@ const AppViewModel = DefineMap.extend({
       auth: 'public',
       login: 'public',
       signup: 'public',
-      dashboard: 'private'
+      dashboard: 'private',
+      contributors: 'private'
     };
 
     if(page === 'logout'){

@@ -16,14 +16,19 @@
 
     <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
       <ul class="nav navbar-nav">
-        <li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home</a></li>
+        {{#if session}}
+          <li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Dashboard</a></li>
+          <li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
+        {{else}}
+          <li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{#if session}}
-          <li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Open Dashboard</a></li>
           <li class="dropdown">
             <a href="javascript://" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
               <li><a href="javascript://">Account</a></li>
               <li><a href="{{routeUrl page='logout'}}">Logout</a></li>
             </ul>
