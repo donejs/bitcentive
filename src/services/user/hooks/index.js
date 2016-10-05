@@ -3,6 +3,7 @@
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
 const auth = require('feathers-authentication').hooks;
+const prepareGithubUser = require('./prepare-github-user');
 
 exports.before = {
   all: [],
@@ -18,7 +19,8 @@ exports.before = {
     auth.restrictToOwner({ ownerField: '_id' })
   ],
   create: [
-    auth.hashPassword()
+    auth.hashPassword(),
+    prepareGithubUser()
   ],
   update: [
     auth.verifyToken(),

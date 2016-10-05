@@ -38,6 +38,8 @@
     "feathers-socketio": "^1.4.1",
     "mongoose": "^4.5.5",
     "passport": "^0.3.2",
+    "passport-github": "^1.1.0",
+    "passport-github-token": "^2.1.0",
     "serve-favicon": "^2.3.0",
     "winston": "^2.2.0"
   },
