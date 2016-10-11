@@ -4,12 +4,25 @@
   "mongodb": "mongodb://localhost:27017/bitcentive",
   "public": "../public/",
   "auth": {
-    "userEndpoint": "/api/users",
+    "cookie": {
+      "enabled": true,
+      "secure": false
+    },
     "token": {
       "secret": "EUe73wz+7v2xp2DBQGvUdPiENRcx/Lhn053WbqiQCAe1ygYWDo1b+kerC8ZRbLoCXK4mPbdPUrhD0L87J7w0zQ=="
     },
+    "user": {
+      "service": "/api/users",
+      "idField": "_id",
+      "usernameField": "email", 
+      "passwordField": "password" 
+    },
     "local": {},
     "github": {
+      "provider": "github",
+      "service": "auth/github",
+      "successRedirect": "/auth/success",
+      "callbackURL": "/auth/github/callback",
       "clientID": "f425f8fe2f98014a32d5",
       "clientSecret": "INSERT SECRET HERE",
       "permissions": {

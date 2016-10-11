@@ -6,44 +6,26 @@ const auth = require('feathers-authentication').hooks;
 const prepareGithubUser = require('./prepare-github-user');
 
 exports.before = {
-  all: [],
-  find: [
-    auth.verifyToken(),
-    auth.populateUser(),
-    auth.restrictToAuthenticated()
+  all: [
+    auth.isAuthenticated(),
+    // auth.checkPermissions({namespace: 'users', on: 'user', field: 'permissions'}),
+    // auth.isPermitted()
   ],
-  get: [
-    auth.verifyToken(),
-    auth.populateUser(),
-    auth.restrictToAuthenticated(),
-    auth.restrictToOwner({ ownerField: '_id' })
-  ],
+  find: [],
+  get: [],
   create: [
     auth.hashPassword(),
     prepareGithubUser()
   ],
-  update: [
-    auth.verifyToken(),
-    auth.populateUser(),
-    auth.restrictToAuthenticated(),
-    auth.restrictToOwner({ ownerField: '_id' })
-  ],
-  patch: [
-    auth.verifyToken(),
-    auth.populateUser(),
-    auth.restrictToAuthenticated(),
-    auth.restrictToOwner({ ownerField: '_id' })
-  ],
-  remove: [
-    auth.verifyToken(),
-    auth.populateUser(),
-    auth.restrictToAuthenticated(),
-    auth.restrictToOwner({ ownerField: '_id' })
-  ]
+  update: [],
+  patch: [],
+  remove: []
 };
 
 exports.after = {
-  all: [hooks.remove('password','__v')],
+  all: [
+    hooks.remove('password','__v')
+  ],
   find: [],
   get: [],
   create: [],

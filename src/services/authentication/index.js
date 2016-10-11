@@ -1,6 +1,10 @@
 'use strict';
 
 const authentication = require('feathers-authentication');
+const token = authentication.TokenService;
+const local = authentication.LocalService;
+const oauth2 = authentication.OAuth2Service;
+
 const GithubStrategy = require('passport-github').Strategy;
 const GithubTokenStrategy = require('passport-github-token');
 
@@ -13,5 +17,8 @@ module.exports = function() {
   config.github.tokenStrategy = GithubTokenStrategy;
 
   app.set('auth', config);
-  app.configure(authentication(config));
+  app.configure(authentication(config))
+    .configure(token(config.token))
+    .configure(local(config.local))
+    .configure(oauth2(config.github));
 };
