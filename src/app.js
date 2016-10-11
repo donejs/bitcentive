@@ -14,7 +14,6 @@ const socketio = require('feathers-socketio');
 const middleware = require('./middleware');
 const services = require('./services');
 const ssr = require("../public/ssr");
-const ssrCookie = require('feathers-done-ssr');
 
 const app = feathers();
 
