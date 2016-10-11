@@ -4,6 +4,7 @@
 
 <auth-component local="password" 
     local-signup="true"
+    oauth-flow="popup"
     {(subpage)}="subpage"
     {(session)}="session"
     {session-model}="@*Session.default"
