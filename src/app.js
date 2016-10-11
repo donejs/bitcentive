@@ -31,7 +31,6 @@ app.use(compress())
   .configure(rest())
   .configure(socketio())
   .configure(services)
-  .use(ssrCookie(app)) //make JWT token available for ssr
   .use(ssr)
   .configure(middleware);
 
