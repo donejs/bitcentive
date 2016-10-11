@@ -14,7 +14,6 @@ const socketio = require('feathers-socketio');
 const middleware = require('./middleware');
 const services = require('./services');
 const ssr = require("../public/ssr");
-const ssrCookie = require('feathers-done-ssr');
 
 const app = feathers();
 
@@ -31,7 +30,6 @@ app.use(compress())
   .configure(rest())
   .configure(socketio())
   .configure(services)
-  .use(ssrCookie(app)) //make JWT token available for ssr
   .use(ssr)
   .configure(middleware);
 

@@ -9,6 +9,7 @@ module.exports = function() {
 
   const options = {
     Model: contributionMonth,
+    lean: true,
     paginate: {
       default: 5,
       max: 25

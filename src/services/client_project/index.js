@@ -9,6 +9,7 @@ module.exports = function() {
 
   const options = {
     Model: clientProject,
+    lean: true,
     paginate: {
       default: 25,
       max: 100
