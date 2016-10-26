@@ -1,11 +1,11 @@
 /* global window */
-
-import feathers from './feathers';
 import connect from 'can-connect';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
+import User from 'bitcentive/models/user';
 
-import dataUrl from 'can-connect/data/url/';
+import feathersClient from './feathers';
+import feathersSession from 'can-connect-feathers/session';
 import dataParse from 'can-connect/data/parse/';
 import construct from 'can-connect/constructor/';
 import constructStore from 'can-connect/constructor/store/';
@@ -15,8 +15,7 @@ import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 
-var behaviors = [
-  dataUrl,
+var behaviorList = [
   dataParse,
   construct,
   constructStore,
@@ -24,32 +23,35 @@ var behaviors = [
   canMap,
   canRef,
   dataCallbacks,
-  realtime
+  realtime,
+  feathersSession
 ];
 
 export const Session = DefineMap.extend('Session', {
-  seal:false
+  seal: false
 }, {
   _id: '*',
   email: 'string',
-  password: 'string'
+  password: 'string',
+  user: {
+    Type: User,
+    get (lastSetVal, resolve) {
+      if (lastSetVal) {
+        return lastSetVal;
+      }
+      if (this._id) {
+        User.get({_id: this._id}).then(resolve);
+      }
+    }
+  }
 });
 
 Session.List = DefineList.extend({
   '*': Session
 });
 
-export const sessionConnection = connect(behaviors, {
-  url: {
-    createData: data => feathers.authenticate(data).then(response => response.data),
-    destroyData: () => feathers.logout().then(() => {
-      if(!window.doneSsr){
-        window.localStorage.clear();
-        window.location.href = '/';
-      }
-      return;
-    })
-  },
+export const sessionConnection = connect(behaviorList, {
+  feathersClient: feathersClient,
   idProp: '_id',
   Map: Session,
   List: Session.List,

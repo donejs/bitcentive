@@ -1,11 +1,10 @@
 /* global window */
-
-import feathers from './feathers';
-import connect from 'can-connect';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 
-import dataUrl from 'can-connect/data/url/';
+import feathersClient from './feathers';
+import connect from 'can-connect';
+import feathersBehavior from 'can-connect-feathers';
 import dataParse from 'can-connect/data/parse/';
 import construct from 'can-connect/constructor/';
 import constructStore from 'can-connect/constructor/store/';
@@ -15,8 +14,7 @@ import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 
-var behaviors = [
-  dataUrl,
+var behaviorList = [
   dataParse,
   construct,
   constructStore,
@@ -24,7 +22,8 @@ var behaviors = [
   canMap,
   canRef,
   dataCallbacks,
-  realtime
+  realtime,
+  feathersBehavior
 ];
 
 export const Signup = DefineMap.extend('Signup', {
@@ -37,9 +36,9 @@ Signup.List = DefineList.extend({
   '*': Signup
 });
 
-export const signupConnection = connect(behaviors, {
+export const signupConnection = connect(behaviorList, {
   parseInstanceProp: 'data',
-  url: '/signup',
+  feathersService: feathersClient.service('/signup'),
   idProp: '_id',
   Map: Signup,
   List: Signup.List,

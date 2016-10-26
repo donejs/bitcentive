@@ -5,7 +5,6 @@ import Contributor from "./contributor";
 import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import superMap from "can-connect/can/super-map/";
 
 import "../lib/prefilter";
 import moment from "moment";
@@ -13,8 +12,29 @@ import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
 
-import feathers from "./feathers";
+import feathersClient from './feathers';
+import connect from 'can-connect';
+import feathersBehavior from 'can-connect-feathers';
+import dataParse from 'can-connect/data/parse/';
+import construct from 'can-connect/constructor/';
+import constructStore from 'can-connect/constructor/store/';
+import constructOnce from 'can-connect/constructor/callbacks-once/';
+import canMap from 'can-connect/can/map/';
+import canRef from 'can-connect/can/ref/';
+import dataCallbacks from 'can-connect/data/callbacks/';
+import realtime from 'can-connect/real-time/';
 
+var behaviorList = [
+  dataParse,
+  construct,
+  constructStore,
+  constructOnce,
+  canMap,
+  canRef,
+  dataCallbacks,
+  realtime,
+  feathersBehavior
+];
 
 var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
@@ -213,12 +233,12 @@ var dataMassage = function(oType) {
   };
 };
 
-ContributionMonth.connection = superMap({
+ContributionMonth.connection = connect(behaviorList, {
   parseInstanceProp: "data",
   idProp: "_id",
   Map: ContributionMonth,
   List: ContributionMonth.List,
-  url: feathers.rest("/api/contribution_months"),
+  feathersService: feathersClient.service("/api/contribution_months"),
   // url: "/api/contribution_months",
   name: "contributionMonth",
   algebra: contributionMonthAlgebra

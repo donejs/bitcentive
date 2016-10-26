@@ -7,14 +7,14 @@ const prepareGithubUser = require('./prepare-github-user');
 
 exports.before = {
   all: [
-    auth.isAuthenticated(),
+    // auth.isAuthenticated(),
     // auth.checkPermissions({namespace: 'users', on: 'user', field: 'permissions'}),
     // auth.isPermitted()
   ],
   find: [],
   get: [],
   create: [
-    auth.hashPassword(),
+    // auth.hashPassword(),
     prepareGithubUser()
   ],
   update: [],

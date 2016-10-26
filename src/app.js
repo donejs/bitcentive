@@ -24,6 +24,10 @@ app.use(compress())
   .use(cors())
   .use(favicon( path.join(app.get('public'), 'favicon.ico') ))
   .use('/', serveStatic( app.get('public') ))
+  .use('/auth/token', function(req, res, next){
+    // debugger;
+    next(null, req, res);
+  })
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(hooks())

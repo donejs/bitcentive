@@ -3,7 +3,6 @@ import DefineMap from 'can-define/map/';
 import route from 'can-route';
 import 'can-route-pushstate';
 import Session from 'bitcentive/models/session';
-import feathers from 'bitcentive/models/feathers';
 // import 'bitcentive/models/fixtures/';
 
 // viewmodel debugging
@@ -26,20 +25,12 @@ const AppViewModel = DefineMap.extend({
    * to obtain the full session data.
    */
   session: {
-    value() {
-      // Refresh the token only on the client.
-      // TODO: Move this somewhere else. 
-      if(!window.doneSsr && feathers.getSession()){
-        new Session().save().then(response => {
-          this.session = response;
-          return response;
-        });
-      }
-      let session = feathers.getSession();
-      if (session) {
-        session = new Session(session);
-      }
-      return session;
+    value () {
+      new Session().save().then(response => {
+        this.session = response;
+        return response;
+      })
+      .catch(err => console.log(err));
     }
   },
 
@@ -89,8 +80,13 @@ const AppViewModel = DefineMap.extend({
     };
 
     if(page === 'logout'){
+      debugger;
       page = 'home';
-      this.session.destroy();
+      this.session && this.session.destroy().then(() => {
+        if(!window.doneSsr){
+          window.location.href = '/';
+        }
+      });
     }
 
     if (this.session) {
@@ -109,10 +105,6 @@ const AppViewModel = DefineMap.extend({
     }
     return page;
   }
-});
-
-feathers.io.on('login', function(data){
-  console.log('LOGGED IN:', data);
 });
 
 route('/login', {page: 'auth', subpage: 'login'}); 
