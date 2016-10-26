@@ -2,12 +2,60 @@
 <can-import from="can-stache/helpers/route" />
 <can-import from="bitcentive/models/session" {^@value}="*Session"/>
 
-<auth-component local="password" 
-    local-signup="true"
-    oauth-flow="popup"
-    {(subpage)}="subpage"
-    {(session)}="session"
-    {session-model}="@*Session.default"
-    providers="local,github">
-  <img src="/img/bitcentive-logo.png" alt="" class="logo">
-</auth-component>
+<div class="auth">
+	<div class="auth-ui">
+		<div id="auth-ui-container">
+
+
+			<ul class="local-auth-tabs">
+				<li class="signup {{#is subpage 'signup'}}active{{/is}}" ($click)="setSubpage('signup')">
+					<a href="javascript://">Signup</a>
+				</li>
+				<li class="login {{#is subpage 'login'}}active{{/is}}" ($click)="setSubpage('login')">
+					<a href="javascript://">Login</a>
+				</li>
+			</ul>
+
+			<div class="auth-branding">
+				<img src="/img/bitcentive-logo.png" alt="" class="logo">
+			</div>
+
+			<ul class="sso-providers one">
+				<li class="sso-github one" title="Login with GitHub">
+					<a href="javascript://" ($click)="openOauthPopup(providers.github)">
+						<img src="/img/github.svg" alt="GitHub logo">
+						<span>Login with GitHub</span>
+					</a>
+				</li>
+			</ul>
+
+			{{#is subpage 'login'}}
+				<form id="local-auth" ($submit)="login(%event, email, password)">
+					<div class="messages"></div>
+
+					<input type="email" placeholder="e-mail address" {($value)}="email">
+					<input type="password" placeholder="password" {($value)}="password">
+
+					<div class="forgot-password">
+						<a href="/forgot">forgot password</a>
+					</div>
+					
+					<button type="submit">Login</button>
+				</form>
+			{{/is}}
+
+			{{#is subpage 'signup'}}
+				<form id="local-auth" ($submit)="signup">
+					<div class="messages"></div>
+
+					<input type="email" placeholder="e-mail address" {($value)}="email">
+					<input type="password" placeholder="password" {($value)}="password">
+
+					<div class="forgot-password"></div>
+
+					<button type="submit">Signup</button>
+				</form>
+			{{/is}}
+		</div>
+	</div>
+</div>
