@@ -1,5 +1,6 @@
 /* global window */
 import 'can-define-stream';
+import canStream from 'can-stream';
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
 import 'can-route-pushstate';
@@ -31,7 +32,7 @@ const AppViewModel = DefineMap.extend({
     },
     stream(setStream){
       console.log('streaming');
-      return this.stream(Session, 'created').onValue(session => {
+      return canStream.toStream(Session, 'created').onValue(session => {
         console.log(session);
         this.session =  session;
       });

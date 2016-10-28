@@ -12,9 +12,7 @@ export const ViewModel = DefineMap.extend({
   setSubpage (tabName) {
     this.subpage = tabName;
   },
-  openLoginPopup () {
-    openLoginPopup('/auth/github');
-  },
+  openLoginPopup,
   isOAuthRoute: {
     get () {
       return this.subpage === 'success' || this.subpage === 'failure';

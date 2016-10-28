@@ -53,7 +53,7 @@ Session.List = DefineList.extend({
 });
 
 export const sessionConnection = connect(behaviorList, {
-  feathersClient: feathersClient,
+  feathersClient,
   idProp: '_id',
   Map: Session,
   List: Session.List,
