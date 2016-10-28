@@ -29,6 +29,7 @@
     "cors": "^2.7.1",
     "feathers": "^2.0.1",
     "feathers-authentication": "^0.8.0-beta-2",
+    "feathers-authentication-popups": "0.0.5",
     "feathers-configuration": "^0.2.3",
     "feathers-errors": "^2.4.0",
     "feathers-hooks": "^1.5.4",
