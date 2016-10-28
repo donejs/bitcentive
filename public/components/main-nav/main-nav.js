@@ -7,7 +7,12 @@ import Session from 'bitcentive/models/session';
 export const ViewModel = DefineMap.extend('MainNav', {
   page: 'string',
   subpage: 'string',
-  session: Session
+  session: Session,
+  logout(){
+    this.session.destroy().then(response => {
+      Session.trigger('destroyed', [response]);
+    });
+  }
 });
 
 export default Component.extend({

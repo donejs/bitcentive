@@ -3,6 +3,7 @@ import connect from 'can-connect';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import User from 'bitcentive/models/user';
+import canEvent from 'can-event';
 
 import feathersClient from './feathers';
 import feathersSession from 'can-connect-feathers/session';
@@ -47,6 +48,8 @@ export const Session = DefineMap.extend('Session', {
     }
   }
 });
+Object.assign(Session, canEvent);
+window.Session = Session;
 
 Session.List = DefineList.extend({
   '*': Session
@@ -61,9 +64,9 @@ export const sessionConnection = connect(behaviorList, {
 });
 
 window.authAgent.on('login', function (token) {
-  console.log('received token', token);
   let payload = decode(token);
   sessionConnection.createInstance(payload);
+  Session.trigger('created', [payload]);
 });
 
 export default Session;

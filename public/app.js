@@ -28,15 +28,26 @@ const AppViewModel = DefineMap.extend({
    */
   session: {
     value () {
+      var self = this;
       new Session().save().catch(err => console.log(err));
-    },
-    stream(setStream){
-      console.log('streaming');
-      return canStream.toStream(Session, 'created').onValue(session => {
-        console.log(session);
-        this.session =  session;
+      Session.on('created', (event, session) => {
+        self.session = session;
       });
-    }
+      Session.on('destroyed', (event, session) => {
+        self.session = undefined;
+      });
+    },
+    // stream(setStream){
+      // var self = this;
+      // console.log('streaming');
+      // return canStream.toStream(Session, 'created').onValue(event => {
+      //   let session = event.args[0];
+      //   console.log(session);
+      //   setTimeout(() => {
+      //     self.session = session;
+      //   }, 1);
+      // });
+    // }
   },
 
   /**
@@ -84,14 +95,15 @@ const AppViewModel = DefineMap.extend({
       contributors: 'private'
     };
 
-    if(page === 'logout'){
-      page = 'home';
-      this.session && this.session.destroy().then(() => {
-        if(!window.doneSsr){
-          window.location.href = '/';
-        }
-      });
-    }
+    // if(page === 'logout'){
+    //   page = 'home';
+    //   this.session && this.session.destroy()
+    //     .then(() => {
+    //       if(!window.doneSsr){
+    //         window.location.href = '/';
+    //       }
+    //     });
+    // }
 
     if (this.session) {
       // Perform some custom logic for logged-in users.
