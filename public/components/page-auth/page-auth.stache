@@ -22,7 +22,7 @@
 
 			<ul class="sso-providers one">
 				<li class="sso-github one" title="Login with GitHub">
-					<a href="javascript://" ($click)="openOauthPopup(providers.github)">
+					<a href="javascript://" ($click)="openLoginPopup">
 						<img src="/img/github.svg" alt="GitHub logo">
 						<span>Login with GitHub</span>
 					</a>

@@ -1,4 +1,5 @@
 /* global window */
+import 'can-define-stream';
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
 import 'can-route-pushstate';
@@ -26,11 +27,14 @@ const AppViewModel = DefineMap.extend({
    */
   session: {
     value () {
-      new Session().save().then(response => {
-        this.session = response;
-        return response;
-      })
-      .catch(err => console.log(err));
+      new Session().save().catch(err => console.log(err));
+    },
+    stream(setStream){
+      console.log('streaming');
+      return this.stream(Session, 'created').onValue(session => {
+        console.log(session);
+        this.session =  session;
+      });
     }
   },
 
@@ -80,7 +84,6 @@ const AppViewModel = DefineMap.extend({
     };
 
     if(page === 'logout'){
-      debugger;
       page = 'home';
       this.session && this.session.destroy().then(() => {
         if(!window.doneSsr){
