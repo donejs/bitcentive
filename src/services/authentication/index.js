@@ -8,7 +8,7 @@ const oauth2 = authentication.OAuth2Service;
 const GithubStrategy = require('passport-github').Strategy;
 const GithubTokenStrategy = require('passport-github-token');
 
-const handleOAuthPopups = require('feathers-authentication-popups/middleware');
+const handleOAuthPopups = require('authentication-popups/express');
 
 module.exports = function() {
   const app = this;
@@ -24,5 +24,5 @@ module.exports = function() {
     .configure(local(config.local))
     .configure(oauth2(config.github));
 
-  app.get('/auth/success', handleOAuthPopups(app));
+  app.get('/auth/success', handleOAuthPopups(app.get('auth').cookie));
 };

@@ -48,8 +48,6 @@ export const Session = DefineMap.extend('Session', {
     }
   }
 });
-Object.assign(Session, canEvent);
-window.Session = Session;
 
 Session.List = DefineList.extend({
   '*': Session
@@ -63,6 +61,7 @@ export const sessionConnection = connect(behaviorList, {
   name: 'session'
 });
 
+Object.assign(Session, canEvent);
 window.authAgent.on('login', function (token) {
   let payload = decode(token);
   sessionConnection.createInstance(payload);
