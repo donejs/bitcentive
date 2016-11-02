@@ -3,26 +3,15 @@
 const authentication = require('feathers-authentication');
 const token = authentication.TokenService;
 const local = authentication.LocalService;
-const oauth2 = authentication.OAuth2Service;
+const githubAuth = require('authentication-popups-github');
 
-const GithubStrategy = require('passport-github').Strategy;
-const GithubTokenStrategy = require('passport-github-token');
-
-const handleOAuthPopups = require('authentication-popups/express');
-
-module.exports = function() {
+module.exports = function () {
   const app = this;
 
-  let config = app.get('auth');
+  var config = app.get('auth');
 
-  config.github.strategy = GithubStrategy;
-  config.github.tokenStrategy = GithubTokenStrategy;
-
-  app.set('auth', config);
   app.configure(authentication(config))
     .configure(token(config.token))
     .configure(local(config.local))
-    .configure(oauth2(config.github));
-
-  app.get('/auth/success', handleOAuthPopups(app.get('auth').cookie));
+    .configure(githubAuth(config.github, config.cookie));
 };
