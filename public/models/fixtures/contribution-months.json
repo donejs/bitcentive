@@ -1,0 +1,31 @@
+[
+  {
+    "_id": "1",
+    "date": "2016-11-10T17:22:18.251Z",
+    "monthlyOSProjects": [{
+      "significance": 10,
+      "commissioned": true,
+      "osProjectRef": {
+        "_id": "1-CanJS",
+        "name": "CanJS"
+      }
+    },{
+      "significance": 20,
+      "commissioned": true,
+      "osProjectRef": {
+        "_id": "1-DoneJS",
+        "name": "DoneJS"
+      }
+    },{
+      "significance": 30,
+      "commissioned": true,
+      "osProjectRef": {
+        "_id": "1-StealJS",
+        "name": "StealJS"
+      }
+    }],
+    "monthlyClientProjects": []
+  },
+  {"_id": "2", "date": "2016-10-05T16:22:18.251Z"},
+  {"_id": "3", "date": "2016-19-01T15:22:18.251Z"}
+]
