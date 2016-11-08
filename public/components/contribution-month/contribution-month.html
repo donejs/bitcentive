@@ -13,17 +13,19 @@
       <bit-contribution-month {contribution-month-id}="contributionMonthId"/>
     </script>
   </div>
-    <script src="../../../node_modules/steal/steal.js"
-            main="can-view-autorender">
-      import autorender from 'can-view-autorender';
+    <script src="../../node_modules/steal/steal.js"
+            main="@empty">
       import viewModel from 'can-view-model';
       window.viewModel = viewModel;
 
       // Load fixtures for socket.io:
       import 'bitcentive/models/fixtures/fixtures-socket';
 
-      autorender(function(){
-        viewModel(document.getElementById("main")).set("contributionMonthId","1");
+      //import autorender from 'can-view-autorender';
+      System.import('can-view-autorender').then(function(autorender){
+        autorender(function(){
+          viewModel(document.getElementById("main")).set("contributionMonthId","1");
+        });
       });
     </script>
   </body>

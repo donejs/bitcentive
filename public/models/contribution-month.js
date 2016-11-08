@@ -246,3 +246,5 @@ ContributionMonth.connection = connect(behaviorList, {
 ContributionMonth.algebra = contributionMonthAlgebra;
 
 export default ContributionMonth;
+
+export { contributionMonthAlgebra as algebra };
