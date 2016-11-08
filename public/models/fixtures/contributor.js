@@ -1,7 +1,9 @@
 import fixture from 'can-fixture';
-import Contributor from '../contributor';
+//import Contributor from '../contributor';
+import canSet from 'can-set';
+var algebra = new canSet.Algebra(canSet.props.id('_id'));
 
-var contributorStore = fixture.store([{
+var store = fixture.store([{
     _id: "1-JustinMeyer",
     name: "Justin Meyer",
     active: true
@@ -9,12 +11,9 @@ var contributorStore = fixture.store([{
     _id: "2-KyleGifford",
     name: "Kyle Gifford",
     active: false
-  }], Contributor.algebra);
+  }], algebra);
 
-fixture({
-  'GET /api/contributors': contributorStore.getListData,
-  'GET /api/contributors/{_id}': contributorStore.getData,
-  'POST /api/contributors': contributorStore.createData,
-  'PUT /api/contributors/{_id}': contributorStore.updateData,
-  'DELETE /api/contributors/{_id}': contributorStore.destroyData
-});
+
+export default function(mockServer){
+  mockServer.onFeathersService("api/contributors", store, {id: "_id"});
+}
