@@ -1,26 +1,21 @@
 import QUnit from 'steal-qunit';
 
-
 // Mock socket.io server:
 import 'bitcentive/models/fixtures/fixtures-socket';
 
-// Load model:
-var VMPromise = System.import('bitcentive/components/contribution-month/').then(module => module.ViewModel);
+// Load VM:
+import { ViewModel } from 'bitcentive/components/contribution-month/';
 
 QUnit.asyncTest('test fixture socket', function(){
-  // Wait till our models get loaded:
-  VMPromise.then(ViewModel => {
-    let vm = new ViewModel({
-      contributionMonthId: "1"
-    });
+  let vm = new ViewModel({
+    contributionMonthId: "1"
+  });
 
-    vm.contributionMonthPromise.then((contributionMonth) => {
-      QUnit.equal(contributionMonth.monthlyOSProjects.length, 3, 'Loaded 3 OS projects');
-      QUnit.start();
-    });
+  vm.contributionMonthPromise.then((contributionMonth) => {
+    QUnit.equal(contributionMonth.monthlyOSProjects.length, 3, 'Loaded 3 OS projects');
+    QUnit.start();
   });
 });
-
 
 QUnit.noop = function(){};
 
@@ -63,8 +58,6 @@ QUnit.module('bitcentive/components/contribution-month', {
     };
   }
 });
-
-
 
 QUnit.noop('Check if the correct contribution month is loaded', function(){
     let vm = new ViewModel();

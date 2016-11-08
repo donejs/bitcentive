@@ -3,5 +3,6 @@ import fixtureSocket from 'can-fixture-socket';
 import mockContributionMonthsService from 'bitcentive/models/fixtures/contribution-months';
 
 // Mock socket.io server:
+console.log('Mocking socket.io server...');
 var mockServer = new fixtureSocket.Server( io );
 mockContributionMonthsService( mockServer );

@@ -14,24 +14,16 @@
     </script>
   </div>
     <script src="../../../node_modules/steal/steal.js"
-            main="@empty">
+            main="can-view-autorender">
+      import autorender from 'can-view-autorender';
       import viewModel from 'can-view-model';
       window.viewModel = viewModel;
 
-      import io from 'socket.io-client/socket.io';
-      import fixtureSocket from 'can-fixture-socket';
-      import mockContributionMonthsService from 'bitcentive/models/fixtures/contribution-months';
+      // Load fixtures for socket.io:
+      import 'bitcentive/models/fixtures/fixtures-socket';
 
-      // Mock socket.io server:
-      var mockServer = new fixtureSocket.Server( io );
-      mockContributionMonthsService( mockServer );
-
-      // Postpone autorender till socket.io gets mocked:
-      System.import('can-view-autorender').then(function(autorender){
-        autorender(function(){
-          console.log('can-view-autorender done.');
-          viewModel(document.getElementById("main")).set("contributionMonthId","1");
-        })
+      autorender(function(){
+        viewModel(document.getElementById("main")).set("contributionMonthId","1");
       });
     </script>
   </body>
