@@ -3,7 +3,6 @@
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
 const auth = require('feathers-authentication').hooks;
-const prepareGithubUser = require('./prepare-github-user');
 
 exports.before = {
   all: [
@@ -13,19 +12,14 @@ exports.before = {
   ],
   find: [],
   get: [],
-  create: [
-    // auth.hashPassword(),
-    prepareGithubUser()
-  ],
+  create: [],
   update: [],
   patch: [],
   remove: []
 };
 
 exports.after = {
-  all: [
-    hooks.remove('password','__v')
-  ],
+  all: [],
   find: [],
   get: [],
   create: [],
