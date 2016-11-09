@@ -6,7 +6,8 @@
   "auth": {
     "cookie": {
       "enabled": true,
-      "secure": false
+      "secure": false,
+      "name": "my-feathers-cookie"
     },
     "token": {
       "secret": "EUe73wz+7v2xp2DBQGvUdPiENRcx/Lhn053WbqiQCAe1ygYWDo1b+kerC8ZRbLoCXK4mPbdPUrhD0L87J7w0zQ=="
@@ -19,8 +20,8 @@
     "user": {
       "service": "/api/users",
       "idField": "_id",
-      "usernameField": "email", 
-      "passwordField": "password" 
+      "usernameField": "email",
+      "passwordField": "password"
     },
     "local": {},
     "github": {
