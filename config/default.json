@@ -5,6 +5,7 @@
   "public": "../public/",
   "auth": {
     "cookie": {
+      "name": "feathers-jwt",
       "enabled": true,
       "secure": false,
       "name": "feathers-jwt"
@@ -30,7 +31,7 @@
       "successRedirect": "/auth/success",
       "callbackURL": "/auth/github/callback",
       "clientID": "f425f8fe2f98014a32d5",
-      "clientSecret": "INSERT SECRET HERE",
+      "clientSecret": "e7ba3cea11d1a178566d8d34e6a154768e3abefd",
       "permissions": {
         "scope": []
       }
