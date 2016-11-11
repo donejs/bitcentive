@@ -63,7 +63,7 @@
     "jquery": "^2.1.4",
     "jwt-decode": "^2.1.0",
     "moment": "^2.14.1",
-    "steal": "^0.16.38",
+    "steal": "^0.16.42",
     "steal-socket.io": "^4.0.0",
     "steal-stache": "^3.0.0-pre.3",
     "superagent": "^2.3.0"
