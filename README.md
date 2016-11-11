@@ -40,13 +40,13 @@ brew uninstall mongodb
 
 
 2. Install your dependencies
-    
+
     ```
     cd path/to/bitcentive; npm install
     ```     
 
 3. Start your app
-    
+
     ```
     npm run develop
     ```
@@ -67,6 +67,16 @@ $ feathers generate hook                  # Generate a new Hook
 $ feathers generate model                 # Generate a new Model
 $ feathers help                           # Show all commands
 ```
+
+## Secrets and Environment Variables
+
+This app allows [logging in with github](https://developer.github.com/v3/oauth/), but for that to work safely we need to have an app [registered on GitHub](https://github.com/settings/applications/new) which then provides you with a **ClientID** and a **Client Secret**.
+
+We **must not** commit the secret to our repository, so we use either **Environment Variables** or a "git ignored" local config file called at `config/local.json`.
+
+For deployments or if you prefer for development you can just set the value of the **Environment Variable** `GITHUB_CLIENT_SECRET` to the client secret provided by github.
+
+Alternatively ask a developer to send you their `local.json` file and stick it in the root `config` directory. 
 
 ## Help
 
