@@ -24,7 +24,14 @@
         "name": "StealJS"
       }
     }],
-    "monthlyClientProjects": []
+    "monthlyClientProjects": [{
+      "hours": 100,
+      "clientProjectRef": {
+        "_id": "1-Levis",
+        "name": "Levi's"
+      },
+      "monthlyClientProjectsOSProjects": []
+    }]
   },
   {"_id": "2", "date": "2016-10-05T16:22:18.251Z"},
   {"_id": "3", "date": "2016-19-01T15:22:18.251Z"}

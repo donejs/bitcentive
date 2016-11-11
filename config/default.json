@@ -30,7 +30,7 @@
       "successRedirect": "/auth/success",
       "callbackURL": "/auth/github/callback",
       "clientID": "f425f8fe2f98014a32d5",
-      "clientSecret": "INSERT SECRET HERE",
+      "clientSecret": "18ed11a166e237e3e0f8c6244f9dac5732a11611",
       "permissions": {
         "scope": []
       }
