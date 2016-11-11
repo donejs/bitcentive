@@ -56,7 +56,6 @@
     "done-ssr-middleware": "^0.4.0-pre.0",
     "feathers": "^2.0.2",
     "feathers-authentication": "^0.8.0-beta-1",
-    "feathers-authentication-popups": "0.0.9",
     "feathers-hooks": "^1.5.8",
     "feathers-rest": "^1.5.0",
     "feathers-socketio": "^1.4.1",
