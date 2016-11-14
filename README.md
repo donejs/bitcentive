@@ -2,7 +2,7 @@
 
 > Royalties
 
-[![Build Status](https://travis-ci.org/donejs/bitcentive.svg?branch=master)](https://travis-ci.org/donejs/bitcentive)
+[![Build Status](https://travis-ci.org/donejs/bitcentive.svg?branch=staging)](https://travis-ci.org/donejs/bitcentive)
 
 ## About
 
