@@ -30,7 +30,9 @@
         "_id": "1-Levis",
         "name": "Levi's"
       },
-      "monthlyClientProjectsOSProjects": []
+      "monthlyClientProjectsOSProjects": [{
+          "osProjectRef": "1-CanJS"
+      }]
     }]
   },
   {"_id": "2", "date": "2016-10-05T16:22:18.251Z"},

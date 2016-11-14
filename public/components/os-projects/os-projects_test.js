@@ -12,7 +12,7 @@ QUnit.module('bitcentive/components/os-projects', {
     };
 
     this.osProject2 = {
-      _id: "__donejs",
+      _id: "2-DoneJS",
       name: "DoneJS"
     };
 
