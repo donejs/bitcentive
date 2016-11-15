@@ -1,7 +1,10 @@
 import QUnit from 'steal-qunit';
 import { ViewModel } from './select-contribution-month';
 import moment from "moment";
-import fixture from "can-fixture";
+import 'bitcentive/models/fixtures/fixtures-socket';
+import { store as contributionMonthStore } from "bitcentive/models/fixtures/contribution-months.js";
+
+window.store = contributionMonthStore;
 
 // ViewModel unit tests
 QUnit.module('bitcentive/components/select-contribution-month',{
@@ -11,33 +14,30 @@ QUnit.module('bitcentive/components/select-contribution-month',{
 });
 
 QUnit.asyncTest('No contribution months', function(){
-  fixture("GET /api/contribution_months", function(){
-    return {data: []};
-  });
+
+  contributionMonthStore.reset();
 
   var vm = new ViewModel();
 
-  fixture("POST /api/contribution_months", function(req){
-    return {
-      _id: "fake id",
-      monthlyOSProjects: [],
-      monthlyClientProjects: [],
-      monthlyContributions: []
-    };
-  });
-
   vm.contributionMonthsPromise.then(function(contributionMonths){
-      QUnit.equal(contributionMonths.length, 0, "starting with no conribution months");
+      QUnit.equal(contributionMonths.length, 3, "starting with no conribution months");
       QUnit.equal(vm.nextMonth.getTime(), moment().startOf('month').toDate().getTime(), "this month is picked");
-      vm.selectedContributionMonthId = "__new__";
+
+      const timeout = setTimeout(()=>{
+        // fail test
+        QUnit.ok(false, 'contribution month list did not get new item before test timeout');
+        QUnit.start();
+      }, 2000);
 
       contributionMonths.on("length", function(ev, newLength){
-        QUnit.equal(newLength, 1, "got an item");
-        QUnit.equal(contributionMonths[0]._id, "fake id");
-        QUnit.equal(moment(contributionMonths[0].date).toDate().getTime(),
+        clearTimeout(timeout);
+        QUnit.equal(newLength, 4, "got an item");
+        QUnit.equal(moment(contributionMonths[3].date).toDate().getTime(),
             moment().startOf('month').toDate().getTime(), "created with the right date");
         QUnit.start();
       });
-  });
+
+      vm.selectedContributionMonthId = "__new__";
+  }, err => console.error("PROBLEM", err));
 
 });

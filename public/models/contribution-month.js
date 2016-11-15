@@ -25,15 +25,15 @@ import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 
 var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersBehavior
+ feathersBehavior,
+ dataParse,
+ construct,
+ constructStore,
+ canMap,
+ canRef,
+ realtime,
+ dataCallbacks,
+ constructOnce
 ];
 
 var contributionMonthAlgebra = new set.Algebra(

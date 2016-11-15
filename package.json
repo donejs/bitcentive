@@ -27,6 +27,7 @@
     "authentication-popups": "0.0.8",
     "authentication-popups-github": "0.0.2",
     "body-parser": "^1.15.2",
+    "can-define": "^1.0.4",
     "compression": "^1.6.2",
     "cors": "^2.7.1",
     "feathers": "^2.0.1",
