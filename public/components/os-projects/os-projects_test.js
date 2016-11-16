@@ -1,7 +1,8 @@
 import QUnit from 'steal-qunit';
+import 'bitcentive/models/fixtures/fixtures-socket';
 import { ViewModel } from './os-projects';
-import fixture from 'can-fixture';
 import ContributionMonth from 'bitcentive/models/contribution-month';
+import { store as contributionMonthStore } from 'bitcentive/models/fixtures/contribution-months';
 
 //ViewModel unit tests
 QUnit.module('bitcentive/components/os-projects', {
@@ -44,20 +45,12 @@ QUnit.module('bitcentive/components/os-projects', {
 });
 
 QUnit.asyncTest('Can create new OS Project', function() {
+  contributionMonthStore.reset();
   var vm = new ViewModel();
 
   vm.contributionMonth = this.contributionMonth;
   vm.selectedOSProjectId = "__new__";
   vm.newOSProjectName = "something";
-
-  fixture({
-    "POST /api/os_projects": (req, res) => {
-      res({_id: "somethingRandom", name: req.data.name});
-    },
-    "PUT /api/contribution_months/{_id}": (req, res) => {
-      res(req.data);
-    }
-  });
 
   vm.addNewMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , 'something');
@@ -67,20 +60,12 @@ QUnit.asyncTest('Can create new OS Project', function() {
 });
 
 QUnit.asyncTest('Can add an existing OS Project to Monthly Contribution', function() {
+  contributionMonthStore.reset();
   var vm = new ViewModel();
   var projectToAdd = this.osProject2;
 
   vm.contributionMonth = this.contributionMonth;
   vm.selectedOSProjectId = projectToAdd._id ;
-
-  fixture({
-    "GET /api/os_projects": (req, res) => {
-      res({data: [projectToAdd]});
-    },
-    "PUT /api/contribution_months/{_id}": (req, res) => {
-      res(req.data);
-    }
-  });
 
   vm.addNewMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects.length, 2);

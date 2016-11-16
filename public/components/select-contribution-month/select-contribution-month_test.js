@@ -2,7 +2,7 @@ import QUnit from 'steal-qunit';
 import { ViewModel } from './select-contribution-month';
 import moment from "moment";
 import 'bitcentive/models/fixtures/fixtures-socket';
-import { store as contributionMonthStore } from "bitcentive/models/fixtures/contribution-months.js";
+import { store as contributionMonthStore } from 'bitcentive/models/fixtures/contribution-months';
 
 window.store = contributionMonthStore;
 
