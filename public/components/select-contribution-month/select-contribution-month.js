@@ -32,7 +32,7 @@ export const ViewModel = DefineMap.extend({
   },
   contributionMonthsPromise: {
     value: ContributionMonth.getList.bind(ContributionMonth, {
-      $sort: {date: 1}
+
     })
   },
 
