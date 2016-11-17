@@ -39,6 +39,7 @@
     "can-connect-feathers": "^2.0.0-beta.3",
     "can-define": "^1.0.1",
     "can-define-stream": "0.0.2",
+    "can-event": "^3.0.1",
     "can-route": "^3.0.0-pre.18",
     "can-route-pushstate": "^3.0.0-pre.7",
     "can-set": "^0.6.0-pre.5",

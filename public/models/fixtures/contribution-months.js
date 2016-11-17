@@ -6,7 +6,7 @@ import json from './contribution-months.json';
 import canSet from 'can-set';
 var algebra = new canSet.Algebra(canSet.props.id('_id'));
 
-var store = fixture.store(json, algebra);
+export var store = fixture.store(json, algebra);
 
 export default function(mockServer){
   mockServer.onFeathersService("api/contribution_months", store, {id: "_id"});
