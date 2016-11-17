@@ -40,13 +40,13 @@ brew uninstall mongodb
 
 
 2. Install your dependencies
-    
+
     ```
     cd path/to/bitcentive; npm install
     ```     
 
 3. Start your app
-    
+
     ```
     npm run develop
     ```
@@ -67,6 +67,51 @@ $ feathers generate hook                  # Generate a new Hook
 $ feathers generate model                 # Generate a new Model
 $ feathers help                           # Show all commands
 ```
+
+## Logging in with GitHub
+
+The bitcentive demo app allows Authenticated login using [GitHubs OAuth api](https://developer.github.com/v3/oauth/).
+
+When you run your demo locally, there are some steps you are going to need to take, so that you can *log in* to the app using your github account.
+
+#### 1. Register your application on GitHub
+Go to the [GitHub application registration form](https://github.com/settings/applications/new) and fill out the form.
+
+You can fill out every piece of information however you like, except the **Authorization callback URL**. This is easily the most important piece to setting up your application. It's the callback URL that GitHub returns the user to after successful authentication. Assuming you are using all the config from the repo unchanged, you should set this to `http://localhost:3030/auth/github/callback`.
+
+#### 2. Configure your Client ID and Client Secret
+After registering your application with GitHub, you will be provided a **Client ID** and a **Client Secret** token. **You will need to set these values in your configuration for your app to work properly**.
+
+Open the json file at `/config/default.json` and find the `github.clientID` property and put your **Client ID** as the value there.
+
+The **GitHub Client Secret** you want to be a little more careful with, and it should never be committed to the repo or published anywhere else.
+
+You have two options for setting your **Client Secret**, you can:
+
+1. set an [Environment Variable](https://en.wikipedia.org/wiki/Environment_variable) called `GITHUB_CLIENT_SECRET` on your system with a value equal to your system
+2. You can add a `local.json` file to the `config` directory in the project, and put some content like this in there:
+
+```json
+{
+  "auth": {
+    "github": {
+      "clientSecret": "REPLACE THIS WITH YOUR GITHUB_CLIENT_SECRET"
+    }
+  }
+}
+```
+This file is ignored by git (`.gitignore`), and will not be commited to the repo, but will be read by the app when running locally.
+
+With one of these two options in place you should now be able to "Login with Github" in the app.
+
+
+## Secrets and Environment Variables
+
+We **must not** commit our **secrets** to our repository, so to store our secrets we use either **Environment Variables** or a "git ignored" local config file at `config/local.json`.
+
+For deployments or if you prefer for development you can just set the value of the **Environment Variables** `GITHUB_CLIENT_SECRET` and `FEATHERS_AUTH_SECRET` to the client secret provided by GitHub and your particular feathers secret respectively.
+
+Alternatively create a `local.json` file and stick it in the root `config` directory and any values here will override the corresponding values in the configuration as per [feathers-configuration](https://github.com/feathersjs/feathers-configuration).
 
 ## Help
 
