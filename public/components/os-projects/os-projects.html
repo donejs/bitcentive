@@ -11,7 +11,7 @@
   import viewModel from 'can-view-model';
 
   ContributionMonth.get("1").then(function(item){
-    viewModel($("#demo")[0]).set("contributionMonth", item);
+    viewModel("#demo").set("contributionMonth", item);
   }).catch(function(err){
     console.log('Err ContributionMonth', err);
   });
