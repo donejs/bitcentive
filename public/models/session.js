@@ -15,7 +15,7 @@ import canMap from 'can-connect/can/map/';
 import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
-import {authAgent} from 'authentication-popups';
+import {authAgent} from 'feathers-authentication-popups';
 import decode from 'jwt-decode';
 
 var behaviorList = [

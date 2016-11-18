@@ -10,10 +10,8 @@ import {CookieStorage} from 'cookie-storage';
 
 const cookieStorage = new CookieStorage();
 
-const serverURL = 'http://localhost:3030';
-
 console.log('feathers model: creating socket.io connection...');
-var socket = io(serverURL, {
+var socket = io({
   transports: ['websocket']
 });
 const app = feathers()
@@ -24,4 +22,3 @@ const app = feathers()
   }));
 
 export default app;
-

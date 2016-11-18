@@ -3,7 +3,7 @@
 const authentication = require('feathers-authentication');
 const token = authentication.TokenService;
 const local = authentication.LocalService;
-const githubAuth = require('authentication-popups-github');
+const githubAuth = require('feathers-authentication-popups-github');
 
 module.exports = function () {
   const app = this;

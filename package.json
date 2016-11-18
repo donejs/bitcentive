@@ -24,14 +24,14 @@
     "install": "node install.js"
   },
   "dependencies": {
-    "authentication-popups": "0.0.8",
-    "authentication-popups-github": "0.0.2",
     "body-parser": "^1.15.2",
     "can-define": "^1.0.4",
     "compression": "^1.6.2",
     "cors": "^2.7.1",
     "feathers": "^2.0.2",
     "feathers-authentication": "^0.8.0-beta-2",
+    "feathers-authentication-popups": "0.0.9",
+    "feathers-authentication-popups-github": "0.0.3",
     "feathers-configuration": "^0.4.1",
     "feathers-errors": "^2.4.0",
     "feathers-hooks": "^1.5.4",
