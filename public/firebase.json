@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "firebase": "bitcentive-e208d",
+    "public": "./dist",
+    "headers": [
+      {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      }
+    ]
+  }
+}
