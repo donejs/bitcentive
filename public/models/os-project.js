@@ -1,42 +1,24 @@
-import set from "can-set";
 import DefineMap from "can-define/map/";
+import DefineList from "can-define/list/";
 
-import feathersClient from './feathers';
-import connect from 'can-connect';
 import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
+import feathersClient from './feathers';
+import superModel from './super-model';
 
-var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersBehavior
-];
+import osProjectAlgebra from './algebras/id-comparator';
 
 var OSProject =  DefineMap.extend("OSProject", {
   _id: "string",
   name: "string"
 });
 
-var osProjectAlgebra = new set.Algebra(
-  set.comparators.id("_id")
-);
+OSProject.List = DefineList.extend({
+	"*": OSProject
+});
 
-OSProject.connection = connect(behaviorList, {
+OSProject.connection = superModel([feathersBehavior], {
   parseInstanceProp: "data",
-  idProp: "_id",
+  idProp: "_id", // TODO: removing this line causes tests to break - not sure why
   Map: OSProject,
   List: OSProject.List,
   feathersService: feathersClient.service("/api/os_projects"),
