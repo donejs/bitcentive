@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "github": {
+      "clientSecret": "GITHUB_CLIENT_SECRET"
+    },
+    "token": {
+      "secret": "FEATHERS_AUTH_SECRET"
+    }
+  }
+}

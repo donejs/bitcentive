@@ -1,12 +1,16 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
+import DefineList from 'can-define/list/list';
 import './client-projects.less';
 import view from './client-projects.stache';
 import ClientProject from '../../models/client-project';
-import $ from 'jquery';
-
+import ContributionMonth from '../../models/contribution-month';
 
 export const ClientProjectVM = DefineMap.extend({
+  // Passed properties
+  contributionMonth: {
+    Type: ContributionMonth
+  },
   // Stateful Props
   projects: {
     value() {
@@ -20,55 +24,85 @@ export const ClientProjectVM = DefineMap.extend({
     type: "boolean",
     value: false
   },
+  activeOSProjectList: {
+    type: '*',
+  },
+  selectedClientId: {
+    type: 'string',
+    value: '__new__'
+  },
+  newClientName: {
+    type: "string",
+    value: ""
+  },
 
   // Derived props
-  total: {
+  creatingNewClientProject: {
     get: function() {
-      return "222";
+      return this.selectedClientId === "__new__";
     }
   },
 
   // Methods
-  toggleClientInput: function(event){
-    if (event) {
-      event.preventDefault();
-    }
+  toggleClientInput: function() {
     this.isAddingClients = !this.isAddingClients;
   },
+  addClient: function(event, monthlyClientProjects) {
+    if(event) {
+      event.preventDefault();
+    }
+    let promise;
+    let selectedClientId = this.selectedClientId;
+    if(this.selectedClientId === "__new__") {
+      let newClientProject = new ClientProject({
+        "name": this.newClientName
+      });
 
-  addClient: function(clientProject, monthlyClientProjects) {
-    monthlyClientProjects.toggleProject(clientProject);
-  },
-  updateClientName: function(event, contributionMonth) {
-    if (event) {
-      event.preventDefault();
+      promise = newClientProject.save().then((clientProject) => {
+        monthlyClientProjects.toggleProject(clientProject);
+        this.contributionMonth.save();
+        this.newClientName = "";
+        this.toggleClientInput();
+        this.selectedClientId = "__new__";
+      });
+    } else {
+      promise = this.projects.then((projects) => {
+        projects.forEach((project) => {
+          if(project._id === selectedClientId) {
+            monthlyClientProjects.toggleProject(project);
+            this.contributionMonth.save();
+            this.toggleClientInput();
+            this.selectedClientId = "__new__";
+          }
+        });
+      });
     }
-    contributionMonth.clientProject.save();
+    return promise;
   },
-  updateClientProjectHours: function(event, contributionMonth) {
-    if (event) {
-      event.preventDefault();
-    }
-    contributionMonth.save();
+  deleteClientProject: function(clientProject) {
+    this.contributionMonth.removeClientProject(clientProject);
+    return this.contributionMonth.save();
   },
-  deleteClientProject: function(contributionMonth, clientProject) {
-    contributionMonth.removeClientProject(clientProject);
-    contributionMonth.save();
-  },
-  toggleUseProject: function(contributionMonth, monthlyClientProjectsOsProjects, monthlyOsProject) {
-    monthlyClientProjectsOsProjects.toggleProject(monthlyOsProject);
-    contributionMonth.save();
+  toggleUseProject: function(monthlyClientProjectsOSProjects, monthlyOsProject) {
+    monthlyClientProjectsOSProjects.toggleProject(monthlyOsProject);
+    return this.contributionMonth.save();
   },
   toggleEditMonthlyClientProject: function(monthlyClientProject) {
-    if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectId) ) {
-      this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, undefined);
+    if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectRef._id) ) {
+      this.editingClientProjectIds.set(monthlyClientProject.clientProjectRef._id, undefined);
     } else {
-      this.editingClientProjectIds.set(monthlyClientProject.clientProjectId, true);
+      this.editingClientProjectIds.set(monthlyClientProject.clientProjectRef._id, true);
     }
   },
+  setActiveOSProjectList: function(monthlyClientProject) {
+    this.activeOSProjectList = monthlyClientProject;
+  },
+  checkActiveOSProjectList: function(monthlyClientProject) {
+    return this.activeOSProjectList === monthlyClientProject;
+  },
   isEditingMonthlyClientProject: function(monthlyClientProject){
-    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId)
-  }
+    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId);
+  },
 });
 
 export default Component.extend({

@@ -5,23 +5,25 @@ import ContributionMonth from "./contribution-month";
 import ClientProject from "./client-project";
 import OSProject from "./os-project";
 
-QUnit.module("models");
+QUnit.module("models", {
+	setup: function(){
+		localStorage.clear();
+	}
+});
 
 QUnit.asyncTest("getList of ContributionMonth", function() {
 	ContributionMonth.getList({}).then(function(contributionMonths) {
 
-	  console.log(contributionMonths);
-		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProject instanceof ClientProject);
-		var first = contributionMonths[0].monthlyOSProjects[0].osProject,
-			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOsProjects[0].osProject;
-
-    console.log(first);
-    console.log(second);
+		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef.value instanceof ClientProject);
+		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef.value,
+			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0].osProjectRef.value;
 
 		QUnit.ok(first === second);
+		QUnit.ok(first);
+
 		QUnit.start();
 	}, function(err) {
-		debugger;
+	  QUnit.ok(false, err);
 	});
 });
 
@@ -42,20 +44,20 @@ QUnit.test("make type convert able to accept instances (#23)", function() {
 			monthlyOSProjects: [{
 					significance: 80,
 					commissioned: true,
-					osProjectId: osProject._id,
+					osProjectRef: osProject._id,
 					osProject: osProject
 			}],
 			monthlyClientProjects: [{
-					monthlyClientProjectsOsProjects: [{
-							osProjectId: osProject._id,
+					monthlyClientProjectsOSProjects: [{
+							osProjectRef: osProject._id,
 							osProject: osProject
 					}],
 					hours: 100,
-					clientProjectId: clientProject._id,
+					clientProjectRef: clientProject._id,
 					clientProject: clientProject
 			}]
 	});
 
-	QUnit.equal(contributionMonth.monthlyOSProjects[0].osProject.name , "CanJS")
+	QUnit.equal(contributionMonth.monthlyOSProjects[0].osProject.name , "CanJS");
 
 });

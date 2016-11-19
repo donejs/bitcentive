@@ -1,20 +1,11 @@
 import fixture from 'can-fixture';
-import ClientProject from '../client-project';
+import json from './client-projects.json';
+//import { algebra } from '../client-project';
+import canSet from 'can-set';
+var algebra = new canSet.Algebra(canSet.props.id('_id'));
 
-var clientProjectStore = fixture.store([
-  { _id: "1-Levis", name: "Levi's" },
-  { _id: "2-Walmart", name: "Wal-Mart" },
-  { _id: "3-Haulhound", name: "HaulHound" },
-  { _id: "4-Lowes", name: "Lowe's" },
-  { _id: "5-Apple", name: "Apple" },
-  { _id: "6-Microsoft", name: "Microsoft" }
-], ClientProject.algebra);
+var store = fixture.store(json, algebra);
 
-fixture({
-  'GET /api/client_projects': clientProjectStore.getListData,
-  'GET /api/client_projects/{_id}': clientProjectStore.getData,
-  'POST /api/client_projects': clientProjectStore.createData,
-  'PUT /api/client_projects/{_id}': clientProjectStore.updateData,
-  'DELETE /api/client_projects/{_id}': clientProjectStore.destroyData
-});
-
+export default function(mockServer){
+  mockServer.onFeathersService("api/client_projects", store, {id: "_id"});
+}

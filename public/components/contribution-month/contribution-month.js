@@ -3,8 +3,6 @@ import DefineMap from 'can-define/map/';
 import './contribution-month.less';
 import template from './contribution-month.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month';
-import "bootstrap/dist/css/bootstrap.css";
-
 
 export const ViewModel = DefineMap.extend({
   // Passed props
@@ -14,15 +12,18 @@ export const ViewModel = DefineMap.extend({
   contributionMonthPromise: {
     get: function(){
       if(this.contributionMonthId) {
-        return ContributionMonth.get({_id: this.contributionMonthId});
+        return ContributionMonth.get({
+          _id: this.contributionMonthId,
+          query: {'$populate': ['monthlyOSProjects.osProjectRef']}
+        });
       }
     }
   },
   contributionMonth: {
     get: function(initialValue, resolve){
       if(this.contributionMonthPromise) {
-        this.contributionMonthPromise.then(resolve, function(err){
-          debugger;
+        this.contributionMonthPromise.then(resolve, (err) => {
+          console.error("Error loading contribution month: ", err);
         });
       }
     }

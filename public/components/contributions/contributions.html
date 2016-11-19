@@ -1,0 +1,45 @@
+<script type="text/stache" can-autorender id="osProjects">
+  <can-import from="bootstrap/dist/css/bootstrap.css" />
+  <can-import from="bitcentive/styles.less" />
+  <can-import from="bitcentive/components/contributions/" />
+  <can-import from="bitcentive/models/fixtures/fixtures" />
+  <contributions {contribution-month}="contributionMonth"/>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+  import ContributionMonth from 'bitcentive/models/contribution-month';
+  import OSProject from 'bitcentive/models/os-project';
+  import osProjects from 'bitcentive/models/fixtures/contributions.json';
+  import ClientProject from 'bitcentive/models/client-project';
+  import clientProjects from "bitcentive/models/fixtures/client-projects.json";
+  import viewModel from 'can-view-model';
+
+  var osProject = new OSProject(osProjects[0]);
+  var osProject2 = new OSProject(osProjects[1]);
+  var clientProject = new ClientProject(clientProjects[1]);
+  var clientProject2 = new ClientProject(clientProjects[2]);
+
+  viewModel($("#osProjects")[0]).set("contributionMonth", new ContributionMonth({
+    _id: "1-MonthlyContribution-08-2016",
+    date: 1470009600000,
+    monthlyOSProjects: [{
+      significance: 80,
+      commissioned: true,
+      osProjectRef: osProject
+    },{
+      significance: 15,
+      commissioned: true,
+      osProjectRef: osProject2
+    }],
+    monthlyClientProjects: [{
+      monthlyClientProjectsOSProjects: [{
+          osProjectRef: osProject,
+        },{
+          osProjectRef: osProject2
+        },
+      ],
+      hours: 100,
+      clientProjectRef: clientProject
+    }]
+  }));
+  window.viewModel = viewModel;
+</script>

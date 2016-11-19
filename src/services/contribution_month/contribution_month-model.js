@@ -9,22 +9,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const osProjectSchema = new Schema({
-  osProjectId: { type: Schema.Types.ObjectId, ref: 'os_project' },
+  osProjectRef: { type: Schema.Types.ObjectId, ref: 'os_project' },
   significance: Number,
-  commisioned: { type: Boolean, default: false }
+  commissioned: { type: Boolean, default: false }
 });
 
 const clientProjectSchema = new Schema({
-  clientProjectId: { type: Schema.Types.ObjectId, ref: 'client_project' },
-  monthlyClientProjectsOSProjects: [ { type: Schema.Types.ObjectId, ref: 'os_project' } ],
+  clientProjectRef: { type: Schema.Types.ObjectId, ref: 'client_project' },
+  monthlyClientProjectsOSProjects: [ { 'osProjectRef': { type: Schema.Types.ObjectId, ref: 'os_project' } } ],
   hours: Number
 });
 
 const contributionSchema = new Schema({
-  osProjectId: { type: Schema.Types.ObjectId, ref: 'os_project' },
-  points: Number,
-  contributor: { type: Schema.Types.ObjectId, ref: 'contributor' },
-  contribution: String
+  osProjectRef: { type: Schema.Types.ObjectId, ref: 'os_project' },
+  contributorRef: { type: Schema.Types.ObjectId, ref: 'contributor' },
+  description: String,
+  points: Number
 });
 
 const contributionMonthSchema = new Schema({

@@ -1,21 +1,59 @@
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>{{title}}</title>
   </head>
   <body>
-    <can-import from="bitcentive/styles.less" />
+    <can-import from="bootstrap" />
+    <can-import from="bootstrap/dist/css/bootstrap.css" />
+    <can-import from="bitcentive/styles.less!" />
     <can-import from="bitcentive/app" export-as="viewModel" />
-    <can-import from="can-stache/helpers/route"/>
+    <can-import from="bitcentive/components/main-nav/" />
+    <can-import from="bitcentive/components/page-home/" />
+    <can-import from="bitcentive/components/page-auth/" />
+    <can-import from="bitcentive/components/page-four-oh-four/" />
+    <can-import from="bitcentive/pages/contributors.component"/>
+    <can-import from="bitcentive/pages/dashboard.component"/>
 
-    {{#eq page 'home'}}
-      <h1>Home Page fer Real</h1>
-      <a href="{{routeUrl page='projects'}}">Projects</a>
+    <main-nav {(session)}="session" {(page)}="page" {(subpage)}="subpage"></main-nav>
+
+    {{#if session}}
+
+      {{#switch page}}
+        {{#case 'home'}}
+          <page-home></page-home>
+        {{/case}}
+        {{#case 'auth'}}
+          <page-auth {(session)}="session" {(page)}="page" {(subpage)}="subpage"></page-auth>
+        {{/case}}
+        {{#case 'dashboard'}}
+          <page-dashboard></page-dashboard>
+        {{/case}}
+        {{#case 'contributors'}}
+          <page-contributors/>
+        {{/case}}
+        {{#case 'four-oh-four'}}
+          <page-four-oh-four></page-four-oh-four>
+        {{/case}}
+      {{/switch}}
+
     {{else}}
-      <h1>{{page}}</h1>
-      <a href="{{routeUrl page='home'}}">Home</a>
-    {{/eq}}
 
-  
+      {{#switch page}}
+        {{#case 'home'}}
+          <page-home></page-home>
+        {{/case}}
+        {{#case 'auth'}}
+          <page-auth {(session)}="session" {(page)}="page" {(subpage)}="subpage"></page-auth>
+        {{/case}}
+        {{#case 'four-oh-four'}}
+          <page-four-oh-four></page-four-oh-four>
+        {{/case}}
+      {{/switch}}
+    {{/if}}
 
     {{#switch env.NODE_ENV}}
       {{#case "production"}}

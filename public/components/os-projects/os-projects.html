@@ -1,49 +1,19 @@
-<script type="text/stache" can-autorender id="osProjects">
-    <can-import from="bitcentive/models/fixtures/fixtures" />
-    <can-import from="bitcentive/components/os-projects/" />
-    <os-projects {contribution-month}="contributionMonth"/>
+<script type="text/stache" can-autorender id="demo">
+  <can-import from="bootstrap/dist/css/bootstrap.css" />
+  <can-import from="bitcentive/styles.less" />
+  <can-import from="bitcentive/components/os-projects/" />
+  <can-import from="bitcentive/models/fixtures/fixtures" />
+  <os-projects {contribution-month}="contributionMonth"/>
 </script>
-
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+  import 'bitcentive/models/fixtures/fixtures-socket';
   import ContributionMonth from 'bitcentive/models/contribution-month';
   import viewModel from 'can-view-model';
-  import contributionMonthStoreFixture from "bitcentive/models/fixtures/fixtures";
-  import OSProject from 'bitcentive/models/os-project';
-  import ClientProject from 'bitcentive/models/client-project';
 
-    var osProject = new OSProject({
-        _id: "somethingCrazey",
-        name: "CanJS"
-    });
-
-    var clientProject = new ClientProject({
-        _id: "asl;dfal;sfj ;lakwj",
-        name: "HualHound"
-    });
-
-    var contributionMonth = new ContributionMonth({
-        _id: "aslkfalsjklas",
-        date: 124234211310000,
-        monthlyOSProjects: [{
-            significance: 80,
-            commissioned: true,
-            osProjectId: osProject._id,
-            osProject: osProject
-        }],
-        monthlyClientProjects: [{
-            monthlyClientProjectsOsProjects: [{
-                osProjectId: osProject._id,
-                osProject: osProject
-            }],
-            hours: 100,
-            clientProjectId: clientProject._id,
-            clientProject: clientProject
-        }]
-    });
-
-
-    //contributionMonthsListData = contributionMonthStoreFixture.getList();
-
-  viewModel($("#osProjects")[0]).set("contributionMonth", contributionMonth);
-
+  ContributionMonth.get("1").then(function(item){
+    viewModel("#demo").set("contributionMonth", item);
+  }).catch(function(err){
+    console.log('Err ContributionMonth', err);
+  });
+  window.viewModel = viewModel;
 </script>

@@ -10,5 +10,5 @@ QUnit.module('bitcentive functional smoke test', {
 });
 
 QUnit.test('bitcentive main page shows up', function() {
-  F('title').text('bitcentive', 'Title is set');
+  F('title').text('Bitcentive', 'Title is set');
 });

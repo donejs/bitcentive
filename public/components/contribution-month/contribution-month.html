@@ -7,17 +7,23 @@
   <body>
     <div class='container'>
     <script type="text/stache" can-autorender id='main'>
+      <can-import from="bootstrap/dist/css/bootstrap.css" />
+      <can-import from="bitcentive/styles.less" />
       <can-import from="bitcentive/components/contribution-month/" />
       <bit-contribution-month {contribution-month-id}="contributionMonthId"/>
     </script>
   </div>
-    <script src="../../../node_modules/steal/steal.js"
+    <script src="../../node_modules/steal/steal.js"
             main="can-view-autorender">
-          import "bitcentive/models/fixtures/";
-          import viewModel from 'can-view-model';
+      import 'bitcentive/models/fixtures/fixtures-socket';
+      import viewModel from 'can-view-model';
+      import autorender from 'can-view-autorender';
 
-          viewModel($("#main")[0]).set("contributionMonthId","aslkfalsjklas");
-          window.viewModel = viewModel;
+      window.viewModel = viewModel;
+
+      autorender(function(){
+        viewModel(document.getElementById("main")).set("contributionMonthId","1");
+      });
     </script>
   </body>
 </html>
