@@ -16,6 +16,7 @@ before_deploy:
   - node public/build
   - git add public/dist/ --force
   - git commit -m "Updating build."
+  - cd public
   - donejs deploy
 addons:
   firefox: "latest"
