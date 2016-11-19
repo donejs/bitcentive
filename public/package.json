@@ -14,8 +14,8 @@
     "develop": "done-serve --develop --port 8080",
     "document": "documentjs",
     "build": "node build",
-    "deploy": "firebase deploy",
-    "deploy:ci": "firebase deploy --token \"$FIREBASE_TOKEN\""
+    "deploy": "firebase deploy --only hosting",
+    "deploy:ci": "firebase deploy --only hosting --token \"$FIREBASE_TOKEN\""
   },
   "main": "bitcentive/index.stache!done-autorender",
   "files": [
