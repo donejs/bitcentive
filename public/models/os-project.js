@@ -18,7 +18,6 @@ OSProject.List = DefineList.extend({
 
 OSProject.connection = superModel([feathersBehavior], {
   parseInstanceProp: "data",
-  idProp: "_id", // TODO: removing this line causes tests to break - not sure why
   Map: OSProject,
   List: OSProject.List,
   feathersService: feathersClient.service("/api/os_projects"),

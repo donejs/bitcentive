@@ -13,6 +13,10 @@ const superModel = function(newBehaviors, options) {
 		options = newBehaviors;
 	}
 
+	// TODO: remove this when this issue is closed:
+	// https://github.com/canjs/can-connect/issues/100
+	options.idProp = "_id";
+
 	const behaviors = [
 		dataParse,
 		construct,
@@ -25,7 +29,7 @@ const superModel = function(newBehaviors, options) {
 	];
 
 	if(arguments.length === 2) {
-		Array.prototype.unshift.apply(behaviors, newBehaviors);
+		Array.prototype.push.apply(behaviors, newBehaviors);
 	}
 
 	return connect(behaviors, options);

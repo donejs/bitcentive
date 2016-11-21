@@ -7,5 +7,5 @@
 import set from 'can-set';
 
 export default new set.Algebra(
-  set.comparators.id("_id")
+  set.props.id("_id")
 );
