@@ -1,4 +1,6 @@
 {
+  "port": "PORT",
+  "host": "HOST",
   "auth": {
     "github": {
       "clientSecret": "GITHUB_CLIENT_SECRET",
