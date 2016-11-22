@@ -18,6 +18,7 @@ before_deploy:
   - git commit -m "Updating build."
   - cd public
   - donejs deploy:ci
+  - cd ..
 addons:
   firefox: "latest"
 deploy:
