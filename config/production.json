@@ -1,13 +1,3 @@
 {
-  "host": "bitcentive-app.feathersjs.com",
-  "port": 80,
-  "mongodb": "MONGODB_URI",
-  "public": "../public/",
-  "auth": {
-    "userEndpoint": "/api/users",
-    "token": {
-      "secret": "FEATHERS_AUTH_SECRET"
-    },
-    "local": {}
-  }
+  "port": 8080
 }
