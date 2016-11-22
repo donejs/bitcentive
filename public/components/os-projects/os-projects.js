@@ -15,7 +15,7 @@ export const ViewModel = DefineMap.extend({
   activePromise: "*",
   adding: {
     type: 'boolean',
-    value: false,
+    value: false
   },
   newOSProjectName: 'string',
   selectedOSProjectId: {
@@ -51,7 +51,7 @@ export const ViewModel = DefineMap.extend({
 
       this.activePromise = newOSProject.save().then((osProject) => {
         this.toggleAddNewMonthlyOSProject();
-        return this.contributionMonth.addNewMonthlyOSProject(osProject);
+        return this.contributionMonth.addNewMonthlyOSProject(osProject, this.contributionMonth);
       });
     } else {
       this.activePromise = this.allOSProjects.then((projects) => {
