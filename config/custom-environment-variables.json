@@ -5,7 +5,8 @@
   "auth": {
     "github": {
       "clientSecret": "GITHUB_CLIENT_SECRET",
-      "clientID": "GITHUB_CLIENT_ID"
+      "clientID": "GITHUB_CLIENT_ID",
+      "callbackURL": "GITHUB_LOGIN_CALLBACK_URL"
     },
     "token": {
       "secret": "FEATHERS_AUTH_SECRET"
