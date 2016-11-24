@@ -1,7 +1,7 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import OSProject from "./os-project";
-import Contributor from "./contributor";
+import OSProject from "../os-project";
+import Contributor from "../contributor";
 
 var MonthlyContributions = DefineMap.extend("MonthlyContributions", {
   contributorRef: {

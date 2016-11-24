@@ -10,9 +10,9 @@ import DefineList from "can-define/list/";
 import "../../lib/prefilter";
 
 import moment from "moment";
-import MonthlyOSProject from "../monthly-os-project";
-import MonthlyClientProject from "../monthly-client-project";
-import MonthlyContributions from "../monthly-contributions";
+import MonthlyOSProject from "./monthly-os-project";
+import MonthlyClientProject from "./monthly-client-project";
+import MonthlyContributions from "./monthly-contributions";
 
 import connect from 'can-connect';
 import feathersBehavior from 'can-connect-feathers';

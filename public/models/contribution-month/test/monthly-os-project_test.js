@@ -1,6 +1,6 @@
 import QUnit from 'steal-qunit';
-import OSProject from './os-project';
-import MonthlyOSProject from './monthly-os-project';
+import OSProject from '../../os-project';
+import MonthlyOSProject from '../monthly-os-project';
 
 QUnit.module('models/monthly-os-project');
 
