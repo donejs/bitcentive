@@ -1,18 +1,19 @@
-import ClientProject from "./client-project";
-import OSProject from "./os-project";
-import Contributor from "./contributor";
+import ClientProject from "../client-project";
+import OSProject from "../os-project";
+import Contributor from "../contributor";
+import feathersClient from '../feathers';
 
 import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 
-import "../lib/prefilter";
-import moment from "moment";
-import MonthlyOSProject from "./monthly-os-project";
-import MonthlyClientProject from "./monthly-client-project";
-import MonthlyContributions from "./monthly-contributions";
+import "../../lib/prefilter";
 
-import feathersClient from './feathers';
+import moment from "moment";
+import MonthlyOSProject from "../monthly-os-project";
+import MonthlyClientProject from "../monthly-client-project";
+import MonthlyContributions from "../monthly-contributions";
+
 import connect from 'can-connect';
 import feathersBehavior from 'can-connect-feathers';
 import dataParse from 'can-connect/data/parse/';

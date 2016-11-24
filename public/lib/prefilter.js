@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 
 $.ajaxPrefilter(function(options, originalOptions, jqXHR){

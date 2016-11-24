@@ -1,7 +1,7 @@
 import './fixtures/';
 
 import QUnit from "steal-qunit";
-import ContributionMonth from "./contribution-month";
+import ContributionMonth from "./contribution-month/";
 import ClientProject from "./client-project";
 import OSProject from "./os-project";
 

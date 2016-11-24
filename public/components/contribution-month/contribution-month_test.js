@@ -20,7 +20,7 @@ QUnit.asyncTest('test fixture socket', function(){
 QUnit.noop = function(){};
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/contribution-month', {
+QUnit.module('bitcentive/components/contribution-month/', {
   beforeEach: function() {
     this.osProject = {
       _id: "somethingCrazey",
