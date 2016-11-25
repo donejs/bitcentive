@@ -2,7 +2,6 @@ import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../lib/super-model';
-import feathersClient from './feathers';
 import { _idAlgebra as osProjectAlgebra } from './algebras';
 
 var OSProject = DefineMap.extend("OSProject", {
@@ -16,10 +15,9 @@ OSProject.List = DefineList.extend({
 
 OSProject.connection = superModel({
   parseInstanceProp: "data",
-  idProp: "_id",
   Map: OSProject,
   List: OSProject.List,
-  feathersService: feathersClient.service("/api/os_projects"),
+  url: "/api/os_projects",
   name: "osProject",
   algebra: osProjectAlgebra
 });

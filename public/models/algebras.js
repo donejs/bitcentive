@@ -2,7 +2,12 @@ import set from 'can-set';
 import moment from "moment";
 
 export const _idAlgebra = new set.Algebra(
-  set.comparators.id('_id')
+  set.comparators.id('_id'),
+  {
+    "token": function(){
+      return true;
+    }
+  }
 );
 
 export const contributionMonthAlgebra = new set.Algebra(
@@ -18,6 +23,9 @@ export const contributionMonthAlgebra = new set.Algebra(
   }),
   {
     "$populate": function(){
+      return true;
+    },
+    "token": function(){
       return true;
     }
   });

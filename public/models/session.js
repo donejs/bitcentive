@@ -7,7 +7,7 @@ import canEvent from 'can-event';
 import superModel from '../lib/super-model';
 import { _idAlgebra as sessionAlgebra } from './algebras';
 
-import feathersClient from './feathers';
+import feathersClient from '../lib/feathers/feathers-client';
 import feathersSession from 'can-connect-feathers/session';
 import {authAgent} from 'feathers-authentication-popups';
 import decode from 'jwt-decode';
@@ -35,7 +35,7 @@ Session.List = DefineList.extend({
   '#': Session
 });
 
-Session.connection = superModel([feathersSession], {
+Session.connection = superModel(feathersSession, {
   feathersClient,
   Map: Session,
   List: Session.List,
@@ -44,6 +44,7 @@ Session.connection = superModel([feathersSession], {
 });
 
 Object.assign(Session, canEvent);
+// TODO: look at removing 'window' here
 window.authAgent.on('login', function (token) {
   let payload = decode(token);
   Session.connection.createInstance(payload);

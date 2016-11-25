@@ -14,12 +14,12 @@ QUnit.module("models", {
 QUnit.asyncTest("getList of ContributionMonth", function() {
 	ContributionMonth.getList({}).then(function(contributionMonths) {
 
-		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef.value instanceof ClientProject);
+		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef.value instanceof ClientProject, 'is a client project');
 		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef.value,
 			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0].osProjectRef.value;
 
-		QUnit.ok(first === second);
-		QUnit.ok(first);
+		QUnit.ok(first === second, 'first and second are equal');
+		QUnit.ok(first, 'first exists');
 
 		QUnit.start();
 	}, function(err) {

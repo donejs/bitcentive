@@ -1,7 +1,6 @@
 import ClientProject from "../client-project";
 import OSProject from "../os-project";
 import Contributor from "../contributor";
-import feathersClient from '../feathers';
 
 import set from "can-set";
 import DefineMap from "can-define/map/";
@@ -238,8 +237,7 @@ ContributionMonth.connection = superModel({
   parseInstanceProp: "data",
   Map: ContributionMonth,
   List: ContributionMonth.List,
-  feathersService: feathersClient.service("/api/contribution_months"),
-  // url: "/api/contribution_months",
+  url: "/api/contribution_months",
   name: "contributionMonth",
   algebra: contributionMonthAlgebra
 });
