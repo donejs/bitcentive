@@ -2,7 +2,7 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
 import './register.less';
-import template from './register.stache';
+import view from './register.stache';
 import User from 'bitcentive/models/user';
 import isEmptyObject from 'can-util/js/is-empty-object/is-empty-object';
 import "bootstrap/dist/css/bootstrap.css";
@@ -39,7 +39,7 @@ export const ViewModel = DefineMap.extend({
           //TODO: global error handler
           console.log("Login error:", err);
         });
-        
+
       }, (err) => {
         console.log("error saving", err);
         if(!err || !err.responseJSON){
@@ -92,5 +92,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'bit-register',
   ViewModel: ViewModel,
-  template
+  view
 });

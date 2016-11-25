@@ -1,7 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './os-projects.less';
-import template from './os-projects.stache';
+import view from './os-projects.stache';
 import OSProject from '../../models/os-project';
 import ContributionMonth from '../../models/contribution-month/';
 
@@ -86,5 +86,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'os-projects',
   ViewModel,
-  template
+  view
 });
