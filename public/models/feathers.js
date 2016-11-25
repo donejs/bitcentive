@@ -10,7 +10,6 @@ import {CookieStorage} from 'cookie-storage';
 
 const cookieStorage = new CookieStorage();
 
-console.log('feathers model: creating socket.io connection...');
 var socket = io({
   transports: ['websocket']
 });

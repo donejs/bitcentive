@@ -3,28 +3,7 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';
 
 import feathersClient from './feathers';
-import connect from 'can-connect';
-import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
-
-var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersBehavior
-];
+import superModel from '../lib/super-model';
 
 var userAlgebra = new set.Algebra(
     set.comparators.id("_id")
@@ -42,7 +21,7 @@ var User = DefineMap.extend("User", {
 
 User.List = DefineList.extend({"*": User});
 
-User.connection = connect(behaviorList, {
+User.connection = superModel({
   idProp: "_id",
   Map: User,
   List: User.List,
@@ -52,5 +31,7 @@ User.connection = connect(behaviorList, {
 });
 
 User.algebra = userAlgebra;
+
+export { userAlgebra as algebra };
 
 export default User;

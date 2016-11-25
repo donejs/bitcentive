@@ -1,30 +1,8 @@
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import set from 'can-set';
-
 import feathersClient from './feathers';
-import connect from 'can-connect';
-import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
-
-var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersBehavior
-];
+import superModel from '../lib/super-model';
 
 var clientProjectAlgebra = new set.Algebra(
   set.comparators.id('_id')
@@ -32,14 +10,14 @@ var clientProjectAlgebra = new set.Algebra(
 
 var ClientProject = DefineMap.extend({
   _id: 'string',
-  name: 'string',
+  name: 'string'
 });
 
 ClientProject.List = DefineList.extend({
-  "*": ClientProject
+  "#": ClientProject
 });
 
-ClientProject.connection = connect(behaviorList, {
+ClientProject.connection = superModel({
   parseInstanceProp: "data",
   Map: ClientProject,
   List: ClientProject.List,
@@ -50,5 +28,7 @@ ClientProject.connection = connect(behaviorList, {
 });
 
 ClientProject.algebra = clientProjectAlgebra;
+
+export { clientProjectAlgebra as algebra };
 
 export default ClientProject;

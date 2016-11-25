@@ -1,30 +1,12 @@
-/* global window */
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
-
+import set from 'can-set';
 import feathersClient from './feathers';
-import connect from 'can-connect';
-import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
+import superModel from '../lib/super-model';
 
-var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersBehavior
-];
+var signupAlgebra = new set.Algebra(
+  set.comparators.id('_id')
+);
 
 export const Signup = DefineMap.extend('Signup', {
   _id: '*',
@@ -36,13 +18,18 @@ Signup.List = DefineList.extend({
   '*': Signup
 });
 
-export const signupConnection = connect(behaviorList, {
+export const signupConnection = superModel({
   parseInstanceProp: 'data',
   feathersService: feathersClient.service('/signup'),
   idProp: '_id',
   Map: Signup,
   List: Signup.List,
-  name: 'signup'
+  name: 'signup',
+  algebra: signupAlgebra
 });
+
+Signup.algebra = signupAlgebra;
+
+export { signupAlgebra as algebra };
 
 export default Signup;

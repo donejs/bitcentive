@@ -8,6 +8,7 @@ import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 
 import "../../lib/prefilter";
+import superModel from '../../lib/super-model';
 
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
@@ -25,18 +26,6 @@ import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 import dataUrl from 'can-connect/data/url/';
-
-var behaviorList = [
- feathersBehavior,
- dataParse,
- construct,
- constructStore,
- canMap,
- canRef,
- realtime,
- dataCallbacks,
- constructOnce
-];
 
 var contributionMonthAlgebra = new set.Algebra(
   set.comparators.id("_id"),
@@ -270,7 +259,7 @@ var dataMassage = function(oType) {
   };
 };
 
-ContributionMonth.connection = connect(behaviorList, {
+ContributionMonth.connection = superModel({
   parseInstanceProp: "data",
   idProp: "_id",
   Map: ContributionMonth,
@@ -280,6 +269,7 @@ ContributionMonth.connection = connect(behaviorList, {
   name: "contributionMonth",
   algebra: contributionMonthAlgebra
 });
+
 ContributionMonth.algebra = contributionMonthAlgebra;
 
 export default ContributionMonth;
