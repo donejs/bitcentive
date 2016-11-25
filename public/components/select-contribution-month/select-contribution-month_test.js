@@ -13,7 +13,7 @@ QUnit.module('bitcentive/components/select-contribution-month',{
   }
 });
 
-QUnit.asyncTest('No contribution months', function(){
+QUnit.skip('No contribution months', function(){
 
   contributionMonthStore.reset();
 

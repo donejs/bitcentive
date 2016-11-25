@@ -23,6 +23,7 @@ import canMap from 'can-connect/can/map/';
 import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
+import dataUrl from 'can-connect/data/url/';
 
 var behaviorList = [
  feathersBehavior,
@@ -63,8 +64,9 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   date: "date",
   monthlyOSProjects: {
     Type: MonthlyOSProject.List,
-    set: function(newVal){
-      return newVal;
+    set: function(monthlyOSProjects){
+      monthlyOSProjects.contributionMonth = this;
+      return monthlyOSProjects;
     }
   },
   monthlyClientProjects: MonthlyClientProject.List,
@@ -158,6 +160,40 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       return calculations;
     }
   },
+
+  // Can add using an osProject or monthlyOSProject
+  addNewMonthlyOSProject: function(project) {
+    let monthlyOSProject;
+    if (project instanceof MonthlyOSProject) {
+      monthlyOSProject = project;
+      this.monthlyOSProjects.push(project);
+    }
+    else {
+      monthlyOSProject = new MonthlyOSProject({
+        significance: 0,
+        commissioned: false,
+        osProjectRef: project,
+        osProjectID: project._id
+      });
+      this.monthlyOSProjects.push(monthlyOSProject);
+    }
+    this.save().then(function() {
+    }, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
+    return monthlyOSProject;
+  },
+  removeMonthlyOSProject: function(monthlyOSProject) {
+    this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
+    this.monthlyClientProjects.forEach((clientProject) => {
+      clientProject.monthlyClientProjectOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject), 1);
+    });
+    this.save().then(function() {
+    }, function() {
+      console.error("Failed saving the contributionMonth obj: ", arguments);
+    });
+  },
+
   commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
     if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
       return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].commissionedMonthlyOSProjects.length;
