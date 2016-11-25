@@ -4,7 +4,7 @@ import DefineList from 'can-define/list/list';
 
 import feathersClient from './feathers';
 import superModel from '../lib/super-model';
-import { _idAlgebra as userAlgebra } from './algebra';
+import { _idAlgebra as userAlgebra } from './algebras';
 
 var User = DefineMap.extend("User", {
   _id: "string",

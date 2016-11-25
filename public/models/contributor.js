@@ -3,7 +3,7 @@ import DefineList from "can-define/list/";
 import set from "can-set";
 import superModel from '../lib/super-model';
 import feathersClient from './feathers';
-import { _idAlgebra as contributorAlgebra } from './algebra';
+import { _idAlgebra as contributorAlgebra } from './algebras';
 
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",

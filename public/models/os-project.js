@@ -2,7 +2,7 @@ import set from "can-set";
 import DefineMap from "can-define/map/";
 import superModel from '../lib/super-model';
 import feathersClient from './feathers';
-import { _idAlgebra as osProjectAlgebra } from './algebra';
+import { _idAlgebra as osProjectAlgebra } from './algebras';
 
 var OSProject = DefineMap.extend("OSProject", {
   _id: "string",
