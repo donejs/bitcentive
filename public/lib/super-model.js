@@ -11,7 +11,6 @@ import canRef from 'can-connect/can/ref/';
 import realtime from 'can-connect/real-time/';
 
 var behaviors = [
- feathersBehavior,
  construct,
  canMap,
  canRef,
@@ -23,8 +22,18 @@ var behaviors = [
  callbacksOnce
 ];
 
-const superModel = function(options){
-	return connect(behaviors,options);
+const superModel = function(newBehaviors, options){
+  // if only 1 argument passed it is options
+  if(arguments.length === 1) {
+    options = newBehaviors;
+    newBehaviors = [feathersBehavior]; // default to feathersBehavior
+  }
+
+  // TODO: remove this when this issue is closed:
+	// https://github.com/canjs/can-connect/issues/100
+	options.idProp = "_id";
+
+  return connect([...newBehaviors, ...behaviors], options);
 };
 
 export default superModel;

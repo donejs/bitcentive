@@ -15,38 +15,9 @@ import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
 
-import connect from 'can-connect';
 import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
-import dataUrl from 'can-connect/data/url/';
 
-var contributionMonthAlgebra = new set.Algebra(
-  set.comparators.id("_id"),
-  set.comparators.sort("$sort", function($sort, cm1, cm2){
-    if($sort.date) {
-      if(parseInt($sort.date) === 1) {
-        return moment(cm1.date).toDate() - moment(cm2.date).toDate();
-      } else {
-        return moment(cm2.date).toDate() - moment(cm1.date).toDate();
-      }
-    } else {
-      throw "can't sort that way";
-    }
-
-  }),
-  {
-    "$populate": function(){
-      return true;
-    }
-  }
-);
+import { contributionMonthAlgebra } from '../algebras';
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
@@ -250,6 +221,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   }
 });
 
+ContributionMonth.List = DefineList.extend({
+  "#": ContributionMonth
+});
+
 var dataMassage = function(oType) {
   return function(item) {
     if (typeof item[oType + 'Id'] === 'object') {
@@ -261,7 +236,6 @@ var dataMassage = function(oType) {
 
 ContributionMonth.connection = superModel({
   parseInstanceProp: "data",
-  idProp: "_id",
   Map: ContributionMonth,
   List: ContributionMonth.List,
   feathersService: feathersClient.service("/api/contribution_months"),

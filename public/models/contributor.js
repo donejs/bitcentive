@@ -17,7 +17,6 @@ Contributor.List = DefineList.extend({
 });
 
 Contributor.connection = superModel({
-  idProp: "_id",
   Map: Contributor,
   List: Contributor.List,
   feathersService: feathersClient.service("/api/contributors"),

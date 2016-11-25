@@ -19,7 +19,6 @@ var User = DefineMap.extend("User", {
 User.List = DefineList.extend({"*": User});
 
 User.connection = superModel({
-  idProp: "_id",
   Map: User,
   List: User.List,
   feathersService: feathersClient.service("/api/users"),

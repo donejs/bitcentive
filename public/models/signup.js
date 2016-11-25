@@ -18,7 +18,6 @@ Signup.List = DefineList.extend({
 export const signupConnection = superModel({
   parseInstanceProp: 'data',
   feathersService: feathersClient.service('/signup'),
-  idProp: '_id',
   Map: Signup,
   List: Signup.List,
   name: 'signup',

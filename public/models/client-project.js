@@ -20,8 +20,7 @@ ClientProject.connection = superModel({
   List: ClientProject.List,
   feathersService: feathersClient.service('/api/client_projects'),
   name: "client-projects",
-  algebra: clientProjectAlgebra,
-  idProp: "_id"
+  algebra: clientProjectAlgebra
 });
 
 ClientProject.algebra = clientProjectAlgebra;
