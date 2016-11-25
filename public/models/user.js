@@ -4,10 +4,7 @@ import DefineList from 'can-define/list/list';
 
 import feathersClient from './feathers';
 import superModel from '../lib/super-model';
-
-var userAlgebra = new set.Algebra(
-    set.comparators.id("_id")
-);
+import { _idAlgebra as userAlgebra } from './algebra';
 
 var User = DefineMap.extend("User", {
   _id: "string",

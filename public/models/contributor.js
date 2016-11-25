@@ -3,6 +3,7 @@ import DefineList from "can-define/list/";
 import set from "can-set";
 import superModel from '../lib/super-model';
 import feathersClient from './feathers';
+import { _idAlgebra as contributorAlgebra } from './algebra';
 
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
@@ -10,10 +11,6 @@ var Contributor = DefineMap.extend("Contributor", {
   email: "string",
   active: "boolean"
 });
-
-var contributorAlgebra = new set.Algebra(
-  set.comparators.id("_id")
-);
 
 Contributor.List = DefineList.extend({
   "*": Contributor

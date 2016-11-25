@@ -1,7 +1,6 @@
 import fixture from 'can-fixture';
 //import Contributor from '../contributor';
-import canSet from 'can-set';
-var algebra = new canSet.Algebra(canSet.props.id('_id'));
+import { _idAlgebra as algebra } from '../algebra';
 
 var store = fixture.store([{
     _id: "1-JustinMeyer",

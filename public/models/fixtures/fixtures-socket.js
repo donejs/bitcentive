@@ -6,7 +6,6 @@ import mockClientProjects from 'bitcentive/models/fixtures/client-project';
 import mockContributor from 'bitcentive/models/fixtures/contributor';
 
 // Mock socket.io server:
-console.log('Mocking socket.io server...');
 var mockServer = new fixtureSocket.Server( io );
 
 mockContributionMonths( mockServer );
