@@ -2,7 +2,7 @@ import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../lib/super-model';
-import { _idAlgebra as osProjectAlgebra } from './algebras';
+import algebra from './algebras';
 
 var OSProject = DefineMap.extend("OSProject", {
   _id: "string",
@@ -19,11 +19,9 @@ OSProject.connection = superModel({
   List: OSProject.List,
   url: "/api/os_projects",
   name: "osProject",
-  algebra: osProjectAlgebra
+  algebra
 });
 
-OSProject.algebra = osProjectAlgebra;
-
-export { osProjectAlgebra as algebra };
+OSProject.algebra = algebra;
 
 export default OSProject;

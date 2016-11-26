@@ -1,16 +1,7 @@
 import set from 'can-set';
 import moment from "moment";
 
-export const _idAlgebra = new set.Algebra(
-  set.comparators.id('_id'),
-  {
-    "token": function(){
-      return true;
-    }
-  }
-);
-
-export const contributionMonthAlgebra = new set.Algebra(
+export default new set.Algebra(
   set.comparators.id("_id"),
   set.comparators.sort("$sort", function($sort, cm1, cm2){
     if($sort.date) {
@@ -26,11 +17,8 @@ export const contributionMonthAlgebra = new set.Algebra(
       return true;
     },
     "token": function(){
+      // token is added by feathers
       return true;
     }
-  });
-
-export default {
-  _id: _idAlgebra,
-  contributionMonth: contributionMonthAlgebra
-};
+  }
+);

@@ -3,7 +3,7 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';
 
 import superModel from '../lib/super-model';
-import { _idAlgebra as userAlgebra } from './algebras';
+import algebra from './algebras';
 
 var User = DefineMap.extend("User", {
   _id: "string",
@@ -24,11 +24,9 @@ User.connection = superModel({
   List: User.List,
   url: "/api/users",
   name: "users",
-  algebra: userAlgebra
+  algebra
 });
 
-User.algebra = userAlgebra;
-
-export { userAlgebra as algebra };
+User.algebra = algebra;
 
 export default User;

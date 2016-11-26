@@ -2,7 +2,7 @@ import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import set from "can-set";
 import superModel from '../lib/super-model';
-import { _idAlgebra as contributorAlgebra } from './algebras';
+import algebra from './algebras';
 
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
@@ -20,11 +20,9 @@ Contributor.connection = superModel({
   List: Contributor.List,
   url: "/api/contributors",
   name: "contributor",
-  algebra: contributorAlgebra
+  algebra
 });
 
-Contributor.algebra = contributorAlgebra;
-
-export { contributorAlgebra as algebra };
+Contributor.algebra = algebra;
 
 export default Contributor;

@@ -31,9 +31,9 @@ export const ViewModel = DefineMap.extend({
     }
   },
   contributionMonthsPromise: {
-    value: ContributionMonth.getList.bind(ContributionMonth, {
-
-    })
+    get: function () {
+      return ContributionMonth.getList({});
+    }
   },
 
   contributionMonths: {

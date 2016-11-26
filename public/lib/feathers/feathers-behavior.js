@@ -31,6 +31,13 @@ export default connect.behavior('data/feathers', function (baseConnection) {
 
     destroyData: function (instance) {
       return service.remove(instance[this.idProp]);
+    },
+
+    init: function () {
+      service.on('created', this.createInstance.bind(this));
+      service.on('updated', this.updateInstance.bind(this));
+      service.on('patched', this.updateInstance.bind(this));
+      service.on('removed', this.destroyInstance.bind(this));
     }
   };
 });

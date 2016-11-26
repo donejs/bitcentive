@@ -1,11 +1,20 @@
 /* global window */
+import connect from 'can-connect';
+import dataParse from 'can-connect/data/parse/';
+import construct from 'can-connect/constructor/';
+import constructStore from 'can-connect/constructor/store/';
+import constructOnce from 'can-connect/constructor/callbacks-once/';
+import canMap from 'can-connect/can/map/';
+import canRef from 'can-connect/can/ref/';
+import dataCallbacks from 'can-connect/data/callbacks/';
+import realtime from 'can-connect/real-time/';
+
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import User from 'bitcentive/models/user';
 import canEvent from 'can-event';
 
-import superModel from '../lib/super-model';
-import { _idAlgebra as sessionAlgebra } from './algebras';
+import algebra from './algebras';
 
 import feathersClient from '../lib/feathers/feathers-client';
 import feathersSession from 'can-connect-feathers/session';
@@ -35,13 +44,25 @@ Session.List = DefineList.extend({
   '#': Session
 });
 
-Session.connection = superModel(feathersSession, {
+Session.connection = connect([
+    dataParse,
+    construct,
+    constructStore,
+    constructOnce,
+    canMap,
+    canRef,
+    dataCallbacks,
+    realtime,
+    feathersSession
+], {
   feathersClient,
   Map: Session,
   List: Session.List,
   name: 'session',
-  algebra: sessionAlgebra
+  algebra
 });
+
+Session.algebra = algebra;
 
 Object.assign(Session, canEvent);
 // TODO: look at removing 'window' here

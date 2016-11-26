@@ -2,7 +2,7 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import set from 'can-set';
 import superModel from '../lib/super-model';
-import { _idAlgebra as signupAlgebra } from './algebras';
+import algebra from './algebras';
 
 export const Signup = DefineMap.extend('Signup', {
   _id: '*',
@@ -20,11 +20,9 @@ export const signupConnection = superModel({
   Map: Signup,
   List: Signup.List,
   name: 'signup',
-  algebra: signupAlgebra
+  algebra
 });
 
-Signup.algebra = signupAlgebra;
-
-export { signupAlgebra as algebra };
+Signup.algebra = algebra;
 
 export default Signup;

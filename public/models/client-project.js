@@ -2,7 +2,7 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import set from 'can-set';
 import superModel from '../lib/super-model';
-import { _idAlgebra as clientProjectAlgebra } from './algebras';
+import algebra from './algebras';
 
 var ClientProject = DefineMap.extend({
   _id: 'string',
@@ -19,11 +19,9 @@ ClientProject.connection = superModel({
   List: ClientProject.List,
   url: '/api/client_projects',
   name: "client-projects",
-  algebra: clientProjectAlgebra
+  algebra
 });
 
-ClientProject.algebra = clientProjectAlgebra;
-
-export { clientProjectAlgebra as algebra };
+ClientProject.algebra = algebra;
 
 export default ClientProject;

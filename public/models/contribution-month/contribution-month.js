@@ -5,8 +5,6 @@ import Contributor from "../contributor";
 import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-
-import "../../lib/prefilter";
 import superModel from '../../lib/super-model';
 
 import moment from "moment";
@@ -16,7 +14,7 @@ import MonthlyContributions from "./monthly-contributions";
 
 import feathersBehavior from 'can-connect-feathers';
 
-import { contributionMonthAlgebra } from '../algebras';
+import algebra from '../algebras';
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
@@ -239,11 +237,9 @@ ContributionMonth.connection = superModel({
   List: ContributionMonth.List,
   url: "/api/contribution_months",
   name: "contributionMonth",
-  algebra: contributionMonthAlgebra
+  algebra
 });
 
-ContributionMonth.algebra = contributionMonthAlgebra;
+ContributionMonth.algebra = algebra;
 
 export default ContributionMonth;
-
-export { contributionMonthAlgebra as algebra };
