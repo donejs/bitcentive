@@ -125,9 +125,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       });
     }
     this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() {
-    }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
+    this.save().catch( err => {
+      console.error("Failed saving the contributionMonth obj: ", err);
     });
     return monthlyOSProject;
   },
@@ -136,9 +135,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     this.monthlyClientProjects.forEach((clientProject) => {
       clientProject.monthlyOSProjects.splice(clientProject.monthlyOSProjects.indexOf(monthlyOSProject), 1);
     });
-    this.save().then(function() {
-    }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
+    this.save().catch(err => {
+      console.error("Failed saving the contributionMonth obj: ", error);
     });
   },
 

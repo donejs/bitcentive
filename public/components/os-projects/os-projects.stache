@@ -32,7 +32,7 @@
       <td>${{getTotal(osProjectRef)}}</td>
       <td>
         <button type="button" class="btn btn-danger btn-xs"
-            ($click)="contributionMonth.removeMonthlyOSProject(monthlyOSProject) contributionMonth.save()">
+            ($click)="contributionMonth.removeMonthlyOSProject(monthlyOSProject)">
           <span class="glyphicon glyphicon-remove"/>
         </button>
       </td>
