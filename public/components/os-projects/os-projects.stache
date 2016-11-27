@@ -1,3 +1,4 @@
+<can-import from="./os-projects.less" />
 {{#if contributionMonth.monthlyOSProjects.length}}
 <table class='table'>
   <thead>
@@ -14,16 +15,18 @@
     <tr>
       <td>{{osProjectRef.value.name}}</td>
       <td>
-        <input type="number" class="form-control significance-input"
-               {($value)}="monthlyOSProject.significance"
-               ($change)="contributionMonth.save()"
-               {{#if contributionMonth.isSaving}} disabled {{/if}}/>
+        <input type="number"
+          class="form-control significance-input"
+          {($value)}="monthlyOSProject.significance"
+          ($change)="contributionMonth.save()"
+          {$disabled}="contributionMonth.isSaving()"
+        />
       </td>
       <td>
         <input type="checkbox"
-        {($checked)}="monthlyOSProject.commissioned"
-        ($change)="contributionMonth.save()"
-        {{#if contributionMonth.isSaving}} disabled {{/if}}
+          {($checked)}="monthlyOSProject.commissioned"
+          ($change)="contributionMonth.save()"
+          {$disabled}="contributionMonth.isSaving()"
         />
       </td>
       <td>${{getTotal(osProjectRef)}}</td>

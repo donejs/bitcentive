@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './os-projects.less';
 import template from './os-projects.stache';
 import OSProject from '../../models/os-project';
 import ContributionMonth from '../../models/contribution-month/';
@@ -12,7 +11,7 @@ export const ViewModel = DefineMap.extend({
   },
 
   // Stateful properties
-  activePromise: "*",
+  activePromise: "any",
   adding: {
     type: 'boolean',
     value: false
@@ -30,6 +29,7 @@ export const ViewModel = DefineMap.extend({
 
   // Derived properties
   creatingNewOSProject: {
+    type: 'boolean',
     get: function() {
       return this.selectedOSProjectId === "__new__";
     }
@@ -51,7 +51,7 @@ export const ViewModel = DefineMap.extend({
 
       this.activePromise = newOSProject.save().then((osProject) => {
         this.toggleAddNewMonthlyOSProject();
-        return this.contributionMonth.addNewMonthlyOSProject(osProject, this.contributionMonth);
+        return this.contributionMonth.addNewMonthlyOSProject(osProject);
       });
     } else {
       this.activePromise = this.allOSProjects.then((projects) => {
