@@ -9,7 +9,7 @@
       "name": "CanJS"
     }
   }, {
-    "significance": 20,
+    "significance": 30,
     "commissioned": true,
     "osProjectRef": {
       "_id": "2-DoneJS",
@@ -17,7 +17,7 @@
     }
   }, {
     "significance": 30,
-    "commissioned": true,
+    "commissioned": false,
     "osProjectRef": {
       "_id": "3-StealJS",
       "name": "StealJS"

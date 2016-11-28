@@ -43,12 +43,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       this.monthlyOSProjects.forEach( osProject => {
         monthlyOSProjectMap[osProject.osProjectRef._id] = osProject;
         if(osProject.commissioned) {
-          totalCommissionedSignificance += osProject.significance;
+          totalCommissionedSignificance += osProject.significance;  // 10 + 20
         }
       });
       // for each client project, calculate out:
       // - rate (based on how many commissioned projects it uses)
-      // - total - (rate * hours)
+      // - total = (rate * hours)
       // - totalSignificance - the total significance for this project
       // - osProjectsUsed - a map of the OS projects used
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
