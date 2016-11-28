@@ -11,5 +11,6 @@ import 'bitcentive/components/login/login_test';
 
 import 'bitcentive/components/register/register_test';
 
-import 'bitcentive/models/contribution-month_test';
-import 'bitcentive/models/monthly-os-project_test';
+import 'bitcentive/models/contribution-month/test/contribution-month_test';
+import 'bitcentive/models/contribution-month/test/monthly-os-project_test';
+import 'bitcentive/models/os-project_test';

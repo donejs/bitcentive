@@ -2,7 +2,7 @@ import QUnit from 'steal-qunit';
 import { ClientProjectVM } from './client-projects';
 import ClientProject from 'bitcentive/models/client-project';
 import OSProject from 'bitcentive/models/client-project';
-import ContributionMonth from 'bitcentive/models/contribution-month';
+import ContributionMonth from 'bitcentive/models/contribution-month/';
 import fixture from 'can-fixture';
 
 //ViewModel unit tests

@@ -1,6 +1,6 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import OSProject from "./os-project";
+import OSProject from "../os-project";
 import ContributionMonth from "./contribution-month";
 import Observation from "can-observation";
 

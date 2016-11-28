@@ -1,14 +1,14 @@
 import QUnit from 'steal-qunit';
-import ContributionMonth from './contribution-month';
+import ContributionMonth from '../contribution-month';
 import moment from 'moment';
 
-import OSProject from './os-project';
-import ClientProject from './client-project';
-import MonthlyClientProjectOSProject from './monthly-client-projects-os-project';
-import Contributor from './contributor';
-import MonthlyContributions from './monthly-contributions';
-import MonthlyOSProject from './monthly-os-project';
-import MonthlyClientProject from './monthly-client-project';
+import OSProject from '../../os-project';
+import ClientProject from '../../client-project';
+import MonthlyClientProjectOSProject from '../monthly-client-projects-os-project';
+import Contributor from '../../contributor';
+import MonthlyContributions from '../monthly-contributions';
+import MonthlyOSProject from '../monthly-os-project';
+import MonthlyClientProject from '../monthly-client-project';
 
 QUnit.module( 'models/contribution-month' );
 

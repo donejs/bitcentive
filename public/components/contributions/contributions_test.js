@@ -1,7 +1,7 @@
 import QUnit from 'steal-qunit';
 import { ViewModel } from './os-projects';
 import fixture from 'can-fixture';
-import ContributionMonth from 'bitcentive/models/contribution-month';
+import ContributionMonth from 'bitcentive/models/contribution-month/';
 
 //ViewModel unit tests
 QUnit.module('bitcentive/components/os-projects', {

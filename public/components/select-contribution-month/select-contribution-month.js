@@ -3,7 +3,7 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './select-contribution-month.less';
 import template from './select-contribution-month.stache';
-import ContributionMonth from 'bitcentive/models/contribution-month';
+import ContributionMonth from 'bitcentive/models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
   selectedContributionMonthId: {
@@ -31,9 +31,9 @@ export const ViewModel = DefineMap.extend({
     }
   },
   contributionMonthsPromise: {
-    value: ContributionMonth.getList.bind(ContributionMonth, {
-
-    })
+    get: function () {
+      return ContributionMonth.getList({});
+    }
   },
 
   contributionMonths: {

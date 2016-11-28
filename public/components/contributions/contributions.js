@@ -2,8 +2,8 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './contributions.less';
 import template from './contributions.stache';
-import MonthlyContribution from '../../models/monthly-contributions';
-import ContributionMonth from '../../models/contribution-month';
+import MonthlyContribution from '../../models/contribution-month/monthly-contributions';
+import ContributionMonth from '../../models/contribution-month/';
 import Contributor from '../../models/contributor';
 import OSProject from '../../models/os-project';
 

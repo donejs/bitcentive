@@ -4,7 +4,7 @@ import DefineList from 'can-define/list/list';
 import './client-projects.less';
 import view from './client-projects.stache';
 import ClientProject from '../../models/client-project';
-import ContributionMonth from '../../models/contribution-month';
+import ContributionMonth from '../../models/contribution-month/';
 
 export const ClientProjectVM = DefineMap.extend({
   // Passed properties
