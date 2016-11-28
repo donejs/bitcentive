@@ -6,22 +6,13 @@
   <bit-contributors {(contributors)}="contributors" />
 </script>
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+  import 'bitcentive/models/fixtures/fixtures-socket';
   import Contributor from 'bitcentive/models/contributor';
   import viewModel from 'can-view-model';
 
-  viewModel($("#contributors")[0]).set("contributors", new Contributor.List([
-    new Contributor({
-      _id: "1-JustinMeyer",
-      name: "Justin Meyer",
-      email: "justin@bitovi.com",
-      active: true
-    }),
-    new Contributor({
-      _id: "2-KyleGifford",
-      name: "Kyle Gifford",
-      email: "kyle@bitovi.com",
-      active: false
-    })
-  ]));
+  Contributor.getList({}).then(function(items){
+    viewModel($("#contributors")[0]).set("contributors", items);
+  });
+
   window.viewModel = viewModel;
 </script>

@@ -27,12 +27,12 @@ export const ContributorsVM = DefineMap.extend({
     value: true,
   },
   newContributorError: {
-    type: "boolean",
-    value: false,
+    type: "string",
+    value: "",
   },
   // Methods
   resetNewContributorFields() {
-    this.newContributorError = false;
+    this.newContributorError = '';
     this.newContributorName = '';
     this.newContributorEmail = '';
     this.newContributorActive = true;
@@ -59,7 +59,8 @@ export const ContributorsVM = DefineMap.extend({
       this.resetNewContributorFields();
       inputs.prop("disabled", false);
     }, (e) => {
-      this.newContributorError = true;
+      console.log('error:', e);
+      this.newContributorError = e.message;
       inputs.prop("disabled", false);
     });
   }

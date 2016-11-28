@@ -30,7 +30,7 @@
   <div class="panel-heading">Add Contributor</div>
     <div class="panel-body">
       <form ($submit)="addContributor(%event)" id="new-contributor">
-        {{#if newContributorError}}<div class="alert alert-danger" role="alert">Name and Email Address are required.</div>{{/if}}
+        {{#if newContributorError}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
         <div class="row">
           <div class="col-xs-5">
             <label>Name:</label>
