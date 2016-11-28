@@ -46,23 +46,32 @@ export const ContributorsVM = DefineMap.extend({
     contributor.save();
   },
   addContributor(ev) {
-    if(event) {
-      event.preventDefault();
+    if(ev) {
+      ev.preventDefault();
     }
-    const inputs = $(ev.target).find(":input");
-    inputs.prop("disabled", true);
+    let error = this.hasErrors();
+    if (error){
+      this.newContributorError = error;
+      return;
+    }
+    const inputs = ev && $(ev.target).find(":input");
+    inputs && inputs.prop("disabled", true);
     return new Contributor({
       name: this.newContributorName,
       email: this.newContributorEmail,
       active: this.newContributorActive,
     }).save().then(() => {
       this.resetNewContributorFields();
-      inputs.prop("disabled", false);
+      inputs && inputs.prop("disabled", false);
     }, (e) => {
       console.log('error:', e);
       this.newContributorError = e.message;
-      inputs.prop("disabled", false);
+      inputs && inputs.prop("disabled", false);
     });
+  },
+  hasErrors(){
+    return this.newContributorName === '' && 'Name cannot be empty'
+      || this.newContributorEmail === '' && 'Email cannot be empty';
   }
 });
 
