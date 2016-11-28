@@ -1,4 +1,4 @@
-import io from 'socket.io-client/socket.io';
+import io from 'socket.io-client';
 import fixtureSocket from 'can-fixture-socket';
 import mockContributionMonths from 'bitcentive/models/fixtures/contribution-months';
 import mockOsProjects from 'bitcentive/models/fixtures/os-project';
