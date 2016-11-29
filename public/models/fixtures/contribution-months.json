@@ -32,7 +32,13 @@
     "monthlyClientProjectsOSProjects": [ {
       "osProjectRef": "1-CanJS"
     } ]
-  } ]
+  } ],
+  "monthlyContributions": [{
+    "osProjectId": "1-CanJS",
+    "points": 13,
+    "contributor": "Peter",
+    "contribution": "I did https://github.com/canjs/canjs/issues/2437"
+  }]
 }, {
   "_id": "2",
   "date": "2016-10-05T16:22:18.251Z"

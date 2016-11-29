@@ -67,7 +67,6 @@ export const ContributorsVM = DefineMap.extend({
       this.resetNewContributorFields();
       this.isSaving = false;
     }, (e) => {
-      console.log('error:', e);
       this.newContributorError = e.message;
       this.isSaving = false;
     });
