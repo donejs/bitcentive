@@ -1,7 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './contributions.less';
-import template from './contributions.stache';
+import view from './contributions.stache';
 import MonthlyContribution from '../../models/contribution-month/monthly-contributions';
 import ContributionMonth from '../../models/contribution-month/';
 import Contributor from '../../models/contributor';
@@ -71,5 +71,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'bit-contributions',
   ViewModel,
-  template
+  view
 });

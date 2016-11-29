@@ -1,7 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './page-dashboard.less!';
-import template from './page-dashboard.stache!';
+import view from './page-dashboard.stache!';
 
 export const ViewModel = DefineMap.extend({
   message: {
@@ -12,5 +12,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'page-dashboard',
   ViewModel,
-  template
+  view
 });
