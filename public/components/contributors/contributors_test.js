@@ -5,7 +5,10 @@ import { ContributorsVM } from './contributors';
 import Contributor from 'bitcentive/models/contributor';
 
 QUnit.module('bitcentive/components/contributors/', {
-  beforeEach: function(){}
+  beforeEach: function(){
+    // Reset fixture store before every test:
+    store.reset();
+  }
 });
 
 QUnit.asyncTest('viewModel.addContributor', function(){
