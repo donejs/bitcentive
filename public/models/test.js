@@ -16,7 +16,7 @@ QUnit.asyncTest("getList of ContributionMonth", function() {
 
 		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef.value instanceof ClientProject, 'is a client project');
 		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef.value,
-			second = contributionMonths[0].monthlyClientProjects[0].monthlyOSProjects[0].osProjectRef.value;
+			second = contributionMonths[0].monthlyClientProjects[0].osProjects[0].value;
 
 		QUnit.ok(first === second, 'first and second are equal');
 		QUnit.ok(first, 'first exists');

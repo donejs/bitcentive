@@ -1,13 +1,13 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import MonthlyOSProject from "./monthly-os-project";
+import OSProject from "../os-project";
 import ClientProject from "../client-project";
 import { indexOfRefForModel } from "bitcentive/lib/ref-list-utils";
 
 var MonthlyClientProject = DefineMap.extend("MonthlyClientProject", {
   clientProjectRef: { type: ClientProject.Ref.type },
   hours: "number",
-  monthlyOSProjects: [ MonthlyOSProject ]
+  osProjects: [ { type: OSProject.Ref.type } ]
 });
 
 MonthlyClientProject.List = DefineList.extend({
@@ -24,7 +24,7 @@ MonthlyClientProject.List = DefineList.extend({
       const newMCP = new MonthlyClientProject({
         clientProjectRef: clientProject,
         hours: 0,
-        monthlyOSProjects: []
+        osProjects: []
       });
       this.push( newMCP );
     }

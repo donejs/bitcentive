@@ -16,7 +16,7 @@ const osProjectSchema = new Schema({
 
 const clientProjectSchema = new Schema({
   clientProjectRef: { type: Schema.Types.ObjectId, ref: 'client_project' },
-  monthlyOSProjects: [ osProjectSchema ],
+  monthlyOSProjects: [ { type: Schema.Types.ObjectId, ref: 'os_project' } ],
   hours: Number
 });
 
