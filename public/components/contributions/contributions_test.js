@@ -4,14 +4,14 @@ import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 import { ViewModel } from './contributions';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 
-QUnit.module('bitcentive/components/contributors/', {
+QUnit.module('bitcentive/components/contributions/', {
   beforeEach: function(){
     // Reset fixture store before every test:
     store.reset();
   }
 });
 
-QUnit.asyncTest('viewModel.addContributor', function(){
+QUnit.asyncTest('viewModel.addContribution', function(){
   ContributionMonth.get("1").then(month => {
     var vm = new ViewModel({
       contributionMonth: month,
