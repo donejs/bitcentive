@@ -12,7 +12,8 @@ QUnit.asyncTest('viewModel.addContributor', function(){
   Contributor.getList({}).then(items => {
     var vm = new ContributorsVM({
       contributors: items,
-      newContributorName: 'Ilya'
+      newContributorName: 'Ilya',
+      newContributorEmail: 'ilya@bitovi.com'
     });
     QUnit.equal(vm.contributors.length, 2, 'should have 2 contributors');
     vm.contributors.on('length', function(){
