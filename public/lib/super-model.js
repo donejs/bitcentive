@@ -7,6 +7,7 @@ import canMap from 'can-connect/can/map/';
 import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
+import errorHandler from './behaviors/error-handler';
 
 // TODO: roll these changes into can-connect-feathers
 import feathersBehavior from './feathers/feathers-behavior';
@@ -25,7 +26,8 @@ const superModel = function(options) {
 		canMap,
 		canRef,
 		dataCallbacks,
-		realtime
+		realtime,
+		errorHandler
 	];
 
 	return connect(behaviors, options);
