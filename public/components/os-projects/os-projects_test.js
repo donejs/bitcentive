@@ -32,9 +32,8 @@ QUnit.module('bitcentive/components/os-projects', {
         osProject: this.osProject
       }],
       monthlyClientProjects: [{
-        monthlyClientProjectsOSProjects: [{
-          osProjectRef: this.osProject._id,
-          osProject: this.osProject
+        monthlyOSProjects: [{
+          osProjectRef: this.osProject._id
         }],
         hours: 100,
         clientProjectRef: this.clientProject._id,

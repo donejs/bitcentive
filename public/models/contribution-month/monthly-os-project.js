@@ -3,66 +3,54 @@ import DefineList from "can-define/list/";
 import OSProject from "../os-project";
 import ContributionMonth from "./contribution-month";
 import Observation from "can-observation";
+import { indexOfRefForModel } from "bitcentive/lib/ref-list-utils";
 
-var MonthlyOSProject = DefineMap.extend("MonthlyOSProject",{
+var MonthlyOSProject = DefineMap.extend("MonthlyOSProject", {
+  osProjectRef: { type: OSProject.Ref.type },
   significance: "number",
   commissioned: "boolean",
-  osProjectRef: { type: OSProject.Ref.type },
-  osProjectID: "number",
   contributionMonth: {
     Type: ContributionMonth,
     serialize: false
-  },
-  init: function() {
-    if (!this.osProjectID && this.osProjectRef) {
-      this.osProjectID = this.osProjectRef._id;
-    }
   }
 });
 
 MonthlyOSProject.List = DefineList.extend({
   "#": {
     Type: MonthlyOSProject,
-    added: function(items) {
-      items.forEach(function(monthlyOSProject) {
+    added: function( items ) {
+      items.forEach( monthlyOSProject => {
         monthlyOSProject.contributionMonth = this.contributionMonth;
-        this.monthlyOSProjectIdMap[monthlyOSProject.osProjectID] = monthlyOSProject;
-      }, this);
+      } );
       return items;
     },
-    removed: function(items) {
-      items.forEach(function(monthlyOSProject) {
-        monthlyOSProject.contributionMonth = null;
-        this.monthlyOSProjectIdMap[monthlyOSProject.osProjectID] = null;
-      }, this);
+    removed: function( items ) {
+      items.forEach( monthlyOSProject => {
+        monthlyOSProject.contributionMonth = undefined;
+      });
       return items;
     }
   },
-  init: function() {
-    this.forEach((monthlyOSProject) => {
-      this.monthlyOSProjectIdMap[monthlyOSProject.osProjectRef.id] = monthlyOSProject;
-    }, this);
-  },
   contributionMonth: {
-    set: function(contributionMonth) {
-      this.forEach(function(monthlyOSProject) {
+    set( contributionMonth ) {
+      this.forEach( monthlyOSProject => {
         monthlyOSProject.contributionMonth = contributionMonth;
-      });
+      } );
       return contributionMonth;
     },
     Type: ContributionMonth,
     serialize: false
   },
-  monthlyOSProjectIdMap: {
-    type: "any",
-    value: {}
+  has( osProject ){
+    const index = indexOfRefForModel( this, osProject, 'osProjectRef' );
+    return index !== -1;
   },
-  has: function(osProject){
-    return osProject._id in this.monthlyOSProjectIdMap;
+  getMonthlyOsProject( osProject ) {
+    const index = indexOfRefForModel( this, osProject, 'osProjectRef' );
+    return this[index];
   },
-  getSignificance: function(osProjectRef) {
-    var monthlyOSProject = this.monthlyOSProjectIdMap[osProjectRef._id];
-    return monthlyOSProject ? monthlyOSProject.significance : false;
+  getSignificance( osProject ) {
+    return this.getMonthlyOsProject( osProject ).significance;
   },
   commissioned: {
     get: function(){

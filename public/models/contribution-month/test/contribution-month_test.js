@@ -1,10 +1,11 @@
+/* global ok */
 import QUnit from 'steal-qunit';
 import ContributionMonth from '../contribution-month';
 import moment from 'moment';
+import DefineList from "can-define/list/";
 
 import OSProject from '../../os-project';
 import ClientProject from '../../client-project';
-import MonthlyClientProjectOSProject from '../monthly-client-projects-os-project';
 import Contributor from '../../contributor';
 import MonthlyContributions from '../monthly-contributions';
 import MonthlyOSProject from '../monthly-os-project';
@@ -71,27 +72,31 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     osProjectRef: osProject02
   } );
 
-  let monthlyClientProjectOSProject01 = new MonthlyClientProjectOSProject( {
+  let monthlyClientProjectOSProject01 = new MonthlyOSProject( {
     osProjectRef: osProject01
   } );
-  let monthlyClientProjectOSProject02 = new MonthlyClientProjectOSProject( {
+  let monthlyClientProjectOSProject02 = new MonthlyOSProject( {
     osProjectRef: osProject02
   } );
-  let monthlyClientProjectOSProjects = new MonthlyClientProjectOSProject.List();
-  monthlyClientProjectOSProjects.push( monthlyClientProjectOSProject01 );
-  monthlyClientProjectOSProjects.push( monthlyClientProjectOSProject02 );
+  let monthlyClientProjectOSProjects = new DefineList([
+    monthlyClientProjectOSProject01,
+    monthlyClientProjectOSProject02,
+  ]);
 
   let monthlyClientProject01 = new MonthlyClientProject( {
     clientProjectRef: clientProject01,
     hours: 8,
-    monthlyClientProjectOSProjects: monthlyClientProjectOSProjects
+    monthlyOSProjects: monthlyClientProjectOSProjects
   } );
+
   monthlyClientProjectOSProjects.pop();
+
   let monthlyClientProject02 = new MonthlyClientProject( {
     clientProjectRef: clientProject02,
     hours: 16,
-    monthlyClientProjectOSProjects: monthlyClientProjectOSProjects
+    monthlyOSProjects: monthlyClientProjectOSProjects
   } );
+
   let monthlyClientProjects = new MonthlyClientProject.List();
   monthlyClientProjects.push( monthlyClientProject01 );
   monthlyClientProjects.push( monthlyClientProject02 );
@@ -120,7 +125,7 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     "monthlyOSProject was added with osProjectRef" );
   ok( contributionMonth.monthlyClientProjects[ 1 ].clientProjectRef.value.name === "Something Awesome",
     "monthlyClientProjects was added with clientProjectRef" );
-  ok( contributionMonth.monthlyClientProjects[ 1 ].monthlyClientProjectOSProjects[ 0 ].osProjectRef.value.name === 'DoneJS',
+  ok( contributionMonth.monthlyClientProjects[ 1 ].monthlyOSProjects[ 0 ].osProjectRef.value.name === 'DoneJS',
     "monthlyClientProjects was added with osProjects and osProjectRef" );
 } );
 

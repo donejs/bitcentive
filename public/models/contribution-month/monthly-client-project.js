@@ -1,56 +1,32 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import MonthlyClientProjectsOsProject from "./monthly-client-projects-os-project";
+import MonthlyOSProject from "./monthly-os-project";
 import ClientProject from "../client-project";
+import { indexOfRefForModel } from "bitcentive/lib/ref-list-utils";
 
-var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
-  clientProjectRef: {
-    type: ClientProject.Ref.type
-  },
+var MonthlyClientProject = DefineMap.extend("MonthlyClientProject", {
+  clientProjectRef: { type: ClientProject.Ref.type },
   hours: "number",
-  monthlyClientProjectsOSProjects: {
-    Type: MonthlyClientProjectsOsProject.List,
-    Value: MonthlyClientProjectsOsProject.List
-  }
+  monthlyOSProjects: [ MonthlyOSProject ]
 });
 
 MonthlyClientProject.List = DefineList.extend({
-  "*": MonthlyClientProject,
-  monthlyProjectIdMap: {
-    get: function() {
-      var map = {};
-      this.forEach(function(monthlyClientProject, index) {
-        map[monthlyClientProject.clientProjectRef._id] = index;
-      });
-      return map;
-    }
+  "#": MonthlyClientProject,
+  has: function( clientProject ) {
+    const index = indexOfRefForModel( this, clientProject, 'clientProjectRef' );
+    return index !== -1;
   },
-  has: function(clientProject) {
-    let monthlyClientProject;
-    if (!!clientProject._id) {
-      monthlyClientProject = new MonthlyClientProject({
-        clientProjectRef: clientProject._id,
-        clientProject: clientProject,
-        hours: 0
-      });
-    }
-    else {
-      monthlyClientProject = clientProject;
-    }
-    return monthlyClientProject.clientProjectRef._id in this.monthlyProjectIdMap;
-  },
-  toggleProject: function(clientProjectRef){
-    let monthlyClientProject = new MonthlyClientProject({
-        clientProjectRef: clientProjectRef._id,
-        clientProject: clientProjectRef,
-        hours: 0,
-        monthlyClientProjectsOSProjects: []
-      });
-    var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectRef._id];
-    if(index != null) {
+  toggleProject: function( clientProject ){
+    const index = indexOfRefForModel( this, clientProject, 'clientProjectRef' );
+    if ( index !== -1 ) {
       this.splice(index, 1);
     } else {
-      this.push(monthlyClientProject);
+      const newMCP = new MonthlyClientProject({
+        clientProjectRef: clientProject,
+        hours: 0,
+        monthlyOSProjects: []
+      });
+      this.push( newMCP );
     }
   }
 });
