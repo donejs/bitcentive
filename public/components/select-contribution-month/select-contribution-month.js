@@ -21,10 +21,12 @@ export const ViewModel = DefineMap.extend({
       if(newVal === "__new__") {
         var last = this.lastMonth.serialize();
         last.date = this.nextMonth;
+        last.monthlyContributions = [];
         delete last._id;
         new ContributionMonth(last).save((newContributionMonth) => {
           setVal(newContributionMonth._id);
         });
+        
       } else {
         setVal(newVal);
       }
@@ -37,6 +39,7 @@ export const ViewModel = DefineMap.extend({
   },
 
   contributionMonths: {
+    Type: ContributionMonth.List,
     get: function(initial, resolve){
       this.contributionMonthsPromise.then(resolve);
     }
