@@ -14,6 +14,10 @@ export const ContributorsVM = DefineMap.extend({
     type: "boolean",
     value: false
   },
+  isSaving: {
+    type: "boolean",
+    value: false
+  },
   newContributorName: {
     type: "string",
     value: "",
@@ -54,19 +58,18 @@ export const ContributorsVM = DefineMap.extend({
       this.newContributorError = error;
       return;
     }
-    const inputs = ev && $(ev.target).find(":input");
-    inputs && inputs.prop("disabled", true);
+    this.isSaving = true;
     return new Contributor({
       name: this.newContributorName,
       email: this.newContributorEmail,
-      active: this.newContributorActive,
+      active: this.newContributorActive
     }).save().then(() => {
       this.resetNewContributorFields();
-      inputs && inputs.prop("disabled", false);
+      this.isSaving = false;
     }, (e) => {
       console.log('error:', e);
       this.newContributorError = e.message;
-      inputs && inputs.prop("disabled", false);
+      this.isSaving = false;
     });
   },
   hasErrors(){
