@@ -1,4 +1,4 @@
-<script type="text/stache" can-autorender id="clientProjects">
+<script type="text/stache" can-autorender id="demo">
   <can-import from="bootstrap/dist/css/bootstrap.css" />
   <can-import from="bitcentive/styles.less" />
   <can-import from="bitcentive/components/client-projects/" />
@@ -12,7 +12,7 @@
 
   ContributionMonth.get("1").then(function(item){
     console.log('ContributionMonth.getData', item);
-    viewModel($("#clientProjects")[0]).set("contributionMonth", item);
+    viewModel(document.getElementById("demo")).set("contributionMonth", item);
   }).catch(function(err){
     console.log('Err ContributionMonth', err);
   });

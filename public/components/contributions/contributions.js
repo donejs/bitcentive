@@ -44,7 +44,7 @@ export const ViewModel = DefineMap.extend({
   },
 
   addContribution(ev) {
-    ev.preventDefault();
+    ev && ev.preventDefault();
 
     let contribution = new MonthlyContribution({
       description: this.description,
