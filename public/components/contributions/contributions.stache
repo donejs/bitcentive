@@ -18,8 +18,8 @@
       <td>
         {{monthlyContribution.osProjectRef.value.name}}
       </td>
-      <td><input type="textarea" {($value)}="monthlyContribution.description" ($change)="contributionMonth.save()"></input></td>
-      <td><input type="number" {($value)}="monthlyContribution.points" ($change)="contributionMonth.save()"></input></td>
+      <td><input type="textarea" {($value)}="monthlyContribution.description" ($change)="contributionMonth.save()"/></td>
+      <td><input type="number" {($value)}="monthlyContribution.points" ($change)="contributionMonth.save()"/></td>
       <td>
         <button type="button" class="btn btn-danger btn-xs"
             ($click)="removeContribution(%event, monthlyContribution)">
@@ -70,11 +70,11 @@
         <div class="row">
           <div class="col-xs-9">
             <label>Description:</label>
-            <input type="textarea" class="form-control" {($value)}="description"></input>
+            <input type="textarea" class="form-control" {($value)}="description"/>
           </div>
           <div class="col-xs-3">
             <label>Points:</label>
-            <input type="number" class="form-control" {($value)}="points" min="0"></input>
+            <input type="number" class="form-control" {($value)}="points" min="0"/>
           </div>
         </div>
       </form>
