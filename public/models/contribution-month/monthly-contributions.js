@@ -3,7 +3,7 @@ import DefineList from "can-define/list/";
 import OSProject from "../os-project";
 import Contributor from "../contributor";
 
-var MonthlyContributions = DefineMap.extend("MonthlyContributions", {
+const MonthlyContributions = DefineMap.extend( "MonthlyContributions", {
   contributorRef: {
     type: Contributor.Ref.type
   },
@@ -15,7 +15,7 @@ var MonthlyContributions = DefineMap.extend("MonthlyContributions", {
 });
 
 MonthlyContributions.List = DefineList.extend({
-  "*": MonthlyContributions
+  "#": MonthlyContributions
 });
 
 export default MonthlyContributions;
