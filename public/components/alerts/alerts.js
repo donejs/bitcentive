@@ -5,6 +5,11 @@ import './alerts.less';
 import hub from '../../lib/hub';
 import AlertItem from '../../models/alert';
 
+/**
+ * TODO: use streams for modifying alerts
+ *      - https://github.com/donejs/bitcentive/issues/149
+ */
+
 export const ViewModel = DefineMap.extend({
   subscription: '*',
   alerts: {

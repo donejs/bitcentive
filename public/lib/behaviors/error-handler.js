@@ -9,6 +9,7 @@ const errorHandler = connect.behavior('error-handler', baseConnect => {
 			const promise = baseConnect[method].apply(baseConnect, args);
 			promise.catch(e => {
 
+				// TODO: use can-event - https://github.com/donejs/bitcentive/issues/154
 				hub.publish('alert', {
 					type: 'error',
 					title: 'Error',
