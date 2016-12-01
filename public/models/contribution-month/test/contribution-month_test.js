@@ -188,7 +188,7 @@ QUnit.test( "Can add and remove a monthlyOSProject", function() {
     "monthlyOSProject was removed" );
 } );
 
-QUnit.test( "Calculations", function() {
+QUnit.test( "Commission calculations", function() {
   let contributionMonth = new ContributionMonth( {
     date: moment().add( -1, "months" ).startOf( "month" ).toDate(),
     monthlyOSProjects: new MonthlyOSProject.List( [
