@@ -188,7 +188,7 @@ QUnit.test( "Can add and remove a monthlyOSProject", function() {
     "monthlyOSProject was removed" );
 } );
 
-QUnit.test( "Commission calculations", function() {
+QUnit.test( "Calculations: OS project royalty pot totals", function() {
   let contributionMonth = new ContributionMonth( {
     date: moment().add( -1, "months" ).startOf( "month" ).toDate(),
     monthlyOSProjects: new MonthlyOSProject.List( [
@@ -221,20 +221,20 @@ QUnit.test( "Commission calculations", function() {
   QUnit.equal( clientProject1.totalSignificance, 10, "total significance for the first client project" );
 
   // rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance)
-  QUnit.equal( clientProject1.rate, "3.50", "rate for the first client project");
+  QUnit.equal( clientProject1.rate, 3.5, "rate for the first client project");
 
   // total = (rate * hours)
-  QUnit.equal( clientProject1.totalAmount, "350.00", "total amount for the first client project" );
+  QUnit.equal( clientProject1.totalAmount, 350, "total amount for the first client project" );
 
   let clientProject2 = contributionMonth.calculations.clientProjects[ "2-Apple" ];
   QUnit.equal( clientProject2.totalSignificance, 40, "total significance for the 2nd client project" );
-  QUnit.equal( clientProject2.rate, "2.00", "rate for the 2nd client project" );
-  QUnit.equal( clientProject2.totalAmount, "200.00", "total amount for the 2nd client project" );
+  QUnit.equal( clientProject2.rate, 2, "rate for the 2nd client project" );
+  QUnit.equal( clientProject2.totalAmount, 200, "total amount for the 2nd client project" );
 
   let clientProject3 = contributionMonth.calculations.clientProjects[ "3-Walmart" ];
   QUnit.equal( clientProject3.totalSignificance, 70, "total significance for the 3rd client project" );
-  QUnit.equal( clientProject3.rate, "2.00", "rate for the 3rd client project" );
-  QUnit.equal( clientProject3.totalAmount, "400.00", "total amount for the 3rd client project" );
+  QUnit.equal( clientProject3.rate, 2, "rate for the 3rd client project" );
+  QUnit.equal( clientProject3.totalAmount, 400, "total amount for the 3rd client project" );
 
   QUnit.equal( contributionMonth.calculations.totalDollarForAllClientProjects, 950, "total amount for all client projects" );
 
