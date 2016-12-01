@@ -39,7 +39,6 @@ export const ViewModel = DefineMap.extend({
   },
 
   contributionMonths: {
-    Type: ContributionMonth.List,
     get: function(initial, resolve){
       this.contributionMonthsPromise.then(resolve);
     }

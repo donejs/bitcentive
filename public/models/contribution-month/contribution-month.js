@@ -164,25 +164,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     }
     return 0;
   },
-  addNewMonthlyOSProject: function(newProject) {
-    let monthlyOSProject = new MonthlyOSProject({
-      significance: 0,
-      commissioned: false,
-      osProjectRef: newProject,
-      osProject: newProject._id
-    });
-    this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() {
-    }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
-    });
-  },
-  removeMonthlyOSProject: function(osProject) {
-    this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(osProject), 1);
-    this.monthlyClientProjects.forEach((clientProject) => {
-      clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(osProject), 1);
-    });
-  },
   removeClientProject: function(clientProject) {
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
   },
