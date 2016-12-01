@@ -1,46 +1,34 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import OSProject  from "../os-project";
+import OSProject from "../os-project";
 import ClientProject from "../client-project";
 
-var MonthlyClientProjectsOsProject = DefineMap.extend("MonthlyClientProjectsOsProject",{
-    osProjectRef: {
-      type: OSProject.Ref.type
-    },
-    osProjectID: "number"
+const MonthlyClientProjectsOsProject = DefineMap.extend( "MonthlyClientProjectsOsProject", {
+  osProjectRef: {
+    type: OSProject.Ref.type
+  }
 });
 
 MonthlyClientProjectsOsProject.List = DefineList.extend({
-  "*": MonthlyClientProjectsOsProject,
-  osProjectIdMap: {
-    get: function(){
-      var map = {};
-      this.forEach(function(monthlyClientProjectOSProject, index){
-        map[monthlyClientProjectOSProject.osProjectRef._id] = index;
-      });
-      return map;
-    }
+  "#": MonthlyClientProjectsOsProject,
+  get osProjectIdMap() {
+    const map = {};
+    this.forEach( monthlyClientProjectOSProject => {
+      map[monthlyClientProjectOSProject.osProjectRef._id] = monthlyClientProjectOSProject;
+    });
+    return map;
   },
-  // serialize: function() {
-  //   let osProjectIds = [];
-  //   for(var i in this.osProjectIdMap) {
-  //     osProjectIds.push(i);
-  //   }
-  //   return osProjectIds;
-  // },
-  has: function(monthlyOsProject){
+  has( monthlyOsProject ){
     return monthlyOsProject.osProjectRef._id in this.osProjectIdMap;
   },
-  toggleProject: function(monthlyOSProject){
-    let newMonthlyOSProject = new MonthlyClientProjectsOsProject({
-      osProjectRef: monthlyOSProject.osProjectRef
-    });
-    var index = this.osProjectIdMap[newMonthlyOSProject.osProjectRef._id];
-
-    if(index != undefined) {
-      this.splice(index, 1);
+  toggleProject( monthlyOSProject ){
+    const monthlyClientProjectsOsProject = this.osProjectIdMap[monthlyOSProject.osProjectRef._id];
+    if( monthlyClientProjectsOsProject ) {
+      this.splice( this.indexOf(monthlyClientProjectsOsProject), 1);
     } else {
-      this.push(newMonthlyOSProject);
+      this.push( new MonthlyClientProjectsOsProject({
+        osProjectRef: monthlyOSProject.osProjectRef
+      }) );
     }
   },
 });

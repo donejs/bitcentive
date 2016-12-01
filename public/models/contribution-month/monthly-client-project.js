@@ -3,7 +3,7 @@ import DefineList from "can-define/list/";
 import MonthlyClientProjectsOsProject from "./monthly-client-projects-os-project";
 import ClientProject from "../client-project";
 
-var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
+const MonthlyClientProject = DefineMap.extend( "MonthlyClientProject", {
   clientProjectRef: {
     type: ClientProject.Ref.type
   },
@@ -15,43 +15,28 @@ var MonthlyClientProject = DefineMap.extend("MonthlyClientProject",{
 });
 
 MonthlyClientProject.List = DefineList.extend({
-  "*": MonthlyClientProject,
-  monthlyProjectIdMap: {
-    get: function() {
-      var map = {};
-      this.forEach(function(monthlyClientProject, index) {
-        map[monthlyClientProject.clientProjectRef._id] = index;
-      });
-      return map;
-    }
+  "#": MonthlyClientProject,
+  has( clientProject ) {
+    return clientProject._id in this.monthlyClientProjectIdMap;
   },
-  has: function(clientProject) {
-    let monthlyClientProject;
-    if (!!clientProject._id) {
-      monthlyClientProject = new MonthlyClientProject({
-        clientProjectRef: clientProject._id,
-        clientProject: clientProject,
-        hours: 0
-      });
-    }
-    else {
-      monthlyClientProject = clientProject;
-    }
-    return monthlyClientProject.clientProjectRef._id in this.monthlyProjectIdMap;
-  },
-  toggleProject: function(clientProjectRef){
-    let monthlyClientProject = new MonthlyClientProject({
-        clientProjectRef: clientProjectRef._id,
-        clientProject: clientProjectRef,
+  toggleProject( clientProject ) {
+    const instance = this.monthlyClientProjectIdMap[clientProject._id];
+    if( instance ) {
+      this.splice(this.indexOf(instance), 1);
+    } else {
+      this.push( new MonthlyClientProject({
+        clientProjectRef: clientProject,
         hours: 0,
         monthlyClientProjectsOSProjects: []
-      });
-    var index =  this.monthlyProjectIdMap[monthlyClientProject.clientProjectRef._id];
-    if(index != null) {
-      this.splice(index, 1);
-    } else {
-      this.push(monthlyClientProject);
+      }) );
     }
+  },
+  get monthlyClientProjectIdMap() {
+    const map = {};
+    this.forEach( monthlyClientProject => {
+      map[monthlyClientProject.clientProjectRef._id] = monthlyClientProject;
+    });
+    return map;
   }
 });
 

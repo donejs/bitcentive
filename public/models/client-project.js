@@ -4,7 +4,7 @@ import set from 'can-set';
 import superModel from '../lib/super-model';
 import algebra from './algebras';
 
-var ClientProject = DefineMap.extend({
+var ClientProject = DefineMap.extend('ClientProject', {
   _id: 'string',
   name: 'string'
 });
