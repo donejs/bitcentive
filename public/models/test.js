@@ -16,10 +16,10 @@ QUnit.asyncTest("getList of ContributionMonth", function() {
 
 		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef.value instanceof ClientProject, 'is a client project');
 		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef.value,
-			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0].osProjectRef.value;
+			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0].value;
 
+  	QUnit.ok(first, 'first exists');
 		QUnit.ok(first === second, 'first and second are equal');
-		QUnit.ok(first, 'first exists');
 
 		QUnit.start();
 	}, function(err) {
@@ -48,10 +48,7 @@ QUnit.test("make type convert able to accept instances (#23)", function() {
 					osProject: osProject
 			}],
 			monthlyClientProjects: [{
-					monthlyClientProjectsOSProjects: [{
-							osProjectRef: osProject._id,
-							osProject: osProject
-					}],
+					monthlyClientProjectsOSProjects: [ osProject ],
 					hours: 100,
 					clientProjectRef: clientProject._id,
 					clientProject: clientProject

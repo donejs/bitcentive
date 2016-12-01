@@ -29,9 +29,7 @@
       "_id": "1-Levis",
       "name": "Levi's"
     },
-    "monthlyClientProjectsOSProjects": [ {
-      "osProjectRef": "1-CanJS"
-    } ]
+    "monthlyClientProjectsOSProjects": [ "1-CanJS" ]
   } ],
   "monthlyContributions": [{
     "points": 10,
