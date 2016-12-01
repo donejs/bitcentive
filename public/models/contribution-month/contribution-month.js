@@ -87,7 +87,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         rate = isNaN(rate) ? 0 : rate; //handle the situation where there is not significance
         let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100).toFixed(2);
 
-        calculations.totalDollarForAllClientProjects =+ totalAmount;
+        calculations.totalDollarForAllClientProjects += parseFloat(totalAmount);
 
         calculations.clientProjects[monthlyClientProject.clientProjectRef._id] = {
           rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2),
