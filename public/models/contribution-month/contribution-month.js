@@ -120,11 +120,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   },
 
   // Can add using an osProject or monthlyOSProject
-  addNewMonthlyOSProject: function(project) {
+  addNewMonthlyOSProject( project ) {
     let monthlyOSProject;
     if (project instanceof MonthlyOSProject) {
       monthlyOSProject = project;
-      this.monthlyOSProjects.push(project);
     }
     else {
       monthlyOSProject = new MonthlyOSProject({
@@ -133,22 +132,20 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         osProjectRef: project,
         osProjectID: project._id
       });
-      this.monthlyOSProjects.push(monthlyOSProject);
     }
-    this.save().then(function() {
-    }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
+    this.monthlyOSProjects.push(monthlyOSProject);
+    this.save().catch(err => {
+      console.error("Failed saving the contributionMonth obj: ", err);
     });
     return monthlyOSProject;
   },
-  removeMonthlyOSProject: function(monthlyOSProject) {
+  removeMonthlyOSProject( monthlyOSProject ) {
     this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
     this.monthlyClientProjects.forEach((clientProject) => {
       clientProject.monthlyClientProjectOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject), 1);
     });
-    this.save().then(function() {
-    }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
+    this.save().catch(err => {
+      console.error("Failed saving the contributionMonth obj: ", err);
     });
   },
 
