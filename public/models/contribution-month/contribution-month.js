@@ -58,8 +58,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         let commissionedMonthlyOSProjects = [];
         let uncommissionedMonthlyOSProjects = [];
 
-        monthlyClientProject.monthlyClientProjectsOSProjects.forEach( usedOSProject => {
-          var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectRef._id];
+        monthlyClientProject.monthlyClientProjectsOSProjects.forEach( usedOSProjectRef => {
+          var monthlyOSProject = monthlyOSProjectMap[usedOSProjectRef._id];
           if(monthlyOSProject) {
             // calculate needed significances
             if(monthlyOSProject.commissioned) {
@@ -71,10 +71,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
             totalSignificance += monthlyOSProject.significance;
 
             // for an OS project, make it possible to get the clients using it
-            if(!clientProjectsUsingOSProject[usedOSProject.osProjectRef._id]) {
-              clientProjectsUsingOSProject[usedOSProject.osProjectRef._id] = [];
+            if(!clientProjectsUsingOSProject[usedOSProjectRef._id]) {
+              clientProjectsUsingOSProject[usedOSProjectRef._id] = [];
             }
-            clientProjectsUsingOSProject[usedOSProject.osProjectRef._id].push(monthlyClientProject);
+            clientProjectsUsingOSProject[usedOSProjectRef._id].push(monthlyClientProject);
           }
         });
 
@@ -143,8 +143,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   },
   removeMonthlyOSProject: function(monthlyOSProject) {
     this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
-    this.monthlyClientProjects.forEach((clientProject) => {
-      clientProject.monthlyClientProjectOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject), 1);
+    this.monthlyClientProjects.forEach( clientProject => {
+      clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef), 1);
     });
     this.save().then(function() {
     }, function() {

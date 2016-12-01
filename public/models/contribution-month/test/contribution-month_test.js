@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import OSProject from '../../os-project';
 import ClientProject from '../../client-project';
-import MonthlyClientProjectOSProject from '../monthly-client-projects-os-project';
+import MonthlyClientProjectsOSProjectList from '../monthly-client-projects-os-project-list';
 import Contributor from '../../contributor';
 import MonthlyContributions from '../monthly-contributions';
 import MonthlyOSProject from '../monthly-os-project';
@@ -71,15 +71,10 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     osProjectRef: osProject02
   } );
 
-  let monthlyClientProjectOSProject01 = new MonthlyClientProjectOSProject( {
-    osProjectRef: osProject01
-  } );
-  let monthlyClientProjectOSProject02 = new MonthlyClientProjectOSProject( {
-    osProjectRef: osProject02
-  } );
-  let monthlyClientProjectOSProjects = new MonthlyClientProjectOSProject.List();
-  monthlyClientProjectOSProjects.push( monthlyClientProjectOSProject01 );
-  monthlyClientProjectOSProjects.push( monthlyClientProjectOSProject02 );
+  let monthlyClientProjectOSProjects = new MonthlyClientProjectsOSProjectList([
+    osProject01,
+    osProject02
+  ]);
 
   let monthlyClientProject01 = new MonthlyClientProject( {
     clientProjectRef: clientProject01,
@@ -120,7 +115,7 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     "monthlyOSProject was added with osProjectRef" );
   ok( contributionMonth.monthlyClientProjects[ 1 ].clientProjectRef.value.name === "Something Awesome",
     "monthlyClientProjects was added with clientProjectRef" );
-  ok( contributionMonth.monthlyClientProjects[ 1 ].monthlyClientProjectOSProjects[ 0 ].osProjectRef.value.name === 'DoneJS',
+  ok( contributionMonth.monthlyClientProjects[ 1 ].monthlyClientProjectOSProjects[ 0 ].value.name === 'DoneJS',
     "monthlyClientProjects was added with osProjects and osProjectRef" );
 } );
 
