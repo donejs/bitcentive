@@ -16,10 +16,11 @@
   } ],
   "monthlyClientProjects": [ {
     "hours": 100,
-    "clientProjectRef": "1-Levis",
-    "monthlyClientProjectsOSProjects": [ {
-      "osProjectRef": "1-CanJS"
-    } ]
+    "clientProjectRef": {
+      "_id": "1-Levis",
+      "name": "Levi's"
+    },
+    "monthlyClientProjectsOSProjects": [ "1-CanJS" ]
   } ],
   "monthlyContributions": [{
     "points": 10,

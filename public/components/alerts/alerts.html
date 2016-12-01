@@ -1,0 +1,26 @@
+<script type="text/stache" can-autorender>
+	<can-import from="bootstrap/dist/css/bootstrap.css" />
+	<can-import from="bitcentive/components/alerts/alerts" />
+	<bit-alerts/>
+	<button class="btn" id="createInfo">type="info"</button>
+	<button class="btn" id="createWarning">type="warning"</button>
+	<button class="btn" id="createSuccess">type="success"</button>
+	<button class="btn" id="createError">type="error"</button>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+	import AlertItem from 'bitcentive/models/alert';
+	import viewModel from 'can-view-model';
+	import autorender from 'can-view-autorender';
+
+	autorender(() => {
+		const vm = viewModel('bit-alerts');
+		['Info', 'Warning', 'Success', 'Error'].forEach(type => {
+			document.getElementById('create' + type).addEventListener('click', ev => {
+				ev.preventDefault();
+				vm.addAlert({type: type.toLowerCase(), title: `"${type}" Alert`, message: `This is a(n) ${type} alert!`});
+			});
+		});
+	});
+
+	window.viewModel = viewModel;
+</script>

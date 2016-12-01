@@ -34,12 +34,11 @@ export const ViewModel = DefineMap.extend({
   },
   contributionMonthsPromise: {
     get: function () {
-      return ContributionMonth.getList({});
+      return ContributionMonth.getList({$sort: {date: 1}});
     }
   },
 
   contributionMonths: {
-    Type: ContributionMonth.List,
     get: function(initial, resolve){
       this.contributionMonthsPromise.then(resolve);
     }
