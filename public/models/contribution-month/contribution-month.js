@@ -197,7 +197,37 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 });
 
 ContributionMonth.List = DefineList.extend({
-  "#": ContributionMonth
+  "#": ContributionMonth,
+  get reportMap() {
+    //this map holds the totals amounts for each client project for all months. Also holds the total amount for each OS project for all previous months cummulative.
+    var calc = {
+      clientProjects: {},
+      osProjects: {}
+    };
+
+    this.forEach(contributionMonth => {
+      let calculations = contributionMonth.calculations;
+      for(let osProjectID in calculations.osProjects) {
+        if(!calc.osProjects[osProjectID]) {
+          calc.osProjects[osProjectID] = calculations.osProjects[osProjectID];
+        }
+        else {
+          calc.osProjects[osProjectID] = calc.osProjects[osProjectID] + calculations.osProjects[osProjectID];
+        }
+      }
+
+      for(let clientProjectID in calculations.clientProjects) {
+        if(!calc.clientProjects[clientProjectID]) {
+          calc.clientProjects[clientProjectID] = parseFloat(calculations.clientProjects[clientProjectID].totalAmount);
+        }
+        else {
+          calc.clientProjects[clientProjectID] = calc.clientProjects[clientProjectID] + parseFloat(calculations.clientProjects[clientProjectID].totalAmount);
+        }
+      }
+    });
+    
+    return calc;
+  }
 });
 
 var dataMassage = function(oType) {

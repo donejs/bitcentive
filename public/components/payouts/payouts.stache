@@ -1,0 +1,30 @@
+{{#if contributionMonthsPromise.isResolved}}
+<table class='table'>
+  <thead>
+    <tr>
+      <th></th>
+      {{#each stats.osProjects as osProject}}
+      <th>{{osProject.name}}</th>
+      {{/each}}
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each stats.contributors as contributor}}
+    {{d(contributor)}}
+    <tr>
+      <td>
+        {{contributor.contributorRef.value.name}}
+      </td>
+      {{#each stats.osProjects as osProject}}
+        <td>{{getOSProjectTotal(osProject, contributor.osProjects)}}</td>
+      {{/each}}
+      <td>$0</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+{{#else}}
+hoaidhf
+{{/if}}
+
