@@ -198,35 +198,33 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 
 ContributionMonth.List = DefineList.extend({
   "#": ContributionMonth,
-  get reportMap() {
-    //this map holds the totals amounts for each client project for all months. Also holds the total amount for each OS project for all previous months cummulative.
-    var calc = {
-      clientProjects: {},
-      osProjects: {}
-    };
-
+  get OSProjectContributionsMap() {
+    var OSProjectContributionsMap = {};
     this.forEach(contributionMonth => {
-      let calculations = contributionMonth.calculations;
-      for(let osProjectID in calculations.osProjects) {
-        if(!calc.osProjects[osProjectID]) {
-          calc.osProjects[osProjectID] = calculations.osProjects[osProjectID];
+      var monthlyContributions = contributionMonth.monthlyContributions;
+      monthlyContributions.forEach( monthlyContribution => {
+        if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
+          OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
+            contributors: {},
+            totalPoints: 0
+          };
         }
-        else {
-          calc.osProjects[osProjectID] = calc.osProjects[osProjectID] + calculations.osProjects[osProjectID];
-        }
-      }
 
-      for(let clientProjectID in calculations.clientProjects) {
-        if(!calc.clientProjects[clientProjectID]) {
-          calc.clientProjects[clientProjectID] = parseFloat(calculations.clientProjects[clientProjectID].totalAmount);
+        if(! OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] ) {
+          OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
+            points: monthlyContribution.points
+          };
         }
         else {
-          calc.clientProjects[clientProjectID] = calc.clientProjects[clientProjectID] + parseFloat(calculations.clientProjects[clientProjectID].totalAmount);
+          OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points + monthlyContribution.points;
         }
-      }
+
+        OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints + monthlyContribution.points;
+
+      });
     });
-    
-    return calc;
+
+    return OSProjectContributionsMap;
   }
 });
 

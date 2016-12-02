@@ -3,21 +3,21 @@
   <thead>
     <tr>
       <th></th>
-      {{#each stats.osProjects as osProject}}
-      <th>{{osProject.name}}</th>
+      {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+      <th>{{monthlyOSProject.osProjectRef.value.name}}</th>
       {{/each}}
       <th>Total</th>
     </tr>
   </thead>
   <tbody>
-  {{#each stats.contributors as contributor}}
+  {{#each contributionMonth.monthlyContributions.contributorsMap as contributor}}
     {{d(contributor)}}
     <tr>
       <td>
         {{contributor.contributorRef.value.name}}
       </td>
-      {{#each stats.osProjects as osProject}}
-        <td>{{getOSProjectTotal(osProject, contributor.osProjects)}}</td>
+      {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+        <td>{{getOSProjectPayoutTotal(monthlyOSProject, contributor)}}</td>
       {{/each}}
       <td>$0</td>
     </tr>

@@ -17,65 +17,20 @@ export const ViewModel = DefineMap.extend({
       this.contributionMonthsPromise.then(resolve);
     }
   },
-  getOSProjectTotal: function(osProject, calcMap) {
-    var a = this.contributionMonths.reportMap;
-    if(calcMap[osProject._id]) {
-      return calcMap[osProject._id].totalPoints;
+  getOSProjectPayoutTotal: function(monthlyOSProject, contributor) {
+    if(this.contributionMonths) {
+      var contributorsMap = this.contributionMonths.OSProjectContributionsMap;
+      
+      if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
+        var contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
+        var points = contributorData.points;
+        var totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
+        var totalAmountForOSProject = this.contributionMonth.calculations.osProjects[monthlyOSProject.osProjectRef._id];
+
+        return (points / totalPoints) * totalAmountForOSProject;
+      }
     }
     return 0;
-  },
-  get stats() {
-    var map = {
-      osProjects: {},
-      contributors: {}
-    };
-
-    if(this.contributionMonths) {
-      var contributionMonthsReportMap = this.contributionMonths.reportMap;
-      var contributionMonthCalc = this.contributionMonth.calculations;
-      
-      this.contributionMonth.monthlyOSProjects.forEach((osProject) => {
-        if(!map.osProjects[osProject.osProjectRef._id]) {
-          //let's add this new osProject to the osProjectsMap
-          map.osProjects[osProject.osProjectRef._id] = [];
-        }
-        
-        map.osProjects[osProject.osProjectRef._id] = osProject.osProjectRef.value;
-      });
-
-      this.contributionMonth.monthlyContributions.forEach(contribution => {
-        let contributorKey = contribution.contributorRef._id;
-        
-        if(!map.contributors[contributorKey]) {
-          map.contributors[contributorKey] = {
-            contributorRef: contribution.contributorRef,
-            //totalContributionPoints: contribution.points,
-            osProjects: {},
-            totalPayout: 0
-          };
-        }
-        else {
-          //map.contributors[contributorKey].totalContributionPoints = map.contributors[contributorKey].totalContributionPoints + contribution.points;
-        }
-
-        if(!map.contributors[contributorKey].osProjects[contribution.osProjectRef._id]) {
-          map.contributors[contributorKey].osProjects[contribution.osProjectRef._id] = {
-            osProjectRef: contribution.osProjectRef,
-            totalPoints: contribution.points
-          };
-
-          map.contributors[contributorKey].totalPayout = map.contributors[contributorKey].totalPayout + contribution.points; 
-        } else {
-          map.contributors[contributorKey].osProjects[contribution.osProjectRef._id].totalPoints = map.contributors[contributorKey].osProjects[contribution.osProjectRef._id].totalPoints + contribution.points; 
-          map.contributors[contributorKey].totalPayout = map.contributors[contributorKey].totalPayout + contribution.points;
-        }
-      }); 
-    }
-    
-    return map;
-  },
-  d: function() {
-    console.log(arguments);
   }
 });
 
