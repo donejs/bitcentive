@@ -4,24 +4,15 @@
   "monthlyOSProjects": [ {
     "significance": 10,
     "commissioned": true,
-    "osProjectRef": {
-      "_id": "1-CanJS",
-      "name": "CanJS"
-    }
+    "osProjectRef": "1-CanJS"
   }, {
     "significance": 30,
     "commissioned": true,
-    "osProjectRef": {
-      "_id": "2-DoneJS",
-      "name": "DoneJS"
-    }
+    "osProjectRef": "2-DoneJS"
   }, {
     "significance": 30,
     "commissioned": false,
-    "osProjectRef": {
-      "_id": "3-StealJS",
-      "name": "StealJS"
-    }
+    "osProjectRef": "3-StealJS"
   } ],
   "monthlyClientProjects": [ {
     "hours": 100,

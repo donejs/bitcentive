@@ -26,20 +26,3 @@ QUnit.asyncTest('Load projects from socket fixture', function () {
     QUnit.start();
   });
 });
-
-QUnit.asyncTest('Check if the correct contribution month totals are being calculated properly', function(){
-  let vm = new ViewModel({
-    contributionMonthId: '1'
-  });
-
-  vm.contributionMonthPromise.then((contributionMonth) => {
-    var clientProject = contributionMonth.calculations.clientProjects['1-Levis'];
-    QUnit.equal(clientProject.totalSignificance, 10, 'calculated correct total significance for first client project');
-    QUnit.equal(clientProject.rate, "3.50", 'calculated correct rate for first client project');
-    QUnit.equal(clientProject.totalAmount, "350.00", 'calculated correct total amount for first client project');
-
-    QUnit.equal(contributionMonth.calculations.totalDollarForAllClientProjects, 350, 'calculated correct total dollar amount for all client projects');
-    QUnit.start();
-  });
-
-});

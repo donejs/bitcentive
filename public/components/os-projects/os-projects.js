@@ -80,7 +80,7 @@ export const ViewModel = DefineMap.extend({
   getTotal: function(osProject) {
     var fullTotal = this.contributionMonth.calculations.osProjects[osProject._id] || 0.0;
     return fullTotal.toFixed(2);
-  },
+  }
 });
 
 export default Component.extend({
