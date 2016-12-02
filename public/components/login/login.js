@@ -1,7 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './login.less';
-import template from './login.stache';
+import view from './login.stache';
 import Session from 'bitcentive/models/session';
 import route from 'can-route';
 import isEmptyObject from 'can-util/js/is-empty-object/is-empty-object';
@@ -83,5 +83,5 @@ const LoginViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'bit-login',
   ViewModel: LoginViewModel,
-  template
+  view
 });

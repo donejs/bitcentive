@@ -1,12 +1,5 @@
 /* global window */
 import connect from 'can-connect';
-import DefineMap from 'can-define/map/';
-import DefineList from 'can-define/list/';
-import User from 'bitcentive/models/user';
-import canEvent from 'can-event';
-
-import feathersClient from './feathers';
-import feathersSession from 'can-connect-feathers/session';
 import dataParse from 'can-connect/data/parse/';
 import construct from 'can-connect/constructor/';
 import constructStore from 'can-connect/constructor/store/';
@@ -15,20 +8,18 @@ import canMap from 'can-connect/can/map/';
 import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
+
+import DefineMap from 'can-define/map/';
+import DefineList from 'can-define/list/';
+import User from 'bitcentive/models/user';
+import canEvent from 'can-event';
+
+import algebra from './algebras';
+
+import feathersClient from '../lib/feathers/feathers-client';
+import feathersSession from 'can-connect-feathers/session';
 import {authAgent} from 'feathers-authentication-popups';
 import decode from 'jwt-decode';
-
-var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersSession
-];
 
 export const Session = DefineMap.extend('Session', {
   seal: false
@@ -50,21 +41,34 @@ export const Session = DefineMap.extend('Session', {
 });
 
 Session.List = DefineList.extend({
-  '*': Session
+  '#': Session
 });
 
-export const sessionConnection = connect(behaviorList, {
+Session.connection = connect([
+    dataParse,
+    construct,
+    constructStore,
+    constructOnce,
+    canMap,
+    canRef,
+    dataCallbacks,
+    realtime,
+    feathersSession
+], {
   feathersClient,
-  idProp: '_id',
   Map: Session,
   List: Session.List,
-  name: 'session'
+  name: 'session',
+  algebra
 });
 
+Session.algebra = algebra;
+
 Object.assign(Session, canEvent);
+// TODO: look at removing 'window' here
 window.authAgent.on('login', function (token) {
   let payload = decode(token);
-  sessionConnection.createInstance(payload);
+  Session.connection.createInstance(payload);
   Session.trigger('created', [payload]);
 });
 

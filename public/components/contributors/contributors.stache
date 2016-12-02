@@ -30,12 +30,13 @@
   <div class="panel-heading">Add Contributor</div>
     <div class="panel-body">
       <form ($submit)="addContributor(%event)" id="new-contributor">
-        {{#if newContributorError}}<div class="alert alert-danger" role="alert">Name and Email Address are required.</div>{{/if}}
+        {{#if newContributorError}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
         <div class="row">
           <div class="col-xs-5">
             <label>Name:</label>
             <input type="text"
                    {($value)}="newContributorName"
+                   {$disabled}="isSaving"
                    class="form-control"
                    placeholder="Name" />
           </div>
@@ -43,12 +44,13 @@
             <label>Email:</label>
             <input type="text"
                    {($value)}="newContributorEmail"
+                   {$disabled}="isSaving"
                    class="form-control"
                    placeholder="Email Address" />
           </div>
           <div class="col-xs-2">
             <label>Active?</label>
-            <input type="checkbox" class="form-control" {($checked)}="newContributorActive" />
+            <input type="checkbox" class="form-control" {($checked)}="newContributorActive" {$disabled}="isSaving" />
           </div>
       </form>
       <button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>

@@ -1,5 +1,5 @@
 import fixture from "can-fixture";
-import ContributionMonth from 'bitcentive/models/contribution-month';
+import ContributionMonth from 'bitcentive/models/contribution-month/';
 import OSProject from 'bitcentive/models/os-project';
 import ClientProject from 'bitcentive/models/client-project';
 
@@ -22,15 +22,11 @@ var monthlyContributionStore = fixture.store([{
     osProjectRef: osProject,
   }],
   monthlyClientProjects: [{
-    monthlyClientProjectsOSProjects: [{
-      osProjectRef: osProject,
-    }],
+    monthlyClientProjectsOSProjects: [ osProject ],
     hours: 100,
     clientProjectRef: clientProject1,
   },{
-    monthlyClientProjectsOSProjects: [{
-      osProjectRef: osProject,
-    }],
+    monthlyClientProjectsOSProjects: [ osProject ],
     hours: 40,
     clientProjectRef: clientProject2,
   }]
