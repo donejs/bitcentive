@@ -194,21 +194,15 @@ QUnit.test( "Calculations: OS project royalty pot totals", function() {
     monthlyClientProjects: new MonthlyClientProject.List( [ {
       "hours": 100,
       "clientProjectRef": "1-Levis",
-      "monthlyClientProjectsOSProjects": [
-        { "osProjectRef": "1-CanJS" }
-      ]
+      "monthlyClientProjectsOSProjects": [ "1-CanJS" ]
     } , {
       "hours": 100,
       "clientProjectRef": "2-Apple",
-      "monthlyClientProjectsOSProjects": [
-        { "osProjectRef": "1-CanJS" }, { "osProjectRef": "2-DoneJS" }
-      ]
+      "monthlyClientProjectsOSProjects": [ "1-CanJS", "2-DoneJS" ]
     } , {
       "hours": 200,
       "clientProjectRef": "3-Walmart",
-      "monthlyClientProjectsOSProjects": [
-        { "osProjectRef": "1-CanJS" }, { "osProjectRef": "2-DoneJS" }, { "osProjectRef": "3-StealJS" }
-      ]
+      "monthlyClientProjectsOSProjects": [ "1-CanJS", "2-DoneJS", "3-StealJS" ]
     } ] )
   });
 
