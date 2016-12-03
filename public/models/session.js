@@ -45,6 +45,7 @@ Session.List = DefineList.extend({
 });
 
 Session.connection = connect([
+    feathersSession,
     dataParse,
     construct,
     constructStore,
@@ -52,8 +53,7 @@ Session.connection = connect([
     canMap,
     canRef,
     dataCallbacks,
-    realtime,
-    feathersSession
+    realtime
 ], {
   feathersClient,
   Map: Session,
