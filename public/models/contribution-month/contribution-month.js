@@ -17,20 +17,22 @@ import idMerge from "can-connect/helpers/id-merge";
 
 // .attr is called on deep replace
 // .replace is called w/o letting it go through the setter.
-var _monthlyOSProjectAttr = MonthlyOSProject.List.prototype.attr;
-MonthlyOSProject.List.prototype.attr = function(items, replace){
-  if(replace === false && typeof items === "object") {
-    idMerge(this, items, function(obj){ return obj._id }, function(x){
-      if(x instanceof MonthlyOSProject) {
-        return x;
-      }
-      return new MonthlyOSProject(x);
-    });
-    return this;
-  } else {
-    return _monthlyOSProjectAttr.apply(this, arguments);
-  }
-};
+[ MonthlyOSProject, MonthlyClientProject ].forEach( MapObj => {
+  var attrOrig = MapObj.List.prototype.attr;
+  MapObj.List.prototype.attr = function( items, replace ) {
+    if ( replace === false && typeof items === "object" ) {
+      idMerge( this, items, function( obj ){ return obj._id }, function( x ){
+        if ( x instanceof MapObj ) {
+          return x;
+        }
+        return new MapObj( x );
+      });
+      return this;
+    } else {
+      return attrOrig.apply( this, arguments );
+    }
+  };
+} );
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
