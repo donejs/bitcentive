@@ -12,9 +12,25 @@ import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
 
-import feathersBehavior from 'can-connect-feathers';
-
 import algebra from '../algebras';
+import idMerge from "can-connect/helpers/id-merge";
+
+// .attr is called on deep replace
+// .replace is called w/o letting it go through the setter.
+var _monthlyOSProjectAttr = MonthlyOSProject.List.prototype.attr;
+MonthlyOSProject.List.prototype.attr = function(items, replace){
+  if(replace === false && typeof items === "object") {
+    idMerge(this, items, function(obj){ return obj._id }, function(x){
+      if(x instanceof MonthlyOSProject) {
+        return x;
+      }
+      return new MonthlyOSProject(x);
+    });
+    return this;
+  } else {
+    return _monthlyOSProjectAttr.apply(this, arguments);
+  }
+};
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
