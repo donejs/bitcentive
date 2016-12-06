@@ -35,14 +35,19 @@
       "server-production": {
         "renderingBaseURL": "https://bitcentive-e208d.firebaseapp.com/"
       }
-    }
+    },
+    "plugins": [
+      "steal-css",
+      "steal-less",
+      "steal-stache"
+    ]
   },
   "dependencies": {
     "auth-component": "^3.2.1",
     "bootstrap": "^3.3.7",
     "can-component": "^3.0.2",
     "can-connect": "^1.0.12",
-    "can-connect-feathers": "^2.0.0-pre.10",
+    "can-connect-feathers": "2.0.0-pre.10",
     "can-define": "^1.0.4",
     "can-define-stream": "0.0.2",
     "can-event": "^3.0.1",
