@@ -10,11 +10,13 @@ export const ViewModel = DefineMap.extend({
     Type: ContributionMonth
   },
   get contributionMonthsPromise() {
-    return ContributionMonth.getList({});
+    return ContributionMonth.getList({"date": {"$lte": this.contributionMonth.date}});
   },
   contributionMonths: {
     get: function(initial, resolve){
-      this.contributionMonthsPromise.then(resolve);
+      this.contributionMonthsPromise.then(res => {
+        return resolve(res);
+      });
     }
   },
   getOSProjectPayoutTotal: function(monthlyOSProject, contributor) {

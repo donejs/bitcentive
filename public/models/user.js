@@ -1,7 +1,7 @@
 import set from "can-set";
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';
-
+import feathersClient from './feathers-client';
 import superModel from '../lib/super-model';
 import algebra from './algebras';
 
@@ -22,7 +22,7 @@ User.List = DefineList.extend({
 User.connection = superModel({
   Map: User,
   List: User.List,
-  url: "/api/users",
+  feathersService: feathersClient.service("/api/users"),
   name: "users",
   algebra
 });

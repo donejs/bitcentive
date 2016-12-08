@@ -3,6 +3,7 @@ import DefineList from 'can-define/list/';
 import set from 'can-set';
 import superModel from '../lib/super-model';
 import algebra from './algebras';
+import feathersClient from './feathers-client';
 
 export const Signup = DefineMap.extend('Signup', {
   _id: '*',
@@ -16,7 +17,7 @@ Signup.List = DefineList.extend({
 
 export const signupConnection = superModel({
   parseInstanceProp: 'data',
-  url: '/signup',
+  feathersService: feathersClient.service('/signup'),
   Map: Signup,
   List: Signup.List,
   name: 'signup',

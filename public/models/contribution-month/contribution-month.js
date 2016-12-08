@@ -6,13 +6,12 @@ import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../../lib/super-model';
+import feathersClient from '../feathers-client';
 
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
-
-import feathersBehavior from 'can-connect-feathers';
 
 import algebra from '../algebras';
 
@@ -241,7 +240,7 @@ ContributionMonth.connection = superModel({
   parseInstanceProp: "data",
   Map: ContributionMonth,
   List: ContributionMonth.List,
-  url: "/api/contribution_months",
+  feathersService: feathersClient.service("/api/contribution_months"),
   name: "contributionMonth",
   algebra
 });
