@@ -7,9 +7,9 @@ import hooks from 'feathers-hooks';
 var socket = io({
   transports: ['websocket']
 });
-const app = feathers()
+const feathersClient = feathers()
   .configure(socketio(socket))
   .configure(hooks())
   .configure(auth());
 
-export default app;
+export default feathersClient;

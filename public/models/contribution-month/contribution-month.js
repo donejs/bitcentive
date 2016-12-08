@@ -6,6 +6,7 @@ import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../../lib/super-model';
+import feathersClient from '../feathers-client';
 
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
@@ -219,7 +220,39 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 });
 
 ContributionMonth.List = DefineList.extend({
-  "#": ContributionMonth
+  "#": ContributionMonth,
+  OSProjectContributionsMap: function(currentContributionMonth) {
+    
+
+    var OSProjectContributionsMap = {};
+    this.forEach(contributionMonth => {
+      if(moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
+        var monthlyContributions = contributionMonth.monthlyContributions;
+        monthlyContributions && monthlyContributions.length && monthlyContributions.forEach( monthlyContribution => {
+          if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
+            OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
+              contributors: {},
+              totalPoints: 0
+            };
+          }
+
+          if(! OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] ) {
+            OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
+              points: monthlyContribution.points
+            };
+          }
+          else {
+            OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points + monthlyContribution.points;
+          }
+
+          OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints + monthlyContribution.points;
+
+        });
+      }
+    });
+
+    return OSProjectContributionsMap;
+  }
 });
 
 var dataMassage = function(oType) {
@@ -235,7 +268,7 @@ ContributionMonth.connection = superModel({
   parseInstanceProp: "data",
   Map: ContributionMonth,
   List: ContributionMonth.List,
-  url: "/api/contribution_months",
+  feathersService: feathersClient.service("/api/contribution_months"),
   name: "contributionMonth",
   algebra
 });

@@ -3,6 +3,7 @@ import DefineList from "can-define/list/";
 import set from "can-set";
 import superModel from '../lib/super-model';
 import algebra from './algebras';
+import feathersClient from './feathers-client';
 
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
@@ -18,7 +19,7 @@ Contributor.List = DefineList.extend({
 Contributor.connection = superModel({
   Map: Contributor,
   List: Contributor.List,
-  url: "/api/contributors",
+  feathersService: feathersClient.service("/api/contributors"),
   name: "contributor",
   algebra
 });
