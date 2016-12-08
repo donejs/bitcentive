@@ -3,6 +3,7 @@ import DefineMap from 'can-define/map/';
 import './payouts.less';
 import template from './payouts.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
+import moment from "moment";
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
@@ -10,7 +11,7 @@ export const ViewModel = DefineMap.extend({
     Type: ContributionMonth
   },
   get contributionMonthsPromise() {
-    return ContributionMonth.getList({"date": {"$lte": this.contributionMonth.date}});
+    return ContributionMonth.getList({});
   },
   contributionMonths: {
     get(initial, resolve){
@@ -20,7 +21,7 @@ export const ViewModel = DefineMap.extend({
   getOSProjectPayoutTotal(monthlyOSProject, contributor) {
     let total = 0;
     if(this.contributionMonths) {
-      const contributorsMap = this.contributionMonths.OSProjectContributionsMap;
+      const contributorsMap = this.contributionMonths.OSProjectContributionsMap(this.contributionMonth);
 
       if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
         const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
@@ -37,7 +38,7 @@ export const ViewModel = DefineMap.extend({
     let total = 0;
 
     if(this.contributionMonths) {
-      const contributorsMap = this.contributionMonths.OSProjectContributionsMap;
+      const contributorsMap = this.contributionMonths.OSProjectContributionsMap(this.contributionMonth);
       for (const osProjectID in contributorsMap) {
         const projectContributors = contributorsMap[osProjectID].contributors;
 
