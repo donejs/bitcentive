@@ -29,12 +29,12 @@ const AppViewModel = DefineMap.extend({
   session: {
     value () {
       var self = this;
-      new Session().save().catch(err => console.log(err));
+      Session.get().catch(err => console.log(err));
       Session.on('created', (event, session) => {
         self.session = session;
         // redirect to the dashboard if on the auth page
         if (self.page === 'auth') {
-          history.replaceState(self.title, null, route.url({page: 'dashboard'}));
+          window.history.replaceState(self.title, null, route.url({page: 'dashboard'}));
         }
       });
       Session.on('destroyed', (event, session) => {
