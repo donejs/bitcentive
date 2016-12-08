@@ -33,7 +33,7 @@ export const ViewModel = DefineMap.extend({
     }
     return total;
   },
-  getTotalForAllPayoutsForContributor: function(contributor) {
+  getTotalForAllPayoutsForContributor: function(contributorRef) {
     var total = 0;
 
     if(this.contributionMonths) {
@@ -42,8 +42,8 @@ export const ViewModel = DefineMap.extend({
         var projectContributors = contributorsMap[osProjectID].contributors;
 
         
-        if(projectContributors[contributor.contributorRef._id]) {
-          var contributorData = contributorsMap[osProjectID].contributors[contributor.contributorRef._id];
+        if(projectContributors[contributorRef._id]) {
+          var contributorData = contributorsMap[osProjectID].contributors[contributorRef._id];
           var points = contributorData.points;
           var totalPoints = contributorsMap[osProjectID].totalPoints;
           var totalAmountForOSProject = this.contributionMonth.calculations.osProjects[osProjectID];
@@ -55,6 +55,36 @@ export const ViewModel = DefineMap.extend({
     }
 
     return total;
+  },
+  get payouts() {
+    var map = {};
+    if(this.contributionMonth) {
+      
+      var monthlyContributorsMap = this.contributionMonth.monthlyContributions.contributorsMap;
+      var monthlyOSProjects = this.contributionMonth.monthlyOSProjects;
+
+      for(var contributorID in monthlyContributorsMap) {
+
+        var contributor = monthlyContributorsMap[contributorID];
+        var contributorRef = contributor.contributorRef;
+        
+        if(!map[contributorRef._id]) {
+          map[contributorRef._id] = {
+            contributorRef: contributorRef,
+            monthlyOSProjects: []
+          };
+        }
+
+        monthlyOSProjects.forEach(monthlyOSProject => {
+          var contributorTotal = this.getOSProjectPayoutTotal(monthlyOSProject, contributor);
+          map[contributorRef._id].monthlyOSProjects.push({
+            osProjectRef: monthlyOSProject.osProjectRef,
+            total: contributorTotal
+          });
+        });        
+      }
+    }
+    return map;
   }
 });
 

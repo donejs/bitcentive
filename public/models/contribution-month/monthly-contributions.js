@@ -22,7 +22,7 @@ MonthlyContributions.List = DefineList.extend({
       if(!map[contributor.contributorRef._id]) {
         map[contributor.contributorRef._id] = {
           contributorRef: contributor.contributorRef
-        }
+        };
       }
     });
     return map;
