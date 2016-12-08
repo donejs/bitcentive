@@ -99,15 +99,15 @@ const AppViewModel = DefineMap.extend({
       contributors: 'private'
     };
 
-    // if(page === 'logout'){
-    //   page = 'home';
-    //   this.session && this.session.destroy()
-    //     .then(() => {
-    //       if(!window.doneSsr){
-    //         window.location.href = '/';
-    //       }
-    //     });
-    // }
+    if (page === 'logout') {
+      page = 'home';
+      this.session && this.session.destroy()
+        .then(() => {
+          if (!window.doneSsr) {
+            window.location.href = '/';
+          }
+        });
+    }
 
     if (this.session) {
       // Perform some custom logic for logged-in users.
