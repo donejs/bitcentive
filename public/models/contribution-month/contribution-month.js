@@ -202,7 +202,7 @@ ContributionMonth.List = DefineList.extend({
     var OSProjectContributionsMap = {};
     this.forEach(contributionMonth => {
       var monthlyContributions = contributionMonth.monthlyContributions;
-      monthlyContributions.forEach( monthlyContribution => {
+      monthlyContributions && monthlyContributions.length && monthlyContributions.forEach( monthlyContribution => {
         if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
           OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
             contributors: {},

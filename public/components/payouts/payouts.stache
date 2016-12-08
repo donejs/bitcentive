@@ -24,7 +24,7 @@
   {{/each}}
   </tbody>
 </table>
-{{#else}}
-hoaidhf
+{{else}}
+  <h3>Warning: Requires contributionMonth data</h3>
 {{/if}}
 
