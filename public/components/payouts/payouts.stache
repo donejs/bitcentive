@@ -14,10 +14,10 @@
       <tr>
         <td>{{payout.contributorRef.value.name}}</td>
         {{#each payout.monthlyOSProjects as monthlyOSProject}}
-          <td>{{monthlyOSProject.total}}</td>
+          <td>{{formatDollarAmount(monthlyOSProject.total)}}</td>
         {{/each}}
         <td>
-          {{getTotalForAllPayoutsForContributor(payout.contributorRef)}}
+          {{formatDollarAmount(getTotalForAllPayoutsForContributor(payout.contributorRef))}}
         </td>
       </tr>
     {{/each}}

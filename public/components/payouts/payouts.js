@@ -85,6 +85,9 @@ export const ViewModel = DefineMap.extend({
       }
     }
     return map;
+  },
+  formatDollarAmount: function(value) {
+    return value.toFixed(2);
   }
 });
 
