@@ -15,7 +15,18 @@ const MonthlyContributions = DefineMap.extend( "MonthlyContributions", {
 });
 
 MonthlyContributions.List = DefineList.extend({
-  "#": MonthlyContributions
+  "#": MonthlyContributions,
+  get contributorsMap() {
+    const map = {};
+    this.forEach(contributor => {
+      if(!map[contributor.contributorRef._id]) {
+        map[contributor.contributorRef._id] = {
+          contributorRef: contributor.contributorRef
+        };
+      }
+    });
+    return map;
+  }
 });
 
 export default MonthlyContributions;

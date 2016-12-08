@@ -8,9 +8,7 @@ import canRef from 'can-connect/can/ref/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 import errorHandler from './behaviors/error-handler';
-
-// TODO: roll these changes into can-connect-feathers
-import feathersBehavior from './feathers/feathers-behavior';
+import feathersBehavior from 'can-connect-feathers/service';
 
 const superModel = function(options) {
 	// TODO: remove this when this issue is closed:

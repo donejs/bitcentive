@@ -3,6 +3,7 @@ import DefineList from 'can-define/list/';
 import set from 'can-set';
 import superModel from '../lib/super-model';
 import algebra from './algebras';
+import feathersClient from './feathers-client';
 
 var ClientProject = DefineMap.extend('ClientProject', {
   _id: 'string',
@@ -17,7 +18,7 @@ ClientProject.connection = superModel({
   parseInstanceProp: "data",
   Map: ClientProject,
   List: ClientProject.List,
-  url: '/api/client_projects',
+  feathersService: feathersClient.service('/api/client_projects'),
   name: "client-projects",
   algebra
 });

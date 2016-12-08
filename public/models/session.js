@@ -16,7 +16,7 @@ import canEvent from 'can-event';
 
 import algebra from './algebras';
 
-import feathersClient from '../lib/feathers/feathers-client';
+import feathersClient from './feathers-client';
 import feathersSession from 'can-connect-feathers/session';
 import {authAgent} from 'feathers-authentication-popups';
 import decode from 'jwt-decode';
