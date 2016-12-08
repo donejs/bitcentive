@@ -18,6 +18,7 @@ export const ViewModel = DefineMap.extend({
     }
   },
   getOSProjectPayoutTotal: function(monthlyOSProject, contributor) {
+    var total = 0;
     if(this.contributionMonths) {
       var contributorsMap = this.contributionMonths.OSProjectContributionsMap;
       
@@ -27,10 +28,33 @@ export const ViewModel = DefineMap.extend({
         var totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
         var totalAmountForOSProject = this.contributionMonth.calculations.osProjects[monthlyOSProject.osProjectRef._id];
 
-        return (points / totalPoints) * totalAmountForOSProject;
+        total = (points / totalPoints) * totalAmountForOSProject;
       }
     }
-    return 0;
+    return total;
+  },
+  getTotalForAllPayoutsForContributor: function(contributor) {
+    var total = 0;
+
+    if(this.contributionMonths) {
+      var contributorsMap = this.contributionMonths.OSProjectContributionsMap;  
+      for(var osProjectID in contributorsMap) {
+        var projectContributors = contributorsMap[osProjectID].contributors;
+
+        
+        if(projectContributors[contributor.contributorRef._id]) {
+          var contributorData = contributorsMap[osProjectID].contributors[contributor.contributorRef._id];
+          var points = contributorData.points;
+          var totalPoints = contributorsMap[osProjectID].totalPoints;
+          var totalAmountForOSProject = this.contributionMonth.calculations.osProjects[osProjectID];
+
+
+          total = total + ( (points / totalPoints) * totalAmountForOSProject );
+        }
+      }
+    }
+
+    return total;
   }
 });
 

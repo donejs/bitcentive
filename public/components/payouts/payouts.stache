@@ -11,7 +11,6 @@
   </thead>
   <tbody>
   {{#each contributionMonth.monthlyContributions.contributorsMap as contributor}}
-    {{d(contributor)}}
     <tr>
       <td>
         {{contributor.contributorRef.value.name}}
@@ -19,7 +18,9 @@
       {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
         <td>{{getOSProjectPayoutTotal(monthlyOSProject, contributor)}}</td>
       {{/each}}
-      <td>$0</td>
+      <td>
+        {{getTotalForAllPayoutsForContributor(contributor)}}
+      </td>
     </tr>
   {{/each}}
   </tbody>
