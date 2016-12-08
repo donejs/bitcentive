@@ -35,14 +35,20 @@
       "server-production": {
         "renderingBaseURL": "https://bitcentive-e208d.firebaseapp.com/"
       }
-    }
+    },
+    "plugins": [
+      "steal-css",
+      "steal-less",
+      "steal-stache",
+      "done-component"
+    ]
   },
   "dependencies": {
     "auth-component": "^3.2.1",
     "bootstrap": "^3.3.7",
     "can-component": "^3.0.2",
     "can-connect": "^1.0.12",
-    "can-connect-feathers": "^2.0.0-pre.10",
+    "can-connect-feathers": "^3.0.0-pre.14",
     "can-define": "^1.0.4",
     "can-define-stream": "0.0.2",
     "can-event": "^3.0.1",
@@ -75,7 +81,7 @@
     "steal": "^1.0.0-rc.11",
     "steal-css": "^1.0.0-rc.0",
     "steal-less": "^1.0.0-rc.2",
-    "steal-socket.io": "^4.0.4",
+    "steal-socket.io": "^4.0.6",
     "steal-stache": "^3.0.0-pre.3",
     "superagent": "^2.3.0"
   },
@@ -88,7 +94,7 @@
     "firebase-tools": "^3.2.0",
     "funcunit": "^3.1.0",
     "generator-donejs": "^0.10.0-pre.4",
-    "socket.io-client": "^1.6.0",
+    "socket.io-client": "^1.7.0",
     "steal-qunit": "^1.0.0-rc.0",
     "steal-tools": "^1.0.0-rc.9",
     "testee": "^0.3.0-pre.2"
