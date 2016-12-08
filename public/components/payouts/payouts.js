@@ -13,42 +13,40 @@ export const ViewModel = DefineMap.extend({
     return ContributionMonth.getList({"date": {"$lte": this.contributionMonth.date}});
   },
   contributionMonths: {
-    get: function(initial, resolve){
-      this.contributionMonthsPromise.then(res => {
-        return resolve(res);
-      });
+    get(initial, resolve){
+      this.contributionMonthsPromise.then(resolve);
     }
   },
-  getOSProjectPayoutTotal: function(monthlyOSProject, contributor) {
-    var total = 0;
+  getOSProjectPayoutTotal(monthlyOSProject, contributor) {
+    let total = 0;
     if(this.contributionMonths) {
-      var contributorsMap = this.contributionMonths.OSProjectContributionsMap;
-      
+      const contributorsMap = this.contributionMonths.OSProjectContributionsMap;
+
       if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
-        var contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
-        var points = contributorData.points;
-        var totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
-        var totalAmountForOSProject = this.contributionMonth.calculations.osProjects[monthlyOSProject.osProjectRef._id];
+        const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
+        const points = contributorData.points;
+        const totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
+        const totalAmountForOSProject = this.contributionMonth.calculations.osProjects[monthlyOSProject.osProjectRef._id];
 
         total = (points / totalPoints) * totalAmountForOSProject;
       }
     }
     return total;
   },
-  getTotalForAllPayoutsForContributor: function(contributorRef) {
-    var total = 0;
+  getTotalForAllPayoutsForContributor(contributorRef) {
+    let total = 0;
 
     if(this.contributionMonths) {
-      var contributorsMap = this.contributionMonths.OSProjectContributionsMap;  
-      for(var osProjectID in contributorsMap) {
-        var projectContributors = contributorsMap[osProjectID].contributors;
+      const contributorsMap = this.contributionMonths.OSProjectContributionsMap;
+      for (const osProjectID in contributorsMap) {
+        const projectContributors = contributorsMap[osProjectID].contributors;
 
-        
+
         if(projectContributors[contributorRef._id]) {
-          var contributorData = contributorsMap[osProjectID].contributors[contributorRef._id];
-          var points = contributorData.points;
-          var totalPoints = contributorsMap[osProjectID].totalPoints;
-          var totalAmountForOSProject = this.contributionMonth.calculations.osProjects[osProjectID];
+          const contributorData = contributorsMap[osProjectID].contributors[contributorRef._id];
+          const points = contributorData.points;
+          const totalPoints = contributorsMap[osProjectID].totalPoints;
+          const totalAmountForOSProject = this.contributionMonth.calculations.osProjects[osProjectID];
 
 
           total = total + ( (points / totalPoints) * totalAmountForOSProject );
@@ -59,17 +57,17 @@ export const ViewModel = DefineMap.extend({
     return total;
   },
   get payouts() {
-    var map = {};
+    const map = {};
     if(this.contributionMonth) {
-      
-      var monthlyContributorsMap = this.contributionMonth.monthlyContributions.contributorsMap;
-      var monthlyOSProjects = this.contributionMonth.monthlyOSProjects;
 
-      for(var contributorID in monthlyContributorsMap) {
+      const monthlyContributorsMap = this.contributionMonth.monthlyContributions.contributorsMap;
+      const monthlyOSProjects = this.contributionMonth.monthlyOSProjects;
 
-        var contributor = monthlyContributorsMap[contributorID];
-        var contributorRef = contributor.contributorRef;
-        
+      for (const contributorID in monthlyContributorsMap) {
+
+        const contributor = monthlyContributorsMap[contributorID];
+        const contributorRef = contributor.contributorRef;
+
         if(!map[contributorRef._id]) {
           map[contributorRef._id] = {
             contributorRef: contributorRef,
@@ -78,17 +76,17 @@ export const ViewModel = DefineMap.extend({
         }
 
         monthlyOSProjects.forEach(monthlyOSProject => {
-          var contributorTotal = this.getOSProjectPayoutTotal(monthlyOSProject, contributor);
+          const contributorTotal = this.getOSProjectPayoutTotal(monthlyOSProject, contributor);
           map[contributorRef._id].monthlyOSProjects.push({
             osProjectRef: monthlyOSProject.osProjectRef,
             total: contributorTotal
           });
-        });        
+        });
       }
     }
     return map;
   },
-  formatDollarAmount: function(value) {
+  formatDollarAmount(value) {
     return value.toFixed(2);
   }
 });
