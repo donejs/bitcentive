@@ -17,8 +17,8 @@ QUnit.asyncTest('viewModel.OSProjectContributionsMap', function(){
   ContributionMonth.get("1").then(month => {
     vm = new ViewModel({ contributionMonth: month });
     vm.on('contributionMonths', () => {
-      QUnit.equal(vm.contributionMonths.OSProjectContributionsMap['1-CanJS'].contributors['1-JustinMeyer'].points, 10, 'has a contributor for CanJS');
-      QUnit.equal(vm.contributionMonths.OSProjectContributionsMap['1-CanJS'].totalPoints, 10, 'has totalPoints for CanJS as 10');
+      QUnit.equal(vm.contributionMonths.OSProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 10, 'has a contributor for CanJS');
+      QUnit.equal(vm.contributionMonths.OSProjectContributionsMap(month)['1-CanJS'].totalPoints, 10, 'has totalPoints for CanJS as 10');
       QUnit.start();
     });
   });
