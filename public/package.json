@@ -78,11 +78,11 @@
     "jquery": "^2.1.4",
     "jwt-decode": "^2.1.0",
     "moment": "^2.17.0",
-    "steal": "^1.0.0-rc.11",
+    "steal": "^1.0.0-rc2",
     "steal-css": "^1.0.0-rc.0",
     "steal-less": "^1.0.0-rc.2",
     "steal-socket.io": "^4.0.6",
-    "steal-stache": "^3.0.0-pre.3",
+    "steal-stache": "^3.0.3",
     "superagent": "^2.3.0"
   },
   "devDependencies": {
@@ -95,8 +95,8 @@
     "funcunit": "^3.1.0",
     "generator-donejs": "^0.10.0-pre.4",
     "socket.io-client": "^1.7.0",
-    "steal-qunit": "^1.0.0-rc.0",
-    "steal-tools": "^1.0.0-rc.9",
+    "steal-qunit": "^1.0.0-rc.1",
+    "steal-tools": "^1.0.0-rc2",
     "testee": "^0.3.0-pre.2"
   }
 }
