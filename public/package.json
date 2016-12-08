@@ -48,7 +48,7 @@
     "bootstrap": "^3.3.7",
     "can-component": "^3.0.2",
     "can-connect": "^1.0.12",
-    "can-connect-feathers": "^3.0.0-pre.14",
+    "can-connect-feathers": "^3.0.0-pre.17",
     "can-define": "^1.0.4",
     "can-define-stream": "0.0.2",
     "can-event": "^3.0.1",
