@@ -64,12 +64,4 @@ Session.connection = connect([
 
 Session.algebra = algebra;
 
-Object.assign(Session, canEvent);
-// TODO: look at removing 'window' here
-window.authAgent.on('login', function (token) {
-  let payload = decode(token);
-  Session.connection.createInstance(payload);
-  Session.trigger('created', [payload]);
-});
-
 export default Session;
