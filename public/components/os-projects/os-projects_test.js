@@ -49,10 +49,10 @@ QUnit.asyncTest('Can create new OS Project', function() {
   var vm = new ViewModel();
 
   vm.contributionMonth = this.contributionMonth;
-  vm.selectedOSProjectId = "__new__";
+  vm.selectedOSProject = {};
   vm.newOSProjectName = "something";
 
-  vm.addNewMonthlyOSProject().then(() => {
+  vm.addMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , 'something');
     QUnit.equal(vm.getTotal(vm.contributionMonth.monthlyOSProjects[1]) , '0.00');
     QUnit.start();
@@ -65,9 +65,9 @@ QUnit.asyncTest('Can add an existing OS Project to Monthly Contribution', functi
   var projectToAdd = this.osProject2;
 
   vm.contributionMonth = this.contributionMonth;
-  vm.selectedOSProjectId = projectToAdd._id ;
+  vm.selectedOSProject = projectToAdd;
 
-  vm.addNewMonthlyOSProject().then(() => {
+  vm.addMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects.length, 2);
     QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , projectToAdd.name);
     QUnit.start();
