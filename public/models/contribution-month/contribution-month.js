@@ -1,61 +1,43 @@
-import ClientProject from "./client-project";
-import OSProject from "./os-project";
-import Contributor from "./contributor";
+import ClientProject from "../client-project";
+import OSProject from "../os-project";
+import Contributor from "../contributor";
 
 import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
+import superModel from '../../lib/super-model';
+import feathersClient from '../feathers-client';
 
-import "../lib/prefilter";
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
 
-import feathersClient from './feathers';
-import connect from 'can-connect';
-import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
+import algebra from '../algebras';
+import idMerge from "can-connect/helpers/id-merge";
 
-var behaviorList = [
- feathersBehavior,
- dataParse,
- construct,
- constructStore,
- canMap,
- canRef,
- realtime,
- dataCallbacks,
- constructOnce
-];
-
-var contributionMonthAlgebra = new set.Algebra(
-  set.comparators.id("_id"),
-  set.comparators.sort("$sort", function($sort, cm1, cm2){
-    if($sort.date) {
-      if(parseInt($sort.date) === 1) {
-        return moment(cm1.date).toDate() - moment(cm2.date).toDate();
-      } else {
-        return moment(cm2.date).toDate() - moment(cm1.date).toDate();
-      }
+// Issue #152: every change causes browser to repaint.
+// Reason: `can-define/map/map`'s `setProps`:
+//     .attr is called on deep replace
+//     .replace is called w/o letting it go through the setter.
+//     As a result the list gets completely replaced, when its needed to be merged with the updated items.
+// Could be removed or moved to the setter depending on a fix for https://github.com/canjs/can-define/issues/96.
+[ MonthlyOSProject, MonthlyClientProject ].forEach( MapObj => {
+  var attrOrig = MapObj.List.prototype.attr;
+  MapObj.List.prototype.attr = function( items, replace ) {
+    if ( replace === false && typeof items === "object" ) {
+      idMerge( this, items, function( obj ){ return obj._id }, function( x ){
+        if ( x instanceof MapObj ) {
+          return x;
+        }
+        return new MapObj( x );
+      });
+      return this;
     } else {
-      throw "can't sort that way";
+      return attrOrig.apply( this, arguments );
     }
-
-  }),
-  {
-    "$populate": function(){
-      return true;
-    }
-  }
-);
+  };
+} );
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
@@ -63,8 +45,9 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   date: "date",
   monthlyOSProjects: {
     Type: MonthlyOSProject.List,
-    set: function(newVal){
-      return newVal;
+    set: function(monthlyOSProjects){
+      monthlyOSProjects.contributionMonth = this;
+      return monthlyOSProjects;
     }
   },
   monthlyClientProjects: MonthlyClientProject.List,
@@ -87,8 +70,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         }
       });
       // for each client project, calculate out:
-      // - rate (based on how many commissioned projects it uses)
-      // - total - (rate * hours)
+      // - rate (based on how many commissioned projects it uses) = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance)
+      // - total = (rate * hours)
       // - totalSignificance - the total significance for this project
       // - osProjectsUsed - a map of the OS projects used
       this.monthlyClientProjects.forEach((monthlyClientProject) => {
@@ -98,8 +81,8 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
         let commissionedMonthlyOSProjects = [];
         let uncommissionedMonthlyOSProjects = [];
 
-        monthlyClientProject.monthlyClientProjectsOSProjects.forEach( usedOSProject => {
-          var monthlyOSProject = monthlyOSProjectMap[usedOSProject.osProjectRef._id];
+        monthlyClientProject.monthlyClientProjectsOSProjects.forEach( usedOSProjectRef => {
+          var monthlyOSProject = monthlyOSProjectMap[usedOSProjectRef._id];
           if(monthlyOSProject) {
             // calculate needed significances
             if(monthlyOSProject.commissioned) {
@@ -111,10 +94,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
             totalSignificance += monthlyOSProject.significance;
 
             // for an OS project, make it possible to get the clients using it
-            if(!clientProjectsUsingOSProject[usedOSProject.osProjectRef._id]) {
-              clientProjectsUsingOSProject[usedOSProject.osProjectRef._id] = [];
+            if(!clientProjectsUsingOSProject[usedOSProjectRef._id]) {
+              clientProjectsUsingOSProject[usedOSProjectRef._id] = [];
             }
-            clientProjectsUsingOSProject[usedOSProject.osProjectRef._id].push(monthlyClientProject);
+            clientProjectsUsingOSProject[usedOSProjectRef._id].push(monthlyClientProject);
           }
         });
 
@@ -125,12 +108,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 
         let rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance);
         rate = isNaN(rate) ? 0 : rate; //handle the situation where there is not significance
-        let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100).toFixed(2);
+        let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100);
 
-        calculations.totalDollarForAllClientProjects =+ totalAmount;
+        calculations.totalDollarForAllClientProjects += totalAmount;
 
         calculations.clientProjects[monthlyClientProject.clientProjectRef._id] = {
-          rate: parseFloat(Math.round(rate * 100) / 100).toFixed(2),
+          rate: parseFloat(Math.round(rate * 100) / 100),
           totalAmount,
           totalSignificance,
           commissionedMonthlyOSProjects,
@@ -158,6 +141,37 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       return calculations;
     }
   },
+
+  // Can add using an osProject or monthlyOSProject
+  addNewMonthlyOSProject( project ) {
+    let monthlyOSProject;
+    if (project instanceof MonthlyOSProject) {
+      monthlyOSProject = project;
+    }
+    else {
+      monthlyOSProject = new MonthlyOSProject({
+        significance: 0,
+        commissioned: false,
+        osProjectRef: project,
+        osProjectID: project._id
+      });
+    }
+    this.monthlyOSProjects.push(monthlyOSProject);
+    this.save().catch(err => {
+      console.error("Failed saving the contributionMonth obj: ", err);
+    });
+    return monthlyOSProject;
+  },
+  removeMonthlyOSProject( monthlyOSProject ) {
+    this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
+    this.monthlyClientProjects.forEach( clientProject => {
+      clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef), 1);
+    });
+    this.save().catch(err => {
+      console.error("Failed saving the contributionMonth obj: ", err);
+    });
+  },
+
   commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
     if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
       return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].commissionedMonthlyOSProjects.length;
@@ -169,25 +183,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].uncommissionedMonthlyOSProjects.length;
     }
     return 0;
-  },
-  addNewMonthlyOSProject: function(newProject) {
-    let monthlyOSProject = new MonthlyOSProject({
-      significance: 0,
-      commissioned: false,
-      osProjectRef: newProject,
-      osProject: newProject._id
-    });
-    this.monthlyOSProjects.push(monthlyOSProject);
-    this.save().then(function() {
-    }, function() {
-      console.error("Failed saving the contributionMonth obj: ", arguments);
-    });
-  },
-  removeMonthlyOSProject: function(osProject) {
-    this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(osProject), 1);
-    this.monthlyClientProjects.forEach((clientProject) => {
-      clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(osProject), 1);
-    });
   },
   removeClientProject: function(clientProject) {
     this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
@@ -224,6 +219,42 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   }
 });
 
+ContributionMonth.List = DefineList.extend({
+  "#": ContributionMonth,
+  OSProjectContributionsMap: function(currentContributionMonth) {
+    
+
+    var OSProjectContributionsMap = {};
+    this.forEach(contributionMonth => {
+      if(moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
+        var monthlyContributions = contributionMonth.monthlyContributions;
+        monthlyContributions && monthlyContributions.length && monthlyContributions.forEach( monthlyContribution => {
+          if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
+            OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
+              contributors: {},
+              totalPoints: 0
+            };
+          }
+
+          if(! OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] ) {
+            OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
+              points: monthlyContribution.points
+            };
+          }
+          else {
+            OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points + monthlyContribution.points;
+          }
+
+          OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints + monthlyContribution.points;
+
+        });
+      }
+    });
+
+    return OSProjectContributionsMap;
+  }
+});
+
 var dataMassage = function(oType) {
   return function(item) {
     if (typeof item[oType + 'Id'] === 'object') {
@@ -233,18 +264,15 @@ var dataMassage = function(oType) {
   };
 };
 
-ContributionMonth.connection = connect(behaviorList, {
+ContributionMonth.connection = superModel({
   parseInstanceProp: "data",
-  idProp: "_id",
   Map: ContributionMonth,
   List: ContributionMonth.List,
   feathersService: feathersClient.service("/api/contribution_months"),
-  // url: "/api/contribution_months",
   name: "contributionMonth",
-  algebra: contributionMonthAlgebra
+  algebra
 });
-ContributionMonth.algebra = contributionMonthAlgebra;
+
+ContributionMonth.algebra = algebra;
 
 export default ContributionMonth;
-
-export { contributionMonthAlgebra as algebra };

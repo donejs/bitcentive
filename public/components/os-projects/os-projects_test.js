@@ -1,7 +1,7 @@
 import QUnit from 'steal-qunit';
 import 'bitcentive/models/fixtures/fixtures-socket';
 import { ViewModel } from './os-projects';
-import ContributionMonth from 'bitcentive/models/contribution-month';
+import ContributionMonth from 'bitcentive/models/contribution-month/';
 import { store as contributionMonthStore } from 'bitcentive/models/fixtures/contribution-months';
 
 //ViewModel unit tests

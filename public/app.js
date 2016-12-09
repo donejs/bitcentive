@@ -29,12 +29,12 @@ const AppViewModel = DefineMap.extend({
   session: {
     value () {
       var self = this;
-      new Session().save().catch(err => console.log(err));
+      Session.get().catch(err => console.log(err));
       Session.on('created', (event, session) => {
         self.session = session;
         // redirect to the dashboard if on the auth page
         if (self.page === 'auth') {
-          history.replaceState(self.title, null, route.url({page: 'dashboard'}));
+          window.history.replaceState(self.title, null, route.url({page: 'dashboard'}));
         }
       });
       Session.on('destroyed', (event, session) => {
@@ -67,7 +67,7 @@ const AppViewModel = DefineMap.extend({
   pageId: {
     type: "string"
   },
-  
+
   /**
    * The auth page uses the subpage attribute to switch between the 'login'
    * view and the 'signup' view. We have to set serialize to true to allow the
@@ -76,7 +76,7 @@ const AppViewModel = DefineMap.extend({
   subpage: {
     serialize: true
   },
-  
+
   /**
    * The `title` attribute is used in index.stache as the HTML title.
    */
@@ -99,15 +99,15 @@ const AppViewModel = DefineMap.extend({
       contributors: 'private'
     };
 
-    // if(page === 'logout'){
-    //   page = 'home';
-    //   this.session && this.session.destroy()
-    //     .then(() => {
-    //       if(!window.doneSsr){
-    //         window.location.href = '/';
-    //       }
-    //     });
-    // }
+    if (page === 'logout') {
+      page = 'home';
+      this.session && this.session.destroy()
+        .then(() => {
+          if (!window.doneSsr) {
+            window.location.href = '/';
+          }
+        });
+    }
 
     if (this.session) {
       // Perform some custom logic for logged-in users.
@@ -127,10 +127,10 @@ const AppViewModel = DefineMap.extend({
   }
 });
 
-route('/login', {page: 'auth', subpage: 'login'}); 
-route('/signup', {page: 'auth', subpage: 'signup'}); 
-route('/auth/success', {page: 'auth', subpage: 'success'});
-route('/auth/failure', {page: 'auth', subpage: 'failure'});
-route('/{page}', {page: 'home'});
+route('login', {page: 'auth', subpage: 'login'});
+route('signup', {page: 'auth', subpage: 'signup'});
+route('auth/success', {page: 'auth', subpage: 'success'});
+route('auth/failure', {page: 'auth', subpage: 'failure'});
+route('{page}', {page: 'home'});
 
 export default AppViewModel;

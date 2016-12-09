@@ -1,9 +1,9 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './os-projects.less';
-import template from './os-projects.stache';
+import view from './os-projects.stache';
 import OSProject from '../../models/os-project';
-import ContributionMonth from '../../models/contribution-month';
+import ContributionMonth from '../../models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
@@ -12,10 +12,10 @@ export const ViewModel = DefineMap.extend({
   },
 
   // Stateful properties
-  activePromise: "*",
+  activePromise: "any",
   adding: {
     type: 'boolean',
-    value: false,
+    value: false
   },
   newOSProjectName: 'string',
   selectedOSProjectId: {
@@ -79,12 +79,12 @@ export const ViewModel = DefineMap.extend({
   },
   getTotal: function(osProject) {
     var fullTotal = this.contributionMonth.calculations.osProjects[osProject._id] || 0.0;
-    return fullTotal.toFixed(2);
-  },
+    return fullTotal;
+  }
 });
 
 export default Component.extend({
   tag: 'os-projects',
   ViewModel,
-  template
+  view
 });

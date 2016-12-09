@@ -16,7 +16,7 @@
     "node": ">= 0.12.0"
   },
   "scripts": {
-    "test": "npm run jshint && npm run mocha && cd public && npm run test",
+    "test": "npm run jshint && TESTING=true npm run mocha && cd public && npm run test",
     "jshint": "jshint src/. test/. --config",
     "develop": "node src/ --develop",
     "start": "node src/",
@@ -25,32 +25,31 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "can-define": "^1.0.4",
     "compression": "^1.6.2",
-    "cors": "^2.7.1",
+    "cors": "^2.8.1",
     "feathers": "^2.0.2",
     "feathers-authentication": "^0.8.0-beta-2",
-    "feathers-authentication-popups": "0.0.9",
+    "feathers-authentication-popups": "^0.1.2",
     "feathers-authentication-popups-github": "0.0.3",
     "feathers-configuration": "^0.4.1",
-    "feathers-errors": "^2.4.0",
-    "feathers-hooks": "^1.5.4",
-    "feathers-mongoose": "^3.5.1",
-    "feathers-rest": "^1.4.3",
-    "feathers-socketio": "^1.4.1",
-    "mongoose": "^4.5.5",
+    "feathers-errors": "^2.5.0",
+    "feathers-hooks": "^1.6.1",
+    "feathers-mongoose": "^3.6.1",
+    "feathers-rest": "^1.5.2",
+    "feathers-socketio": "^1.4.2",
+    "mongoose": "^4.7.0",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "passport-github-token": "^2.1.0",
-    "serve-favicon": "^2.3.0",
-    "winston": "^2.2.0"
+    "serve-favicon": "^2.3.2",
+    "winston": "^2.3.0"
   },
   "system": {
     "npmAlgorithm": "flat"
   },
   "devDependencies": {
-    "jshint": "^2.9.2",
-    "mocha": "^2.5.3",
-    "request": "^2.73.0"
+    "jshint": "^2.9.4",
+    "mocha": "^3.2.0",
+    "request": "^2.79.0"
   }
 }

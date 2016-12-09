@@ -1,0 +1,29 @@
+{{#if contributionMonthsPromise.isResolved}}
+<table class='table'>
+  <thead>
+    <tr>
+      <th></th>
+      {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+      <th>{{monthlyOSProject.osProjectRef.value.name}}</th>
+      {{/each}}
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each payouts as payout}}
+      <tr>
+        <td>{{payout.contributorRef.value.name}}</td>
+        {{#each payout.monthlyOSProjects as monthlyOSProject}}
+          <td>{{formatDollarAmount(monthlyOSProject.total)}}</td>
+        {{/each}}
+        <td>
+          {{formatDollarAmount(getTotalForAllPayoutsForContributor(payout.contributorRef))}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+  <h3>Warning: Requires contributionMonth data</h3>
+{{/if}}
+

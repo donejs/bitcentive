@@ -12,7 +12,9 @@ const user = require('./user');
 module.exports = function() {
   const app = this;
 
-  mongoose.connect(app.get('mongodb'));
+  if (process.env.TESTING !== 'true'){
+    mongoose.connect(app.get('mongodb'));
+  }
   mongoose.Promise = global.Promise;
 
   app.configure(authentication);
