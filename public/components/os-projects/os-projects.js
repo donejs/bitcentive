@@ -4,6 +4,8 @@ import './os-projects.less';
 import view from './os-projects.stache';
 import OSProject from '../../models/os-project';
 import ContributionMonth from '../../models/contribution-month/';
+import 'can-stache-converters';
+
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
@@ -18,52 +20,72 @@ export const ViewModel = DefineMap.extend({
     value: false
   },
   newOSProjectName: 'string',
-  selectedOSProjectId: {
-    type: 'string',
-    value: '__new__'
-  },
-  allOSProjects: {
-    value: function() {
-      return OSProject.connection.getList();
-    }
+  selectedOSProject: {
+    Type: OSProject
   },
 
   // Derived properties
-  creatingNewOSProject: {
+  osProjectPromise: {
     get: function() {
-      return this.selectedOSProjectId === "__new__";
+      return OSProject.getList()
+    }
+  },
+  osProjectList: {
+    get: function(lastSaved, resolve) {
+      this.osProjectPromise.then(resolve);
+    },
+    value: []
+  },
+  osProjectsNotInMonth: {
+    get: function() {
+      return this.osProjectList.filter((osProject)=> {
+        return !this.contributionMonth.monthlyOSProjects.has(osProject);
+      });
+    }
+  },
+  osProjectOptions: {
+    get: function() {
+      return this.osProjectsNotInMonth.concat(new OSProject({name: 'Add New OS Project'}));
+    }
+  },
+  showCreateForm: {
+    get: function() {
+      return !!(this.selectedOSProject && this.selectedOSProject.isNew());
     }
   },
 
   // Methods
-  toggleAddNewMonthlyOSProject: function() {
-    this.newOSProjectName = '';
-    this.adding = !this.adding;
-  },
-  addNewMonthlyOSProject: function(ev) {
+  toggleCreateForm: function(vm, el, ev) {
     if (ev) {
       ev.preventDefault();
     }
-    if (this.selectedOSProjectId === '__new__') {
-      let newOSProject = new OSProject({
-        name: this.newOSProjectName
-      });
+    this.showCreateForm = !this.showCreateForm;
+  },
+  toggleAddMonthlyOSProject: function() {
+    this.newOSProjectName = '';
+    this.showCreateForm = false;
+    this.adding = !this.adding;
+  },
+  addMonthlyOSProject: function(vm, el, ev) {
+    let promise = Promise.resolve(null);
 
-      this.activePromise = newOSProject.save().then((osProject) => {
-        this.toggleAddNewMonthlyOSProject();
-        return this.contributionMonth.addNewMonthlyOSProject(osProject);
-      });
-    } else {
-      this.activePromise = this.allOSProjects.then((projects) => {
-        projects.each((proj) => {
-          if (this.selectedOSProjectId === proj._id) {
-            this.contributionMonth.addNewMonthlyOSProject(proj);
-            this.toggleAddNewMonthlyOSProject();
-          }
-        });
-      });
+    if (ev) {
+      ev.preventDefault();
     }
-    return this.activePromise;
+
+    if (this.showCreateForm) {
+      promise = (new OSProject({
+        name: this.newOSProjectName
+      }).save().then((osProject) => {
+        this.toggleAddMonthlyOSProject();
+        return this.contributionMonth.addNewMonthlyOSProject(osProject);
+      }));
+    } else {
+      this.contributionMonth.addNewMonthlyOSProject(this.selectedOSProject);
+      this.toggleAddMonthlyOSProject();
+    }
+
+    return promise
   },
   removeMonthlyOSProject: function(osProject) {
     this.contributionMonth.removeMonthlyOSProject(osProject);

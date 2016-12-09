@@ -45,39 +45,44 @@
 <div class="panel panel-default">
   <div class="panel-heading">Add Project</div>
     <div class="panel-body">
-      <form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
-        <div class="row">
+      <div class="row" style="padding-bottom: 10px;">
+        <form ($submit)="addMonthlyOSProject" id="new-os-project">
           <div class="col-xs-6">
-          {{#if allOSProjects.ispending}}
-            <p>Loading...</p>
-          {{else}}
-            <select {($value)}="selectedOSProjectId" class="form-control">
-              <option value="" disabled selected hidden>Select Project...</option>
-              {{#each allOSProjects.value}}
-                {{^if contributionMonth.monthlyOSProjects.has(.)}}
-              <option value="{{_id}}">{{name}}</option>
-                {{/if}}
-              {{/each}}
-              <option value="__new__">Create New Project</option>
-            </select>
+            {{#if osProjectPromise.isPending}}
+              <p>Loading...</p>
+            {{else}}
+              <select {($value)}="index-to-selected(~selectedOSProject, osProjectOptions)"
+                      class="form-control">
+                <option value="" disabled selected hidden>Select Project...</option>
+
+                {{#each osProjectOptions}}
+                    <option value="{{%index}}">{{name}}</option>
+                {{/each}}
+              </select>
+            {{/if}}
+          </div>
+
+          {{#if showCreateForm}}
+            <div class="col-xs-6">
+              <label>New project name:</label>
+              <input type="text"
+                class="form-control"
+                placeholder="New Project Name..."
+                {($value)}="newOSProjectName"/>
+            </div>
           {{/if}}
-          </div>
-        {{#if creatingNewOSProject}}
-          <div class="col-xs-6">
-            <label>New project name:</label>
-            <input type="text"
-              class="form-control"
-              placeholder="New Project Name..."
-              {($value)}="newOSProjectName"/>
-          </div>
-        {{/if}}
-        </div>
-      </form>
-      <button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">Add Project</button>
-      <button class="btn btn-default" ($click)="toggleAddNewMonthlyOSProject()">Cancel</button>
+        </form>
+      </div>
+
+      <button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">
+        Add Project
+      </button>
+      <button class="btn btn-default" ($click)="toggleAddMonthlyOSProject">
+        Cancel
+      </button>
     </div>
   </div>
 </div>
 {{else}}
-  <a href="javascript://" ($click)="toggleAddNewMonthlyOSProject()">Add Project</a>
+  <a href="javascript://" ($click)="toggleAddMonthlyOSProject">Add Project</a>
 {{/if}}
