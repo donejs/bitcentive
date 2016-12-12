@@ -12,5 +12,5 @@ module.exports = function() {
 
   app.use(notFound());
   app.use(logger(app));
-  app.use(handler());
+  //app.use(handler());
 };
