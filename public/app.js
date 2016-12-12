@@ -3,7 +3,7 @@ import 'can-define-stream';
 import canStream from 'can-stream';
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
-import 'can-route-pushstate';
+//import 'can-route-pushstate';
 import Session from 'bitcentive/models/session';
 // import 'bitcentive/models/fixtures/';
 
