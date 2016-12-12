@@ -1,25 +1,29 @@
-import './fixtures/';
+import './fixtures/fixtures-socket';
+import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 
 import QUnit from "steal-qunit";
-import ContributionMonth from "./contribution-month";
+import ContributionMonth from "./contribution-month/";
 import ClientProject from "./client-project";
 import OSProject from "./os-project";
 
 QUnit.module("models", {
 	setup: function(){
 		localStorage.clear();
+		// Reset fixture store before every test:
+		store.reset();
 	}
 });
 
 QUnit.asyncTest("getList of ContributionMonth", function() {
 	ContributionMonth.getList({}).then(function(contributionMonths) {
 
-		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef.value instanceof ClientProject);
-		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef.value,
-			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0].osProjectRef.value;
+		// TODO: check if we need to test against `clientProjectRef.value`.
+		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef._id === "1-Levis", 'contains a client project');
+		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef._id,
+			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0]._id;
 
-		QUnit.ok(first === second);
-		QUnit.ok(first);
+		QUnit.ok(first, 'first exists');
+		QUnit.ok(first === second, 'first and second are equal');
 
 		QUnit.start();
 	}, function(err) {
@@ -48,10 +52,7 @@ QUnit.test("make type convert able to accept instances (#23)", function() {
 					osProject: osProject
 			}],
 			monthlyClientProjects: [{
-					monthlyClientProjectsOSProjects: [{
-							osProjectRef: osProject._id,
-							osProject: osProject
-					}],
+					monthlyClientProjectsOSProjects: [ osProject ],
 					hours: 100,
 					clientProjectRef: clientProject._id,
 					clientProject: clientProject

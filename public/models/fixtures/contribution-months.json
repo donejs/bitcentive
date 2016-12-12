@@ -4,24 +4,15 @@
   "monthlyOSProjects": [ {
     "significance": 10,
     "commissioned": true,
-    "osProjectRef": {
-      "_id": "1-CanJS",
-      "name": "CanJS"
-    }
-  }, {
-    "significance": 20,
-    "commissioned": true,
-    "osProjectRef": {
-      "_id": "2-DoneJS",
-      "name": "DoneJS"
-    }
+    "osProjectRef": "1-CanJS"
   }, {
     "significance": 30,
     "commissioned": true,
-    "osProjectRef": {
-      "_id": "3-StealJS",
-      "name": "StealJS"
-    }
+    "osProjectRef": "2-DoneJS"
+  }, {
+    "significance": 30,
+    "commissioned": false,
+    "osProjectRef": "3-StealJS"
   } ],
   "monthlyClientProjects": [ {
     "hours": 100,
@@ -29,14 +20,17 @@
       "_id": "1-Levis",
       "name": "Levi's"
     },
-    "monthlyClientProjectsOSProjects": [ {
-      "osProjectRef": "1-CanJS"
-    } ]
-  } ]
-}, {
-  "_id": "2",
-  "date": "2016-10-05T16:22:18.251Z"
-}, {
-  "_id": "3",
-  "date": "2016-19-01T15:22:18.251Z"
+    "monthlyClientProjectsOSProjects": [ "1-CanJS" ]
+  } ],
+  "monthlyContributions": [{
+    "points": 10,
+    "description": "I did https://github.com/canjs/canjs/issues/2437",
+    "contributorRef": "1-JustinMeyer",
+    "osProjectRef": "1-CanJS"
+  },{
+    "points": 12,
+    "description": "I did https://github.com/donejs/done-ssr/issues/5",
+    "contributorRef": "2-KyleGifford",
+    "osProjectRef": "2-DoneJS"
+  }]
 } ]

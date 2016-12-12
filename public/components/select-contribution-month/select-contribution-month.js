@@ -2,8 +2,8 @@ import moment from 'moment';
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './select-contribution-month.less';
-import template from './select-contribution-month.stache';
-import ContributionMonth from 'bitcentive/models/contribution-month';
+import view from './select-contribution-month.stache';
+import ContributionMonth from 'bitcentive/models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
   selectedContributionMonthId: {
@@ -21,19 +21,21 @@ export const ViewModel = DefineMap.extend({
       if(newVal === "__new__") {
         var last = this.lastMonth.serialize();
         last.date = this.nextMonth;
+        last.monthlyContributions = [];
         delete last._id;
         new ContributionMonth(last).save((newContributionMonth) => {
           setVal(newContributionMonth._id);
         });
+        
       } else {
         setVal(newVal);
       }
     }
   },
   contributionMonthsPromise: {
-    value: ContributionMonth.getList.bind(ContributionMonth, {
-
-    })
+    get: function () {
+      return ContributionMonth.getList({$sort: {date: 1}});
+    }
   },
 
   contributionMonths: {
@@ -66,5 +68,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'bit-select-contribution-month',
   ViewModel: ViewModel,
-  template
+  view
 });

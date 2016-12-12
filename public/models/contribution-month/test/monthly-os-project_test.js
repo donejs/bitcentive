@@ -1,10 +1,10 @@
 import QUnit from 'steal-qunit';
-import OSProject from './os-project';
-import MonthlyOSProject from './monthly-os-project';
+import OSProject from '../../os-project';
+import MonthlyOSProject from '../monthly-os-project';
 
 QUnit.module('models/monthly-os-project');
 
-QUnit.test('MonthlyOSProject basic test', function() {
+QUnit.test('MonthlyOSProject basic test', () => {
   let osProject = new OSProject({
     _id: 'qwe123',
     name: 'DoneJS'
@@ -16,13 +16,11 @@ QUnit.test('MonthlyOSProject basic test', function() {
     osProjectRef: osProject
   });
 
-  ok(monthlyOSProject.osProjectRef._id === "qwe123",
-    "osProjectRef _id is correct");
-  ok(monthlyOSProject.osProjectRef._value.name === "DoneJS",
-    "osProjectRef name is correct");
+  QUnit.ok(monthlyOSProject.osProjectRef._id === "qwe123", "osProjectRef _id is correct");
+  QUnit.ok(monthlyOSProject.osProjectRef._value.name === "DoneJS", "osProjectRef name is correct");
 });
 
-QUnit.test('MonthlyOSProject List basic test', function() {
+QUnit.test('MonthlyOSProject List basic test', () => {
   let osProject01 = new OSProject({
     _id: '1',
     name: 'DoneJS'
@@ -49,9 +47,7 @@ QUnit.test('MonthlyOSProject List basic test', function() {
   monthlyOSProjectsList.push(monthlyOSProject01);
   monthlyOSProjectsList.push(monthlyOSProject02);
 
-  ok(monthlyOSProjectsList.has(osProject01), "has works as expected");
-  ok(monthlyOSProjectsList.getSignificance(osProject01) === 1,
-    "getSignificance works as expected");
-  ok(monthlyOSProjectsList.commissioned.length === 1,
-    "got the right amount of commissioned")
+  QUnit.ok(monthlyOSProjectsList.has(osProject01), "has works as expected");
+  QUnit.ok(monthlyOSProjectsList.getSignificance(osProject01) === 1, "getSignificance works as expected");
+  QUnit.ok(monthlyOSProjectsList.commissioned.length === 1, "got the right amount of commissioned");
 });

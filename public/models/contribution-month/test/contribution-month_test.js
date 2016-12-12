@@ -1,14 +1,14 @@
 import QUnit from 'steal-qunit';
-import ContributionMonth from './contribution-month';
+import ContributionMonth from '../contribution-month';
 import moment from 'moment';
 
-import OSProject from './os-project';
-import ClientProject from './client-project';
-import MonthlyClientProjectOSProject from './monthly-client-projects-os-project';
-import Contributor from './contributor';
-import MonthlyContributions from './monthly-contributions';
-import MonthlyOSProject from './monthly-os-project';
-import MonthlyClientProject from './monthly-client-project';
+import OSProject from '../../os-project';
+import ClientProject from '../../client-project';
+import MonthlyClientProjectsOSProjectList from '../monthly-client-projects-os-project-list';
+import Contributor from '../../contributor';
+import MonthlyContributions from '../monthly-contributions';
+import MonthlyOSProject from '../monthly-os-project';
+import MonthlyClientProject from '../monthly-client-project';
 
 QUnit.module( 'models/contribution-month' );
 
@@ -71,15 +71,10 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     osProjectRef: osProject02
   } );
 
-  let monthlyClientProjectOSProject01 = new MonthlyClientProjectOSProject( {
-    osProjectRef: osProject01
-  } );
-  let monthlyClientProjectOSProject02 = new MonthlyClientProjectOSProject( {
-    osProjectRef: osProject02
-  } );
-  let monthlyClientProjectOSProjects = new MonthlyClientProjectOSProject.List();
-  monthlyClientProjectOSProjects.push( monthlyClientProjectOSProject01 );
-  monthlyClientProjectOSProjects.push( monthlyClientProjectOSProject02 );
+  let monthlyClientProjectOSProjects = new MonthlyClientProjectsOSProjectList([
+    osProject01,
+    osProject02
+  ]);
 
   let monthlyClientProject01 = new MonthlyClientProject( {
     clientProjectRef: clientProject01,
@@ -120,7 +115,7 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     "monthlyOSProject was added with osProjectRef" );
   ok( contributionMonth.monthlyClientProjects[ 1 ].clientProjectRef.value.name === "Something Awesome",
     "monthlyClientProjects was added with clientProjectRef" );
-  ok( contributionMonth.monthlyClientProjects[ 1 ].monthlyClientProjectOSProjects[ 0 ].osProjectRef.value.name === 'DoneJS',
+  ok( contributionMonth.monthlyClientProjects[ 1 ].monthlyClientProjectOSProjects[ 0 ].value.name === 'DoneJS',
     "monthlyClientProjects was added with osProjects and osProjectRef" );
 } );
 
@@ -186,4 +181,59 @@ QUnit.test( "Can add and remove a monthlyOSProject", function() {
   contributionMonth.removeMonthlyOSProject( monthlyOSProject );
   ok( contributionMonth.monthlyOSProjects.length === 0,
     "monthlyOSProject was removed" );
+} );
+
+QUnit.test( "Calculations: OS project royalty pot totals", function() {
+  let contributionMonth = new ContributionMonth( {
+    date: moment().add( -1, "months" ).startOf( "month" ).toDate(),
+    monthlyOSProjects: new MonthlyOSProject.List( [
+      { significance: 10, commissioned: true, osProjectRef: "1-CanJS" },
+      { significance: 30, commissioned: true, osProjectRef: "2-DoneJS" },
+      { significance: 30, commissioned: false, osProjectRef: "3-StealJS" }
+    ] ),
+    monthlyClientProjects: new MonthlyClientProject.List( [ {
+      "hours": 100,
+      "clientProjectRef": "1-Levis",
+      "monthlyClientProjectsOSProjects": [ "1-CanJS" ]
+    } , {
+      "hours": 100,
+      "clientProjectRef": "2-Apple",
+      "monthlyClientProjectsOSProjects": [ "1-CanJS", "2-DoneJS" ]
+    } , {
+      "hours": 200,
+      "clientProjectRef": "3-Walmart",
+      "monthlyClientProjectsOSProjects": [ "1-CanJS", "2-DoneJS", "3-StealJS" ]
+    } ] )
+  });
+
+  let clientProject1 = contributionMonth.calculations.clientProjects[ "1-Levis" ];
+  QUnit.equal( clientProject1.totalSignificance, 10, "total significance for the first client project" );
+
+  // rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance)
+  QUnit.equal( clientProject1.rate, 3.5, "rate for the first client project");
+
+  // total = (rate * hours)
+  QUnit.equal( clientProject1.totalAmount, 350, "total amount for the first client project" );
+
+  let clientProject2 = contributionMonth.calculations.clientProjects[ "2-Apple" ];
+  QUnit.equal( clientProject2.totalSignificance, 40, "total significance for the 2nd client project" );
+  QUnit.equal( clientProject2.rate, 2, "rate for the 2nd client project" );
+  QUnit.equal( clientProject2.totalAmount, 200, "total amount for the 2nd client project" );
+
+  let clientProject3 = contributionMonth.calculations.clientProjects[ "3-Walmart" ];
+  QUnit.equal( clientProject3.totalSignificance, 70, "total significance for the 3rd client project" );
+  QUnit.equal( clientProject3.rate, 2, "rate for the 3rd client project" );
+  QUnit.equal( clientProject3.totalAmount, 400, "total amount for the 3rd client project" );
+
+  QUnit.equal( contributionMonth.calculations.totalDollarForAllClientProjects, 950, "total amount for all client projects" );
+
+  // Sum each client: (clientProjectCalc.totalAmount * osProject.significance / clientProjectCalc.totalSignificance)
+  // (350 * 10 / 10) + (200 * 10 / 40) + (400 * 10 / 70) = 457.142857
+  QUnit.equal( contributionMonth.calculations.osProjects[ "1-CanJS" ].toFixed( 2 ), "457.14", "final calculation for the 1st project" );
+  // (0)             + (200 * 30 / 40) + (400 * 30 / 70) = 321.42857
+  QUnit.equal( contributionMonth.calculations.osProjects[ "2-DoneJS" ].toFixed( 2 ), "321.43", "final calculation for the 2st project" );
+  // (0)             + (0)             + (400 * 30 / 70) = 171.42857
+  QUnit.equal( contributionMonth.calculations.osProjects[ "3-StealJS" ].toFixed( 2 ), "171.43", "final calculation for the uncommissioned project" );
+
+  console.log('contributionMonth.calculations.osProjects', contributionMonth.calculations.osProjects);
 } );

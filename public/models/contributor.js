@@ -1,30 +1,9 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import set from "can-set";
-
-import feathersClient from './feathers';
-import connect from 'can-connect';
-import feathersBehavior from 'can-connect-feathers';
-import dataParse from 'can-connect/data/parse/';
-import construct from 'can-connect/constructor/';
-import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
-import canMap from 'can-connect/can/map/';
-import canRef from 'can-connect/can/ref/';
-import dataCallbacks from 'can-connect/data/callbacks/';
-import realtime from 'can-connect/real-time/';
-
-var behaviorList = [
-  dataParse,
-  construct,
-  constructStore,
-  constructOnce,
-  canMap,
-  canRef,
-  dataCallbacks,
-  realtime,
-  feathersBehavior
-];
+import superModel from '../lib/super-model';
+import algebra from './algebras';
+import feathersClient from './feathers-client';
 
 var Contributor = DefineMap.extend("Contributor", {
   _id: "string",
@@ -33,21 +12,18 @@ var Contributor = DefineMap.extend("Contributor", {
   active: "boolean"
 });
 
-var contributorAlgebra = new set.Algebra(
-  set.comparators.id("_id")
-);
-
 Contributor.List = DefineList.extend({
-  "*": Contributor
+  "#": Contributor
 });
 
-Contributor.connection = connect(behaviorList, {
-  idProp: "_id",
+Contributor.connection = superModel({
   Map: Contributor,
   List: Contributor.List,
   feathersService: feathersClient.service("/api/contributors"),
   name: "contributor",
+  algebra
 });
-Contributor.algebra = contributorAlgebra;
+
+Contributor.algebra = algebra;
 
 export default Contributor;

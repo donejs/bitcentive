@@ -14,6 +14,10 @@ export const ContributorsVM = DefineMap.extend({
     type: "boolean",
     value: false
   },
+  isSaving: {
+    type: "boolean",
+    value: false
+  },
   newContributorName: {
     type: "string",
     value: "",
@@ -27,12 +31,12 @@ export const ContributorsVM = DefineMap.extend({
     value: true,
   },
   newContributorError: {
-    type: "boolean",
-    value: false,
+    type: "string",
+    value: "",
   },
   // Methods
   resetNewContributorFields() {
-    this.newContributorError = false;
+    this.newContributorError = '';
     this.newContributorName = '';
     this.newContributorEmail = '';
     this.newContributorActive = true;
@@ -46,22 +50,30 @@ export const ContributorsVM = DefineMap.extend({
     contributor.save();
   },
   addContributor(ev) {
-    if(event) {
-      event.preventDefault();
+    if(ev) {
+      ev.preventDefault();
     }
-    const inputs = $(ev.target).find(":input");
-    inputs.prop("disabled", true);
+    let error = this.hasErrors();
+    if (error){
+      this.newContributorError = error;
+      return;
+    }
+    this.isSaving = true;
     return new Contributor({
       name: this.newContributorName,
       email: this.newContributorEmail,
-      active: this.newContributorActive,
+      active: this.newContributorActive
     }).save().then(() => {
       this.resetNewContributorFields();
-      inputs.prop("disabled", false);
+      this.isSaving = false;
     }, (e) => {
-      this.newContributorError = true;
-      inputs.prop("disabled", false);
+      this.newContributorError = e.message;
+      this.isSaving = false;
     });
+  },
+  hasErrors(){
+    return this.newContributorName === '' && 'Name cannot be empty'
+      || this.newContributorEmail === '' && 'Email cannot be empty';
   }
 });
 

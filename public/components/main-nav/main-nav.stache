@@ -30,7 +30,7 @@
             <ul class="dropdown-menu">
               <li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
               <li><a href="javascript://">Account</a></li>
-              <li><a href="javascript://" ($click)="logout()">Logout</a></li>
+              <li><a href="{{routeUrl(page='logout')}}">Logout</a></li>
             </ul>
           </li>
         {{else}}
