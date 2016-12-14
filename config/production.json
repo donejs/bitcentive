@@ -1,4 +1,5 @@
 {
-  "port": 3030,
+  "host": "bitcentive.herokuapp.com",
+  "port": "PORT",
   "main": "production.html"
 }

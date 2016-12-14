@@ -1,8 +1,7 @@
 'use strict';
 
-const authentication = require('feathers-authentication');
-const token = authentication.TokenService;
-const local = authentication.LocalService;
+const auth = require('feathers-authentication');
+const jwt = require('feathers-authentication-jwt');
 const githubAuth = require('feathers-authentication-popups-github');
 
 module.exports = function () {
@@ -10,8 +9,15 @@ module.exports = function () {
 
   var config = app.get('auth');
 
-  app.configure(authentication(config))
-    .configure(token(config.token))
-    .configure(local(config.local))
+  app.configure(auth(config))
+    .configure(jwt())
     .configure(githubAuth(config.github, config.cookie));
+
+  app.service('authentication').hooks({
+    before: {
+      create: [
+        auth.hooks.authenticate('jwt')
+      ]
+    }
+  });
 };
