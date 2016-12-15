@@ -101,7 +101,8 @@ const AppViewModel = DefineMap.extend({
       this.session && this.session.destroy()
         .then(() => {
           if (!window.doneSsr) {
-            window.location.href = '/';
+            this.session = undefined;
+            page = 'home';
           }
         });
     }
