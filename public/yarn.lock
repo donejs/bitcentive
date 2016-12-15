@@ -6734,9 +6734,15 @@ steal-qunit@^1.0.0-rc.1:
     qunitjs "^1.17.1"
     steal-css "^1.0.0-rc.0"
 
-steal-socket.io@^4.0.5, steal-socket.io@^4.0.7:
+steal-socket.io@^4.0.5:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/steal-socket.io/-/steal-socket.io-4.0.7.tgz#322680ac6a625389d987df97b5f91495a0f1d05b"
+  dependencies:
+    socket.io-client "^1.7.1"
+
+steal-socket.io@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/steal-socket.io/-/steal-socket.io-4.0.8.tgz#87b11730389061f6f016e8edf85b19a2eecca3fd"
   dependencies:
     socket.io-client "^1.7.1"
 

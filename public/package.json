@@ -81,7 +81,7 @@
     "steal": "^1.0.0-rc2",
     "steal-css": "^1.0.0-rc.0",
     "steal-less": "^1.0.0-rc.2",
-    "steal-socket.io": "^4.0.7",
+    "steal-socket.io": "^4.0.8",
     "steal-stache": "^3.0.3",
     "superagent": "^2.3.0"
   },
