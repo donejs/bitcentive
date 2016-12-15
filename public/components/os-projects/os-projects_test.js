@@ -44,7 +44,9 @@ QUnit.module('bitcentive/components/os-projects', {
   }
 });
 
-QUnit.asyncTest('Can create new OS Project', function() {
+QUnit.test('Can create new OS Project', function(assert) {
+  var done = assert.async();
+
   contributionMonthStore.reset();
   var vm = new ViewModel();
 
@@ -55,21 +57,25 @@ QUnit.asyncTest('Can create new OS Project', function() {
   vm.addNewMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , 'something');
     QUnit.equal(vm.getTotal(vm.contributionMonth.monthlyOSProjects[1]) , '0.00');
-    QUnit.start();
+    done();
   });
 });
 
-QUnit.asyncTest('Can add an existing OS Project to Monthly Contribution', function() {
+QUnit.test('Can add an existing OS Project to Monthly Contribution', function(assert) {
+  var done = assert.async();
+
   contributionMonthStore.reset();
   var vm = new ViewModel();
   var projectToAdd = this.osProject2;
 
   vm.contributionMonth = this.contributionMonth;
-  vm.selectedOSProjectId = projectToAdd._id ;
+  vm.selectedOSProjectId = projectToAdd._id;
 
   vm.addNewMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects.length, 2);
-    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , projectToAdd.name);
-    QUnit.start();
+    vm.contributionMonth.monthlyOSProjects[1].osProjectRef.on('value', function(value){
+      QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , projectToAdd.name);
+      done();
+    });
   });
 });
