@@ -1,5 +1,5 @@
 import feathers from 'feathers/client';
-import io from 'steal-socket.io';
+import io from '../../lib/steal-socket.io/io';
 import socketio from 'feathers-socketio/client';
 import auth from 'feathers-authentication-client';
 import hooks from 'feathers-hooks';
