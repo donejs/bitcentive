@@ -77,7 +77,7 @@
     "jquery": "^2.1.4",
     "jwt-decode": "^2.1.0",
     "moment": "^2.17.0",
-    "steal": "^1.0.0-rc2",
+    "steal": "^1.0.2",
     "steal-css": "^1.0.0-rc.0",
     "steal-less": "^1.0.0-rc.2",
     "steal-socket.io": "^4.0.8",
