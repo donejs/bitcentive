@@ -32,10 +32,7 @@ const AppViewModel = DefineMap.extend({
       Session.get().catch(err => console.log(err));
       Session.on('created', (event, session) => {
         self.session = session;
-        // redirect to the dashboard if on the auth page
-        if (self.page === 'auth') {
-          window.history.replaceState(self.title, null, route.url({page: 'dashboard'}));
-        }
+        self.page = 'dashboard';
       });
       Session.on('destroyed', (event, session) => {
         self.session = undefined;

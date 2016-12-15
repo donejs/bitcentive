@@ -1,4 +1,6 @@
 /* global window */
+import feathersClient from './feathers-client';
+import feathersSession from 'can-connect-feathers/session';
 import connect from 'can-connect';
 import dataParse from 'can-connect/data/parse/';
 import construct from 'can-connect/constructor/';
@@ -14,34 +16,21 @@ import DefineList from 'can-define/list/';
 import User from 'bitcentive/models/user';
 import canEvent from 'can-event';
 
-import algebra from './algebras';
-
-import feathersClient from './feathers-client';
-import feathersSession from 'can-connect-feathers/session';
-import {authAgent} from 'feathers-authentication-popups';
-import decode from 'jwt-decode';
-
 export const Session = DefineMap.extend('Session', {
   seal: false
 }, {
-  _id: '*',
-  email: 'string',
-  password: 'string',
+  userId: 'any',
   user: {
     Type: User,
     get (lastSetVal, resolve) {
       if (lastSetVal) {
         return lastSetVal;
       }
-      if (this._id) {
-        User.get({_id: this._id}).then(resolve);
+      if (this.userId) {
+        User.get({_id: this.userId}).then(resolve);
       }
     }
   }
-});
-
-Session.List = DefineList.extend({
-  '#': Session
 });
 
 Session.connection = connect([
@@ -56,12 +45,9 @@ Session.connection = connect([
     realtime
 ], {
   feathersClient,
+  idProp: 'exp',
   Map: Session,
-  List: Session.List,
-  name: 'session',
-  algebra
+  name: 'session'
 });
-
-Session.algebra = algebra;
 
 export default Session;
