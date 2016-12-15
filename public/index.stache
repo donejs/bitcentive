@@ -14,7 +14,6 @@
     <can-import from="bitcentive/components/alerts/" />
     <can-import from="bitcentive/components/main-nav/" />
     <can-import from="bitcentive/components/page-home/" />
-    <can-import from="bitcentive/components/page-auth/" />
     <can-import from="bitcentive/components/page-four-oh-four/" />
     <can-import from="bitcentive/pages/contributors.component"/>
     <can-import from="bitcentive/pages/dashboard.component"/>
@@ -24,12 +23,6 @@
     {{#if session}}
 
       {{#switch page}}
-        {{#case 'home'}}
-          <page-home></page-home>
-        {{/case}}
-        {{#case 'auth'}}
-          <page-auth {(session)}="session" {(page)}="page" {(subpage)}="subpage"></page-auth>
-        {{/case}}
         {{#case 'dashboard'}}
           <page-dashboard></page-dashboard>
         {{/case}}
@@ -46,9 +39,6 @@
       {{#switch page}}
         {{#case 'home'}}
           <page-home></page-home>
-        {{/case}}
-        {{#case 'auth'}}
-          <page-auth {(session)}="session" {(page)}="page" {(subpage)}="subpage"></page-auth>
         {{/case}}
         {{#case 'four-oh-four'}}
           <page-four-oh-four></page-four-oh-four>

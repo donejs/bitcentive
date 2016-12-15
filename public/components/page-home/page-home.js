@@ -2,11 +2,10 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './page-home.less!';
 import view from './page-home.stache!';
+import openLoginPopup from 'feathers-authentication-popups';
 
 export const ViewModel = DefineMap.extend({
-  message: {
-    value: 'This is the page-home component'
-  }
+  openLoginPopup
 });
 
 export default Component.extend({
