@@ -15,7 +15,6 @@ import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
 import User from 'bitcentive/models/user';
 import canEvent from 'can-event';
-import algebra from './algebras';
 
 export const Session = DefineMap.extend('Session', {
   seal: false
@@ -46,11 +45,9 @@ Session.connection = connect([
     realtime
 ], {
   feathersClient,
+  idProp: 'exp',
   Map: Session,
-  name: 'session',
-  algebra
+  name: 'session'
 });
-
-Session.algebra = algebra;
 
 export default Session;
