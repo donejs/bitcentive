@@ -1,6 +1,5 @@
 {
   "port": "PORT",
-  "host": "HOST",
   "mongodb": "MONGODB_URI",
   "auth": {
     "github": {

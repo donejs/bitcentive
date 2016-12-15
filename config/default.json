@@ -3,15 +3,16 @@
   "port": 3030,
   "mongodb": "mongodb://localhost:27017/bitcentive",
   "public": "../public/",
+  "main": "development.html",
   "auth": {
     "cookie": {
       "enabled": true,
       "secure": false,
       "name": "feathers-jwt"
     },
-    "token": {
-      "secret": "EUe73wz+7v2xp2DBQGvUdPiENRcx/Lhn053WbqiQCAe1ygYWDo1b+kerC8ZRbLoCXK4mPbdPUrhD0L87J7w0zQ=="
-    },
+    "entity": "user",
+    "service": "/api/users",
+    "secret": "EUe73wz+7v2xp2DBQGvUdPiENRcx/Lhn053WbqiQCAe1ygYWDo1b+kerC8ZRbLoCXK4mPbdPUrhD0L87J7w0zQ==",
     "jwt": {
       "issuer": "bitcentive",
       "algorithm": "HS256",
@@ -23,10 +24,8 @@
       "usernameField": "email",
       "passwordField": "password"
     },
-    "local": {},
     "github": {
-      "provider": "github",
-      "service": "auth/github",
+      "service": "/api/users",
       "successRedirect": "/auth/success",
       "callbackURL": "/auth/github/callback",
       "clientID": "f425f8fe2f98014a32d5",

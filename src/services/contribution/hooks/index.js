@@ -2,11 +2,11 @@
 
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
-const auth = require('feathers-authentication').hooks;
+const auth = require('feathers-legacy-authentication-hooks');
 
 exports.before = {
   all: [
-    auth.isAuthenticated(),
+    auth.restrictToAuthenticated(),
     // auth.checkPermissions({namespace: 'users', on: 'user', field: 'permissions'}),
     // auth.isPermitted()
   ],
