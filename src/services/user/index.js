@@ -11,8 +11,8 @@ module.exports = function() {
     Model: user,
     lean: true,
     paginate: {
-      default: 5,
-      max: 25
+      default: 40,
+      max: 200
     }
   };
 

@@ -11,8 +11,8 @@ module.exports = function() {
     Model: clientProject,
     lean: true,
     paginate: {
-      default: 25,
-      max: 100
+      default: 40,
+      max: 200
     }
   };
 

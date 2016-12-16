@@ -11,8 +11,8 @@ module.exports = function() {
     Model: contributor,
     lean: true,
     paginate: {
-      default: 5,
-      max: 25
+      default: 40,
+      max: 200
     }
   };
 
