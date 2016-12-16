@@ -9,11 +9,7 @@ module.exports = function() {
 
   const options = {
     Model: clientProject,
-    lean: true,
-    paginate: {
-      default: 25,
-      max: 100
-    }
+    lean: true
   };
 
   // Initialize our service with any options it requires
