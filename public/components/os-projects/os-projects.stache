@@ -5,7 +5,7 @@
       <th>Name</th>
       <th>Significance</th>
       <th>Commissioned</th>
-      <th>Total</th>
+      <th class="text-right">Total</th>
       <th></th>
     </tr>
   </thead>
@@ -28,7 +28,7 @@
           {$disabled}="contributionMonth.isSaving()"
         />
       </td>
-      <td>${{getTotal(osProjectRef)}}</td>
+      <td class="text-right">${{getTotal(osProjectRef).toFixed(2)}}</td>
       <td>
         <button type="button" class="btn btn-danger btn-xs"
             ($click)="contributionMonth.removeMonthlyOSProject(monthlyOSProject)">

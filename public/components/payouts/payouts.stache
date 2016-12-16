@@ -6,17 +6,17 @@
       {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
       <th>{{monthlyOSProject.osProjectRef.value.name}}</th>
       {{/each}}
-      <th>Total</th>
+      <th class="text-right">Total</th>
     </tr>
   </thead>
   <tbody>
     {{#each payouts as payout}}
       <tr>
-        <td>{{payout.contributorRef.value.name}}</td>
+        <td class="text-right">{{payout.contributorRef.value.name}}</td>
         {{#each payout.monthlyOSProjects as monthlyOSProject}}
-          <td>{{formatDollarAmount(monthlyOSProject.total)}}</td>
+          <td class="text-right">{{formatDollarAmount(monthlyOSProject.total)}}</td>
         {{/each}}
-        <td>
+        <td class="text-right">
           {{formatDollarAmount(getTotalForAllPayoutsForContributor(payout.contributorRef))}}
         </td>
       </tr>
