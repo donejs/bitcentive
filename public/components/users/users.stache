@@ -1,0 +1,63 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Active</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each users as user}}
+    <tr>
+      <td>{{name}}</td>
+      <td>{{email}}</td>
+      <td>
+        <input type="checkbox" {$checked}="active" ($change)="setActive(user, %element.checked)"{{#if isSaving}} disabled{{/if}} />
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger btn-xs" ($click)="user.destroy()">
+          <span class="glyphicon glyphicon-remove"/>
+        </button>
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+{{#if isAddingUser}}
+<div class="panel panel-default">
+  <div class="panel-heading">Add User</div>
+    <div class="panel-body">
+      <form ($submit)="addUser(%event)" id="new-user">
+        {{#if newUserError}}<div class="alert alert-danger" role="alert">{{newUserError}}</div>{{/if}}
+        <div class="row">
+          <div class="col-xs-5">
+            <label>Name:</label>
+            <input type="text"
+                   {($value)}="newUserName"
+                   {$disabled}="isSaving"
+                   class="form-control"
+                   placeholder="Name" />
+          </div>
+          <div class="col-xs-5">
+            <label>Email:</label>
+            <input type="text"
+                   {($value)}="newUserEmail"
+                   {$disabled}="isSaving"
+                   class="form-control"
+                   placeholder="Email Address" />
+          </div>
+          <div class="col-xs-2">
+            <label>Active?</label>
+            <input type="checkbox" class="form-control" {($checked)}="newUserActive" {$disabled}="isSaving" />
+          </div>
+      </form>
+      <button class="btn btn-primary" type="submit" form="new-user" value="Submit">Add User</button>
+      <button class="btn btn-default" ($click)="toggleUserInput()">Cancel</button>
+    </div>
+  </div>
+</div>
+{{else}}
+  <a href="javascript://" ($click)="toggleUserInput()">Add User</a>
+{{/if}}

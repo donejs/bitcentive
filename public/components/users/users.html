@@ -1,0 +1,18 @@
+<script type="text/stache" can-autorender id="users">
+  <can-import from="bootstrap/dist/css/bootstrap.css" />
+  <can-import from="bitcentive/styles.less" />
+  <can-import from="bitcentive/components/users/" />
+  <can-import from="bitcentive/models/fixtures/fixtures" />
+  <bit-users {(users)}="users" />
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+  import 'bitcentive/models/fixtures/fixtures-socket';
+  import User from 'bitcentive/models/user';
+  import viewModel from 'can-view-model';
+
+  User.getList({}).then(function(items){
+    viewModel($("#users")[0]).set("users", items);
+  });
+
+  window.viewModel = viewModel;
+</script>
