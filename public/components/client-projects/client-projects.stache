@@ -6,7 +6,7 @@
       <th>Hours</th>
       <th>Commissioned + Uncommissioned</th>
       <th>Hourly Tax</th>
-      <th>Total</th>
+      <th class="text-right">Total</th>
       <th></th>
     </tr>
   </thead>
@@ -49,8 +49,8 @@
       <td>
          <span class="rate">${{getRate(monthlyClientProject)}}
       </td>
-      <td>
-        <span class="total">${{getTotal(monthlyClientProject)}}</span>
+      <td class="text-right">
+        <span class="total">${{getTotal(monthlyClientProject).toFixed(2)}}</span>
       </td>
       <td>
         <button type="button" class="btn btn-danger btn-xs" ($click)="deleteClientProject(monthlyClientProject)">
