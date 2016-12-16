@@ -18,12 +18,12 @@ const services = require('./services');
 const app = feathers();
 
 // Redirect to HTTPS if a request comes in over HTTP.
-app.get('*', function(req, res, next) {
-  if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
-    return res.redirect(`https://${req.hostname}${req.url}`);
-  }
-  return next();
-});
+// app.get('*', function(req, res, next) {
+//   if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+//     return res.redirect(`https://${req.hostname}${req.url}`);
+//   }
+//   return next();
+// });
 
 app.configure(configuration(path.join(__dirname, '..')));
 
