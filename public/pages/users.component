@@ -1,0 +1,29 @@
+<can-component tag="page-users">
+  <style type="less">
+    div.container {
+      background: white;
+      padding-bottom: 16px;
+    }
+  </style>
+  <template>
+    <div class="container">
+      <h2>Users</h2>
+      <can-import from="bitcentive/components/users/"/>
+      <bit-users {(users)}="users.value" />
+    </div>
+  </template>
+  <script type="view-model">
+    import DefineMap from 'can-define/map/';
+    import User from 'bitcentive/models/user';
+
+    export default DefineMap.extend({
+      // Passed properties
+      users: {
+        Type: User.List,
+        get() {
+          return User.getList({});
+        }
+      },
+    });
+  </script>
+</can-component>
