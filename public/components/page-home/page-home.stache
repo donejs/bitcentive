@@ -1,5 +1,3 @@
-<can-import from="can-stache/helpers/route" />
-
 <div class="auth">
 	<div class="auth-ui">
 		<div id="auth-ui-container">

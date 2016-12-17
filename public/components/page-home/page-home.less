@@ -34,16 +34,10 @@ page-home {
 
 	div.auth-ui {
 		display: block;
-		color: #4A4A4A;
 		width: 100%;
 		.bp-mobile-medium({
 			width: 270px;
 		});
-
-		a {
-			text-decoration: none;
-			color: #4A4A4A;
-		}
 
 		div#auth-ui-container {
 			padding-bottom: 11px;
@@ -58,34 +52,6 @@ page-home {
 		.auth-branding {
 			padding: 30px 0;
 			text-align: center;
-		}
-
-		ul.local-auth-tabs {
-			list-style: none;
-			padding: 0;
-			margin: 0 auto;
-			display: flex;
-			font-size: 16px;
-			font-weight: 400;
-
-			li {
-				height: 56px;
-				line-height: 56px;
-				width: 50%;
-				text-align: center;
-				&:not(.active){
-					background: #77BFED;
-					a {
-						color: white;
-						display:block;
-						height: 100%;
-						width: 100%;
-					}
-				}
-			}
-			a:active, a:focus, a:hover, a:visited {
-				text-decoration: none;
-			}
 		}
 
 		ul.sso-providers {
@@ -153,46 +119,6 @@ page-home {
 			padding: 4px;
 			font-size: 14px;
 			color: #FF0A0A;
-		}
-
-		form {
-			text-align: center;
-			font-size: 16px;
-
-			input[type=email], input[type=text], input[type=password] {
-				border-bottom: solid 1px #E6E6E6;
-				border-top: none;
-				border-left: none;
-				border-right: none;
-				height: 30px;
-				width: calc(100% - 10px);
-				text-align: center;
-				padding: 6px 0;
-				outline: none;
-				box-sizing: content-box;
-
-				&:focus {
-					border-bottom: solid 1px #77BFED;
-				}
-			}
-
-			div.forgot-password {
-				margin-top: 12px;
-				height: 15px;
-				font-size: 12px;
-				a {
-					color: #77BFED;
-				}
-			}
-
-			button {
-				width: calc(100% - 10px);
-				height: 52px;
-				background: #77BFED;
-				border: none;
-				color: white;
-				margin-top: 22px;
-			}
 		}
 	}
 
