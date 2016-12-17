@@ -48,19 +48,6 @@ const AppViewModel = DefineMap.extend({
     }
   },
 
-  pageId: {
-    type: "string"
-  },
-
-  /**
-   * The auth page uses the subpage attribute to switch between the 'login'
-   * view and the 'signup' view. We have to set serialize to true to allow the
-   * auth routes to work.
-   */
-  subpage: {
-    serialize: true
-  },
-
   /**
    * The `title` attribute is used in index.stache as the HTML title.
    */
@@ -112,10 +99,6 @@ const AppViewModel = DefineMap.extend({
   }
 });
 
-route('login', {page: 'auth', subpage: 'login'});
-route('signup', {page: 'auth', subpage: 'signup'});
-route('auth/success', {page: 'auth', subpage: 'success'});
-route('auth/failure', {page: 'auth', subpage: 'failure'});
 route('{page}', {page: 'home'});
 
 export default AppViewModel;

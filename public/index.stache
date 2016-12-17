@@ -18,7 +18,7 @@
     <can-import from="bitcentive/pages/contributors.component"/>
     <can-import from="bitcentive/pages/dashboard.component"/>
 
-    <main-nav {(session)}="session" {(page)}="page" {(subpage)}="subpage"></main-nav>
+    <main-nav {(session)}="session" {(page)}="page"></main-nav>
 
     {{#if session}}
 
