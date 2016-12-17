@@ -28,24 +28,19 @@ const AppViewModel = DefineMap.extend({
   },
 
   /**
-   * Uses whatever session data is available from Feathers JWT token, if
-   * available. Because the token data is limited, a request is sent
-   * to obtain the full session data.
+   * Use Session.get() to see if there's a valid JWT.
    */
   session: {
     stream (setStream) {
       Session.get().catch(err => console.log(err));
       return canStream.toStream(Session, 'created')
         .merge(canStream.toStream(Session, 'destroyed'))
-        .map(event => {
-          let session = event.type === 'created' ? event.args[0] : undefined;
-          return session;
-        });
+        .map(event => event.type === 'created' ? event.args[0] : undefined);
     }
   },
 
   /**
-   * dDtermines which page-level component is displayed.
+   * Determines which page-level component is displayed.
    */
   page: {
     serialize: true,
