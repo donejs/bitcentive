@@ -3,13 +3,19 @@ import 'can-define-stream';
 import canStream from 'can-stream';
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
-//import 'can-route-pushstate';
+// import 'can-route-pushstate';
 import Session from 'bitcentive/models/session';
 // import 'bitcentive/models/fixtures/';
 
 // viewmodel debugging
 import viewModel from 'can-view-model';
 window.viewModel = viewModel;
+
+var pages = {
+  home: 'public',
+  dashboard: 'private',
+  contributors: 'private'
+};
 
 const AppViewModel = DefineMap.extend({
 
@@ -39,12 +45,32 @@ const AppViewModel = DefineMap.extend({
   },
 
   /**
-   * The `page` attribute determines which page-component is displayed.
+   * dDtermines which page-level component is displayed.
    */
   page: {
     serialize: true,
     get (page, setPage) {
-      return this.routePage(page);
+      if (page === 'logout') {
+        return this.logout();
+      }
+
+      if (pages[page]) {
+        // Logic for authenticated users.
+        if (this.session) {
+          if (page === 'home') {
+            page = 'dashboard';
+          }
+        // Logic for non-authenticated users.
+        } else {
+          if (pages[page] !== 'public') {
+            page = 'home';
+          }
+        }
+      // 404 if the page isn't in the list of pages.
+      } else {
+        page = 'four-oh-four';
+      }
+      return page;
     }
   },
 
@@ -53,41 +79,6 @@ const AppViewModel = DefineMap.extend({
    */
   title: {
     value: 'Bitcentive'
-  },
-
-  /**
-   * `routePage` controls the pages that the current user can view.
-   * If a non-authenticated user tries to access a private page, they will be
-   * shown the login page. Also handles 404s.
-   */
-  routePage: function (page) {
-    let pages = {
-      home: 'public',
-      dashboard: 'private',
-      contributors: 'private'
-    };
-
-    if (page === 'logout') {
-      this.logout();
-    }
-
-    if (pages[page]) {
-      // Logic for authenticated users.
-      if (this.session) {
-        if (page === 'home') {
-          page = 'dashboard';
-        }
-      // Logic for non-authenticated users.
-      } else {
-        if (pages[page] !== 'public') {
-          page = 'home';
-        }
-      }
-    // 404 if the page isn't in the list of pages.
-    } else {
-      page = 'four-oh-four';
-    }
-    return page;
   },
 
   logout () {
