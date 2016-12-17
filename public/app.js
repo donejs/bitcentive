@@ -27,28 +27,15 @@ const AppViewModel = DefineMap.extend({
    * to obtain the full session data.
    */
   session: {
-    value () {
-      var self = this;
+    stream (setStream) {
       Session.get().catch(err => console.log(err));
-      Session.on('created', (event, session) => {
-        self.session = session;
-        self.page = 'dashboard';
-      });
-      Session.on('destroyed', (event, session) => {
-        self.session = undefined;
-      });
-    },
-    // stream(setStream){
-      // var self = this;
-      // console.log('streaming');
-      // return canStream.toStream(Session, 'created').onValue(event => {
-      //   let session = event.args[0];
-      //   console.log(session);
-      //   setTimeout(() => {
-      //     self.session = session;
-      //   }, 1);
-      // });
-    // }
+      return canStream.toStream(Session, 'created')
+        .merge(canStream.toStream(Session, 'destroyed'))
+        .map(event => {
+          let session = event.type === 'created' ? event.args[0] : undefined;
+          return session;
+        });
+    }
   },
 
   /**
