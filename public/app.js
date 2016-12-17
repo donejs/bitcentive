@@ -28,7 +28,8 @@ const AppViewModel = DefineMap.extend({
   },
 
   /**
-   * Use Session.get() to see if there's a valid JWT.
+   * Use Session.get() to see if there's a valid JWT. If one exists, 
+   * a new Session will be created.
    */
   session: {
     stream (setStream) {
