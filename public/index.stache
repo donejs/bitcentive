@@ -14,7 +14,7 @@
     <can-import from="bitcentive/components/alerts/" />
     <can-import from="bitcentive/components/main-nav/" />
     <can-import from="bitcentive/components/page-home/" />
-    <can-import from="bitcentive/components/page-four-oh-four/" />
+    <can-import from="bitcentive/pages/four-oh-four.component"/>
     <can-import from="bitcentive/pages/contributors.component"/>
     <can-import from="bitcentive/pages/dashboard.component"/>
 
