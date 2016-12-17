@@ -43,7 +43,7 @@ const AppViewModel = DefineMap.extend({
    */
   page: {
     serialize: true,
-    get(page, setPage){
+    get (page, setPage) {
       return this.routePage(page);
     }
   },
@@ -60,42 +60,43 @@ const AppViewModel = DefineMap.extend({
    * If a non-authenticated user tries to access a private page, they will be
    * shown the login page. Also handles 404s.
    */
-  routePage: function(page){
-    let pageConfig = {
+  routePage: function (page) {
+    let pages = {
       home: 'public',
-      auth: 'public',
-      login: 'public',
-      signup: 'public',
       dashboard: 'private',
       contributors: 'private'
     };
 
     if (page === 'logout') {
-      page = 'home';
-      this.session && this.session.destroy()
-        .then(() => {
-          if (!window.doneSsr) {
-            this.session = undefined;
-            page = 'home';
-          }
-        });
+      this.logout();
     }
 
-    if (this.session) {
-      // Perform some custom logic for logged-in users.
-
-    } else {
+    if (pages[page]) {
+      // Logic for authenticated users.
+      if (this.session) {
+        if (page === 'home') {
+          page = 'dashboard';
+        }
       // Logic for non-authenticated users.
-      if (pageConfig[page] !== 'public') {
-        page = 'login';
+      } else {
+        if (pages[page] !== 'public') {
+          page = 'home';
+        }
       }
-    }
-
-    // 404 if the page isn't in the config.
-    if(!pageConfig[page]){
+    // 404 if the page isn't in the list of pages.
+    } else {
       page = 'four-oh-four';
     }
     return page;
+  },
+
+  logout () {
+    this.session && this.session.destroy()
+      .then(() => {
+        if (!window.doneSsr) {
+          this.page = 'home';
+        }
+      });
   }
 });
 

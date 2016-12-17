@@ -20,31 +20,20 @@
 
     <main-nav {(session)}="session" {(page)}="page"></main-nav>
 
-    {{#if session}}
-
-      {{#switch page}}
-        {{#case 'dashboard'}}
-          <page-dashboard></page-dashboard>
-        {{/case}}
-        {{#case 'contributors'}}
-          <page-contributors/>
-        {{/case}}
-        {{#case 'four-oh-four'}}
-          <page-four-oh-four></page-four-oh-four>
-        {{/case}}
-      {{/switch}}
-
-    {{else}}
-
-      {{#switch page}}
-        {{#case 'home'}}
-          <page-home></page-home>
-        {{/case}}
-        {{#case 'four-oh-four'}}
-          <page-four-oh-four></page-four-oh-four>
-        {{/case}}
-      {{/switch}}
-    {{/if}}
+    {{#switch page}}
+      {{#case 'home'}}
+        <page-home></page-home>
+      {{/case}}
+      {{#case 'dashboard'}}
+        <page-dashboard></page-dashboard>
+      {{/case}}
+      {{#case 'contributors'}}
+        <page-contributors/>
+      {{/case}}
+      {{#case 'four-oh-four'}}
+        <page-four-oh-four></page-four-oh-four>
+      {{/case}}
+    {{/switch}}
 
     <bit-alerts></bit-alerts>
 
