@@ -7,8 +7,6 @@ import 'bitcentive/components/contributors/contributors_test';
 import 'bitcentive/components/contributions/contributions_test';
 import 'bitcentive/components/client-projects/client-projects_test';
 import 'bitcentive/components/select-contribution-month/select-contribution-month_test';
-import 'bitcentive/components/login/login_test';
-import 'bitcentive/components/register/register_test';
 import 'bitcentive/components/alerts/alerts_test';
 import 'bitcentive/components/payouts/payouts_test.js';
 
