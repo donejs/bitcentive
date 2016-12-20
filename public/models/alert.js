@@ -1,8 +1,13 @@
 import DefineMap from 'can-define/map/';
-import DefineList from 'can-define/list/';
+import CID from 'can-cid';
 
 const AlertItem = DefineMap.extend({
   // bootstrap states - info, warning, success, danger
+  id: {
+    value () {
+      return CID(this);
+    }
+  },
   type: 'string',
   title: 'string',
   message: 'string',
@@ -35,10 +40,6 @@ const AlertItem = DefineMap.extend({
       return 'alert-' + className
     }
   }
-});
-
-AlertItem.List = DefineList.extend({
-  '#': AlertItem
 });
 
 export default AlertItem;

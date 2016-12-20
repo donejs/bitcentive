@@ -1,7 +1,7 @@
 <div class="alert-container">
 	{{#each alerts}}
-	<div class="alert alert-dismissable fade {{alertClass}}{{#if visible}} in{{/if}}" ($inserted)="showAlert(.)">
-	    <button type="button" class="close" ($click)="hideAlert(.)">
+	<div class="alert alert-dismissable {{alertClass}}">
+	    <button type="button" class="close" ($click)="removeAlert(.)">
 	    	<span aria-hidden="true">&times;</span>
 	    </button>
 	    {{#title}}<h3 class="title">{{.}}</h3>{{/title}}

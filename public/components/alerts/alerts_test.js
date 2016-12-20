@@ -1,68 +1,84 @@
 import QUnit from 'steal-qunit';
-import { ViewModel } from './alerts';
+import { ViewModel, reducers } from './alerts';
 import AlertItem from 'bitcentive/models/alert';
+import hub from 'bitcentive/lib/hub';
 
 // ViewModel unit tests
 QUnit.module('bitcentive/components/alerts');
 
-QUnit.test('Can add and remove items', assert => {
+QUnit.test('Can add items', assert => {
+	const done = assert.async();
 	const vm = new ViewModel();
 	const alert = new AlertItem();
 
+	vm.addAlertStream.onValue(value => {
+		assert.ok(value.hasOwnProperty('action'));
+		assert.ok(value.hasOwnProperty('alert'));
+		assert.equal(value.action, 'ADD_ALERT');
+		done();
+	});
 	vm.addAlert(alert);
-	assert.equal(vm.alerts.length, 1);
-	vm.removeAlert(alert);
-	assert.equal(vm.alerts.length, 0);
 });
 
-QUnit.test('removeAlert doesn\'t fail if alert does not exist', assert => {
+QUnit.test('Plain objects are converted to AlertItems', assert => {
+	const done = assert.async();
 	const vm = new ViewModel();
 
+	vm.addAlertStream.onValue(value => {
+		assert.ok(value.alert instanceof AlertItem);
+		done();
+	});
+	vm.addAlert({});
+});
+
+QUnit.test('Can remove items', assert => {
+	const done = assert.async();
+	const vm = new ViewModel();
+	const alert = new AlertItem();
+
+	vm.removeAlertStream.onValue(value => {
+		assert.ok(value.hasOwnProperty('action'));
+		assert.ok(value.hasOwnProperty('alert'));
+		assert.equal(value.action, 'REMOVE_ALERT');
+		done();
+	});
+	vm.removeAlert(alert);
+});
+
+QUnit.test('Autohide automatically creates a remove action', assert => {
+	const done = assert.async();
+	const vm = new ViewModel();
+
+	vm.autoHideStream.onValue(value => {
+		assert.ok(value.hasOwnProperty('action'));
+		assert.ok(value.hasOwnProperty('alert'));
+		assert.equal(value.action, 'REMOVE_ALERT');
+		done();
+	});
+	vm.addAlert({ displayInterval: 100 });
+});
+
+QUnit.test('reducers.add adds to the front of the array', assert => {
+	const orig = [{id: 1}, {id: 2}];
+	const result = reducers.add(orig, {id: 3});
+	assert.equal(orig.length, 2, 'Does not mutate input array');
+	assert.equal(result.length, 3);
+	assert.equal(result[0].id, 3);
+});
+
+QUnit.test('reducers.remove matches on ID', assert => {
+	const orig = [{id: 1}, {id: 2}];
+	const result = reducers.remove(orig, {id: 1});
+	assert.equal(orig.length, 2, 'Does not mutate input array');
+	assert.equal(result.length, 1);
+	assert.equal(result[0].id, 2);
+});
+
+QUnit.test('reducers.remove does not fail if alert doesn\'t exist', assert => {
 	try {
-		vm.removeAlert({});
+		const result = reducers.remove([], {id: 1});
 		assert.ok(true);
 	} catch (ex) {
-		assert.notOk(true, 'should not error');
+		assert.notOk(true, 'Should not error');
 	}
-});
-
-QUnit.test('showAlert sets visibility after short delay', assert => {
-	const done = assert.async();
-	const vm = new ViewModel();
-	const alert = new AlertItem();
-
-	vm.showAlert(alert);
-	assert.notOk(alert.visible, 'should not be visible synchronously');
-
-	setTimeout(() => {
-		assert.equal(alert.visible, true);
-		done();
-	}, 100);
-});
-
-QUnit.test('showAlert hides alert if displayInterval > 0', assert => {
-	const done = assert.async();
-	const vm = new ViewModel();
-	const alert = new AlertItem();
-	alert.displayInterval = 300;
-
-	vm.showAlert(alert);
-	setTimeout(() => {
-		assert.notOk(alert.visible, 'alert should no longer be visible');
-		done();
-	}, 400);
-});
-
-QUnit.test('hideAlert removes alert from list after delay', assert => {
-	const done = assert.async();
-	const vm = new ViewModel();
-	const alert = new AlertItem();
-
-	vm.alerts = [alert];
-	vm.hideAlert(alert);
-	assert.equal(vm.alerts.length, 1, 'not removed synchronously');
-	setTimeout(() => {
-		assert.equal(vm.alerts.length, 0);
-		done();
-	}, 600);
 });
