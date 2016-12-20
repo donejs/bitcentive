@@ -1,7 +1,7 @@
 import QUnit from 'steal-qunit';
 import { ViewModel, reducers } from './alerts';
 import AlertItem from 'bitcentive/models/alert';
-import hub from 'bitcentive/lib/hub';
+import hub from 'bitcentive/lib/event-hub';
 
 // ViewModel unit tests
 QUnit.module('bitcentive/components/alerts');
@@ -20,15 +20,29 @@ QUnit.test('Can add items', assert => {
 	vm.addAlert(alert);
 });
 
+QUnit.test('Hub alerts are handled correctly', assert => {
+	const done = assert.async();
+	const vm = new ViewModel();
+
+	vm.addAlertStream.onValue(value => {
+		assert.ok(value.hasOwnProperty('action'));
+		assert.ok(value.hasOwnProperty('alert'));
+		assert.equal(value.action, 'ADD_ALERT');
+		done();
+	});
+	hub.dispatch('alert', [{}]);
+});
+
 QUnit.test('Plain objects are converted to AlertItems', assert => {
 	const done = assert.async();
 	const vm = new ViewModel();
 
 	vm.addAlertStream.onValue(value => {
 		assert.ok(value.alert instanceof AlertItem);
+		assert.equal(value.alert.message, 'Foo');
 		done();
 	});
-	vm.addAlert({});
+	vm.addAlert({ message: 'Foo' });
 });
 
 QUnit.test('Can remove items', assert => {
