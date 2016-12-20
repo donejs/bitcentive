@@ -3,7 +3,7 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import 'can-define-stream';
 import view from './alerts.stache';
-import hub from '../../lib/hub';
+import hub from '../../lib/event-hub';
 import AlertItem from '../../models/alert';
 
 export const reducers = {
@@ -21,9 +21,10 @@ export const ViewModel = DefineMap.extend({
       return this.stream('add-alert')
         .map(ev => ev.args[0])
         .merge(Kefir.stream(emitter => {
-          const subscription = hub.subscribe('alert', alert => emitter.emit(alert));
+          const handler = (ev, val) => emitter.emit(val);
+          hub.on('alert', handler);
           return () => {
-            subscription.remove();
+            hub.off('alert', handler)
           };
         }))
         .map(alert => {
