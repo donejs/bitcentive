@@ -22,7 +22,7 @@ import idMerge from "can-connect/helpers/id-merge";
 //     .replace is called w/o letting it go through the setter.
 //     As a result the list gets completely replaced, when its needed to be merged with the updated items.
 // Could be removed or moved to the setter depending on a fix for https://github.com/canjs/can-define/issues/96.
-[ MonthlyOSProject, MonthlyClientProject ].forEach( MapObj => {
+[ MonthlyOSProject, MonthlyClientProject, MonthlyContributions ].forEach( MapObj => {
   var attrOrig = MapObj.List.prototype.attr;
   MapObj.List.prototype.attr = function( items, replace ) {
     if ( replace === false && typeof items === "object" ) {
