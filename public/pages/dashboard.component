@@ -1,9 +1,0 @@
-<can-component tag="page-dashboard">
-  <style type="less">
-    
-  </style>
-  <template>
-    
-  </template>
-  
-</can-component>
