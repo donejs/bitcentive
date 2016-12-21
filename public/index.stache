@@ -12,7 +12,7 @@
     <can-import from="bitcentive/styles.less!" />
     <can-import from="bitcentive/app" export-as="viewModel" />
     <can-import from="bitcentive/components/alerts/" />
-    <can-import from="bitcentive/components/main-nav.component" />
+    <can-import from="bitcentive/components/main-nav/" />
     <can-import from="bitcentive/pages/home.component"/>
     <can-import from="bitcentive/pages/four-oh-four.component"/>
     <can-import from="bitcentive/pages/contributors.component"/>
