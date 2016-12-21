@@ -58,22 +58,20 @@ const AppViewModel = DefineMap.extend({
    */
   page: {
     serialize: true,
-    stream (setStream) {
-      return setStream.combine(this.stream('.session'), (page, session) => {
-        if (session) {
-          if (page === 'home') {
-            page = 'dashboard';
-          } 
-        } else {
-          if (pages[page] === 'private') {
-            page = 'home';
-          }
+    get (page) {
+      if (this.session) {
+        if (page === 'home') {
+          page = 'dashboard';
+        } 
+      } else {
+        if (pages[page] === 'private') {
+          page = 'home';
         }
-        if (!pages[page]) {
-          page = 'four-oh-four';
-        }
-        return page;
-      });
+      }
+      if (!pages[page]) {
+        page = 'four-oh-four';
+      }
+      return page;
     }
   },
 
