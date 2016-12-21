@@ -1,16 +1,9 @@
 <can-component tag="page-contributors">
   <style type="less">
-    div.container {
-      background: white;
-      padding-bottom: 16px;
-    }
+    
   </style>
   <template>
-    <div class="container">
-      <h2>Contributors</h2>
-      <can-import from="bitcentive/components/contributors/"/>
-      <bit-contributors {(contributors)}="contributors.value" />
-    </div>
+    
   </template>
   <script type="view-model">
     import DefineMap from 'can-define/map/';
