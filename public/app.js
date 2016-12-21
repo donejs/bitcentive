@@ -87,14 +87,6 @@ const AppViewModel = DefineMap.extend({
    */
   title: {
     value: 'Bitcentive'
-  },
-
-  logout () {
-    this.session && this.session.destroy().then(() => {
-      if (!window.doneSsr) {
-        this.page = 'home';
-      }
-    });
   }
 });
 
