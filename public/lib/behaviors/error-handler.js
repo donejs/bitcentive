@@ -8,11 +8,12 @@ const errorHandler = connect.behavior('error-handler', baseConnect => {
 		behavior[method] = (...args) => {
 			const promise = baseConnect[method].apply(baseConnect, args);
 			promise.catch(e => {
-				hub.dispatch('alert', [{
-					type: 'error',
+				hub.dispatch({
+					type: 'alert',
+					kind: 'error',
 					title: 'Error',
 					message: (e.responseJSON && e.responseJSON.message) || e.responseText || e.message
-				}]);
+				});
 			});
 
 			return promise;
