@@ -90,12 +90,11 @@ const AppViewModel = DefineMap.extend({
   },
 
   logout () {
-    this.session && this.session.destroy()
-      .then(() => {
-        if (!window.doneSsr) {
-          this.page = 'home';
-        }
-      });
+    this.session && this.session.destroy().then(() => {
+      if (!window.doneSsr) {
+        this.page = 'home';
+      }
+    });
   }
 });
 
