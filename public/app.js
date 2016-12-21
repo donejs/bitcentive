@@ -28,7 +28,8 @@ const AppViewModel = DefineMap.extend({
   },
 
   // Once https://github.com/canjs/can-define-stream/issues/15 is fixed, 
-  // we can move the initialSession into the session `value` function.
+  // we can move the initialSession into the session `value` function and
+  // replace the `.initialSession` stream with the setStream.
   initialSession: {
     value () {
       Session.get().then(session => {
@@ -44,7 +45,7 @@ const AppViewModel = DefineMap.extend({
    */
   session: {
     // value () {},
-    stream (setStream) {
+    stream () {
       return canStream.toStream(Session, 'created')
         .merge(canStream.toStream(Session, 'destroyed'))
         .map(event => event.type !== 'destroyed' ? event.args[0] : undefined)
