@@ -1,3 +1,44 @@
+@import 'locate://bitcentive/less/breakpoints.less';
+
 bit-payouts {
 	display: block;
+	position: relative;
+
+	.table-scroller {
+		overflow-x: scroll;
+		overflow-y: visible;
+	}
+
+	.total {
+		background: #efe;
+		span {
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+	}
+		
+	thead {
+		th {
+			white-space: nowrap;
+		}
+	}
+
+	.bp-tablet({
+		@left-col-width: 15em;
+
+		.table-scroller {
+			margin-left: @left-col-width;
+		}
+
+		tr {
+			> td:first-child,
+			> th:first-child {
+				position: absolute;
+				width: @left-col-width;
+				left: 0;
+				top: auto;
+				border-right: 2px solid #ddd;
+			}
+		}
+	});
 }
