@@ -5,9 +5,9 @@ import connect from 'can-connect';
 import dataParse from 'can-connect/data/parse/';
 import construct from 'can-connect/constructor/';
 import constructStore from 'can-connect/constructor/store/';
-import constructOnce from 'can-connect/constructor/callbacks-once/';
 import canMap from 'can-connect/can/map/';
 import canRef from 'can-connect/can/ref/';
+import callbacksOnce from 'can-connect/constructor/callbacks-once/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 
@@ -35,14 +35,14 @@ export const Session = DefineMap.extend('Session', {
 
 Session.connection = connect([
     feathersSession,
-    dataParse,
     construct,
-    constructStore,
-    constructOnce,
     canMap,
     canRef,
+    constructStore,
     dataCallbacks,
-    realtime
+    dataParse,
+    realtime,
+    callbacksOnce
 ], {
   feathersClient,
   idProp: 'exp',
