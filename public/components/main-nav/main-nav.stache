@@ -26,7 +26,7 @@
       <ul class="nav navbar-nav navbar-right">
         {{#if session}}
           <li>
-            <li><a href="{{routeUrl(page='logout')}}">Logout</a></li>
+            <li><a href="javascript://" ($click)="session.destroy()">Logout</a></li>
           </li>
         {{/if}}
       </ul>
