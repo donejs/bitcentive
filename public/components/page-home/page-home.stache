@@ -1,0 +1,18 @@
+<div class="auth">
+  <div class="auth-ui">
+    <div id="auth-ui-container">
+      <div class="auth-branding">
+        <img src="/img/bitcentive-logo.png" alt="" class="logo">
+      </div>
+
+      <ul class="sso-providers one">
+        <li class="sso-github one" title="Login with GitHub">
+          <a href="javascript://" ($click)="openLoginPopup('/auth/github')">
+            <img src="/img/github.svg" alt="GitHub logo">
+            <span>Login with GitHub</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
