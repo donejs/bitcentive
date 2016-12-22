@@ -4,7 +4,7 @@ import { ViewModel } from './page-home';
 // ViewModel unit tests
 QUnit.module('bitcentive/components/page-home');
 
-QUnit.test('Has message', function(){
-  var vm = new ViewModel();
-  QUnit.equal(vm.attr('message'), 'This is the page-home component');
+QUnit.test('viewModel attributes', function(){
+	var vm = new ViewModel();
+	QUnit.ok(vm.openLoginPopup, 'The viewModel has a openLoginPopup method.');
 });

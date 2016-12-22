@@ -1,0 +1,28 @@
+<can-component tag="page-four-oh-four">
+  <style type="less">
+    display: block;
+    height: 100%;
+    .four-oh-four {
+      color: white;
+      text-align: center;
+      position: relative;
+      top: 30%;
+      height: 290px;
+      transform: translateY(-50%);
+      h1 {
+        font-size: 170px;
+        margin-bottom: 0;
+        line-height: 170px;
+      }
+      h3 {
+        font-weight: 500;
+      }
+    }
+  </style>
+  <template>
+    <div class="four-oh-four">
+      <h1>404</h1>
+      <h3>The page you requested cannot be found.</h3>
+    </div>
+  </template>
+</can-component>
