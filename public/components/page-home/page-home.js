@@ -5,11 +5,11 @@ import view from './page-home.stache';
 import openLoginPopup from 'feathers-authentication-popups';
 
 export const ViewModel = DefineMap.extend({
-  openLoginPopup
+	openLoginPopup
 });
 
 export default Component.extend({
-  tag: 'page-home',
-  ViewModel: ViewModel,
-  view
+	tag: 'page-home',
+	ViewModel: ViewModel,
+	view
 });

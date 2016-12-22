@@ -2,8 +2,8 @@
 <can-import from="bitcentive/components/contribution-month/"/>
 
 <div class="container">
-  <bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>
-  {{#if contributionMonthId}}
-    <bit-contribution-month {(contribution-month-id)}="contributionMonthId"/>
-  {{/if}}
+	<bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>
+	{{#if contributionMonthId}}
+		<bit-contribution-month {(contribution-month-id)}="contributionMonthId"/>
+	{{/if}}
 </div>

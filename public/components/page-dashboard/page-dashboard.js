@@ -4,13 +4,13 @@ import './page-dashboard.less';
 import template from './page-dashboard.stache';
 
 export const ViewModel = DefineMap.extend({
-  contributionMonthId: {
-    type: "string",
-  }
+	contributionMonthId: {
+		type: "string",
+	}
 });
 
 export default Component.extend({
-  tag: 'page-dashboard',
-  ViewModel: ViewModel,
-  template
+	tag: 'page-dashboard',
+	ViewModel: ViewModel,
+	template
 });

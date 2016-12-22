@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Contributors</h2>
-  <can-import from="bitcentive/components/contributors/"/>
-  <bit-contributors {(contributors)}="contributors.value" />
+	<h2>Contributors</h2>
+	<can-import from="bitcentive/components/contributors/"/>
+	<bit-contributors {(contributors)}="contributors.value" />
 </div>
