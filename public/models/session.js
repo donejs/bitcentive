@@ -1,6 +1,6 @@
 /* global window */
 import feathersClient from './feathers-client';
-import feathersSession from 'can-connect-feathers/session';
+import feathersSession from 'can-connect-feathers/session/';
 import connect from 'can-connect';
 import dataParse from 'can-connect/data/parse/';
 import construct from 'can-connect/constructor/';
