@@ -26,18 +26,30 @@ import idMerge from "can-connect/helpers/id-merge";
   var attrOrig = MapObj.List.prototype.attr;
   MapObj.List.prototype.attr = function( items, replace ) {
     if ( replace === false && typeof items === "object" ) {
-      idMerge( this, items, function( obj ){ return obj._id }, function( x ){
-        if ( x instanceof MapObj ) {
-          return x;
-        }
-        return new MapObj( x );
-      });
+      idMerge( this, items, function( obj ){ return obj._id }, makeFn( MapObj ), mergeProps);
       return this;
     } else {
       return attrOrig.apply( this, arguments );
     }
   };
 } );
+function makeFn( MapObj ) {
+  return function( x ) {
+    if (x instanceof MapObj) {
+      return x;
+    }
+    return new MapObj( x );
+  }
+}
+function mergeProps( listItem, updateItem ) {
+  let props = Object.keys( updateItem );
+  props.forEach(p => {
+    if (typeof listItem[p] !== 'object'){
+      listItem[p] = updateItem[p];
+    }
+  });
+  return listItem;
+}
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
@@ -222,7 +234,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 ContributionMonth.List = DefineList.extend({
   "#": ContributionMonth,
   OSProjectContributionsMap: function(currentContributionMonth) {
-    
+
 
     var OSProjectContributionsMap = {};
     this.forEach(contributionMonth => {
