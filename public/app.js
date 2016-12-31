@@ -27,30 +27,14 @@ const AppViewModel = DefineMap.extend({
     serialize: false
   },
 
-  // Once https://github.com/canjs/can-define-stream/issues/15 is fixed, 
-  // we can move the initialSession into the session `value` function and
-  // replace the `.initialSession` stream with the setStream.
-  initialSession: {
-    value () {
-      Session.get().then(session => {
-        this.initialSession = session;
-      })
-      .catch(err => console.log(err));
-    }
-  },
-
   /**
    * Use Session.get() to see if there's a valid JWT. If one exists, 
    * a new Session will be created.
    */
   session: {
-    // value () {},
-    stream () {
-      return canStream.toStream(Session, 'created')
-        .merge(canStream.toStream(Session, 'destroyed'))
-        .map(event => event.type !== 'destroyed' ? event.args[0] : undefined)
-        .merge(this.stream('.initialSession'));
-    }
+    get () {
+      return Session.current;
+    },
   },
 
   /**
