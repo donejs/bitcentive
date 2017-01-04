@@ -1,4 +1,5 @@
 {{#if contributionMonth.monthlyClientProjects.length}}
+{{#with contributionMonth}}
 <table class="table">
   <thead>
     <tr>
@@ -11,8 +12,9 @@
     </tr>
   </thead>
   <tbody>
-  {{#with contributionMonth}}
+
   {{#each monthlyClientProjects as monthlyClientProject}}
+    {{#if clientProjectRef.value}}
     <tr>
       <td>{{clientProjectRef.value.name}}</td>
       <td>
@@ -22,61 +24,13 @@
                {{#if isSaving}} disabled {{/if}}/>
       </td>
       <td class="os-projects-cell">
-        {{! Count of commissioned projects }}
-        {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{monthlyOSProjects.commissioned.length}}
-        +
-        {{! Count of uncommisioned projects }}
-        {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
-
-        {{! Toggle of OS projects }}
-        <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#modal_{{id}}">
-          Edit OS Projects
+        <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" ($click)="setSelectedClientProject(monthlyClientProject)" >
+          {{! Count of commissioned projects }}
+          {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{monthlyOSProjects.commissioned.length}}
+          +
+          {{! Count of uncommisioned projects }}
+          {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
         </button>
-
-        {{! Modal }}
-        <div class="modal fade" id="modal_{{id}}" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Monthy Client OS Projects</h4>
-              </div>
-              <div class="modal-body">
-                <ul class="os-project-list">
-                {{#each monthlyOSProjects as monthlyOSProject}}
-                  <li>
-                    <input id="os_project_{{osProjectRef._id}}"
-                           type="checkbox"
-                           {{#if monthlyClientProjectsOSProjects.has(monthlyOSProject) }}checked{{/if}}
-                           value="{{osProjectRef.value.name}}"
-                           ($click)="toggleUseProject(monthlyClientProjectsOSProjects, monthlyOSProject)"
-                           {{#if isSaving}} disabled{{/if}}/>
-                    <label for="os_project_{{osProjectRef._id}}"
-                           {{#if commissioned}} class="commissioned" {{/if}}>
-                      {{osProjectRef.value.name}}
-                    </label>
-                  </li>
-                  {{/each}}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {{! List of selected OS Projects}}
-        <ul class="selected-os-projects-list">
-          {{#each monthlyOSProjects as monthlyOSProject}}
-            {{#if monthlyClientProjectsOSProjects.has(monthlyOSProject)}}
-              <li>
-                {{osProjectRef.value.name}}
-                <button class="glyphicon glyphicon-remove btn btn-link btn-sm" ($click)="toggleUseProject(monthlyClientProjectsOSProjects, monthlyOSProject)"><span class="sr-only">Remove OS Project</span></button>
-              </li>
-            {{/if}}
-          {{/each}}
-        </ul>
-
       </td>
       <td>
          <span class="rate">${{getRate(monthlyClientProject)}}
@@ -90,10 +44,14 @@
         </button>
       </td>
     </tr>
+    {{/if}}
   {{/each}}
-  {{/with}}
   </tbody>
 </table>
+{{/with}}
+
+{{! Partial defined in the view-model }}
+{{>os-projects-modal}}
 {{/if}}
 
 {{#if isAddingClients}}
