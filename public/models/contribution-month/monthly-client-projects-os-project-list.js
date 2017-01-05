@@ -4,9 +4,7 @@ import OSProject from "../os-project";
 import ClientProject from "../client-project";
 
 const MonthlyClientProjectsOsProjectList = DefineList.extend("MonthlyClientProjectsOsProjectList", {
-  "#": {
-    type: OSProject.Ref.type
-  },
+  "#": OSProject.Ref,
   get osProjectIdMap() {
     const map = {};
     this.forEach( osProjectRef => {

@@ -47,7 +47,7 @@
     "auth-component": "^3.2.1",
     "bootstrap": "^3.3.7",
     "can-component": "^3.0.2",
-    "can-connect": "^1.0.21",
+    "can-connect": "^1.1.1",
     "can-connect-feathers": "^3.0.0-pre.22",
     "can-define": "^1.0.10",
     "can-define-stream": "0.0.6",
