@@ -8,7 +8,6 @@ import ContributionMonth from 'bitcentive/models/contribution-month/';
 export const ViewModel = DefineMap.extend({
   selectedContributionMonthId: {
     type: "string",
-    value: null,
     get: function(lastSet){
       if(lastSet) {
         return lastSet;
