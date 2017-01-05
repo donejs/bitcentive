@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-  {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+  {{#each contributionMonth.sortedMonthlyOSProjects as monthlyOSProject}}
     {{#if osProjectRef.value}}
     <tr>
       <td class="name-col">{{osProjectRef.value.name}}</td>

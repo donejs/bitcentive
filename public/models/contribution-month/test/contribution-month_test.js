@@ -9,6 +9,7 @@ import Contributor from '../../contributor';
 import MonthlyContributions from '../monthly-contributions';
 import MonthlyOSProject from '../monthly-os-project';
 import MonthlyClientProject from '../monthly-client-project';
+import fixture from 'can-fixture';
 
 QUnit.module( 'models/contribution-month' );
 
@@ -197,14 +198,25 @@ QUnit.test( "Can add and remove a monthlyOSProject", function() {
     name: "DoneJS"
   } );
 
+  let oldSave = ContributionMonth.prototype.save;
+
+  ContributionMonth.prototype.save = function () {
+    ok( contributionMonth.monthlyOSProjects[ 0 ].contributionMonth === contributionMonth,
+      "monthlyOSProject was added and had it's contributionMonth set" );
+    ok( contributionMonth.monthlyOSProjects.length === 1,
+      "monthlyOSProject was added" );
+    return Promise.resolve();
+  };
   let monthlyOSProject = contributionMonth.addNewMonthlyOSProject( osProject01 );
-  ok( contributionMonth.monthlyOSProjects[ 0 ].contributionMonth === contributionMonth,
-    "monthlyOSProject was added and had it's contributionMonth set" );
-  ok( contributionMonth.monthlyOSProjects.length === 1,
-    "monthlyOSProject was added" );
+
+  ContributionMonth.prototype.save = function () {
+    ok( contributionMonth.monthlyOSProjects.length === 0,
+      "monthlyOSProject was removed" );
+    return Promise.resolve();
+  };
   contributionMonth.removeMonthlyOSProject( monthlyOSProject );
-  ok( contributionMonth.monthlyOSProjects.length === 0,
-    "monthlyOSProject was removed" );
+
+  ContributionMonth.prototype.save = oldSave;
 } );
 
 QUnit.test( "Calculations: OS project royalty pot totals", function() {
@@ -258,6 +270,25 @@ QUnit.test( "Calculations: OS project royalty pot totals", function() {
   QUnit.equal( contributionMonth.calculations.osProjects[ "2-DoneJS" ].toFixed( 2 ), "321.43", "final calculation for the 2st project" );
   // (0)             + (0)             + (400 * 30 / 70) = 171.42857
   QUnit.equal( contributionMonth.calculations.osProjects[ "3-StealJS" ].toFixed( 2 ), "171.43", "final calculation for the uncommissioned project" );
-
-  console.log('contributionMonth.calculations.osProjects', contributionMonth.calculations.osProjects);
 } );
+
+QUnit.test( "OS Projects and Client Projects are provide sorted clones", function() {
+  const contributionMonth = new ContributionMonth( {
+    date: moment().add( -1, "months" ).startOf( "month" ).toDate(),
+    monthlyOSProjects: new MonthlyOSProject.List([
+      { osProjectRef: new OSProject({ name: "C" }) },
+      { osProjectRef: new OSProject({ name: "B" }) }
+    ]),
+    monthlyClientProjects: new MonthlyClientProject.List([ 
+      { clientProjectRef: new ClientProject({ name: "Z" }) },
+      { clientProjectRef: new ClientProject({ name: "X" }) }
+    ])
+  });
+
+  const sortedProjects = contributionMonth.sortedMonthlyOSProjects;
+  const sortedClients = contributionMonth.sortedMonthlyClientProjects;
+  QUnit.equal(sortedProjects[0].osProjectRef.value.name, 'B');
+  QUnit.equal(sortedProjects[1].osProjectRef.value.name, 'C');
+  QUnit.equal(sortedClients[0].clientProjectRef.value.name, 'X');
+  QUnit.equal(sortedClients[1].clientProjectRef.value.name, 'Z');
+});

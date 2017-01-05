@@ -12,31 +12,30 @@
     </tr>
   </thead>
   <tbody>
-  {{#with contributionMonth}}
-  {{#each monthlyClientProjects as monthlyClientProject}}
-    {{#if clientProjectRef.value}}
+  {{#each contributionMonth.sortedMonthlyClientProjects as monthlyClientProject}}
+    {{#if monthlyClientProject.clientProjectRef.value}}
     <tr>
-      <td>{{clientProjectRef.value.name}}</td>
+      <td>{{monthlyClientProject.clientProjectRef.value.name}}</td>
       <td>
         <input type="number" class="form-control hours-input"
                {($value)}="monthlyClientProject.hours"
-               ($change)="save()"
-               {{#if isSaving}} disabled {{/if}}/>
+               ($change)="contributionMonth.save()"
+               {$disabled}="contributionMonth.isSaving" />
       </td>
       <td class="os-projects-cell">
         <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" ($click)="setSelectedClientProject(monthlyClientProject)" >
           {{! Count of commissioned projects }}
-          {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{monthlyOSProjects.commissioned.length}}
+          {{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
           +
           {{! Count of uncommisioned projects }}
-          {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+          {{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
         </button>
       </td>
       <td>
-         <span class="rate">${{getRate(monthlyClientProject)}}
+         <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}
       </td>
       <td class="text-right">
-        <span class="total">${{getTotal(monthlyClientProject).toFixed(2)}}</span>
+        <span class="total">${{contributionMonth.getTotal(monthlyClientProject).toFixed(2)}}</span>
       </td>
       <td>
         <button type="button" class="btn btn-danger btn-xs" ($click)="deleteClientProject(monthlyClientProject)">
@@ -46,7 +45,6 @@
     </tr>
     {{/if}}
   {{/each}}
-  {{/with}}
   </tbody>
 </table>
 

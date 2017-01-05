@@ -15,6 +15,20 @@ import MonthlyContributions from "./monthly-contributions";
 
 import algebra from '../algebras';
 
+/**
+ * Builds a sorting function for sorting by a property on a ref field
+ */
+const sortByRefField = (refName, fieldName) => {
+  return (a, b) => {
+    if (!a[refName].value || !b[refName].value) {
+      return 0;
+    }
+    const lowerA = a[refName].value[fieldName].toLowerCase();
+    const lowerB = b[refName].value[fieldName].toLowerCase();
+    return lowerA < lowerB ? -1 : lowerA > lowerB ? 1 : 0;
+  };
+};
+
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
   __v:"number",
@@ -38,6 +52,18 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
     value: 4,
     set(value) {
       return value == null ? 4: value;
+    }
+  },
+  sortedMonthlyOSProjects: {
+    get () {
+      // sort a clone so that an infinite loop doesn't happen
+      return this.monthlyOSProjects.slice(0).sort(sortByRefField('osProjectRef', 'name'));
+    }
+  },
+  sortedMonthlyClientProjects: {
+    get () {
+      // sort a clone so that an infinite loop doesn't happen
+      return this.monthlyClientProjects.slice(0).sort(sortByRefField('clientProjectRef', 'name'));
     }
   },
   calculations: {
