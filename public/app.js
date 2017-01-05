@@ -1,6 +1,4 @@
 /* global window */
-import 'can-define-stream';
-import canStream from 'can-stream';
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
 // import 'can-route-pushstate';
@@ -34,7 +32,7 @@ const AppViewModel = DefineMap.extend({
   session: {
     get () {
       return Session.current;
-    },
+    }
   },
 
   /**
@@ -46,7 +44,7 @@ const AppViewModel = DefineMap.extend({
       if (this.session) {
         if (page === 'home') {
           page = 'dashboard';
-        } 
+        }
       } else {
         if (pages[page] === 'private') {
           page = 'home';
