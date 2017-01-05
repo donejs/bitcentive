@@ -21,9 +21,7 @@ export const ClientProjectVM = DefineMap.extend({
       return ClientProject.getList({});
     }
   },
-  selectedClientProject: {
-    Type: ClientProject
-  },
+  selectedClientProject: ClientProject,
   editingClientProjectIds: {
     Value: DefineMap.extend({seal: false},{}),
   },
