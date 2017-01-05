@@ -1,6 +1,6 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import template from './alerts.stache';
+import view from './alerts.stache';
 import './alerts.less';
 import hub from '../../lib/hub';
 import AlertItem from '../../models/alert';
@@ -45,7 +45,7 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'bit-alerts',
   ViewModel,
-  template,
+  view,
   events: {
     'inserted'() {
       this.viewModel.subscription = hub.subscribe('alert', this.viewModel.addAlert.bind(this.viewModel));

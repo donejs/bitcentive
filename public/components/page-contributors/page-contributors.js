@@ -1,7 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './page-contributors.less';
-import template from './page-contributors.stache';
+import view from './page-contributors.stache';
 import Contributor from 'bitcentive/models/contributor';
 
 export const ViewModel = DefineMap.extend({
@@ -16,5 +16,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
 	tag: 'page-contributors',
 	ViewModel: ViewModel,
-	template
+	view
 });
