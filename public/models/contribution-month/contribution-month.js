@@ -14,30 +14,6 @@ import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
 
 import algebra from '../algebras';
-import idMerge from "can-connect/helpers/id-merge";
-
-// Issue #152: every change causes browser to repaint.
-// Reason: `can-define/map/map`'s `setProps`:
-//     .attr is called on deep replace
-//     .replace is called w/o letting it go through the setter.
-//     As a result the list gets completely replaced, when its needed to be merged with the updated items.
-// Could be removed or moved to the setter depending on a fix for https://github.com/canjs/can-define/issues/96.
-[ MonthlyOSProject, MonthlyClientProject, MonthlyContributions ].forEach( MapObj => {
-  var attrOrig = MapObj.List.prototype.attr;
-  MapObj.List.prototype.attr = function( items, replace ) {
-    if ( replace === false && typeof items === "object" ) {
-      idMerge( this, items, function( obj ){ return obj._id }, function( x ){
-        if ( x instanceof MapObj ) {
-          return x;
-        }
-        return new MapObj( x );
-      });
-      return this;
-    } else {
-      return attrOrig.apply( this, arguments );
-    }
-  };
-} );
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",

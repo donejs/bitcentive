@@ -7,6 +7,7 @@ import feathersClient from './feathers-client';
 
 var OSProject = DefineMap.extend("OSProject", {
   _id: "string",
+  __v: "string",
   name: "string"
 });
 

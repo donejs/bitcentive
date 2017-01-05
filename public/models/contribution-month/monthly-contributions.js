@@ -4,12 +4,8 @@ import OSProject from "../os-project";
 import Contributor from "../contributor";
 
 const MonthlyContributions = DefineMap.extend( "MonthlyContributions", {
-  contributorRef: {
-    type: Contributor.Ref.type
-  },
-  osProjectRef: {
-    type: OSProject.Ref.type
-  },
+  contributorRef: Contributor.Ref,
+  osProjectRef: OSProject.Ref,
   description: "string",
   points: "number"
 });
