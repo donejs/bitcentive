@@ -1,4 +1,5 @@
 <can-import from="./contributors.less"/>
+<can-import from="bitcentive/components/model-edit-property/" />
 
 <table class="table">
   <thead>
@@ -12,8 +13,8 @@
   <tbody>
   {{#each contributors as contributor}}
     <tr>
-      <td>{{name}}</td>
-      <td>{{email}}</td>
+      <td><model-edit-property {model}="contributor" property="name" /></td>
+      <td><model-edit-property {model}="contributor" property="email" /></td>
       <td>
         <input type="checkbox" {$checked}="active" ($change)="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} />
       </td>
