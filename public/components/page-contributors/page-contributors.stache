@@ -1,3 +1,5 @@
+<can-import from="./page-contributors.less" />
+
 <div class="container">
 	<h2>Contributors</h2>
 	<can-import from="bitcentive/components/contributors/"/>

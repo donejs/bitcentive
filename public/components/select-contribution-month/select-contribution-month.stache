@@ -1,4 +1,5 @@
 <can-import from="bitcentive/lib/stache-helpers/pretty-date"/>
+<can-import from="./select-contribution-month.less" />
 
 {{#if contributionMonths}}
 <select {($value)}="selectedContributionMonthId" class="form-control">

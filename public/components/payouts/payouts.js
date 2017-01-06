@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './payouts.less';
 import view from './payouts.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 import moment from "moment";

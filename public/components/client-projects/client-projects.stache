@@ -1,3 +1,4 @@
+<can-import from='./client-projects.less'/>
 {{#if contributionMonth.monthlyClientProjects.length}}
 <table class="table">
   <thead>

@@ -1,3 +1,5 @@
+<can-import from="./payouts.less" />
+
 {{#if contributionMonthsPromise.isResolved}}
 <div class="table-scroller">
   <table class='table'>

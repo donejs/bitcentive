@@ -1,3 +1,5 @@
+<can-import from="./contributions.less" />
+
 {{#if contributionMonth.monthlyContributions.length}}
 <table class='table'>
   <thead>

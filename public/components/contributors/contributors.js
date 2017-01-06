@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './contributors.less';
 import view from './contributors.stache';
 import Contributor from 'bitcentive/models/contributor';
 import $ from 'jquery';
