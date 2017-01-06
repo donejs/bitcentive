@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './main-nav.less!';
 import view from './main-nav.stache!';
 import Session from 'bitcentive/models/session';
 

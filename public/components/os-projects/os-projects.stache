@@ -1,3 +1,5 @@
+<can-import from="./os-projects.less" />
+
 {{#if contributionMonth.monthlyOSProjects.length}}
 <table class='table'>
   <thead>

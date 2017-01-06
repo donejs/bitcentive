@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './page-home.less';
 import view from './page-home.stache';
 import openLoginPopup from 'feathers-authentication-popups';
 

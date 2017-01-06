@@ -1,7 +1,6 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import view from './alerts.stache';
-import './alerts.less';
 import hub from '../../lib/hub';
 import AlertItem from '../../models/alert';
 

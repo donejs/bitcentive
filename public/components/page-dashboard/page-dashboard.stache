@@ -1,5 +1,6 @@
 <can-import from="bitcentive/components/select-contribution-month/"/>
 <can-import from="bitcentive/components/contribution-month/"/>
+<can-import from="./page-dashboard.less" />
 
 <div class="container">
 	<bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>

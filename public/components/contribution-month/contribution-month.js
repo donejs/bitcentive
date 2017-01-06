@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './contribution-month.less';
 import view from './contribution-month.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 

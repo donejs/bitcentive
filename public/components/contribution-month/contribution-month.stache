@@ -2,6 +2,7 @@
 <can-import from="../client-projects/"/>
 <can-import from="../contributions/"/>
 <can-import from="../payouts/" />
+<can-import from="./contribution-month.less" />
 
 {{#if contributionMonth}}
   <div class='callout'>

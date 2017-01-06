@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './contributions.less';
 import view from './contributions.stache';
 import MonthlyContribution from '../../models/contribution-month/monthly-contributions';
 import ContributionMonth from '../../models/contribution-month/';
