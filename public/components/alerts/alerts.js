@@ -1,5 +1,5 @@
 import Kefir from 'kefir';
-import CanStream from 'can-stream';
+import canStream from 'can-stream';
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import 'can-define-stream';
@@ -8,7 +8,7 @@ import hub from '../../lib/event-hub';
 import CID from 'can-cid';
 
 
-var alertStream = CanStream.toStream(hub, 'alert').map(ev => {
+var alertStream = canStream.toStream(hub, 'alert').map(ev => {
   return Object.assign({
     id: CID(ev),
     kind: 'warning'

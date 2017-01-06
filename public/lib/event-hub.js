@@ -7,6 +7,4 @@ import assign from 'can-util/js/assign/assign';
 const hub = {};
 assign(hub, canEvent);
 
-window.hub = hub;
-
 export default hub;

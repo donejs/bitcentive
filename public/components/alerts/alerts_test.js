@@ -5,37 +5,28 @@ import hub from 'bitcentive/lib/event-hub';
 // ViewModel unit tests
 QUnit.module('bitcentive/components/alerts');
 
-QUnit.test('Hub alerts are handled correctly', assert => {
+QUnit.test('Hub alerts are added and removed', assert => {
 	const done = assert.async();
 	const vm = new ViewModel();
 
 	// Always unbind
-	const handler = (ev, alerts) => {
+	const addHandler = (ev, alerts) => {
 		assert.equal(alerts.length, 1);
 		assert.ok(alerts[0].hasOwnProperty('id'));
 		assert.ok(alerts[0].hasOwnProperty('kind'));
-		vm.off('alerts', handler);
+		vm.off('alerts', addHandler);
+		vm.on('alerts', removeHandler);
+		vm.dispatch({type: 'remove', id: alerts[0].id});
+	};
+
+	const removeHandler = (ev, alerts) => {
+		assert.equal(alerts.length, 0, 'Alerts should be empty');
+		vm.off('alerts', removeHandler);
 		done();
 	};
 
-	vm.on('alerts', handler);
+	vm.on('alerts', addHandler);
 	hub.dispatch({type: 'alert'});
-});
-
-QUnit.test('Can remove items', assert => {
-	const done = assert.async();
-	const vm = new ViewModel();
-
-	// Always unbind
-	const handler = ev => {
-		assert.equal(ev.type, 'remove');
-		assert.equal(ev.id, 1234);
-		vm.off('remove', handler);
-		done();
-	};
-
-	vm.on('remove', handler);
-	vm.removeAlert({ id: 1234 });
 });
 
 QUnit.test('Autohide automatically creates a remove action', assert => {
