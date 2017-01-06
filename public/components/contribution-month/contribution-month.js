@@ -31,6 +31,6 @@ export const ViewModel = DefineMap.extend({
 
 export default Component.extend({
   tag: 'bit-contribution-month',
-  ViewModel: ViewModel,
+  ViewModel,
   view
 });
