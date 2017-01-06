@@ -1,3 +1,4 @@
+<can-import from='./alerts.less'/>
 <div class="alert-container">
 	{{#each alerts}}
 	<div class="alert alert-dismissable fade {{alertClass}}{{#if visible}} in{{/if}}" ($inserted)="showAlert(.)">

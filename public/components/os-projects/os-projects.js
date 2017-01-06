@@ -1,6 +1,5 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './os-projects.less';
 import view from './os-projects.stache';
 import OSProject from '../../models/os-project';
 import ContributionMonth from '../../models/contribution-month/';
