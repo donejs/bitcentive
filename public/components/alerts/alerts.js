@@ -8,7 +8,7 @@ import hub from '../../lib/event-hub';
 import CID from 'can-cid';
 
 
-var alertStream = canStream.toStream(hub, 'alert').map(ev => {
+var hubStream = canStream.toStream(hub, 'alert').map(ev => {
   return Object.assign({
     id: CID(ev),
     kind: 'warning'
@@ -18,8 +18,9 @@ var alertStream = canStream.toStream(hub, 'alert').map(ev => {
 export const ViewModel = DefineMap.extend({
   autoHideStream: {
     value() {
-      return alertStream.flatMap(alert => {
-        if (alert.displayInterval > 0) {
+      return hubStream.flatMap(alert => {
+        // Allows displayInterval to be falsy OR Infinity to disable autohide
+        if (alert.displayInterval > 0 && alert.displayInterval !== Infinity) {
           return Kefir.later(alert.displayInterval, {
             type: 'remove',
             id: alert.id
@@ -31,7 +32,7 @@ export const ViewModel = DefineMap.extend({
   },
   alerts: {
     stream() {
-      return alertStream
+      return hubStream
         .merge(this.autoHideStream)
         .merge(this.stream('remove'))
         .scan((alerts, ev) => {

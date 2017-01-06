@@ -1,5 +1,5 @@
 import QUnit from 'steal-qunit';
-import { ViewModel, reducers } from './alerts';
+import { ViewModel } from './alerts';
 import hub from 'bitcentive/lib/event-hub';
 
 // ViewModel unit tests
@@ -42,4 +42,27 @@ QUnit.test('Autohide automatically creates a remove action', assert => {
 
 	vm.autoHideStream.onValue(handler);
 	hub.dispatch({ type: 'alert', displayInterval: 100 });
+});
+
+QUnit.test('Autohide ignores falsy or Infinity', assert => {
+	assert.expect(5);
+	const done = assert.async();
+	const vm = new ViewModel();
+
+	const handler = ev => {
+		assert.equal(ev.type, 'no-op');
+	};
+
+	// Always unbind
+	setTimeout(() => {
+		vm.autoHideStream.offValue(handler);
+		done();
+	}, 300);
+
+	vm.autoHideStream.onValue(handler);
+	hub.dispatch({ type: 'alert', displayInterval: 0 });
+	hub.dispatch({ type: 'alert', displayInterval: null });
+	hub.dispatch({ type: 'alert', displayInterval: undefined });
+	hub.dispatch({ type: 'alert', displayInterval: '' });
+	hub.dispatch({ type: 'alert', displayInterval: Infinity });
 });
