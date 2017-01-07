@@ -51,6 +51,10 @@ brew uninstall mongodb
     npm run develop
     ```
 
+## Migrations
+
+Please read the [migration docs](./migrations/README.md).
+
 ## Testing
 
 Simply run `npm test` and all your tests in the `test/` directory will be run.

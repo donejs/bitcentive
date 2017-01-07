@@ -21,12 +21,15 @@
     "develop": "node src/ --develop",
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
-    "install": "node install.js"
+    "install": "node install.js && npm run db-migrate",
+    "db-migrate": "db-migrate up" 
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "cors": "^2.8.1",
+    "db-migrate": "^0.10.0-beta.20",
+    "db-migrate-mongodb": "^1.1.4",
     "feathers": "^2.0.2",
     "feathers-authentication": "1.0.2",
     "feathers-authentication-jwt": "^0.3.0",
