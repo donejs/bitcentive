@@ -1,5 +1,4 @@
 import moment from 'moment';
-import stache from 'can-stache';
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import './select-contribution-month.less';
@@ -26,8 +25,9 @@ export const ViewModel = DefineMap.extend({
         new ContributionMonth(last).save((newContributionMonth) => {
           setVal(newContributionMonth._id);
         });
+        
       } else {
-        return newVal;
+        setVal(newVal);
       }
     }
   },

@@ -1,4 +1,3 @@
-import stache from 'can-stache';
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';
@@ -6,9 +5,6 @@ import './client-projects.less';
 import view from './client-projects.stache';
 import ClientProject from '../../models/client-project';
 import ContributionMonth from '../../models/contribution-month/';
-import osProjectsModal from './client-projects-os-projects-modal.stache';
-
-stache.registerPartial('os-projects-modal', osProjectsModal);
 
 export const ClientProjectVM = DefineMap.extend({
   // Passed properties

@@ -1,5 +1,4 @@
 {{#if contributionMonth.monthlyClientProjects.length}}
-{{#with contributionMonth}}
 <table class="table">
   <thead>
     <tr>
@@ -12,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-
+  {{#with contributionMonth}}
   {{#each monthlyClientProjects as monthlyClientProject}}
     {{#if clientProjectRef.value}}
     <tr>
@@ -46,12 +45,12 @@
     </tr>
     {{/if}}
   {{/each}}
+  {{/with}}
   </tbody>
 </table>
-{{/with}}
 
-{{! Partial defined in the view-model }}
-{{>os-projects-modal}}
+<can-import from="./client-projects-os-projects-modal.stache" {^@value}="@*osProjectsModal" />
+{{>*osProjectsModal}}
 {{/if}}
 
 {{#if isAddingClients}}
