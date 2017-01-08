@@ -10,6 +10,24 @@
     <os-projects {contribution-month}="contributionMonth"/>
   </div>
   <div class='callout'>
+    <div class="rates">
+      <label>Start Rate<br/>
+        <input
+          type="number"
+          class="form-control"
+          {($value)}="contributionMonth.startRate"
+          ($enter)="contributionMonth.save()"
+        />
+      </label>
+      <label>End Rate<br/>
+        <input
+          type="number"
+          class="form-control"
+          {($value)}="contributionMonth.endRate"
+          ($enter)="contributionMonth.save()"
+        />
+      </label>
+    </div>
     <h2>Client Projects</h2>
     <bit-client-projects {contribution-month}="contributionMonth"/>
   </div>
