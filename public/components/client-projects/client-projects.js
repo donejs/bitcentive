@@ -16,6 +16,7 @@ export const ClientProjectVM = DefineMap.extend({
       return ClientProject.getList({});
     }
   },
+  selectedClientProject: ClientProject,
   editingClientProjectIds: {
     Value: DefineMap.extend({seal: false},{}),
   },
@@ -78,6 +79,9 @@ export const ClientProjectVM = DefineMap.extend({
     }
     return promise;
   },
+  setSelectedClientProject: function (clientProject) {
+    this.selectedClientProject = clientProject;
+  },
   deleteClientProject: function(clientProject) {
     this.contributionMonth.removeClientProject(clientProject);
     return this.contributionMonth.save();
@@ -85,22 +89,6 @@ export const ClientProjectVM = DefineMap.extend({
   toggleUseProject: function(monthlyClientProjectsOSProjects, monthlyOsProject) {
     monthlyClientProjectsOSProjects.toggleProject(monthlyOsProject);
     return this.contributionMonth.save();
-  },
-  toggleEditMonthlyClientProject: function(monthlyClientProject) {
-    if( this.editingClientProjectIds.get(monthlyClientProject.clientProjectRef._id) ) {
-      this.editingClientProjectIds.set(monthlyClientProject.clientProjectRef._id, undefined);
-    } else {
-      this.editingClientProjectIds.set(monthlyClientProject.clientProjectRef._id, true);
-    }
-  },
-  setActiveOSProjectList: function(monthlyClientProject) {
-    this.activeOSProjectList = monthlyClientProject;
-  },
-  checkActiveOSProjectList: function(monthlyClientProject) {
-    return this.activeOSProjectList === monthlyClientProject;
-  },
-  isEditingMonthlyClientProject: function(monthlyClientProject){
-    return this.editingClientProjectIds.get(monthlyClientProject.clientProjectId);
   },
 });
 

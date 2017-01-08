@@ -14,6 +14,7 @@
   <tbody>
   {{#with contributionMonth}}
   {{#each monthlyClientProjects as monthlyClientProject}}
+    {{#if clientProjectRef.value}}
     <tr>
       <td>{{clientProjectRef.value.name}}</td>
       <td>
@@ -22,30 +23,14 @@
                ($change)="save()"
                {{#if isSaving}} disabled {{/if}}/>
       </td>
-      <td ($mouseenter)="setActiveOSProjectList(monthlyClientProject)" ($mouseleave)="setActiveOSProjectList(null)">
-        {{! Count of commissioned projects }}
-        {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{monthlyOSProjects.commissioned.length}}
-        +
-        {{! Count of uncommisioned projects }}
-        {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
-
-        {{! Toggle of OS projects }}
-        {{#if checkActiveOSProjectList(monthlyClientProject)}}
-          <div class="os-project-list">
-            {{#each monthlyOSProjects as monthlyOSProject}}
-                <input id="{{osProjectRef._id}}"
-                       type="checkbox"
-                       {{#if monthlyClientProjectsOSProjects.has(monthlyOSProject) }}checked{{/if}}
-                       value="{{osProjectRef.value.name}}"
-                       ($click)="toggleUseProject(monthlyClientProjectsOSProjects, monthlyOSProject)"
-                       {{#if isSaving}} disabled{{/if}}/>
-                <label for="{{osProjectRef._id}}"
-                       {{#if commissioned}} class="commissioned" {{/if}}>
-                  {{osProjectRef.value.name}}
-                </label>
-            {{/each}}
-          </div>
-        {{/if}}
+      <td class="os-projects-cell">
+        <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" ($click)="setSelectedClientProject(monthlyClientProject)" >
+          {{! Count of commissioned projects }}
+          {{commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{monthlyOSProjects.commissioned.length}}
+          +
+          {{! Count of uncommisioned projects }}
+          {{uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+        </button>
       </td>
       <td>
          <span class="rate">${{getRate(monthlyClientProject)}}
@@ -59,10 +44,14 @@
         </button>
       </td>
     </tr>
+    {{/if}}
   {{/each}}
   {{/with}}
   </tbody>
 </table>
+
+<can-import from="./client-projects-os-projects-modal.stache" {^@value}="@*osProjectsModal" />
+{{>*osProjectsModal}}
 {{/if}}
 
 {{#if isAddingClients}}

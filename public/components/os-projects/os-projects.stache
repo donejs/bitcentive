@@ -13,6 +13,7 @@
   </thead>
   <tbody>
   {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+    {{#if osProjectRef.value}}
     <tr>
       <td class="name-col">{{osProjectRef.value.name}}</td>
       <td>
@@ -38,6 +39,7 @@
         </button>
       </td>
     </tr>
+    {{/if}}
   {{/each}}
   </tbody>
 </table>
