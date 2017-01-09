@@ -23,7 +23,7 @@ MonthlyClientProject.List = DefineList.extend({
       this.splice(this.indexOf(instance), 1);
     } else {
       this.push( new MonthlyClientProject({
-        clientProjectRef: clientProject,
+        clientProjectRef: clientProject.serialize(),
         hours: 0,
         monthlyClientProjectsOSProjects: []
       }) );
