@@ -6,11 +6,11 @@ import moment from "moment";
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
-  contributionMonth: {
-    Type: ContributionMonth
-  },
-  get contributionMonthsPromise() {
-    return ContributionMonth.getList({});
+  contributionMonth: ContributionMonth,
+  contributionMonthsPromise: {
+    value() {
+      return ContributionMonth.getList({});
+    }
   },
   contributionMonths: {
     get(initial, resolve){
