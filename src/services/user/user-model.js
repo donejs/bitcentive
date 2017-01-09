@@ -10,7 +10,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   github: {},
-  githubId: {type: Number}
+  githubId: {type: Number},
+  isAdmin: { type: Boolean, default: false }
 });
 
 const userModel = mongoose.model('user', userSchema);

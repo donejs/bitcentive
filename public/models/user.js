@@ -8,7 +8,11 @@ import algebra from './algebras';
 var User = DefineMap.extend("User", {
   _id: "string",
   email: "string",
-  password: "string"
+  password: "string",
+  isAdmin: {
+    type: "boolean",
+    value: false
+  }
 });
 
 User.List = DefineList.extend({
