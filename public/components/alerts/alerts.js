@@ -1,57 +1,61 @@
+import Kefir from 'kefir';
+import canStream from 'can-stream';
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import template from './alerts.stache';
-import './alerts.less';
-import hub from '../../lib/hub';
-import AlertItem from '../../models/alert';
+import 'can-define-stream';
+import view from './alerts.stache';
+import hub from '../../lib/event-hub';
+import CID from 'can-cid';
 
-/**
- * TODO: use streams for modifying alerts
- *      - https://github.com/donejs/bitcentive/issues/149
- */
+
+var hubStream = canStream.toStream(hub, 'alert').map(ev => {
+  return Object.assign({
+    id: CID(ev),
+    kind: 'warning'
+  }, ev);
+});
 
 export const ViewModel = DefineMap.extend({
-  subscription: '*',
-  alerts: {
-    Value: AlertItem.List
+  autoHideStream: {
+    value() {
+      return hubStream.flatMap(alert => {
+        // Allows displayInterval to be falsy OR Infinity to disable autohide
+        if (alert.displayInterval > 0 && alert.displayInterval !== Infinity) {
+          return Kefir.later(alert.displayInterval, {
+            type: 'remove',
+            id: alert.id
+          });
+        } 
+        return Kefir.constant({ type: 'no-op' });
+      });
+    }
   },
-  addAlert (alert) {
-    this.alerts.push(alert);
+  alerts: {
+    stream() {
+      return hubStream
+        .merge(this.autoHideStream)
+        .merge(this.stream('remove'))
+        .scan((alerts, ev) => {
+          switch (ev.type) {
+            case 'alert':
+              return [ev, ...alerts.slice()];
+
+            case 'remove':
+              return alerts.filter(item => item.id !== ev.id);
+
+            default:
+              return alerts;
+          }
+        }, []);
+    }
   },
   removeAlert (alert) {
-    const idx = this.alerts.indexOf(alert);
-    if (idx !== -1) {
-      this.alerts.splice(idx, 1);
-    }
-  },
-  // called by ($inserted) event
-  showAlert (alert) {
-    // timeout allows for paint cycle to pass
-    setTimeout(() => {
-      alert.visible = true;
-    }, 30);
-    
-    if (alert.displayInterval > 0) {
-      setTimeout(() => this.hideAlert(alert), 30 + alert.displayInterval);
-    }
-  },
-  hideAlert (alert) {
-    alert.visible = false;
-    // TODO: this should happen on CSS animation end
-    setTimeout(() => this.removeAlert(alert), 500);
+    this.dispatch({ type: 'remove', id: alert.id });
   }
 });
 
 export default Component.extend({
   tag: 'bit-alerts',
   ViewModel,
-  template,
-  events: {
-    'inserted'() {
-      this.viewModel.subscription = hub.subscribe('alert', this.viewModel.addAlert.bind(this.viewModel));
-    },
-    'removed'() {
-      this.viewModel.subscription.remove();
-    }
-  }
+  view
 });

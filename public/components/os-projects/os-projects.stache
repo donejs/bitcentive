@@ -1,3 +1,5 @@
+<can-import from="./os-projects.less" />
+
 {{#if contributionMonth.monthlyOSProjects.length}}
 <table class='table'>
   <thead>
@@ -11,8 +13,9 @@
   </thead>
   <tbody>
   {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+    {{#if osProjectRef.value}}
     <tr>
-      <td>{{osProjectRef.value.name}}</td>
+      <td class="name-col">{{osProjectRef.value.name}}</td>
       <td>
         <input type="number"
           class="form-control significance-input"
@@ -36,6 +39,7 @@
         </button>
       </td>
     </tr>
+    {{/if}}
   {{/each}}
   </tbody>
 </table>

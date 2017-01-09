@@ -1,7 +1,6 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './payouts.less';
-import template from './payouts.stache';
+import view from './payouts.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 import moment from "moment";
 
@@ -95,5 +94,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'bit-payouts',
   ViewModel: ViewModel,
-  template
+  view
 });

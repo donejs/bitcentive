@@ -119,6 +119,30 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     "monthlyClientProjects was added with osProjects and osProjectRef" );
 } );
 
+QUnit.test( "Cannot set ContributionMonth startRate or endRate to undefined", () => {
+  let contributionMonth = new ContributionMonth( {
+    _id: 1,
+    date: moment().add( -1, 'months' ).startOf( 'month' ).toDate()
+  } );
+
+  ok(contributionMonth.startRate > 0, 'startRate has positive default');
+  ok(contributionMonth.endRate > 0, 'endRate has positive default');
+
+  contributionMonth.startRate = undefined;
+  contributionMonth.startRate = null;
+  ok(contributionMonth.startRate, 'cannot set startRate to undefined');
+
+  contributionMonth.startRate = -2;
+  strictEqual(contributionMonth.startRate, -2,  'can set startRate to negative number');
+
+  contributionMonth.startRate = 0;
+  strictEqual(contributionMonth.startRate, 0,  'can set startRate to zero');
+
+  contributionMonth.endRate = undefined;
+  contributionMonth.endRate = null;
+  ok(contributionMonth.endRate, 'cannot set endRate to undefined');
+});
+
 QUnit.test( "Can set ContributionMonth monthlyOSProjects list", function() {
 
   let contributionMonth = new ContributionMonth( {

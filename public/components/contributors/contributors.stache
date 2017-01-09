@@ -1,3 +1,5 @@
+<can-import from="./contributors.less"/>
+
 <table class="table">
   <thead>
     <tr>
