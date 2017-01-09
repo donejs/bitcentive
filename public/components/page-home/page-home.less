@@ -1,12 +1,11 @@
 page-home {
 	display: block;
-  height: ~"calc(100% - 72px)";
-  background-size: cover;
+	height: ~"calc(100% - 72px)";
+	background-size: cover;
 	min-height: 560px;
 	-webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
 	.logo {
 		width: 160px;
 	}
@@ -15,13 +14,11 @@ page-home {
 		font-weight: 500;
 		margin: 8px 0 0;
 	}
-
 	div.auth {
 		display: block;
 		height: 100%;
 		width: 100%;
 		margin: 0 auto;
-
 		.bp-mobile-medium({
 			justify-content: center;
 			align-items: center;
@@ -30,21 +27,12 @@ page-home {
 			justify-content: center;
 		});
 	}
-
-
 	div.auth-ui {
 		display: block;
-		color: #4A4A4A;
 		width: 100%;
 		.bp-mobile-medium({
 			width: 270px;
 		});
-
-		a {
-			text-decoration: none;
-			color: #4A4A4A;
-		}
-
 		div#auth-ui-container {
 			padding-bottom: 11px;
 			background: white;
@@ -54,40 +42,10 @@ page-home {
 				box-shadow: 0px 0px 24px 0px rgba(110,110,110,0.75);
 			});
 		}
-
 		.auth-branding {
 			padding: 30px 0;
 			text-align: center;
 		}
-
-		ul.local-auth-tabs {
-			list-style: none;
-			padding: 0;
-			margin: 0 auto;
-			display: flex;
-			font-size: 16px;
-			font-weight: 400;
-
-			li {
-				height: 56px;
-				line-height: 56px;
-				width: 50%;
-				text-align: center;
-				&:not(.active){
-					background: #77BFED;
-					a {
-						color: white;
-						display:block;
-						height: 100%;
-						width: 100%;
-					}
-				}
-			}
-			a:active, a:focus, a:hover, a:visited {
-				text-decoration: none;
-			}
-		}
-
 		ul.sso-providers {
 			list-style: none;
 			margin: 0;
@@ -100,7 +58,6 @@ page-home {
 			justify-content: center;
 			-webkit-flex-wrap: wrap;
 			flex-wrap: wrap;
-
 			li {
 				border: 0px solid #556D99;
 				border-radius: 2px;
@@ -115,7 +72,6 @@ page-home {
 				margin: 7px;
 				color: white;
 				font-size: 12px;
-
 				a {
 					width: 100%;
 					height: 100%;
@@ -134,7 +90,6 @@ page-home {
 					height: 23px;
 					margin: 0 7px 0 0;
 				}
-
 				&.sso-github {
 					background: #a6a0a0;
 					&.one {
@@ -143,7 +98,6 @@ page-home {
 				}
 			}
 		}
-
 		.auth-error {
 			text-align: center;
 			background: #FFDCDC;
@@ -154,71 +108,9 @@ page-home {
 			font-size: 14px;
 			color: #FF0A0A;
 		}
-
-		form {
-			text-align: center;
-			font-size: 16px;
-
-			input[type=email], input[type=text], input[type=password] {
-				border-bottom: solid 1px #E6E6E6;
-				border-top: none;
-				border-left: none;
-				border-right: none;
-				height: 30px;
-				width: calc(100% - 10px);
-				text-align: center;
-				padding: 6px 0;
-				outline: none;
-				box-sizing: content-box;
-
-				&:focus {
-					border-bottom: solid 1px #77BFED;
-				}
-			}
-
-			div.forgot-password {
-				margin-top: 12px;
-				height: 15px;
-				font-size: 12px;
-				a {
-					color: #77BFED;
-				}
-			}
-
-			button {
-				width: calc(100% - 10px);
-				height: 52px;
-				background: #77BFED;
-				border: none;
-				color: white;
-				margin-top: 22px;
-			}
-		}
 	}
-
-}
-
-/* MEDIUM MOBILE DEVICES ~375px+ */
-.bp-mobile-medium(@rules) {
-	@media only screen and (min-width: 375px) { @rules(); }
-}
-
-/* LARGE MOBILE DEVICES ~425px+ */
-.bp-mobile-large(@rules) {
-	@media only screen and (min-width: 425px) { @rules(); }
-}
-
-/* TABLET & SMALLER LAPTOPS ~768px+ */
-.bp-tablet(@rules) {
-	@media only screen and (min-width: 768px) { @rules(); }
-}
-
-/* DESKTOP ~1030px+ */
-.bp-desktop(@rules) {
-	@media only screen and (min-width: 1030px) { @rules(); }
-}
-
-/* LARGE VIEWING SIZE ~1240px+ */
-.bp-large-screen(@rules) {
-	@media only screen and (min-width: 1240px) { @rules(); }
+	/* MEDIUM MOBILE DEVICES ~375px+ */
+	.bp-mobile-medium(@rules) {
+		@media only screen and (min-width: 375px) { @rules(); }
+	}
 }

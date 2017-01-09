@@ -29,6 +29,8 @@ const contributionSchema = new Schema({
 
 const contributionMonthSchema = new Schema({
   date: { type: Date, default: Date.now },
+  startRate: { type: Number, default: 2 },
+  endRate: { type: Number, default: 4 },
   monthlyOSProjects: [ osProjectSchema ],
   monthlyClientProjects: [ clientProjectSchema ],
   monthlyContributions: [ contributionSchema ]

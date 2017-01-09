@@ -13,38 +13,27 @@
     <can-import from="bitcentive/app" export-as="viewModel" />
     <can-import from="bitcentive/components/alerts/" />
     <can-import from="bitcentive/components/main-nav/" />
-    <can-import from="bitcentive/components/page-home/" />
-    <can-import from="bitcentive/components/page-four-oh-four/" />
-    <can-import from="bitcentive/pages/contributors.component"/>
-    <can-import from="bitcentive/pages/dashboard.component"/>
+    <can-import from="bitcentive/components/page-home/"/>
+    <can-import from="bitcentive/components/page-contributors/"/>
+    <can-import from="bitcentive/components/page-dashboard/"/>
+    <can-import from="bitcentive/pages/four-oh-four.component"/>
 
-    <main-nav {(session)}="session" {(page)}="page" {(subpage)}="subpage"></main-nav>
+    <main-nav {(session)}="session" {(page)}="page"></main-nav>
 
-    {{#if session}}
-
-      {{#switch page}}
-        {{#case 'dashboard'}}
-          <page-dashboard></page-dashboard>
-        {{/case}}
-        {{#case 'contributors'}}
-          <page-contributors/>
-        {{/case}}
-        {{#case 'four-oh-four'}}
-          <page-four-oh-four></page-four-oh-four>
-        {{/case}}
-      {{/switch}}
-
-    {{else}}
-
-      {{#switch page}}
-        {{#case 'home'}}
-          <page-home></page-home>
-        {{/case}}
-        {{#case 'four-oh-four'}}
-          <page-four-oh-four></page-four-oh-four>
-        {{/case}}
-      {{/switch}}
-    {{/if}}
+    {{#switch page}}
+      {{#case 'home'}}
+        <page-home></page-home>
+      {{/case}}
+      {{#case 'dashboard'}}
+        <page-dashboard></page-dashboard>
+      {{/case}}
+      {{#case 'contributors'}}
+        <page-contributors/>
+      {{/case}}
+      {{#case 'four-oh-four'}}
+        <page-four-oh-four></page-four-oh-four>
+      {{/case}}
+    {{/switch}}
 
     <bit-alerts></bit-alerts>
 

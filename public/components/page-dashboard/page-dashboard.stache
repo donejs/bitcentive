@@ -1,5 +1,10 @@
+<can-import from="bitcentive/components/select-contribution-month/"/>
+<can-import from="bitcentive/components/contribution-month/"/>
+<can-import from="./page-dashboard.less" />
+
 <div class="container">
-  <h2>Dashboard</h2> 
-  <p>{{message}}</p>
-  <p><a href="javascript://" ($click)="logout">Logout</a></p>
+	<bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>
+	{{#if contributionMonthId}}
+		<bit-contribution-month {(contribution-month-id)}="contributionMonthId"/>
+	{{/if}}
 </div>

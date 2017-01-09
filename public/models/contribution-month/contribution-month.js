@@ -14,30 +14,6 @@ import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContributions from "./monthly-contributions";
 
 import algebra from '../algebras';
-import idMerge from "can-connect/helpers/id-merge";
-
-// Issue #152: every change causes browser to repaint.
-// Reason: `can-define/map/map`'s `setProps`:
-//     .attr is called on deep replace
-//     .replace is called w/o letting it go through the setter.
-//     As a result the list gets completely replaced, when its needed to be merged with the updated items.
-// Could be removed or moved to the setter depending on a fix for https://github.com/canjs/can-define/issues/96.
-[ MonthlyOSProject, MonthlyClientProject ].forEach( MapObj => {
-  var attrOrig = MapObj.List.prototype.attr;
-  MapObj.List.prototype.attr = function( items, replace ) {
-    if ( replace === false && typeof items === "object" ) {
-      idMerge( this, items, function( obj ){ return obj._id }, function( x ){
-        if ( x instanceof MapObj ) {
-          return x;
-        }
-        return new MapObj( x );
-      });
-      return this;
-    } else {
-      return attrOrig.apply( this, arguments );
-    }
-  };
-} );
 
 var ContributionMonth = DefineMap.extend("ContributionMonth",{
   _id: "string",
@@ -52,6 +28,18 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
   },
   monthlyClientProjects: MonthlyClientProject.List,
   monthlyContributions: MonthlyContributions.List,
+  startRate: {
+    value: 2,
+    set(value) {
+      return value == null ? 2 : value;
+    }
+  },
+  endRate: {
+    value: 4,
+    set(value) {
+      return value == null ? 4: value;
+    }
+  },
   calculations: {
     get: function() {
       var calculations = {
@@ -106,7 +94,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
           totalCommissionedSignificance = 1;
         }
 
-        let rate = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance);
+        let rate = this.endRate - (this.endRate - this.startRate) * (usedCommissionedSignificance / totalCommissionedSignificance);
         rate = isNaN(rate) ? 0 : rate; //handle the situation where there is not significance
         let totalAmount = parseFloat(Math.round((rate * monthlyClientProject.hours) * 100) / 100);
 
@@ -152,7 +140,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
       monthlyOSProject = new MonthlyOSProject({
         significance: 0,
         commissioned: false,
-        osProjectRef: project,
+        osProjectRef: project.serialize(),
         osProjectID: project._id
       });
     }
@@ -222,7 +210,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth",{
 ContributionMonth.List = DefineList.extend({
   "#": ContributionMonth,
   OSProjectContributionsMap: function(currentContributionMonth) {
-    
+
 
     var OSProjectContributionsMap = {};
     this.forEach(contributionMonth => {

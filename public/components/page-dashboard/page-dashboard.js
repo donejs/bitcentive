@@ -1,16 +1,15 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
-import './page-dashboard.less!';
-import view from './page-dashboard.stache!';
+import view from './page-dashboard.stache';
 
 export const ViewModel = DefineMap.extend({
-  message: {
-    value: 'This is the page-dashboard component. Add your app here.'
-  }
+	contributionMonthId: {
+		type: "string",
+	}
 });
 
 export default Component.extend({
-  tag: 'page-dashboard',
-  ViewModel,
-  view
+	tag: 'page-dashboard',
+	ViewModel: ViewModel,
+	view
 });

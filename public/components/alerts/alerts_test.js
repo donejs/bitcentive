@@ -1,68 +1,68 @@
 import QUnit from 'steal-qunit';
 import { ViewModel } from './alerts';
-import AlertItem from 'bitcentive/models/alert';
+import hub from 'bitcentive/lib/event-hub';
 
 // ViewModel unit tests
 QUnit.module('bitcentive/components/alerts');
 
-QUnit.test('Can add and remove items', assert => {
-	const vm = new ViewModel();
-	const alert = new AlertItem();
-
-	vm.addAlert(alert);
-	assert.equal(vm.alerts.length, 1);
-	vm.removeAlert(alert);
-	assert.equal(vm.alerts.length, 0);
-});
-
-QUnit.test('removeAlert doesn\'t fail if alert does not exist', assert => {
-	const vm = new ViewModel();
-
-	try {
-		vm.removeAlert({});
-		assert.ok(true);
-	} catch (ex) {
-		assert.notOk(true, 'should not error');
-	}
-});
-
-QUnit.test('showAlert sets visibility after short delay', assert => {
+QUnit.test('Hub alerts are added and removed', assert => {
 	const done = assert.async();
 	const vm = new ViewModel();
-	const alert = new AlertItem();
 
-	vm.showAlert(alert);
-	assert.notOk(alert.visible, 'should not be visible synchronously');
+	// Always unbind
+	const addHandler = (ev, alerts) => {
+		assert.equal(alerts.length, 1);
+		assert.ok(alerts[0].hasOwnProperty('id'));
+		assert.ok(alerts[0].hasOwnProperty('kind'));
+		vm.off('alerts', addHandler);
+		vm.on('alerts', removeHandler);
+		vm.dispatch({type: 'remove', id: alerts[0].id});
+	};
 
-	setTimeout(() => {
-		assert.equal(alert.visible, true);
+	const removeHandler = (ev, alerts) => {
+		assert.equal(alerts.length, 0, 'Alerts should be empty');
+		vm.off('alerts', removeHandler);
 		done();
-	}, 100);
+	};
+
+	vm.on('alerts', addHandler);
+	hub.dispatch({type: 'alert'});
 });
 
-QUnit.test('showAlert hides alert if displayInterval > 0', assert => {
+QUnit.test('Autohide automatically creates a remove action', assert => {
 	const done = assert.async();
 	const vm = new ViewModel();
-	const alert = new AlertItem();
-	alert.displayInterval = 300;
 
-	vm.showAlert(alert);
-	setTimeout(() => {
-		assert.notOk(alert.visible, 'alert should no longer be visible');
+	// Always unbind
+	const handler = ev => {
+		assert.equal(ev.type, 'remove');
+		vm.autoHideStream.offValue(handler);
 		done();
-	}, 400);
+	};
+
+	vm.autoHideStream.onValue(handler);
+	hub.dispatch({ type: 'alert', displayInterval: 100 });
 });
 
-QUnit.test('hideAlert removes alert from list after delay', assert => {
+QUnit.test('Autohide ignores falsy or Infinity', assert => {
+	assert.expect(5);
 	const done = assert.async();
 	const vm = new ViewModel();
-	const alert = new AlertItem();
 
-	vm.alerts = [alert];
-	vm.hideAlert(alert);
-	assert.equal(vm.alerts.length, 1, 'not removed synchronously');
+	const handler = ev => {
+		assert.equal(ev.type, 'no-op');
+	};
+
+	// Always unbind
 	setTimeout(() => {
-		assert.equal(vm.alerts.length, 0);
+		vm.autoHideStream.offValue(handler);
 		done();
-	}, 600);
+	}, 300);
+
+	vm.autoHideStream.onValue(handler);
+	hub.dispatch({ type: 'alert', displayInterval: 0 });
+	hub.dispatch({ type: 'alert', displayInterval: null });
+	hub.dispatch({ type: 'alert', displayInterval: undefined });
+	hub.dispatch({ type: 'alert', displayInterval: '' });
+	hub.dispatch({ type: 'alert', displayInterval: Infinity });
 });

@@ -1,35 +1,36 @@
 <can-import from="can-stache/helpers/route" />
+<can-import from="./main-nav.less!" />
 
 <nav class="navbar navbar-default navbar-static-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="{{routeUrl}}" class="navbar-brand">
-        <img src="/img/bitcentive-logo-brand.png" alt="" class="logo">
-      </a>
-    </div>
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="{{routeUrl}}" class="navbar-brand">
+				<img src="/img/bitcentive-logo-brand.png" alt="" class="logo">
+			</a>
+		</div>
 
-    <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
-      <ul class="nav navbar-nav">
-        {{#if session}}
-          <li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Dashboard</a></li>
-          <li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
-        {{else}}
-          <li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
-        {{/if}}
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {{#if session}}
-          <li>
-            <li><a href="{{routeUrl(page='logout')}}">Logout</a></li>
-          </li>
-        {{/if}}
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
+		<div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
+			<ul class="nav navbar-nav">
+				{{#if session}}
+					<li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Dashboard</a></li>
+					<li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
+				{{else}}
+					<li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
+				{{/if}}
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				{{#if session}}
+					<li>
+						<li><a href="javascript://" ($click)="session.destroy()">Logout</a></li>
+					</li>
+				{{/if}}
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
 </nav>

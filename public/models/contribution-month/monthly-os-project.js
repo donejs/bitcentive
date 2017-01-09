@@ -8,7 +8,7 @@ import OSProject from "../os-project";
 const MonthlyOSProject = DefineMap.extend( "MonthlyOSProject" , {
   significance: "number",
   commissioned: "boolean",
-  osProjectRef: { type: OSProject.Ref.type },
+  osProjectRef: OSProject.Ref,
   contributionMonth: {
     Type: ContributionMonth,
     serialize: false

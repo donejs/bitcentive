@@ -4,9 +4,7 @@ import MonthlyClientProjectsOsProjectList from "./monthly-client-projects-os-pro
 import ClientProject from "../client-project";
 
 const MonthlyClientProject = DefineMap.extend( "MonthlyClientProject", {
-  clientProjectRef: {
-    type: ClientProject.Ref.type
-  },
+  clientProjectRef: ClientProject.Ref,
   hours: "number",
   monthlyClientProjectsOSProjects: {
     Type: MonthlyClientProjectsOsProjectList,
@@ -25,7 +23,7 @@ MonthlyClientProject.List = DefineList.extend({
       this.splice(this.indexOf(instance), 1);
     } else {
       this.push( new MonthlyClientProject({
-        clientProjectRef: clientProject,
+        clientProjectRef: clientProject.serialize(),
         hours: 0,
         monthlyClientProjectsOSProjects: []
       }) );
