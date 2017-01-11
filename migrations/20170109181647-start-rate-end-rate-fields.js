@@ -1,25 +1,22 @@
 'use strict';
 
 const app = require('../src/app');
+const denodeify = require('denodeify');
 
 exports.up = function(db) {
 	const svc = app.service('/api/contribution_months');
 	const ContributionMonth = svc.Model;
 	const paths = ContributionMonth.schema.paths;
+	const update = denodeify(ContributionMonth.update.bind(ContributionMonth));
 
 	/**
 	 * Example update direct to db
 	 */
-	return new Promise((resolve, reject) => {
-		ContributionMonth.update({
-			startRate: { '$exists': false }
-		}, {
-			startRate: paths.startRate.defaultValue,
-			endRate: paths.endRate.defaultValue
-		}, (err, result) => {
-			if (err) return reject(err);
-			return resolve(result);
-		});
+	return update({
+		startRate: { '$exists': false }
+	}, {
+		startRate: paths.startRate.defaultValue,
+		endRate: paths.endRate.defaultValue
 	});
 
 	/**
@@ -42,13 +39,9 @@ exports.down = function(db) {
 	const svc = app.service('/api/contribution_months');
 	const ContributionMonth = svc.Model;
 	const paths = ContributionMonth.schema.paths;
+	const update = denodeify(ContributionMonth.update.bind(ContributionMonth));
 
-	return new Promise((resolve, reject) => {
-		ContributionMonth.update({}, {
-			'$unset': { startRate: 1, endRate: 1 }
-		}, (err, result) => {
-			if (err) return reject(err);
-			return resolve(result);
-		});
+	return update({}, {
+		'$unset': { startRate: 1, endRate: 1 }
 	});
 };

@@ -8,7 +8,7 @@ We are using the [db-migrate](https://www.npmjs.com/package/db-migrate) package.
 db-migrate create name-of-migration
 ```
 
-Please use a meaningfull `name-of-migration`. This will create a file within the [migrations](./) directory prefixed with a sortable timestamp. Open the file and add your `up` and `down` scripts. Most of the time you will want to import the app and call services directly to ensure data is processed correctly (hooks and all):
+Please use a meaningful `name-of-migration`. This will create a file within the [migrations](./) directory prefixed with a sortable timestamp. Open the file and add your `up` and `down` scripts. Often times you will want to import the app and call services directly to ensure data is processed correctly (hooks and all):
 
 ```js
 const app = require('../src/app');
@@ -19,7 +19,7 @@ exports.up = function() {
 }
 ```
 
-**Exectute all new migration scripts:**
+**Execute all new migration scripts:**
 
 ```
 npm run db-migrate

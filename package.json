@@ -22,7 +22,7 @@
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
     "install": "node install.js && npm run db-migrate",
-    "db-migrate": "db-migrate up" 
+    "db-migrate": "node migrate.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -30,6 +30,7 @@
     "cors": "^2.8.1",
     "db-migrate": "^0.10.0-beta.20",
     "db-migrate-mongodb": "^1.1.4",
+    "denodeify": "^1.2.1",
     "feathers": "^2.0.2",
     "feathers-authentication": "1.0.2",
     "feathers-authentication-jwt": "^0.3.0",
