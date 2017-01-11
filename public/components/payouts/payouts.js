@@ -56,35 +56,72 @@ export const ViewModel = DefineMap.extend({
 
     return total;
   },
+  /**
+   * @property {Map} payouts
+   *
+   * A map of OS Project payouts per Contributor based on the current month and
+   * any previous months.
+   *
+   * e.g.
+   * ```
+   * {
+   *   "5873af58cd85b95c3f6285f5": {
+   *     "contributorRef": ...,
+   *     "monthlyOSProjects": [
+   *       {
+   *         "osProjectRef": ...,
+   *         "total": 0
+   *       },
+   *       {
+   *         "osProjectRef": ...,
+   *         "total": 339.9396969696969
+   *       },
+   *       {
+   *         "osProjectRef": ...,
+   *         "total": 0
+   *       }
+   *     ]
+   *   }
+   * }
+   * ```
+   */
   get payouts() {
-    const map = {};
-    if(this.contributionMonth) {
+    let contributorProjectPayouts = {};
 
-      const monthlyContributorsMap = this.contributionMonth.monthlyContributions.contributorsMap;
-      const monthlyOSProjects = this.contributionMonth.monthlyOSProjects;
+    if (this.contributionMonth && this.contributionMonths) {
+      let currentMonth = moment(this.contributionMonth.date);
+      let uniqueProjects = {};
+      let uniqueContributors = {};
 
-      for (const contributorID in monthlyContributorsMap) {
+      this.contributionMonths.map(contributionMonth => {
+        if (currentMonth.isSameOrAfter(contributionMonth.date)) {
+          contributionMonth.monthlyOSProjects.map(monthlyOSProject => {
+            uniqueProjects[monthlyOSProject._id] = monthlyOSProject;
+          });
 
-        const contributor = monthlyContributorsMap[contributorID];
-        const contributorRef = contributor.contributorRef;
-
-        if(!map[contributorRef._id]) {
-          map[contributorRef._id] = {
-            contributorRef: contributorRef,
-            monthlyOSProjects: []
-          };
+          Object.assign(uniqueContributors,
+            contributionMonth.monthlyContributions.contributorsMap);
         }
+      });
 
-        monthlyOSProjects.forEach(monthlyOSProject => {
-          const contributorTotal = this.getOSProjectPayoutTotal(monthlyOSProject, contributor);
-          map[contributorRef._id].monthlyOSProjects.push({
+      Object.keys(uniqueContributors).map(contributorId => {
+        let contributor = Object.assign({ }, uniqueContributors[contributorId]);
+        contributor.monthlyOSProjects = [];
+
+        Object.keys(uniqueProjects).map(projectId => {
+          let monthlyOSProject = uniqueProjects[projectId];
+
+          contributor.monthlyOSProjects.push({
             osProjectRef: monthlyOSProject.osProjectRef,
-            total: contributorTotal
+            total: this.getOSProjectPayoutTotal(monthlyOSProject, contributor)
           });
         });
-      }
+
+        contributorProjectPayouts[contributorId] = contributor;
+      });
     }
-    return map;
+
+    return contributorProjectPayouts;
   },
   get hasContributionPayouts() {
     return Boolean(Object.keys(this.payouts).length);
