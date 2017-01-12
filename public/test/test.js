@@ -18,3 +18,5 @@ import 'bitcentive/components/page-dashboard/page-dashboard_test';
 import 'bitcentive/components/page-contributors/page-contributors_test';
 
 import 'bitcentive/components/page-home/page-home_test';
+
+import 'bitcentive/components/model-edit-property/model-edit-property_test';

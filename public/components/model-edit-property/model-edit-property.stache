@@ -1,0 +1,13 @@
+<can-import from="./model-edit-property.less" />
+
+{{#if isEditing}}
+  <input
+    type="text"
+    class="form-control"
+    {$value}="propertyValue"
+    ($enter)="commitValue(%element.value)"
+    ($keydown)="cancelEdit(%event)"
+  />
+{{else}}
+  <a href="javascript://" ($click)="makeEditable()" title="Edit" >{{propertyValue}}</a>
+{{/if}}
