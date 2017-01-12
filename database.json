@@ -1,0 +1,7 @@
+{
+  "dev": "mongodb://localhost:27017/bitcentive",
+  "prod": {
+  	"ENV": "MONGODB_URI",
+  	"driver": "mongodb"
+  }
+}
