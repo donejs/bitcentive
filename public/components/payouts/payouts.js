@@ -86,6 +86,9 @@ export const ViewModel = DefineMap.extend({
     }
     return map;
   },
+  get hasContributionPayouts() {
+    return Boolean(Object.keys(this.payouts).length);
+  },
   formatDollarAmount(value) {
     return value.toFixed(2);
   }
