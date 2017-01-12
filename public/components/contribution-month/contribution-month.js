@@ -8,14 +8,12 @@ export const ViewModel = DefineMap.extend({
   contributionMonthId: "string",
 
   // derived props
-  contributionMonthPromise: {
-    get: function(){
-      if(this.contributionMonthId) {
-        return ContributionMonth.get({
-          _id: this.contributionMonthId,
-          query: {'$populate': ['monthlyOSProjects.osProjectRef']}
-        });
-      }
+  get contributionMonthPromise() {
+    if(this.contributionMonthId) {
+      return ContributionMonth.get({
+        _id: this.contributionMonthId,
+        query: {'$populate': ['monthlyOSProjects.osProjectRef']}
+      });
     }
   },
   contributionMonth: {
