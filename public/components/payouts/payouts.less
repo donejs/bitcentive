@@ -5,8 +5,12 @@ bit-payouts {
 	position: relative;
 
 	.table-scroller {
-		overflow-x: scroll;
+		overflow-x: auto;
 		overflow-y: visible;
+	}
+
+	table {
+		font-size: inherit;
 	}
 
 	.total {
@@ -38,6 +42,9 @@ bit-payouts {
 				left: 0;
 				top: auto;
 				border-right: 2px solid #ddd;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 		}
 	});
