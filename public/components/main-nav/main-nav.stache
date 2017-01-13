@@ -20,6 +20,7 @@
 				{{#if session}}
 					<li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Dashboard</a></li>
 					<li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
+					<li {{#routeCurrent page="users"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="users"}}">Users</a></li>
 				{{else}}
 					<li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
 				{{/if}}

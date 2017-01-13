@@ -5,6 +5,7 @@ var store = fixture.store([
   {
     "_id": "5877a57f810a6b19008720ba",
     "githubId": 798836,
+		"isAdmin": true,
     "github": {
       "accessToken": "accessToken123456789accessToken123456789",
       "profile": {

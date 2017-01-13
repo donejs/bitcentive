@@ -11,7 +11,7 @@ exports.up = function(db) {
 
   return new Promise((resolve, reject) => {
     User.update({ isAdmin: { '$exists': false } },
-      { isAdmin: paths.isAdmin.defaultValue },
+      { isAdmin: true }, // model default is false
       (error, result) => error ? reject(error) : resolve(result));
   });
 };
