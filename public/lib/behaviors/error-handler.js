@@ -10,7 +10,7 @@ const errorHandler = connect.behavior('error-handler', baseConnect => {
 			promise.catch(e => {
 				hub.dispatch({
 					type: 'alert',
-					kind: 'error',
+					kind: 'danger',
 					title: 'Error',
 					message: (e.responseJSON && e.responseJSON.message) || e.responseText || e.message
 				});
