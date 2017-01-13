@@ -1,5 +1,6 @@
 <can-import from="can-stache/helpers/route" />
 <can-import from="./main-nav.less!" />
+<can-import from="~/lib/stache-helpers/" />
 
 <nav class="navbar navbar-default navbar-static-top">
 	<div class="container">
@@ -19,8 +20,10 @@
 			<ul class="nav navbar-nav">
 				{{#if session}}
 					<li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Dashboard</a></li>
-					<li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
-					<li {{#routeCurrent page="users"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="users"}}">Users</a></li>
+					{{#if isAdmin()}}
+						<li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
+						<li {{#routeCurrent page="users"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="users"}}">Users</a></li>
+					{{/if}}
 				{{else}}
 					<li {{#routeCurrent page="home"}}class="active"{{/routeCurrent}}><a href="{{routeUrl}}">Home Page</a></li>
 				{{/if}}

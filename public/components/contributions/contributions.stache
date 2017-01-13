@@ -1,98 +1,119 @@
 <can-import from="./contributions.less" />
+<can-import from="~/lib/stache-helpers/" />
 
 {{#if contributionMonth.monthlyContributions.length}}
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Open Source Project</th>
-      <th>Description</th>
-      <th>Points</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  {{#each contributionMonth.monthlyContributions as monthlyContribution}}
-    <tr>
-      <td>
-        {{monthlyContribution.contributorRef.value.name}}
-      </td>
-      <td>
-        {{monthlyContribution.osProjectRef.value.name}}
-      </td>
-      <td><input type="textarea" {($value)}="monthlyContribution.description" ($change)="contributionMonth.save()"/></td>
-      <td><input type="number" {($value)}="monthlyContribution.points" ($change)="contributionMonth.save()"/></td>
-      <td>
-        <button type="button" class="btn btn-danger btn-xs"
-            ($click)="removeContribution(%event, monthlyContribution)">
-          <span class="glyphicon glyphicon-remove"/>
-        </button>
-      </td>
-    </tr>
-  {{/each}}
-  </tbody>
-</table>
+	<table class='table'>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Open Source Project</th>
+				<th>Description</th>
+				<th>Points</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each contributionMonth.monthlyContributions as monthlyContribution}}
+			<tr>
+				<td>
+					{{monthlyContribution.contributorRef.value.name}}
+				</td>
+				<td>
+					{{monthlyContribution.osProjectRef.value.name}}
+				</td>
+				<td>
+					<input
+						type="textarea"
+						class="form-control"
+						{($value)}="monthlyContribution.description"
+						($change)="contributionMonth.save()"
+						{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
+					/>
+				</td>
+				<td>
+					<input
+						type="number"
+						class="form-control"
+						{($value)}="monthlyContribution.points"
+						($change)="contributionMonth.save()"
+						{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
+					/>
+				</td>
+				<td>
+					{{#if isAdmin()}}
+						<button type="button" class="btn btn-danger btn-xs"
+								($click)="removeContribution(%event, monthlyContribution)">
+							<span class="glyphicon glyphicon-remove"/>
+						</button>
+					{{/if}}
+				</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table>
 {{/if}}
 
-{{#if adding}}
-<div class="panel panel-default">
-  <div class="panel-heading">Add Contribution</div>
-    <div class="panel-body">
-      <form ($submit)="addContribution(%event)" id="contributions-form">
-        <div class="row">
-          <div class="col-xs-6">
-          {{#if activeContributors.isPending}}
-            <p>Loading...</p>
-          {{else}}
-            <label>User: </label>
-            <select {($value)}="selectedContributorId" class="form-control">
-            {{#each activeContributors.value as contributor}}
-              <option value="{{contributor._id}}">{{contributor.name}}</option>
-            {{/each}}
-            </select>
-          {{/if}}
-          </div>
+{{#if isAdmin()}}
+	{{#if adding}}
+		<div class="panel panel-default">
+			<div class="panel-heading">Add Contribution</div>
+				<div class="panel-body">
+					<form ($submit)="addContribution(%event)" id="contributions-form">
+						<div class="row">
+							<div class="col-xs-6">
+							{{#if activeContributors.isPending}}
+								<p>Loading...</p>
+							{{else}}
+								<label>User: </label>
+								<select {($value)}="selectedContributorId" class="form-control">
+								{{#each activeContributors.value as contributor}}
+									<option value="{{contributor._id}}">{{contributor.name}}</option>
+								{{/each}}
+								</select>
+							{{/if}}
+							</div>
 
-          <div class="col-xs-6">
-            {{#if osProjects.isPending}}
-              <p>Loading...</p>
-            {{else}}
-              <label>Open Source Project: </label>
-              <select {($value)}="selectedOSProjectId" class="form-control">
-              {{#each osProjects.value as osProject}}
-                <option value="{{osProject._id}}">
-                  {{osProject.name}}
-                </option>
-              {{/each}}
-              </select>
-            {{/if}}
-          </div>
-        </div>
+							<div class="col-xs-6">
+								{{#if osProjects.isPending}}
+									<p>Loading...</p>
+								{{else}}
+									<label>Open Source Project: </label>
+									<select {($value)}="selectedOSProjectId" class="form-control">
+									{{#each osProjects.value as osProject}}
+										<option value="{{osProject._id}}">
+											{{osProject.name}}
+										</option>
+									{{/each}}
+									</select>
+								{{/if}}
+							</div>
+						</div>
 
-        <div class="row">
-          <div class="col-xs-9">
-            <label>Description:</label>
-            <input type="textarea" class="form-control" {($value)}="description"/>
-          </div>
-          <div class="col-xs-3">
-            <label>Points:</label>
-            <input type="number" class="form-control" {($value)}="points" min="0"/>
-          </div>
-        </div>
-      </form>
+						<div class="row">
+							<div class="col-xs-9">
+								<label>Description:</label>
+								<input type="textarea" class="form-control" {($value)}="description"/>
+							</div>
+							<div class="col-xs-3">
+								<label>Points:</label>
+								<input type="number" class="form-control" {($value)}="points" min="0"/>
+							</div>
+						</div>
+					</form>
 
-      <button
-        class="btn btn-primary"
-        type="submit"
-        form="contributions-form"
-        value="Submit">Add Contribution</button>
+					<button
+						class="btn btn-primary"
+						type="submit"
+						form="contributions-form"
+						value="Submit">Add Contribution</button>
 
-      <button
-        class="btn btn-default"
-        ($click)="toggleAddNewContribution(%event)">Cancel</button>
-    </div>
-  </div>
-</div>
-{{else}}
-  <a href="javascript://" ($click)="toggleAddNewContribution(%event)">Add Contribution</a>
+					<button
+						class="btn btn-default"
+						($click)="toggleAddNewContribution(%event)">Cancel</button>
+				</div>
+			</div>
+		</div>
+	{{else}}
+		<a href="javascript://" ($click)="toggleAddNewContribution(%event)">Add Contribution</a>
+	{{/if}}
 {{/if}}

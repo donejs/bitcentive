@@ -6,9 +6,7 @@ import ContributionMonth from '../../models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
-  contributionMonth: {
-    Type: ContributionMonth
-  },
+  contributionMonth: ContributionMonth,
 
   // Stateful properties
   activePromise: "any",
