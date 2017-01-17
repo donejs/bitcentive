@@ -23,17 +23,3 @@ QUnit.asyncTest('viewModel.OSProjectContributionsMap', function(){
     });
   });
 });
-
-QUnit.asyncTest('viewModel.getOSProjectPayoutTotal', function(){
-  var vm;
-  ContributionMonth.get("1").then(month => {
-    vm = new ViewModel({ contributionMonth: month });
-    vm.on('contributionMonths', () => {
-      QUnit.equal(vm.getOSProjectPayoutTotal(
-        vm.contributionMonth.monthlyOSProjects[0],
-        vm.contributionMonth.monthlyContributions.contributorsMap['1-JustinMeyer']
-      ), 350, 'Total for the 1st contributor should be 350');
-      QUnit.start();
-    });
-  });
-});
