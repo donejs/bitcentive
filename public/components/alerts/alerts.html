@@ -1,23 +1,42 @@
 <script type="text/stache" can-autorender>
 	<can-import from="bootstrap/dist/css/bootstrap.css" />
+	<can-import from="bitcentive/styles.less" />
 	<can-import from="bitcentive/components/alerts/alerts" />
 	<bit-alerts/>
-	<button class="btn" id="createInfo">type="info"</button>
-	<button class="btn" id="createWarning">type="warning"</button>
-	<button class="btn" id="createSuccess">type="success"</button>
-	<button class="btn" id="createError">type="error"</button>
+
+	<button class="btn alert-info" id="createInfo">kind="info"</button>
+	<button class="btn alert-warning" id="createWarning">kind="warning"</button>
+	<button class="btn alert-success" id="createSuccess">kind="success"</button>
+	<button class="btn alert-danger" id="createDanger">kind="danger"</button>
+	<br>
+	<label><input type="checkbox" id="autoHide"> Autohide after 3000ms</label>
+	<h3>Code:</h3>
+	<pre style="display: inline-block;"><code id="output">Click a button to generate code</code></pre>
 </script>
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
-	import AlertItem from 'bitcentive/models/alert';
 	import viewModel from 'can-view-model';
 	import autorender from 'can-view-autorender';
+	import hub from 'bitcentive/lib/event-hub';
 
 	autorender(() => {
 		const vm = viewModel('bit-alerts');
-		['Info', 'Warning', 'Success', 'Error'].forEach(type => {
-			document.getElementById('create' + type).addEventListener('click', ev => {
+		const autohideCheckbox = document.getElementById('autoHide');
+		const output = document.getElementById('output');
+
+		['Info', 'Warning', 'Success', 'Danger'].forEach(kind => {
+			document.getElementById('create' + kind).addEventListener('click', ev => {
 				ev.preventDefault();
-				vm.addAlert({type: type.toLowerCase(), title: `"${type}" Alert`, message: `This is a(n) ${type} alert!`});
+				const options = {
+					type: 'alert',
+					kind: kind.toLowerCase(), 
+					title: `${kind} Alert`,
+					displayInterval: autohideCheckbox.checked ? 3000 : Infinity, 
+					message: `This is a(n) ${kind} alert!`
+				};
+				hub.dispatch(options);
+				delete options.batchNum;
+				output.innerText = 'import hub from "bitcentive/lib/event-hub";\n\n';
+				output.innerText += 'hub.dispatch(' + JSON.stringify(options, null, '  ') + ');';
 			});
 		});
 	});
