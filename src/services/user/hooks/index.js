@@ -2,12 +2,13 @@
 
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
+const makeFirstAdmin = require('./make-first-admin');
 
 exports.before = {
   all: [],
   find: [],
   get: [],
-  create: [],
+  create: [makeFirstAdmin()],
   update: [],
   patch: [],
   remove: []
