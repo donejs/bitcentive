@@ -12,7 +12,8 @@ window.viewModel = viewModel;
 var pages = {
   home: 'public',
   dashboard: 'private',
-  contributors: 'private'
+  contributors: 'private',
+  users: 'private'
 };
 
 const AppViewModel = DefineMap.extend({
@@ -26,7 +27,7 @@ const AppViewModel = DefineMap.extend({
   },
 
   /**
-   * Use Session.get() to see if there's a valid JWT. If one exists, 
+   * Use Session.get() to see if there's a valid JWT. If one exists,
    * a new Session will be created.
    */
   session: {

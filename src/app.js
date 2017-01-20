@@ -15,6 +15,8 @@ const middleware = require('./middleware');
 const services = require('./services');
 //const ssr = require("../public/ssr");
 
+const globalHooks = require('./hooks');
+
 const app = feathers();
 
 // Redirect to HTTPS if a request comes in over HTTP.
@@ -40,5 +42,12 @@ app.use(compress())
   .configure(services)
   //.use(ssr)
   .configure(middleware);
+
+app.hooks({
+  before: [globalHooks.restrictToAuthenticated(), globalHooks.requireAdmin({
+    ignorePaths: ['authentication']
+  })],
+  after: []
+});
 
 module.exports = app;

@@ -1,95 +1,102 @@
 <can-import from='./client-projects.less'/>
-{{#if contributionMonth.monthlyClientProjects.length}}
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Hours</th>
-      <th>Commissioned + Uncommissioned</th>
-      <th>Hourly Tax</th>
-      <th class="text-right">Total</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  {{#each contributionMonth.sortedMonthlyClientProjects as monthlyClientProject}}
-    {{#if monthlyClientProject.clientProjectRef.value}}
-    <tr>
-      <td>{{monthlyClientProject.clientProjectRef.value.name}}</td>
-      <td>
-        <input type="number" class="form-control hours-input"
-               {($value)}="monthlyClientProject.hours"
-               ($change)="contributionMonth.save()"
-               {$disabled}="contributionMonth.isSaving" />
-      </td>
-      <td class="os-projects-cell">
-        <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" ($click)="setSelectedClientProject(monthlyClientProject)" >
-          {{! Count of commissioned projects }}
-          {{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
-          +
-          {{! Count of uncommisioned projects }}
-          {{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
-        </button>
-      </td>
-      <td>
-         <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}
-      </td>
-      <td class="text-right">
-        <span class="total">${{contributionMonth.getTotal(monthlyClientProject).toFixed(2)}}</span>
-      </td>
-      <td>
-        <button type="button" class="btn btn-danger btn-xs" ($click)="deleteClientProject(monthlyClientProject)">
-          <span class="glyphicon glyphicon-remove"/>
-        </button>
-      </td>
-    </tr>
-    {{/if}}
-  {{/each}}
-  </tbody>
-</table>
+<can-import from="~/lib/stache-helpers/" />
 
-<can-import from="./client-projects-os-projects-modal.stache" {^@value}="@*osProjectsModal" />
-{{>*osProjectsModal}}
+{{#if contributionMonth.monthlyClientProjects.length}}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Hours</th>
+				<th>Commissioned + Uncommissioned</th>
+				<th>Hourly Tax</th>
+				<th class="text-right">Total</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each contributionMonth.sortedMonthlyClientProjects as monthlyClientProject}}
+			{{#if monthlyClientProject.clientProjectRef.value}}
+				<tr>
+					<td>{{monthlyClientProject.clientProjectRef.value.name}}</td>
+					<td>
+						<input type="number" class="form-control hours-input"
+							{($value)}="monthlyClientProject.hours"
+							($change)="contributionMonth.save()"
+							{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
+						/>
+					</td>
+					<td class="os-projects-cell">
+						<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" ($click)="setSelectedClientProject(monthlyClientProject)" >
+							{{! Count of commissioned projects }}
+							{{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
+							+
+							{{! Count of uncommisioned projects }}
+							{{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+						</button>
+					</td>
+					<td>
+						 <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}
+					</td>
+					<td class="text-right">
+						<span class="total">${{contributionMonth.getTotal(monthlyClientProject).toFixed(2)}}</span>
+					</td>
+					<td>
+						{{#if isAdmin()}}
+							<button type="button" class="btn btn-danger btn-xs" ($click)="deleteClientProject(monthlyClientProject)">
+								<span class="glyphicon glyphicon-remove"/>
+							</button>
+						{{/if}}
+					</td>
+				</tr>
+			{{/if}}
+		{{/each}}
+		</tbody>
+	</table>
+
+	<can-import from="./client-projects-os-projects-modal.stache" {^@value}="@*osProjectsModal" />
+	{{>*osProjectsModal}}
 {{/if}}
 
-{{#if isAddingClients}}
-<div class="panel panel-default">
-  <div class="panel-heading">Add Client</div>
-    <div class="panel-body">
-      <form ($submit)="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
-        <div class="row">
-          <div class="col-xs-6">
-          {{#if projects.pending}}
-            <p>Loading...</p>
-          {{/if}}
-          {{#if projects.isResolved}}
-            <label>Select a client: </label>
-            <select {($value)}="selectedClientId" class="form-control">
-            {{#each projects.value}}
-            {{^if contributionMonth.monthlyClientProjects.has(.)}}
-              <option value="{{_id}}">{{name}}</option>
-            {{/if}}
-            {{/each}}
-              <option value="__new__">Add New Client</option>
-            </select>
-          {{/if}}
-          </div>
-        {{#if creatingNewClientProject}}
-          <div class="col-xs-6">
-            <label>New client name:</label>
-            <input type="text"
-                   class="form-control"
-                   placeholder="Client Name"
-                   {($value)}="newClientName"/>
-          </div>
-        {{/if}}
-        </div>
-      </form>
-      <button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>
-      <button class="btn btn-default" ($click)="toggleClientInput()">Cancel</button>
-    </div>
-  </div>
-</div>
-{{else}}
-  <a href="javascript://" ($click)="toggleClientInput()">Add Client</a>
+{{#if isAdmin()}}
+	{{#if isAddingClients}}
+		<div class="panel panel-default">
+			<div class="panel-heading">Add Client</div>
+				<div class="panel-body">
+					<form ($submit)="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
+						<div class="row">
+							<div class="col-xs-6">
+							{{#if projects.pending}}
+								<p>Loading...</p>
+							{{/if}}
+							{{#if projects.isResolved}}
+								<label>Select a client: </label>
+								<select {($value)}="selectedClientId" class="form-control">
+								{{#each projects.value}}
+								{{^if contributionMonth.monthlyClientProjects.has(.)}}
+									<option value="{{_id}}">{{name}}</option>
+								{{/if}}
+								{{/each}}
+									<option value="__new__">Add New Client</option>
+								</select>
+							{{/if}}
+							</div>
+						{{#if creatingNewClientProject}}
+							<div class="col-xs-6">
+								<label>New client name:</label>
+								<input type="text"
+											 class="form-control"
+											 placeholder="Client Name"
+											 {($value)}="newClientName"/>
+							</div>
+						{{/if}}
+						</div>
+					</form>
+					<button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>
+					<button class="btn btn-default" ($click)="toggleClientInput()">Cancel</button>
+				</div>
+			</div>
+		</div>
+	{{else}}
+		<a href="javascript://" ($click)="toggleClientInput()">Add Client</a>
+	{{/if}}
 {{/if}}

@@ -15,6 +15,7 @@
     <can-import from="bitcentive/components/main-nav/" />
     <can-import from="bitcentive/components/page-home/"/>
     <can-import from="bitcentive/components/page-contributors/"/>
+    <can-import from="bitcentive/components/page-users/"/>
     <can-import from="bitcentive/components/page-dashboard/"/>
     <can-import from="bitcentive/pages/four-oh-four.component"/>
 
@@ -29,6 +30,9 @@
       {{/case}}
       {{#case 'contributors'}}
         <page-contributors/>
+      {{/case}}
+      {{#case 'users'}}
+        <page-users/>
       {{/case}}
       {{#case 'four-oh-four'}}
         <page-four-oh-four></page-four-oh-four>

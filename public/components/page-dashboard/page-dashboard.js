@@ -3,9 +3,7 @@ import DefineMap from 'can-define/map/';
 import view from './page-dashboard.stache';
 
 export const ViewModel = DefineMap.extend({
-	contributionMonthId: {
-		type: "string",
-	}
+	contributionMonthId: "string"
 });
 
 export default Component.extend({

@@ -8,9 +8,7 @@ import OSProject from '../../models/os-project';
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
-  contributionMonth: {
-    Type: ContributionMonth
-  },
+  contributionMonth: ContributionMonth,
 
   // Stateful properties
   selectedContributorId: 'string',
