@@ -24,15 +24,15 @@ export const ViewModel = DefineMap.extend({
         new ContributionMonth(last).save((newContributionMonth) => {
           setVal(newContributionMonth._id);
         });
-        
+
       } else {
         setVal(newVal);
       }
     }
   },
   contributionMonthsPromise: {
-    get: function () {
-      return ContributionMonth.getList({$sort: {date: 1}});
+    value() {
+      return ContributionMonth.getList({ $sort: { date: 1 } });
     }
   },
 
@@ -41,26 +41,21 @@ export const ViewModel = DefineMap.extend({
       this.contributionMonthsPromise.then(resolve);
     }
   },
-  lastMonth: {
-    get: function(){
-      if(this.contributionMonths && this.contributionMonths.length) {
-        return this.contributionMonths[this.contributionMonths.length - 1];
-      } else {
-        return new ContributionMonth({
-          monthlyClientProjects: [],
-          monthlyOSProjects:[],
-          monthlyContributions: [],
-          date: moment().add(-1,'months').startOf('month').toDate()
-        });
-      }
+  get lastMonth() {
+    if(this.contributionMonths && this.contributionMonths.length) {
+      return this.contributionMonths[this.contributionMonths.length - 1];
+    } else {
+      return new ContributionMonth({
+        monthlyClientProjects: [],
+        monthlyOSProjects:[],
+        monthlyContributions: [],
+        date: moment().add(-1,'months').startOf('month').toDate()
+      });
     }
   },
-  nextMonth: {
-    get: function(){
-      return moment(this.lastMonth.date).add(1,'months').startOf('month').toDate();
-    }
-  },
-
+  get nextMonth() {
+		return moment(this.lastMonth.date).add(1,'months').startOf('month').toDate();
+  }
 });
 
 export default Component.extend({
