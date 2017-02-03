@@ -42,7 +42,9 @@ const AppViewModel = DefineMap.extend({
   page: {
     serialize: true,
     get (page) {
-      if (this.session) {
+      var session = this.session;
+      // We don't want to make requests that require auth before the Socket.io connection has been authenticated:
+      if (session && session.isAuthenticated) {
         if (page === 'home') {
           page = 'dashboard';
         }
