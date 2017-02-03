@@ -63,7 +63,7 @@ var User = DefineMap.extend("User", {
 	 * An email address for the user.
 	 */
 	get email() {
-		return this.profile && this.profile.emails[0].value;
+		return this.profile && this.profile.emails && this.profile.emails[0].value;
 	},
 	/**
 	 * @property {String} name
