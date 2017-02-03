@@ -12,7 +12,11 @@ export const ViewModel = DefineMap.extend({
     if(this.contributionMonthId) {
       return ContributionMonth.get({
         _id: this.contributionMonthId,
-        query: {'$populate': ['monthlyOSProjects.osProjectRef']}
+        query: {'$populate': [
+					'monthlyOSProjects.osProjectRef',
+					'monthlyClientProjects.clientProjectRef',
+					'monthlyContributions.contributorRef',
+				]}
       });
     }
   },
