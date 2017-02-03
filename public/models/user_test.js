@@ -31,6 +31,10 @@ QUnit.test('derived properties', assert => {
     assert.ok(/@/.test(user.email), 'email');
     assert.ok(user.name, 'name');
 
+		let user2 = users[1];
+		assert.ok(typeof user2.email === 'undefined', 'no email resolves in undefined');
+		assert.ok(typeof user2.photoUrl === 'undefined', 'no photoUrl resolves in undefined');
+
     done();
   }, err => {
     assert.ok(false);

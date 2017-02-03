@@ -60,6 +60,22 @@ var store = fixture.store([
       }
     },
     "__v": 0
+  },
+  {
+    "_id": "2",
+    "githubId": 12345,
+		"isAdmin": true,
+    "github": {
+      "accessToken": "accessToken123456789",
+      "profile": {
+        "provider": "github",
+        "profileUrl": "https://github.com/ilyavf",
+        "username": "ilyavf",
+        "displayName": "Ilya",
+        "id": "12345"
+      }
+    },
+    "__v": 1
   }
 ], algebra);
 

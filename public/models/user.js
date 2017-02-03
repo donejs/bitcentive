@@ -55,7 +55,7 @@ var User = DefineMap.extend("User", {
 	 * A URL to a user avatar.
 	 */
 	get photoUrl() {
-		return this.profile && this.profile.photos[0].value;
+		return this.profile && this.profile.photos && this.profile.photos[0] && this.profile.photos[0].value;
 	},
 	/**
 	 * @property {String} email
@@ -63,7 +63,7 @@ var User = DefineMap.extend("User", {
 	 * An email address for the user.
 	 */
 	get email() {
-		return this.profile && this.profile.emails && this.profile.emails[0].value;
+		return this.profile && this.profile.emails && this.profile.emails[0] && this.profile.emails[0].value;
 	},
 	/**
 	 * @property {String} name
