@@ -6,7 +6,7 @@ import OSProject from '../../os-project';
 import ClientProject from '../../client-project';
 import MonthlyClientProjectsOSProjectList from '../monthly-client-projects-os-project-list';
 import Contributor from '../../contributor';
-import MonthlyContributions from '../monthly-contributions';
+import MonthlyContribution from '../monthly-contribution';
 import MonthlyOSProject from '../monthly-os-project';
 import MonthlyClientProject from '../monthly-client-project';
 import fixture from 'can-fixture';
@@ -27,8 +27,8 @@ QUnit.test( "ContributionMonth basic test", function() {
     "monthlyOSProjects was made and is a MonthlyOSProject.List" );
   ok( contributionMonth.monthlyClientProjects instanceof MonthlyClientProject.List,
     "monthlyClientProjects was made and is a MonthlyClientProject.List" );
-  ok( contributionMonth.monthlyContributions instanceof MonthlyContributions.List,
-    "monthlyContributions was made and is a MonthlyContributions.List" );
+  ok( contributionMonth.monthlyContributions instanceof MonthlyContribution.List,
+    "monthlyContributions was made and is a MonthlyContribution.List" );
 } );
 
 QUnit.test( "Can create ContributionMonth from scratch", function() {
@@ -92,13 +92,13 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
   monthlyClientProjects.push( monthlyClientProject01 );
   monthlyClientProjects.push( monthlyClientProject02 );
 
-  let monthlyContribution01 = new MonthlyContributions( {
+  let monthlyContribution01 = new MonthlyContribution( {
     contributorRef: contributor01,
     osProjectRef: osProject01,
     description: "Did some stuff",
     points: 1
   } );
-  let monthlyContributions = new MonthlyContributions.List();
+  let monthlyContributions = new MonthlyContribution.List();
   monthlyContributions.push( monthlyContribution01 );
 
   let contributionMonth = new ContributionMonth( {
@@ -279,7 +279,7 @@ QUnit.test( "OS Projects and Client Projects are provide sorted clones", functio
       { osProjectRef: new OSProject({ name: "C" }) },
       { osProjectRef: new OSProject({ name: "B" }) }
     ]),
-    monthlyClientProjects: new MonthlyClientProject.List([ 
+    monthlyClientProjects: new MonthlyClientProject.List([
       { clientProjectRef: new ClientProject({ name: "Z" }) },
       { clientProjectRef: new ClientProject({ name: "X" }) }
     ])
