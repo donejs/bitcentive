@@ -42,7 +42,8 @@ const AppViewModel = DefineMap.extend({
   page: {
     serialize: true,
     get (page) {
-      if (this.session) {
+      var session = this.session;
+      if (session && session.isAuthenticated) {
         if (page === 'home') {
           page = 'dashboard';
         }
