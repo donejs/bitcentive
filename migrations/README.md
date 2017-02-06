@@ -47,4 +47,5 @@ exports.up = function() {
 }
 ```
 
+
 While this strategy results in more verbose migration scripts, it protects the app from getting into a bad state. Consider a situation where someone adds new indexing rules to a particular Schema. Mongoose may or may not create this index for you during app startup based on the `autoIndex` setting. Therefore, the migration script should first check whether or not the index exists before creating it. The same rules should apply to all types of migrations. It is worth the time to write the extra code.
