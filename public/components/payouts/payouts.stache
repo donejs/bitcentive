@@ -1,33 +1,37 @@
 <can-import from="./payouts.less" />
+<can-import from="~/lib/stache-helpers/" />
 
 {{#if contributionMonthsPromise.isResolved}}
-<div class="table-scroller">
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>&nbsp;</th>
-        <th class="total"><span>Total</span></th>
-        {{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
-        <th>{{monthlyOSProject.osProjectRef.value.name}}</th>
-        {{/each}}
-      </tr>
-    </thead>
-    <tbody>
-      {{#each payouts as payout}}
-        <tr>
-          <th>{{payout.contributorRef.value.name}}</th>
-          <td class="total">
-            <span>{{formatDollarAmount(getTotalForAllPayoutsForContributor(payout.contributorRef))}}</span>
-          </td>
-          {{#each payout.monthlyOSProjects as monthlyOSProject}}
-            <td>{{formatDollarAmount(monthlyOSProject.total)}}</td>
-          {{/each}}
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+	{{#if hasContributionPayouts}}
+		<div class="table-scroller">
+			<table class='table'>
+				<thead>
+					<tr>
+						<th>&nbsp;</th>
+						<th class="total"><span>Total</span></th>
+						{{#each monthlyOSProjects as monthlyOSProject}}
+						<th>{{monthlyOSProject.osProjectRef.value.name}}</th>
+						{{/each}}
+					</tr>
+				</thead>
+				<tbody>
+					{{#each payouts as payout}}
+						<tr>
+							<th>{{payout.contributorRef.value.name}}</th>
+							<td class="total">
+								<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(payout.contributorRef, contributionMonth))}}</span>
+							</td>
+							{{#each payout.monthlyOSProjects as monthlyOSProject}}
+								<td>{{formatDollarAmount(monthlyOSProject.total)}}</td>
+							{{/each}}
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	{{else}}
+		<p>Payouts will be calculated when contributions are added.</p>
+	{{/if}}
 {{else}}
-  <h3>Warning: Requires contributionMonth data</h3>
+	<h3>Warning: Requires contributionMonth data</h3>
 {{/if}}
-

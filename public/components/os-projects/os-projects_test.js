@@ -72,10 +72,8 @@ QUnit.test('Can add an existing OS Project to Monthly Contribution', function(as
   vm.selectedOSProjectId = projectToAdd._id;
 
   vm.addNewMonthlyOSProject().then(() => {
-    QUnit.equal(vm.contributionMonth.monthlyOSProjects.length, 2);
-    vm.contributionMonth.monthlyOSProjects[1].osProjectRef.on('value', function(value){
-      QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , projectToAdd.name);
-      done();
-    });
+    QUnit.equal(vm.contributionMonth.monthlyOSProjects.length, 2, 'should be 2 projects');
+    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , projectToAdd.name, 'name should be set');
+    done();
   });
 });

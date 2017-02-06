@@ -12,7 +12,8 @@ window.viewModel = viewModel;
 var pages = {
   home: 'public',
   dashboard: 'private',
-  contributors: 'private'
+  contributors: 'private',
+  users: 'private'
 };
 
 const AppViewModel = DefineMap.extend({
@@ -26,7 +27,7 @@ const AppViewModel = DefineMap.extend({
   },
 
   /**
-   * Use Session.get() to see if there's a valid JWT. If one exists, 
+   * Use Session.get() to see if there's a valid JWT. If one exists,
    * a new Session will be created.
    */
   session: {
@@ -41,7 +42,9 @@ const AppViewModel = DefineMap.extend({
   page: {
     serialize: true,
     get (page) {
-      if (this.session) {
+      var session = this.session;
+      // We don't want to make requests that require auth before the Socket.io connection has been authenticated:
+      if (session && session.isAuthenticated) {
         if (page === 'home') {
           page = 'dashboard';
         }

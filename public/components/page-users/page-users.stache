@@ -1,0 +1,7 @@
+<can-import from="./page-users.less" />
+
+<div class="container">
+	<h2>Users</h2>
+	<can-import from="bitcentive/components/users/" />
+	<bit-users {users}="users" />
+</div>

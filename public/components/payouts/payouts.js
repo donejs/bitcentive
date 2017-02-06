@@ -6,88 +6,92 @@ import moment from "moment";
 
 export const ViewModel = DefineMap.extend({
   // Passed properties
-  contributionMonth: {
-    Type: ContributionMonth
+  contributionMonth: ContributionMonth,
+  /**
+   * @property {Moment} currentMonth
+   *
+   * The current contribution month.
+   */
+  get currentMonth() {
+    return this.contributionMonth && moment(this.contributionMonth.date);
   },
-  get contributionMonthsPromise() {
-    return ContributionMonth.getList({});
+  contributionMonthsPromise: {
+		value() {
+			return ContributionMonth.getList({});
+		}
   },
   contributionMonths: {
     get(initial, resolve){
       this.contributionMonthsPromise.then(resolve);
     }
   },
-  getOSProjectPayoutTotal(monthlyOSProject, contributor) {
-    let total = 0;
-    if(this.contributionMonths) {
-      const contributorsMap = this.contributionMonths.OSProjectContributionsMap(this.contributionMonth);
-
-      if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
-        const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
-        const points = contributorData.points;
-        const totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
-        const totalAmountForOSProject = this.contributionMonth.calculations.osProjects[monthlyOSProject.osProjectRef._id];
-
-        total = (points / totalPoints) * totalAmountForOSProject;
-      }
-    }
-    return total;
+  /**
+   * @property {List} effectiveMonths
+   *
+   * A list of contribution months including the current month and before.
+   */
+  get effectiveMonths() {
+    return this.contributionMonths &&
+      this.contributionMonths.filter(contributionMonth => {
+        return this.currentMonth.isSameOrAfter(contributionMonth.date);
+      });
   },
-  getTotalForAllPayoutsForContributor(contributorRef) {
-    let total = 0;
+  /**
+   * @property {Map} monthlyOSProjects
+   *
+   * A unique set of OS Projects from the current and previous months.
+   */
+  get monthlyOSProjects() {
+    let uniqueProjects = {};
 
-    if(this.contributionMonths) {
-      const contributorsMap = this.contributionMonths.OSProjectContributionsMap(this.contributionMonth);
-      for (const osProjectID in contributorsMap) {
-        const projectContributors = contributorsMap[osProjectID].contributors;
+    this.effectiveMonths && this.effectiveMonths.map(contributionMonth => {
+      contributionMonth.monthlyOSProjects.map(monthlyOSProject => {
+        uniqueProjects[monthlyOSProject._id] = monthlyOSProject;
+      });
+    });
 
-
-        if(projectContributors[contributorRef._id]) {
-          const contributorData = contributorsMap[osProjectID].contributors[contributorRef._id];
-          const points = contributorData.points;
-          const totalPoints = contributorsMap[osProjectID].totalPoints;
-          const totalAmountForOSProject = this.contributionMonth.calculations.osProjects[osProjectID];
-
-
-          total = total + ( (points / totalPoints) * totalAmountForOSProject );
-        }
-      }
-    }
-
-    return total;
+    return uniqueProjects;
   },
+  /**
+   * @property {Map} payouts
+   *
+   * A map of OS Project payouts per Contributor based on the current month and
+   * any previous months.
+   *
+   * e.g.
+   * ```
+   * {
+   *   "5873af58cd85b95c3f6285f5": {
+   *     "contributorRef": ...,
+   *     "monthlyOSProjects": [
+   *       {
+   *         "osProjectRef": ...,
+   *         "total": 0
+   *       },
+   *       {
+   *         "osProjectRef": ...,
+   *         "total": 339.9396969696969
+   *       },
+   *       {
+   *         "osProjectRef": ...,
+   *         "total": 0
+   *       }
+   *     ]
+   *   }
+   * }
+   * ```
+   */
   get payouts() {
-    const map = {};
-    if(this.contributionMonth) {
-
-      const monthlyContributorsMap = this.contributionMonth.monthlyContributions.contributorsMap;
-      const monthlyOSProjects = this.contributionMonth.monthlyOSProjects;
-
-      for (const contributorID in monthlyContributorsMap) {
-
-        const contributor = monthlyContributorsMap[contributorID];
-        const contributorRef = contributor.contributorRef;
-
-        if(!map[contributorRef._id]) {
-          map[contributorRef._id] = {
-            contributorRef: contributorRef,
-            monthlyOSProjects: []
-          };
-        }
-
-        monthlyOSProjects.forEach(monthlyOSProject => {
-          const contributorTotal = this.getOSProjectPayoutTotal(monthlyOSProject, contributor);
-          map[contributorRef._id].monthlyOSProjects.push({
-            osProjectRef: monthlyOSProject.osProjectRef,
-            total: contributorTotal
-          });
-        });
-      }
-    }
-    return map;
+		return this.contributionMonths &&
+			this.contributionMonths.getMonthlyPayouts(this.contributionMonth);
   },
-  formatDollarAmount(value) {
-    return value.toFixed(2);
+	/**
+	 * @property {Boolean} hasContributionPayouts
+	 *
+	 * Whethere there are any payouts to display.
+	 */
+  get hasContributionPayouts() {
+    return this.payouts && Boolean(Object.keys(this.payouts).length);
   }
 });
 
