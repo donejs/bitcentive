@@ -5,7 +5,7 @@ import Observation from "can-observation";
 import ContributionMonth from "./contribution-month";
 import OSProject from "../os-project";
 
-const MonthlyOSProject = DefineMap.extend( "MonthlyOSProject" , {
+const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
   significance: "number",
   commissioned: "boolean",
   osProjectRef: OSProject.Ref,

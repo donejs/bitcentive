@@ -5,7 +5,7 @@ import superModel from '../lib/super-model';
 import algebra from './algebras';
 import feathersClient from './feathers-client';
 
-var ClientProject = DefineMap.extend('ClientProject', {
+var ClientProject = DefineMap.extend('ClientProject', { seal: false }, {
   _id: 'string',
   name: 'string'
 });

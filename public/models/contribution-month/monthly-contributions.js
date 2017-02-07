@@ -3,7 +3,7 @@ import DefineList from "can-define/list/";
 import OSProject from "../os-project";
 import Contributor from "../contributor";
 
-const MonthlyContributions = DefineMap.extend( "MonthlyContributions", {
+const MonthlyContributions = DefineMap.extend( "MonthlyContributions", { seal: false }, {
   contributorRef: Contributor.Ref,
   osProjectRef: OSProject.Ref,
   description: "string",
