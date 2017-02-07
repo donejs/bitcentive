@@ -1,6 +1,6 @@
 import fixture from 'can-fixture';
 import json from './client-projects.json';
-import algebra from '../algebras';
+import algebra from '../algebra';
 
 var store = fixture.store(json, algebra);
 

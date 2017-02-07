@@ -13,7 +13,7 @@ import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContribution from "./monthly-contribution";
 
-import algebra from '../algebras';
+import algebra from '../algebra';
 
 /**
  * Builds a sorting function for sorting by a property on a ref field
