@@ -29,9 +29,8 @@ const sortByRefField = (refName, fieldName) => {
 	};
 };
 
-var ContributionMonth = DefineMap.extend("ContributionMonth",{
+var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	_id: "string",
-	__v:"number",
 	date: "date",
 	monthlyOSProjects: {
 		Type: MonthlyOSProject.List,

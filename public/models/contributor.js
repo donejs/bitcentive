@@ -5,7 +5,7 @@ import superModel from '../lib/super-model';
 import algebra from './algebras';
 import feathersClient from './feathers-client';
 
-var Contributor = DefineMap.extend("Contributor", {
+var Contributor = DefineMap.extend("Contributor", { seal: false }, {
   _id: "string",
   name: "string",
   email: "string",
