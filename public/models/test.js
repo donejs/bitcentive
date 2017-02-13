@@ -3,7 +3,7 @@ import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 
 import QUnit from "steal-qunit";
 import ContributionMonth from "./contribution-month/";
-import MonthlyContributions from "./contribution-month/monthly-contributions";
+import MonthlyContribution from "./contribution-month/monthly-contribution";
 import MonthlyOSProject from "./contribution-month/monthly-os-project";
 import MonthlyClientProject from "./contribution-month/monthly-client-project";
 import ClientProject from "./client-project";
@@ -73,7 +73,7 @@ QUnit.test("unsealed models", function(){
 		ClientProject,
 		Contributor,
 		ContributionMonth,
-		MonthlyContributions,
+		MonthlyContribution,
 		MonthlyOSProject,
 		MonthlyClientProject
 	].forEach(function(Model){

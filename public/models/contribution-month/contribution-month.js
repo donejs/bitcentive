@@ -11,9 +11,9 @@ import feathersClient from '../feathers-client';
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
-import MonthlyContributions from "./monthly-contributions";
+import MonthlyContribution from "./monthly-contribution";
 
-import algebra from '../algebras';
+import algebra from '../algebra';
 
 /**
  * Builds a sorting function for sorting by a property on a ref field
@@ -40,7 +40,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		}
 	},
 	monthlyClientProjects: MonthlyClientProject.List,
-	monthlyContributions: MonthlyContributions.List,
+	monthlyContributions: MonthlyContribution.List,
 	startRate: {
 		value: 2,
 		set(value) {
