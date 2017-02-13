@@ -10,7 +10,7 @@ exports.up = function(db) {
   let paths = User.schema.paths;
 
   return new Promise((resolve, reject) => {
-    User.update({ isAdmin: { '$exists': false } },
+    User.updateMany({ isAdmin: { '$exists': false } },
       { isAdmin: true }, // model default is false
       (error, result) => error ? reject(error) : resolve(result));
   });

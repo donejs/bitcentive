@@ -22,9 +22,9 @@ const mongoose = require('mongoose');
 const options = {};
 
 // Travis runs db-migrate without passing NODE_ENV
-if (!process.env.NODE_ENV){
-	options.env = 'dev';
-}
+options.env = process.env.NODE_ENV
+	? (process.env.NODE_ENV === 'prod' ? 'production' : process.env.NODE_ENV)
+	: 'dev';
 
 const instance = DBMigrate.getInstance(true, options);
 
