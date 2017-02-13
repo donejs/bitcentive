@@ -13,7 +13,8 @@ var pages = {
 	home: 'public',
 	dashboard: 'private',
 	contributors: 'private',
-	users: 'private'
+	users: 'private',
+	loading: 'public'
 };
 
 const AppViewModel = DefineMap.extend({
@@ -37,24 +38,30 @@ const AppViewModel = DefineMap.extend({
 	},
 
 	/**
-	 * Determines which page-level component is displayed.
+	 * Page component of the route.
 	 */
 	page: {
-		serialize: true,
-		get (page) {
-			if (this.session) {
-				if (page === 'home') {
-					page = 'dashboard';
-				}
-			} else {
-				if (pages[page] === 'private') {
-					page = 'home';
-				}
+		serialize: true
+	},
+
+	/**
+	 * Determines which page-level component is displayed.
+	 */
+	displayedPage: {
+		get () {
+			let page = this.page;
+
+			// Unknown session:
+			if (this.session === undefined) {
+				page = 'loading';
 			}
-			if (!pages[page]) {
-				page = 'four-oh-four';
+			// Non-authenticated session:
+			else if (this.session === null) {
+				page = pages[page] === 'private' ? 'home' : page;
+			} else if (page === 'home') {
+				page = 'dashboard';
 			}
-			return page;
+			return pages[page] ? page : 'four-oh-four';
 		}
 	},
 
