@@ -3,15 +3,15 @@ import DefineList from "can-define/list/";
 import OSProject from "../os-project";
 import Contributor from "../contributor";
 
-const MonthlyContributions = DefineMap.extend( "MonthlyContributions", {
+const MonthlyContribution = DefineMap.extend( "MonthlyContribution", { seal: false }, {
   contributorRef: Contributor.Ref,
   osProjectRef: OSProject.Ref,
   description: "string",
   points: "number"
 });
 
-MonthlyContributions.List = DefineList.extend({
-  "#": MonthlyContributions,
+MonthlyContribution.List = DefineList.extend({
+  "#": MonthlyContribution,
   get contributorsMap() {
     const map = {};
     this.forEach(contributor => {
@@ -25,4 +25,4 @@ MonthlyContributions.List = DefineList.extend({
   }
 });
 
-export default MonthlyContributions;
+export default MonthlyContribution;

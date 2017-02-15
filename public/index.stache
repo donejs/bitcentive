@@ -1,53 +1,57 @@
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{{title}}</title>
-  </head>
-  <body>
-    <can-import from="bootstrap" />
-    <can-import from="bootstrap/dist/css/bootstrap.css" />
-    <can-import from="bitcentive/styles.less!" />
-    <can-import from="bitcentive/app" export-as="viewModel" />
-    <can-import from="bitcentive/components/alerts/" />
-    <can-import from="bitcentive/components/main-nav/" />
-    <can-import from="bitcentive/components/page-home/"/>
-    <can-import from="bitcentive/components/page-contributors/"/>
-    <can-import from="bitcentive/components/page-users/"/>
-    <can-import from="bitcentive/components/page-dashboard/"/>
-    <can-import from="bitcentive/pages/four-oh-four.component"/>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>{{title}}</title>
+	</head>
+	<body>
+		<can-import from="bootstrap" />
+		<can-import from="bootstrap/dist/css/bootstrap.css" />
+		<can-import from="bitcentive/styles.less!" />
+		<can-import from="bitcentive/app" export-as="viewModel" />
+		<can-import from="bitcentive/components/alerts/" />
+		<can-import from="bitcentive/components/main-nav/" />
+		<can-import from="bitcentive/components/page-home/"/>
+		<can-import from="bitcentive/components/page-contributors/"/>
+		<can-import from="bitcentive/components/page-users/"/>
+		<can-import from="bitcentive/components/page-dashboard/"/>
+		<can-import from="bitcentive/pages/four-oh-four.component"/>
+		<can-import from="bitcentive/pages/loading.component"/>
 
-    <main-nav {(session)}="session" {(page)}="page"></main-nav>
+		<main-nav {(session)}="session" {(page)}="displayedPage"></main-nav>
 
-    {{#switch page}}
-      {{#case 'home'}}
-        <page-home></page-home>
-      {{/case}}
-      {{#case 'dashboard'}}
-        <page-dashboard></page-dashboard>
-      {{/case}}
-      {{#case 'contributors'}}
-        <page-contributors/>
-      {{/case}}
-      {{#case 'users'}}
-        <page-users/>
-      {{/case}}
-      {{#case 'four-oh-four'}}
-        <page-four-oh-four></page-four-oh-four>
-      {{/case}}
-    {{/switch}}
+		{{#switch displayedPage}}
+			{{#case 'loading'}}
+				<page-loading></page-loading>
+			{{/case}}
+			{{#case 'home'}}
+				<page-home></page-home>
+			{{/case}}
+			{{#case 'dashboard'}}
+				<page-dashboard></page-dashboard>
+			{{/case}}
+			{{#case 'contributors'}}
+				<page-contributors/>
+			{{/case}}
+			{{#case 'users'}}
+				<page-users/>
+			{{/case}}
+			{{#case 'four-oh-four'}}
+				<page-four-oh-four></page-four-oh-four>
+			{{/case}}
+		{{/switch}}
 
-    <bit-alerts></bit-alerts>
+		<bit-alerts></bit-alerts>
 
-    {{#switch env.NODE_ENV}}
-      {{#case "production"}}
-        <script src="{{joinBase 'node_modules/steal/steal.production.js'}}"  main="bitcentive/index.stache!done-autorender"></script>
-      {{/case}}
-      {{#default}}
-        <script src="/node_modules/steal/steal.js"></script>
-      {{/default}}
-    {{/switch}}
-  </body>
+		{{#switch env.NODE_ENV}}
+			{{#case "production"}}
+				<script src="{{joinBase 'node_modules/steal/steal.production.js'}}"  main="bitcentive/index.stache!done-autorender"></script>
+			{{/case}}
+			{{#default}}
+				<script src="/node_modules/steal/steal.js"></script>
+			{{/default}}
+		{{/switch}}
+	</body>
 </html>

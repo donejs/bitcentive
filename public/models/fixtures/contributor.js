@@ -1,5 +1,5 @@
 import fixture from 'can-fixture';
-import algebra from '../algebras';
+import algebra from '../algebra';
 
 var store = fixture.store([{
     _id: "1-JustinMeyer",

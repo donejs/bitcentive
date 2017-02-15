@@ -2,12 +2,11 @@ import set from "can-set";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../lib/super-model';
-import algebra from './algebras';
+import algebra from './algebra';
 import feathersClient from './feathers-client';
 
-var OSProject = DefineMap.extend("OSProject", {
+var OSProject = DefineMap.extend("OSProject", { seal: false }, {
   _id: "string",
-  __v: "string",
   name: "string"
 });
 

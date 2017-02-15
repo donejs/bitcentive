@@ -2,10 +2,10 @@ import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import set from "can-set";
 import superModel from '../lib/super-model';
-import algebra from './algebras';
+import algebra from './algebra';
 import feathersClient from './feathers-client';
 
-var Contributor = DefineMap.extend("Contributor", {
+var Contributor = DefineMap.extend("Contributor", { seal: false }, {
   _id: "string",
   name: "string",
   email: "string",

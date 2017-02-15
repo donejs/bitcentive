@@ -1,0 +1,17 @@
+<can-component tag="page-loading">
+	<style type="less">
+		display: block;
+		height: 90vh;
+		h3 {
+			color: white;
+			text-align: center;
+			position: relative;
+			top: 40vh;
+			transform: translateY(-50%);
+			font-weight: 500;
+		}
+	</style>
+	<template>
+		<h3>Loading...</h3>
+	</template>
+</can-component>
