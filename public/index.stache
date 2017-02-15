@@ -20,30 +20,35 @@
 		<can-import from="bitcentive/pages/four-oh-four.component"/>
 		<can-import from="bitcentive/pages/loading.component"/>
 
-		<main-nav {(session)}="session" {(page)}="displayedPage"></main-nav>
+		<h1>{{page}}</h1>
+		<h2>{{displayedPage}}</h2>
 
-		{{#switch displayedPage}}
-			{{#case 'loading'}}
-				<page-loading></page-loading>
-			{{/case}}
-			{{#case 'home'}}
-				<page-home></page-home>
-			{{/case}}
-			{{#case 'dashboard'}}
-				<page-dashboard></page-dashboard>
-			{{/case}}
-			{{#case 'contributors'}}
-				<page-contributors/>
-			{{/case}}
-			{{#case 'users'}}
-				<page-users/>
-			{{/case}}
-			{{#case 'four-oh-four'}}
-				<page-four-oh-four></page-four-oh-four>
-			{{/case}}
-		{{/switch}}
+		{{#if session.user.isAdmin}}I am admin {{/if}}
 
-		<bit-alerts></bit-alerts>
+		<!--<main-nav {(session)}="session" {page}="displayedPage"></main-nav>-->
+
+		<!--{{#switch displayedPage}}-->
+			<!--{{#case 'loading'}}-->
+				<!--<page-loading></page-loading>-->
+			<!--{{/case}}-->
+			<!--{{#case 'home'}}-->
+				<!--<page-home></page-home>-->
+			<!--{{/case}}-->
+			<!--{{#case 'dashboard'}}-->
+				<!--<page-dashboard></page-dashboard>-->
+			<!--{{/case}}-->
+			<!--{{#case 'contributors'}}-->
+				<!--<page-contributors/>-->
+			<!--{{/case}}-->
+			<!--{{#case 'users'}}-->
+				<!--<page-users/>-->
+			<!--{{/case}}-->
+			<!--{{#case 'four-oh-four'}}-->
+				<!--<page-four-oh-four></page-four-oh-four>-->
+			<!--{{/case}}-->
+		<!--{{/switch}}-->
+
+		<!--<bit-alerts></bit-alerts>-->
 
 		{{#switch env.NODE_ENV}}
 			{{#case "production"}}

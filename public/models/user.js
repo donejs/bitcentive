@@ -87,6 +87,19 @@ User.connection = superModel({
 	algebra
 });
 
+User.connection.getData__ = function(){
+	var p = Promise.resolve();
+	return p.then(function(){
+		return Promise.resolve().catch();
+	}).then(function(){
+		return new Promise(function(resolve, reject){
+			setTimeout(function(){
+				resolve({_id:1});
+			}, 10);
+		});
+	});
+};
+
 User.algebra = algebra;
 
 export default User;

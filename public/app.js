@@ -4,6 +4,7 @@ import route from 'can-route';
 // import 'can-route-pushstate';
 import Session from 'bitcentive/models/session';
 // import 'bitcentive/models/fixtures/';
+import Zone from 'can-zone';
 
 // viewmodel debugging
 import viewModel from 'can-view-model';
@@ -33,7 +34,10 @@ const AppViewModel = DefineMap.extend({
 	 */
 	session: {
 		get () {
-			return Session.current;
+			//var fn = Zone.ignore(function(){
+				return Session.current;
+			//});
+			//return fn();
 		}
 	},
 

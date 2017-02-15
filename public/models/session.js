@@ -13,6 +13,7 @@ import realtime from 'can-connect/real-time/';
 
 import DefineMap from 'can-define/map/';
 import User from 'bitcentive/models/user';
+import Zone from 'can-zone';
 
 export const Session = DefineMap.extend('Session', {
   seal: false
@@ -25,7 +26,13 @@ export const Session = DefineMap.extend('Session', {
         return lastSetVal;
       }
       if (this.userId) {
-        User.get({_id: this.userId}).then(resolve);
+	      //return {"githubId":1895948,"__v":0};
+	      //Zone.ignore(function(){
+		      User.get({_id: this.userId}).then(function(data){
+			      console.log('user is OK', data);
+			      resolve(data);
+		      });
+	      //})();
       }
     }
   }
