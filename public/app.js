@@ -4,6 +4,7 @@ import route from 'can-route';
 // import 'can-route-pushstate';
 import Session from 'bitcentive/models/session';
 // import 'bitcentive/models/fixtures/';
+import zone from 'can-zone';
 
 // viewmodel debugging
 import viewModel from 'can-view-model';
@@ -13,7 +14,8 @@ var pages = {
 	home: 'public',
 	dashboard: 'private',
 	contributors: 'private',
-	users: 'private'
+	users: 'private',
+	loading: 'public'
 };
 
 const AppViewModel = DefineMap.extend({
@@ -32,29 +34,37 @@ const AppViewModel = DefineMap.extend({
 	 */
 	session: {
 		get () {
-			return Session.current;
+			return zone.ignore(function(){
+				return Session.current;
+			})();
 		}
+	},
+
+	/**
+	 * Page component of the route.
+	 */
+	page: {
+		serialize: true
 	},
 
 	/**
 	 * Determines which page-level component is displayed.
 	 */
-	page: {
-		serialize: true,
-		get (page) {
-			if (this.session) {
-				if (page === 'home') {
-					page = 'dashboard';
-				}
-			} else {
-				if (pages[page] === 'private') {
-					page = 'home';
-				}
+	displayedPage: {
+		get () {
+			let page = this.page;
+
+			// Unknown session:
+			if (this.session === undefined) {
+				page = 'loading';
 			}
-			if (!pages[page]) {
-				page = 'four-oh-four';
+			// Non-authenticated session:
+			else if (this.session === null) {
+				page = pages[page] === 'private' ? 'home' : page;
+			} else if (page === 'home') {
+				page = 'dashboard';
 			}
-			return page;
+			return pages[page] ? page : 'four-oh-four';
 		}
 	},
 
