@@ -18,7 +18,8 @@ QUnit.module("models", {
 	}
 });
 
-QUnit.asyncTest("getList of ContributionMonth", function() {
+QUnit.test("getList of ContributionMonth", function(assert) {
+	let done = assert.async();
 	ContributionMonth.getList({}).then(function(contributionMonths) {
 
 		// TODO: check if we need to test against `clientProjectRef.value`.
@@ -29,7 +30,7 @@ QUnit.asyncTest("getList of ContributionMonth", function() {
 		QUnit.ok(first, 'first exists');
 		QUnit.ok(first === second, 'first and second are equal');
 
-		QUnit.start();
+		done();
 	}, function(err) {
 	  QUnit.ok(false, err);
 	});

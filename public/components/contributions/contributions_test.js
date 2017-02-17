@@ -11,7 +11,8 @@ QUnit.module('bitcentive/components/contributions/', {
   }
 });
 
-QUnit.asyncTest('viewModel.addContribution', function(){
+QUnit.test('viewModel.addContribution', function(assert){
+  let done = assert.async();
   ContributionMonth.get("1").then(month => {
     var vm = new ViewModel({
       contributionMonth: month,
@@ -23,7 +24,7 @@ QUnit.asyncTest('viewModel.addContribution', function(){
     QUnit.equal(vm.contributionMonth.monthlyContributions.length, 2, 'should have 2 contributions');
     vm.contributionMonth.monthlyContributions.on('length', function(){
       QUnit.equal(vm.contributionMonth.monthlyContributions.length, 3, 'should have 3 contributions after addContribution');
-      QUnit.start();
+      done();
     });
     vm.addContribution();
   });
