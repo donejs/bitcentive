@@ -11,18 +11,21 @@ QUnit.module('bitcentive/components/contributors/', {
   }
 });
 
-QUnit.asyncTest('viewModel.addContributor', function(){
+QUnit.test('viewModel.addContributor', function(assert){
+  let done = assert.async();
   Contributor.getList({}).then(items => {
-    var vm = new ContributorsVM({
+    let vm = new ContributorsVM({
       contributors: items,
       newContributorName: 'Ilya',
       newContributorEmail: 'ilya@bitovi.com'
     });
     QUnit.equal(vm.contributors.length, 2, 'should have 2 contributors');
-    vm.contributors.on('length', function(){
+    let handler = function(){
       QUnit.equal(vm.contributors.length, 3, 'should have 3 contributors after addContributor');
-      QUnit.start();
-    });
+      vm.contributors.off('length', handler);
+      done();
+    };
+    vm.contributors.on('length', handler);
     vm.addContributor();
   });
 });

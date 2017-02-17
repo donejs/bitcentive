@@ -15,7 +15,8 @@ QUnit.module('bitcentive/components/contribution-month/', {
   }
 });
 
-QUnit.asyncTest('Load projects from socket fixture', function () {
+QUnit.test('Load projects from socket fixture', function (assert) {
+  let done = assert.async();
   let vm = new ViewModel({
     contributionMonthId: "1"
   });
@@ -23,6 +24,6 @@ QUnit.asyncTest('Load projects from socket fixture', function () {
   vm.contributionMonthPromise.then((contributionMonth) => {
     QUnit.equal(contributionMonth.monthlyOSProjects.length, 3, 'Loaded 3 OS projects');
     QUnit.equal(contributionMonth.monthlyClientProjects.length, 1, 'Loaded 1 client project');
-    QUnit.start();
+    done();
   });
 });

@@ -12,14 +12,15 @@ QUnit.module('bitcentive/components/payouts', {
   }
 });
 
-QUnit.asyncTest('viewModel.OSProjectContributionsMap', function(){
-  var vm;
+QUnit.test('viewModel.OSProjectContributionsMap', function(assert){
+  let done = assert.async();
+  let vm;
   ContributionMonth.get("1").then(month => {
     vm = new ViewModel({ contributionMonth: month });
     vm.on('contributionMonths', () => {
       QUnit.equal(vm.contributionMonths.OSProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 10, 'has a contributor for CanJS');
       QUnit.equal(vm.contributionMonths.OSProjectContributionsMap(month)['1-CanJS'].totalPoints, 10, 'has totalPoints for CanJS as 10');
-      QUnit.start();
+      done();
     });
   });
 });
