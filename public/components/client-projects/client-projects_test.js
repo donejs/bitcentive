@@ -11,16 +11,17 @@ QUnit.module('bitcentive/components/client-projects/', {
   }
 });
 
-QUnit.asyncTest('viewModel.addClient', function(){
+QUnit.test('viewModel.addClient', function(assert){
+  let done = assert.async();
   ContributionMonth.get("1").then(month => {
-    var vm = new ClientProjectVM({
+    let vm = new ClientProjectVM({
       contributionMonth: month,
       selectedClientId: "2-Walmart"
     });
     QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 1, 'should have 1 client project');
     vm.contributionMonth.monthlyClientProjects.on('length', function(){
       QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 2, 'should have 2 client project after addClient');
-      QUnit.start();
+      done();
     });
     vm.addClient(null, vm.contributionMonth.monthlyClientProjects);
   });
