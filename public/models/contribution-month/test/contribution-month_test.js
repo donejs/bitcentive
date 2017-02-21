@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import OSProject from '../../os-project';
 import ClientProject from '../../client-project';
-import MonthlyClientProjectsOSProjectList from '../monthly-client-projects-os-project-list';
+import MonthlyClientProjectsOSProjectList from '../monthly-client-projects-os-projects';
 import Contributor from '../../contributor';
 import MonthlyContribution from '../monthly-contribution';
 import MonthlyOSProject from '../monthly-os-project';
