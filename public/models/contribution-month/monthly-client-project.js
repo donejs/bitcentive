@@ -12,7 +12,7 @@ const MonthlyClientProject = DefineMap.extend( "MonthlyClientProject", { seal: f
   }
 });
 
-MonthlyClientProject.List = DefineList.extend({
+MonthlyClientProject.List = DefineList.extend( "MonthlyClientProjectList", {
   "#": MonthlyClientProject,
   has( clientProject ) {
     return clientProject._id in this.monthlyClientProjectIdMap;
