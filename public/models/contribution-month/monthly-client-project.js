@@ -1,14 +1,14 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import MonthlyClientProjectsOsProjectList from "./monthly-client-projects-os-projects";
+import MonthlyClientProjectOsProjectList from "./monthly-client-project-os-project-list";
 import ClientProject from "../client-project";
 
 const MonthlyClientProject = DefineMap.extend( "MonthlyClientProject", { seal: false }, {
   clientProjectRef: ClientProject.Ref,
   hours: "number",
   monthlyClientProjectsOSProjects: {
-    Type: MonthlyClientProjectsOsProjectList,
-    Value: MonthlyClientProjectsOsProjectList
+    Type: MonthlyClientProjectOsProjectList,
+    Value: MonthlyClientProjectOsProjectList
   }
 });
 
