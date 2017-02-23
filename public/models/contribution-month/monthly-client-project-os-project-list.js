@@ -3,7 +3,7 @@ import DefineList from "can-define/list/";
 import OSProject from "../os-project";
 import ClientProject from "../client-project";
 
-const MonthlyClientProjectsOsProjectList = DefineList.extend("MonthlyClientProjectsOsProjectList", {
+const MonthlyClientProjectOsProjectList = DefineList.extend("MonthlyClientProjectOsProjectList", {
   "#": OSProject.Ref,
   get osProjectIdMap() {
     const map = {};
@@ -25,5 +25,4 @@ const MonthlyClientProjectsOsProjectList = DefineList.extend("MonthlyClientProje
   },
 });
 
-
-export default MonthlyClientProjectsOsProjectList;
+export default MonthlyClientProjectOsProjectList;

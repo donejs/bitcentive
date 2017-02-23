@@ -75,7 +75,7 @@ var User = DefineMap.extend("User", {
 	}
 });
 
-User.List = DefineList.extend({
+User.List = DefineList.extend("UserList", {
 	"#": User
 });
 

@@ -232,7 +232,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	}
 });
 
-ContributionMonth.List = DefineList.extend({
+ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
 	OSProjectContributionsMap(currentContributionMonth) {
 		var OSProjectContributionsMap = {};
@@ -382,7 +382,6 @@ var dataMassage = function(oType) {
 };
 
 ContributionMonth.connection = superModel({
-	parseInstanceProp: "data",
 	Map: ContributionMonth,
 	List: ContributionMonth.List,
 	feathersService: feathersClient.service("/api/contribution_months"),

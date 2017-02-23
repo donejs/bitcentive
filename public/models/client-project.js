@@ -10,12 +10,11 @@ var ClientProject = DefineMap.extend('ClientProject', { seal: false }, {
   name: 'string'
 });
 
-ClientProject.List = DefineList.extend({
+ClientProject.List = DefineList.extend('ClientProjectList', {
   "#": ClientProject
 });
 
 ClientProject.connection = superModel({
-  parseInstanceProp: "data",
   Map: ClientProject,
   List: ClientProject.List,
   feathersService: feathersClient.service('/api/client_projects'),

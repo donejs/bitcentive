@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import OSProject from '../../os-project';
 import ClientProject from '../../client-project';
-import MonthlyClientProjectsOSProjectList from '../monthly-client-projects-os-project-list';
+import MonthlyClientProjectOsProjectList from '../monthly-client-project-os-project-list';
 import Contributor from '../../contributor';
 import MonthlyContribution from '../monthly-contribution';
 import MonthlyOSProject from '../monthly-os-project';
@@ -72,7 +72,7 @@ QUnit.test( "Can create ContributionMonth from scratch", function() {
     osProjectRef: osProject02
   } );
 
-  let monthlyClientProjectOSProjects = new MonthlyClientProjectsOSProjectList([
+  let monthlyClientProjectOSProjects = new MonthlyClientProjectOsProjectList([
     osProject01,
     osProject02
   ]);
