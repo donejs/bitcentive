@@ -293,8 +293,12 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 				const totalPoints = contributorsMap[osProjectID].totalPoints;
 				const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
 
-
-				total = total + ( (points / totalPoints) * totalAmountForOSProject );
+				// TODO: figure out what to do with `OSProjectContributionsMap` if an `OSProject` gets removed from a month:
+				// since `OSProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
+				// which will cause NaN for total. For now just ignore undefined for calculation:
+				if (typeof totalAmountForOSProject !== 'undefined'){
+					total = total + ( (points / totalPoints) * totalAmountForOSProject );
+				}
 			}
 		}
 
