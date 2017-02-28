@@ -4,7 +4,7 @@ import User from 'bitcentive/models/user';
 import 'bitcentive/models/fixtures/fixtures-socket';
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/users');
+QUnit.module('bitcentive/components/page-users/users');
 
 QUnit.test('setAdmin', assert => {
 	let done = assert.async();

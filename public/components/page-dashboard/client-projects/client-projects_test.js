@@ -4,7 +4,7 @@ import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 import { ClientProjectVM } from './client-projects';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 
-QUnit.module('bitcentive/components/client-projects/', {
+QUnit.module('bitcentive/components/page-dashboard/client-projects/', {
   beforeEach: function(){
     // Reset fixture store before every test:
     store.reset();

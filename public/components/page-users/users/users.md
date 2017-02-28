@@ -1,5 +1,5 @@
 @parent bitcentive
-@module {can.Component} bitcentive/components/users <bit-users>
+@module {can.Component} bitcentive/components/page-users/users <bit-users>
 
 Display a list of application users with settings such as admin status.
 
@@ -10,6 +10,6 @@ Display a list of application users with settings such as admin status.
 ## Use
 
 ```
-<can-import from="bitcentive/components/users/" />
+<can-import from="bitcentive/components/page-users/users/" />
 <bit-users {users}="users"></bit-users>
 ```

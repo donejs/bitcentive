@@ -1,7 +1,7 @@
 <script type="text/stache" id="demo" can-autorender>
 	<can-import from="bootstrap/dist/css/bootstrap.css" />
 	<can-import from="bitcentive/styles.less" />
-	<can-import from="bitcentive/components/payouts/" />
+	<can-import from="bitcentive/components/page-dashboard/payouts/" />
 	<bit-payouts {contribution-month}="contributionMonth"></bit-payouts>
 </script>
 <style>
@@ -9,7 +9,7 @@ bit-payouts {
 	background-color: #fff;
 }
 </style>
-<script src="../../node_modules/steal/steal.js" main="can-view-autorender">
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
 	import 'bitcentive/models/fixtures/fixtures-socket';
 	import ContributionMonth from 'bitcentive/models/contribution-month/';
 	import viewModel from 'can-view-model';

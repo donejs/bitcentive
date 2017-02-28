@@ -4,7 +4,7 @@ import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 import { ContributorsVM } from './contributors';
 import Contributor from 'bitcentive/models/contributor';
 
-QUnit.module('bitcentive/components/contributors/', {
+QUnit.module('bitcentive/components/page-contributors/contributors/', {
   beforeEach: function(){
     // Reset fixture store before every test:
     store.reset();

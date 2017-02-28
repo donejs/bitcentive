@@ -5,7 +5,7 @@ import ContributionMonth from 'bitcentive/models/contribution-month/';
 import { ViewModel } from './payouts';
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/payouts', {
+QUnit.module('bitcentive/components/page-dashboard/payouts', {
   beforeEach: function(){
     // Reset fixture store before every test:
     store.reset();

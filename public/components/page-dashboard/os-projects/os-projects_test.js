@@ -5,7 +5,7 @@ import ContributionMonth from 'bitcentive/models/contribution-month/';
 import { store as contributionMonthStore } from 'bitcentive/models/fixtures/contribution-months';
 
 //ViewModel unit tests
-QUnit.module('bitcentive/components/os-projects', {
+QUnit.module('bitcentive/components/page-dashboard/os-projects', {
   beforeEach: function() {
     this.osProject = {
       _id: "somethingCrazey",

@@ -1,5 +1,5 @@
 @parent bitcentive
-@module {can.Component} bitcentive/components/contributors <bit-contributors>
+@module {can.Component} bitcentive/components/page-contributors/contributors <bit-contributors>
 
 A short description of the bit-contributors component
 
