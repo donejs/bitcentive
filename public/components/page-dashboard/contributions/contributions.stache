@@ -22,22 +22,10 @@
 					{{monthlyContribution.osProjectRef.value.name}}
 				</td>
 				<td>
-					<input
-						type="textarea"
-						class="form-control"
-						{($value)}="monthlyContribution.description"
-						($change)="contributionMonth.save()"
-						{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
-					/>
+					<model-edit-property {model}="monthlyContribution" property="description" {saveModel}="contributionMonth" />
 				</td>
 				<td>
-					<input
-						type="number"
-						class="form-control"
-						{($value)}="monthlyContribution.points"
-						($change)="contributionMonth.save()"
-						{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
-					/>
+					<model-edit-property {model}="monthlyContribution" property="points" {saveModel}="contributionMonth" type="number" />
 				</td>
 				<td>
 					{{#if isAdmin()}}
