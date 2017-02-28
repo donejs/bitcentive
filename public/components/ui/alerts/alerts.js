@@ -4,7 +4,7 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import 'can-define-stream';
 import view from './alerts.stache';
-import hub from '../../lib/event-hub';
+import hub from '~/lib/event-hub';
 import CID from 'can-cid';
 
 
@@ -25,7 +25,7 @@ export const ViewModel = DefineMap.extend({
             type: 'remove',
             id: alert.id
           });
-        } 
+        }
         return Kefir.constant({ type: 'no-op' });
       });
     }

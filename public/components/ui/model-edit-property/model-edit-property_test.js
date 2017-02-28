@@ -1,9 +1,9 @@
 import QUnit from 'steal-qunit';
 import { ViewModel } from './model-edit-property';
-import Entity from 'bitcentive/components/model-edit-property/demo-fixture';
+import Entity from 'bitcentive/components/ui/model-edit-property/demo-fixture';
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/model-edit-property');
+QUnit.module('bitcentive/components/ui/model-edit-property');
 
 QUnit.test('Has initial property value', function() {
   let name = 'Foo';

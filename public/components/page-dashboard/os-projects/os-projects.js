@@ -1,8 +1,8 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import view from './os-projects.stache';
-import OSProject from '../../models/os-project';
-import ContributionMonth from '../../models/contribution-month/';
+import OSProject from '~/models/os-project';
+import ContributionMonth from '~/models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
   // Passed properties

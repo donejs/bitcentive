@@ -9,7 +9,7 @@ import 'bitcentive/components/contributors/contributors_test';
 import 'bitcentive/components/contributions/contributions_test';
 import 'bitcentive/components/client-projects/client-projects_test';
 import 'bitcentive/components/select-contribution-month/select-contribution-month_test';
-import 'bitcentive/components/alerts/alerts_test';
+import 'bitcentive/components/ui/alerts/alerts_test';
 import 'bitcentive/components/payouts/payouts_test.js';
 
 import 'bitcentive/models/contribution-month/test/test';

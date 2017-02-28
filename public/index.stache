@@ -11,7 +11,7 @@
 		<can-import from="bootstrap/dist/css/bootstrap.css" />
 		<can-import from="bitcentive/styles.less!" />
 		<can-import from="bitcentive/app" export-as="viewModel" />
-		<can-import from="bitcentive/components/alerts/" />
+		<can-import from="bitcentive/components/ui/alerts/" />
 		<can-import from="bitcentive/components/main-nav/" />
 		<can-import from="bitcentive/components/page-home/"/>
 		<can-import from="bitcentive/components/page-contributors/"/>

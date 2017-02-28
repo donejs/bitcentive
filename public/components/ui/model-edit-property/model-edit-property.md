@@ -1,5 +1,5 @@
 @parent bitcentive
-@module {can.Component} bitcentive/components/model-edit-property <model-edit-property>
+@module {can.Component} bitcentive/components/ui/model-edit-property <model-edit-property>
 
 This component takes a model and a property name.
 The property value is initially displayed as hypertext.
@@ -14,6 +14,6 @@ The user can discard uncommitted changes with the escape key.
 ## Use
 
 ```
-<can-import from="bitcentive/components/model-edit-property/" />
+<can-import from="bitcentive/components/ui/model-edit-property/" />
 <model-edit-property {model}="contributor" property="name" />
 ```

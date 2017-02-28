@@ -1,5 +1,5 @@
-<can-import from="bitcentive/components/select-contribution-month/"/>
-<can-import from="bitcentive/components/contribution-month/"/>
+<can-import from="./select-contribution-month/"/>
+<can-import from="./contribution-month/"/>
 <can-import from="./page-dashboard.less" />
 
 <div class="container">

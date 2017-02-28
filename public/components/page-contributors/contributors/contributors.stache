@@ -1,5 +1,5 @@
 <can-import from="./contributors.less"/>
-<can-import from="bitcentive/components/model-edit-property/" />
+<can-import from="~/components/ui/model-edit-property/" />
 
 <table class="table">
   <thead>

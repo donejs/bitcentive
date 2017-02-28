@@ -3,7 +3,7 @@ import { ViewModel } from './alerts';
 import hub from 'bitcentive/lib/event-hub';
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/alerts');
+QUnit.module('bitcentive/components/ui/alerts');
 
 QUnit.test('Hub alerts are added and removed', assert => {
 	const done = assert.async();

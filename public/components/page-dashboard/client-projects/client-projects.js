@@ -2,8 +2,8 @@ import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';
 import view from './client-projects.stache';
-import ClientProject from '../../models/client-project';
-import ContributionMonth from '../../models/contribution-month/';
+import ClientProject from '~/models/client-project';
+import ContributionMonth from '~/models/contribution-month/';
 
 export const ClientProjectVM = DefineMap.extend({
   // Passed properties
