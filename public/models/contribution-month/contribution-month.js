@@ -296,7 +296,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 				// TODO: figure out what to do with `OSProjectContributionsMap` if an `OSProject` gets removed from a month:
 				// since `OSProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
 				// which will cause NaN for total. For now just ignore undefined for calculation:
-				if (typeof totalAmountForOSProject !== 'undefined'){
+				if (totalAmountForOSProject !== undefined){
 					total = total + ( (points / totalPoints) * totalAmountForOSProject );
 				}
 			}
