@@ -7,7 +7,6 @@
       <th>Name</th>
       <th>Email</th>
       <th>Active</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,11 +16,6 @@
       <td><model-edit-property {model}="contributor" property="email" /></td>
       <td>
         <input type="checkbox" {$checked}="active" ($change)="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} />
-      </td>
-      <td>
-        <button type="button" class="btn btn-danger btn-xs" ($click)="contributor.destroy()">
-          <span class="glyphicon glyphicon-remove"/>
-        </button>
       </td>
     </tr>
   {{/each}}
