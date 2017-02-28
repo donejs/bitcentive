@@ -6,9 +6,9 @@ import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 
 
 // Load VM:
-import { ViewModel } from 'bitcentive/components/contribution-month/';
+import { ViewModel } from 'bitcentive/components/page-dashboard/contribution-month/';
 
-QUnit.module('bitcentive/components/contribution-month/', {
+QUnit.module('bitcentive/components/page-dashboard/contribution-month/', {
   before: function(){
     // Reset fixture store before every test:
     store.reset();
