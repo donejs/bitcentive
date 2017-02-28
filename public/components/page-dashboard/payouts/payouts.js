@@ -17,7 +17,9 @@ export const ViewModel = DefineMap.extend({
   },
   contributionMonthsPromise: {
 		value() {
-			return ContributionMonth.getList({});
+			return ContributionMonth.getList({
+				'$populate': ['monthlyContributions.contributorRef']
+			});
 		}
   },
   contributionMonths: {
