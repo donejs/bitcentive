@@ -7,7 +7,7 @@ import { store as contributionMonthStore } from 'bitcentive/models/fixtures/cont
 window.store = contributionMonthStore;
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/select-contribution-month',{
+QUnit.module('bitcentive/components/page-dashboard/select-contribution-month',{
   setup: function(){
     localStorage.clear();
   }

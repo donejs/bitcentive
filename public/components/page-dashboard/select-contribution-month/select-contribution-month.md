@@ -1,5 +1,5 @@
 @parent bitcentive
-@module {can.Component} bitcentive/components/select-contribution-month <bit-select-contribution-month>
+@module {can.Component} bitcentive/components/page-dashboard/select-contribution-month <bit-select-contribution-month>
 
 A short description of the bit-select-contribution-month component
 
