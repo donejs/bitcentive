@@ -2,12 +2,12 @@
 <can-import from="~/lib/stache-helpers/" />
 
 {{#if contributionMonths}}
-	<select {($value)}="selectedContributionMonthId" class="form-control">
+	<select {($value)}="emptyToNull(~selectedContributionMonthId)" class="form-control">
 		{{#each contributionMonths}}
 			<option value="{{_id}}">{{prettyDate(date)}}</option>
 		{{/each}}
 		{{#if isAdmin()}}
-			<option value="__new__">+ Create {{prettyDate(nextMonth)}}</option>
+			<option value="">+ Create {{prettyDate(nextMonth)}}</option>
 		{{/if}}
 	</select>
 {{else}}
