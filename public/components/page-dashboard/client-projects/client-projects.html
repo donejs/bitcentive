@@ -1,0 +1,28 @@
+<script type="text/stache" can-autorender id="demo">
+	<can-import from="jquery" />
+	<can-import from="bootstrap" />
+	<can-import from="bootstrap/dist/css/bootstrap.css" />
+	<can-import from="bitcentive/styles.less" />
+	<can-import from="bitcentive/components/page-dashboard/client-projects/" />
+	<can-import from="bitcentive/models/fixtures/fixtures" />
+	<bit-client-projects {contribution-month}="contributionMonth"/>
+</script>
+<style>
+bit-client-projects {
+	background-color: white;
+}
+</style>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+	import 'bitcentive/models/fixtures/fixtures-socket';
+	import ContributionMonth from 'bitcentive/models/contribution-month/';
+	import viewModel from 'can-view-model';
+
+	ContributionMonth.get("1").then(function(item){
+		console.log('ContributionMonth.getData', item);
+		viewModel(document.getElementById("demo")).set("contributionMonth", item);
+	}).catch(function(err){
+		console.log('Err ContributionMonth', err);
+	});
+
+	window.viewModel = viewModel;
+</script>
