@@ -13,8 +13,8 @@ const handleCreateRequest = function (hook) {
 	}
 
 	const postedDate = new Date(hook.data.date);
-	const postedMonth = postedDate.getMonth();
-	const postedYear = postedDate.getFullYear();
+	const postedMonth = postedDate.getUTCMonth();
+	const postedYear = postedDate.getUTCFullYear();
 	const nextMonth = postedMonth === 11 ? 0 : postedMonth + 1;
 	const nextYear = postedMonth === 11 ? 0 : postedYear + 1;
 	// Lower limit - beginning of month (ex: 2018-12-01T00:00:00Z)
@@ -23,7 +23,7 @@ const handleCreateRequest = function (hook) {
 	const upperLimit = new Date(Date.UTC(nextMonth, nextYear, 1));
 
 	return new Promise((resolve, reject) => {
-		ContributionMonth.find({ 
+		ContributionMonth.find({
 			"date": {
 				"$gte": lowerLimit,
 				"$lt": upperLimit
