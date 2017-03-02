@@ -1,14 +1,21 @@
 <can-import from="./model-edit-property.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if and(isEditing, isAdmin())}}
-  <input
-    type="{{type}}"
-    class="form-control"
-    {$value}="propertyValue"
-    ($enter)="commitValue(%element.value)"
-    ($keydown)="cancelEdit(%event)"
-  />
+{{#if viewOnly}}
+
+	<span>{{propertyValue}}</span>
+
 {{else}}
-  <a href="javascript://" ($click)="makeEditable()" title="Edit" >{{propertyValue}}</a>
+
+	{{#if isEditing}}
+		<input class="form-control"
+			type="{{type}}"
+			{$value}="propertyValue"
+		 	{$disabled}="isDisabled"
+			($enter)="commitValue(%element.value)"
+			($keydown)="cancelEdit(%event)"
+		/>
+	{{else}}
+		<a href="javascript://" ($click)="makeEditable()" title="Edit" >{{propertyValue}}</a>
+	{{/if}}
 {{/if}}

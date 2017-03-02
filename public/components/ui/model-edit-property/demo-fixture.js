@@ -11,7 +11,12 @@ let mockData = fixture.store([
   {
     id: 2,
     name: 'Contributor'
-  }
+  },
+	{
+		id: 3,
+		name: 'View only option',
+		viewOnly: true
+	}
 ]);
 
 fixture({

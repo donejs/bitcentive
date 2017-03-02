@@ -31,6 +31,15 @@ export const ViewModel = DefineMap.extend({
 	  value: 'text'
   },
   /**
+   * @property {Boolean} viewOnly
+   *
+   * Whether to switch to a view-only mode.
+   */
+  viewOnly: {
+	  type: 'boolean',
+	  value: false
+  },
+  /**
    * @property {String} propertyValue
    *
    * The value in the model property that we're making editable.
@@ -46,6 +55,14 @@ export const ViewModel = DefineMap.extend({
   isEditing: {
     value: false
   },
+	/**
+	 * @property {Boolean} isDisabled
+	 *
+	 * Whether input field is disabled (e.g. during saving).
+	 */
+	get isDisabled() {
+		return (this.saveModel || this.model).isSaving();
+	},
   /**
    * @function makeEditable
    *

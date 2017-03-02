@@ -2,6 +2,7 @@ import QUnit from 'steal-qunit';
 import { ViewModel } from './model-edit-property';
 import Entity from 'bitcentive/components/ui/model-edit-property/demo-fixture';
 import DefineMap from 'can-define/map/';
+import stache from 'can-stache';
 
 // ViewModel unit tests
 QUnit.module('bitcentive/components/model-edit-property', {
@@ -60,4 +61,16 @@ QUnit.test('saveModel is called for saving', function(assert){
 		saveModel
 	});
 	vm.commitValue();
+});
+
+QUnit.test('View-only mode', function(){
+	let vm = new (DefineMap.extend({
+		record: DefineMap
+	}))({
+		record: { name: 'I am viewOnly'},
+		viewOnly: true
+	});
+	var frag = stache('<model-edit-property {model}="record" property="name" {view-only}="viewOnly" />')(vm);
+
+	QUnit.ok(frag.querySelector('span'), 'Should render span for the view-only mode');
 });
