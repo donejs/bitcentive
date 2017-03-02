@@ -29,6 +29,10 @@ export const ViewModel = DefineMap.extend({
       }
     }
   },
+	isAdmin: {
+		type: 'boolean',
+		value: true
+	},
   contributionMonthsPromise: {
     value() {
       return ContributionMonth.getList({ $sort: { date: 1 } });
