@@ -6,7 +6,6 @@ import ContributionMonth from 'bitcentive/models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
   selectedContributionMonthId: {
-    type: "string",
     get: function(lastSet){
       if(lastSet) {
         return lastSet;
@@ -16,7 +15,7 @@ export const ViewModel = DefineMap.extend({
       }
     },
     set: function(newVal, setVal) {
-      if(newVal === "__new__") {
+      if(newVal === null) {
         var last = this.lastMonth.serialize();
         last.date = this.nextMonth;
         last.monthlyContributions = [];
@@ -30,6 +29,10 @@ export const ViewModel = DefineMap.extend({
       }
     }
   },
+	isAdmin: {
+		type: 'boolean',
+		value: true
+	},
   contributionMonthsPromise: {
     value() {
       return ContributionMonth.getList({ $sort: { date: 1 } });

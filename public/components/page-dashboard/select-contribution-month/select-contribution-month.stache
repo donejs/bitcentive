@@ -1,13 +1,14 @@
 <can-import from="./select-contribution-month.less" />
 <can-import from="~/lib/stache-helpers/" />
+<can-import from="can-stache-converters" />
 
 {{#if contributionMonths}}
-	<select {($value)}="selectedContributionMonthId" class="form-control">
+	<select {($value)}="string-to-any(~selectedContributionMonthId)" class="form-control">
 		{{#each contributionMonths}}
 			<option value="{{_id}}">{{prettyDate(date)}}</option>
 		{{/each}}
-		{{#if isAdmin()}}
-			<option value="__new__">+ Create {{prettyDate(nextMonth)}}</option>
+		{{#if isAdmin}}
+			<option value="null">+ Create {{prettyDate(nextMonth)}}</option>
 		{{/if}}
 	</select>
 {{else}}
