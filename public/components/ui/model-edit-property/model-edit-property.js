@@ -10,11 +10,35 @@ export const ViewModel = DefineMap.extend({
    */
   model: DefineMap,
   /**
+   * @property {DefineMap} saveModel
+   *
+   * The model that has a connection for saving (e.g. for nested data).
+   */
+  saveModel: DefineMap,
+  /**
    * @property {String} property
    *
    * The name of the model property that we're making editable.
    */
   property: 'string',
+  /**
+   * @property {String} type
+   *
+   * The type of the input field. Default `text`.
+   */
+  type: {
+	  type: 'string',
+	  value: 'text'
+  },
+  /**
+   * @property {Boolean} viewOnly
+   *
+   * Whether to switch to a view-only mode.
+   */
+  viewOnly: {
+	  type: 'boolean',
+	  value: false
+  },
   /**
    * @property {String} propertyValue
    *
@@ -31,6 +55,14 @@ export const ViewModel = DefineMap.extend({
   isEditing: {
     value: false
   },
+	/**
+	 * @property {Boolean} isDisabled
+	 *
+	 * Whether input field is disabled (e.g. during saving).
+	 */
+	get isDisabled() {
+		return (this.saveModel || this.model).isSaving();
+	},
   /**
    * @function makeEditable
    *
@@ -63,12 +95,13 @@ export const ViewModel = DefineMap.extend({
    */
   commitValue(newValue) {
     let model = this.model;
+	  let connectedModel = this.saveModel || model;
     let property = this.property;
 
     this.isEditing = false;
     model[property] = newValue;
 
-    return model.save().catch(err => {
+    return connectedModel.save().catch(err => {
       console.error(err)
 
       return err;

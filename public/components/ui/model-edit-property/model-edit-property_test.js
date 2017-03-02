@@ -1,9 +1,15 @@
 import QUnit from 'steal-qunit';
 import { ViewModel } from './model-edit-property';
 import Entity from 'bitcentive/components/ui/model-edit-property/demo-fixture';
+import DefineMap from 'can-define/map/';
+import stache from 'can-stache';
 
 // ViewModel unit tests
-QUnit.module('bitcentive/components/ui/model-edit-property');
+QUnit.module('bitcentive/components/model-edit-property', {
+	beforeEach: function(){
+		window.localStorage.clear();
+	}
+});
 
 QUnit.test('Has initial property value', function() {
   let name = 'Foo';
@@ -39,4 +45,32 @@ QUnit.test('Can update and save property', function(assert) {
       done();
     });
   });
+});
+
+QUnit.test('saveModel is called for saving', function(assert){
+	expect(1);
+
+	let model = new DefineMap({});
+	let saveModel = new DefineMap({});
+	saveModel.save = function(){
+		QUnit.ok(true, 'save is called correctly');
+		return Promise.resolve();
+	};
+	let vm = new ViewModel({
+		model,
+		saveModel
+	});
+	vm.commitValue();
+});
+
+QUnit.test('View-only mode', function(){
+	let vm = new (DefineMap.extend({
+		record: DefineMap
+	}))({
+		record: { name: 'I am viewOnly'},
+		viewOnly: true
+	});
+	var frag = stache('<model-edit-property {model}="record" property="name" {view-only}="viewOnly" />')(vm);
+
+	QUnit.ok(frag.querySelector('span'), 'Should render span for the view-only mode');
 });
