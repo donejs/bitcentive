@@ -2,6 +2,6 @@
 
 <div class="container">
 	<h2>Users</h2>
-	<can-import from="bitcentive/components/users/" />
+	<can-import from="./users/" />
 	<bit-users {users}="users" />
 </div>

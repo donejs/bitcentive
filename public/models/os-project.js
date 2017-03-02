@@ -10,12 +10,11 @@ var OSProject = DefineMap.extend("OSProject", { seal: false }, {
   name: "string"
 });
 
-OSProject.List = DefineList.extend({
+OSProject.List = DefineList.extend("OSProjectList", {
   "#": OSProject
 });
 
 OSProject.connection = superModel({
-  parseInstanceProp: "data",
   Map: OSProject,
   List: OSProject.List,
   feathersService: feathersClient.service("/api/os_projects"),

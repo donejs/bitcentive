@@ -1,0 +1,16 @@
+<script type="text/stache" can-autorender id="view">
+	<can-import from="bitcentive/components/ui/model-edit-property/" />
+	<ul>
+		{{#each records as record}}
+			<li><model-edit-property {model}="record" property="name" {view-only}="record.viewOnly" /></li>
+		{{/each}}
+	</ul>
+</script>
+<script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
+	import viewModel from 'can-view-model';
+	import Entity from 'bitcentive/components/ui/model-edit-property/demo-fixture';
+
+	Entity.getList({ }).then(records => {
+		viewModel('#view').set('records', records);
+	});
+</script>

@@ -10,7 +10,7 @@ const MonthlyContribution = DefineMap.extend( "MonthlyContribution", { seal: fal
   points: "number"
 });
 
-MonthlyContribution.List = DefineList.extend({
+MonthlyContribution.List = DefineList.extend( "MonthlyContributionList", {
   "#": MonthlyContribution,
   get contributorsMap() {
     const map = {};

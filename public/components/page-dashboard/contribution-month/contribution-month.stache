@@ -1,0 +1,46 @@
+<can-import from="../os-projects/"/>
+<can-import from="../client-projects/"/>
+<can-import from="../contributions/"/>
+<can-import from="../payouts/" />
+<can-import from="./contribution-month.less" />
+<can-import from="~/lib/stache-helpers/" />
+
+{{#if contributionMonth}}
+	<div class='callout'>
+		<h2>Open Source Projects</h2>
+		<os-projects {contribution-month}="contributionMonth"/>
+	</div>
+	<div class='callout'>
+		<div class="rates">
+			<label>Start Rate<br/>
+				<input
+					type="number"
+					class="form-control"
+					{($value)}="contributionMonth.startRate"
+					($change)="contributionMonth.save()"
+					{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
+				/>
+			</label>
+			<label>End Rate<br/>
+				<input
+					type="number"
+					class="form-control"
+					{($value)}="contributionMonth.endRate"
+					($change)="contributionMonth.save()"
+					{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
+				/>
+			</label>
+		</div>
+		<h2>Client Projects</h2>
+		<bit-client-projects {contribution-month}="contributionMonth"/>
+	</div>
+	<div class='callout'>
+		<h2>Contributions</h2>
+		<bit-contributions {contribution-month}="contributionMonth"/>
+	</div>
+
+	<div class='callout'>
+		<h2>Payouts</h2>
+		<bit-payouts {contribution-month}="contributionMonth"/>
+	</div>
+{{/if}}

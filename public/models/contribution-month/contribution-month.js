@@ -232,7 +232,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	}
 });
 
-ContributionMonth.List = DefineList.extend({
+ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
 	OSProjectContributionsMap(currentContributionMonth) {
 		var OSProjectContributionsMap = {};
@@ -293,8 +293,12 @@ ContributionMonth.List = DefineList.extend({
 				const totalPoints = contributorsMap[osProjectID].totalPoints;
 				const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
 
-
-				total = total + ( (points / totalPoints) * totalAmountForOSProject );
+				// TODO: figure out what to do with `OSProjectContributionsMap` if an `OSProject` gets removed from a month:
+				// since `OSProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
+				// which will cause NaN for total. For now just ignore undefined for calculation:
+				if (totalAmountForOSProject !== undefined){
+					total = total + ( (points / totalPoints) * totalAmountForOSProject );
+				}
 			}
 		}
 
@@ -382,7 +386,6 @@ var dataMassage = function(oType) {
 };
 
 ContributionMonth.connection = superModel({
-	parseInstanceProp: "data",
 	Map: ContributionMonth,
 	List: ContributionMonth.List,
 	feathersService: feathersClient.service("/api/contribution_months"),

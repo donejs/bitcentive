@@ -12,7 +12,7 @@ var Contributor = DefineMap.extend("Contributor", { seal: false }, {
   active: "boolean"
 });
 
-Contributor.List = DefineList.extend({
+Contributor.List = DefineList.extend("ContributorList", {
   "#": Contributor
 });
 

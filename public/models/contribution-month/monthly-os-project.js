@@ -15,7 +15,7 @@ const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
   }
 });
 
-MonthlyOSProject.List = DefineList.extend({
+MonthlyOSProject.List = DefineList.extend("MonthlyOSProjectList", {
   "#": {
     Type: MonthlyOSProject,
     added( items ) {
