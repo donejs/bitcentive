@@ -22,10 +22,17 @@
 					{{monthlyContribution.osProjectRef.value.name}}
 				</td>
 				<td>
-					<model-edit-property {model}="monthlyContribution" property="description" {saveModel}="contributionMonth" />
+					<model-edit-property {model}="monthlyContribution"
+						property="description"
+						{view-only}="nonAdmin()"
+						{save-model}="contributionMonth" />
 				</td>
 				<td>
-					<model-edit-property {model}="monthlyContribution" property="points" {saveModel}="contributionMonth" type="number" />
+					<model-edit-property {model}="monthlyContribution"
+						property="points"
+						type="number"
+						{view-only}="nonAdmin()"
+						{save-model}="contributionMonth" />
 				</td>
 				<td>
 					{{#if isAdmin()}}
