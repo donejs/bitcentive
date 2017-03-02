@@ -49,12 +49,12 @@ export const ViewModel = DefineMap.extend({
         monthlyClientProjects: [],
         monthlyOSProjects:[],
         monthlyContributions: [],
-        date: moment().add(-1,'months').startOf('month').toDate()
+        date: moment.utc().add(-1,'months').startOf('month').toDate()
       });
     }
   },
   get nextMonth() {
-		return moment(this.lastMonth.date).add(1,'months').startOf('month').toDate();
+		return moment.utc( this.lastMonth.date ).add(1, 'months').startOf('month').toDate();
   }
 });
 
