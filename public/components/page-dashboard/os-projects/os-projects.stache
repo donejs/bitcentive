@@ -56,7 +56,7 @@
 					<form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
 						<div class="row">
 							<div class="col-xs-6">
-							{{#if allOSProjects.ispending}}
+							{{#if allOSProjects.isPending}}
 								<p>Loading...</p>
 							{{else}}
 								<select {($value)}="selectedOSProjectId" class="form-control">
