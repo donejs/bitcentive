@@ -59,14 +59,14 @@
 							{{#if allOSProjects.isPending}}
 								<p>Loading...</p>
 							{{else}}
-								<select {($value)}="selectedOSProjectId" class="form-control">
+								<select {($value)}="string-to-any(~selectedOSProjectId)" class="form-control">
 									<option value="" disabled selected hidden>Select Project...</option>
 									{{#each allOSProjects.value}}
 										{{^if contributionMonth.monthlyOSProjects.has(.)}}
 									<option value="{{_id}}">{{name}}</option>
 										{{/if}}
 									{{/each}}
-									<option value="__new__">Create New Project</option>
+									<option value="null">Create New Project</option>
 								</select>
 							{{/if}}
 							</div>

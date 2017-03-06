@@ -17,7 +17,7 @@ export const ViewModel = DefineMap.extend({
   newOSProjectName: 'string',
   selectedOSProjectId: {
     type: 'string',
-    value: '__new__'
+    value: null
   },
   allOSProjects: {
     value: function() {
@@ -28,7 +28,7 @@ export const ViewModel = DefineMap.extend({
   // Derived properties
   creatingNewOSProject: {
     get: function() {
-      return this.selectedOSProjectId === "__new__";
+      return this.selectedOSProjectId === null;
     }
   },
 
@@ -41,7 +41,7 @@ export const ViewModel = DefineMap.extend({
     if (ev) {
       ev.preventDefault();
     }
-    if (this.selectedOSProjectId === '__new__') {
+    if (this.selectedOSProjectId === null) {
       let newOSProject = new OSProject({
         name: this.newOSProjectName
       });
