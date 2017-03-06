@@ -36,7 +36,7 @@
 					<td>
 						{{#if isAdmin()}}
 							<button type="button" class="btn btn-danger btn-xs"
-									($click)="contributionMonth.removeMonthlyOSProject( monthlyOSProject )">
+									($click)="monthlyOSProject.remove()">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						{{/if}}
