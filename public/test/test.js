@@ -19,7 +19,3 @@ import 'bitcentive/components/page-users/page-users_test';
 
 import 'bitcentive/components/ui/alerts/alerts_test';
 import 'bitcentive/components/ui/model-edit-property/model-edit-property_test';
-
-import 'bitcentive/models/os-project_test';
-import 'bitcentive/models/user_test';
-import 'bitcentive/models/contribution-month/test/test';
