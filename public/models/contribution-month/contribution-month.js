@@ -56,7 +56,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	sortedMonthlyOSProjects: {
 		get () {
 			// sort a clone so that an infinite loop doesn't happen
-			return this.monthlyOSProjects.slice(0).sort(sortByRefField('osProjectRef', 'name'));
+			let sorterList = this.monthlyOSProjects.slice(0).sort(sortByRefField('osProjectRef', 'name'));
+			// expando properties are not copied when we create a copy of a list this ^ way:
+			sorterList.contributionMonth = this.monthlyOSProjects.contributionMonth;
+			return sorterList;
 		}
 	},
 	sortedMonthlyClientProjects: {

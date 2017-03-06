@@ -16,7 +16,7 @@
 		{{#each contributionMonth.sortedMonthlyOSProjects as monthlyOSProject}}
 			{{#if osProjectRef.value}}
 				<tr>
-					<td class="name-col">{{osProjectRef.value.name}}</td>
+					<td class="name-col">{{monthlyOSProject.osProjectRef.value.name}}</td>
 					<td>
 						<input type="number"
 							class="form-control significance-input"
@@ -32,11 +32,11 @@
 							{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
-					<td class="text-right">${{getTotal(osProjectRef).toFixed(2)}}</td>
+					<td class="text-right">${{monthlyOSProject.getTotal().toFixed(2)}}</td>
 					<td>
 						{{#if isAdmin()}}
 							<button type="button" class="btn btn-danger btn-xs"
-									($click)="contributionMonth.removeMonthlyOSProject(monthlyOSProject)">
+									($click)="contributionMonth.removeMonthlyOSProject( monthlyOSProject )">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						{{/if}}
