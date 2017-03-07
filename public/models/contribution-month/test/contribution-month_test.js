@@ -10,6 +10,7 @@ import MonthlyContribution from '../monthly-contribution';
 import MonthlyOSProject from '../monthly-os-project';
 import MonthlyClientProject from '../monthly-client-project';
 import fixture from 'can-fixture';
+import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 
 QUnit.module( 'models/contribution-month', {
 	setup: function(){
@@ -220,7 +221,7 @@ QUnit.test( "Can add and remove a monthlyOSProject", function() {
       "monthlyOSProject was removed" );
     return Promise.resolve();
   };
-  contributionMonth.removeMonthlyOSProject( monthlyOSProject );
+  monthlyOSProject.remove();
 
   ContributionMonth.prototype.save = oldSave;
 } );
