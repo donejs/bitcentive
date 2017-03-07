@@ -1,5 +1,4 @@
 /* global window */
-import feathersClient from './feathers-client';
 import feathersSession from 'can-connect-feathers/session/';
 import connect from 'can-connect';
 import dataParse from 'can-connect/data/parse/';
@@ -10,8 +9,10 @@ import canRef from 'can-connect/can/ref/';
 import callbacksOnce from 'can-connect/constructor/callbacks-once/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
-
 import DefineMap from 'can-define/map/';
+import set from 'can-set';
+
+import feathersClient from './feathers-client';
 import User from 'bitcentive/models/user';
 
 export const Session = DefineMap.extend('Session', {
@@ -29,6 +30,10 @@ export const Session = DefineMap.extend('Session', {
   }
 });
 
+Session.algebra =  new set.Algebra(
+  set.comparators.id('exp')
+);
+
 Session.connection = connect([
     feathersSession,
     construct,
@@ -41,9 +46,9 @@ Session.connection = connect([
     callbacksOnce
 ], {
   feathersClient,
-  idProp: 'exp',
   Map: Session,
-  name: 'session'
+  name: 'session',
+  algebra: Session.algebra
 });
 
 export default Session;
