@@ -19,7 +19,13 @@
 const DBMigrate = require('db-migrate');
 const mongoose = require('mongoose');
 
-const options = {};
+const options = {
+	// To avoid having an additional config file (database.json):
+	config: {
+		"dev": require('./config/default.json').mongodb,
+		"production": { "ENV": require('./config/custom-environment-variables.json').mongodb }
+	}
+};
 
 // Travis runs db-migrate without passing NODE_ENV
 options.env = process.env.NODE_ENV
