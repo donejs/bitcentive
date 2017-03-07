@@ -15,10 +15,6 @@ export default new set.Algebra(
   {
     "$populate": function(){
       return true;
-    },
-    "token": function(){
-      // token is added by feathers
-      return true;
     }
   }
 );
