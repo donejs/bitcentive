@@ -15,8 +15,6 @@ import DefineMap from 'can-define/map/';
 import User from 'bitcentive/models/user';
 
 export const Session = DefineMap.extend('Session', {
-  seal: false
-}, {
   userId: 'any',
   user: {
     Type: User,
