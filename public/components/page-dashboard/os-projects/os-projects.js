@@ -9,7 +9,6 @@ export const ViewModel = DefineMap.extend({
   contributionMonth: ContributionMonth,
 
   // Stateful properties
-  activePromise: "any",
   adding: {
     type: 'boolean',
     value: false
@@ -17,18 +16,18 @@ export const ViewModel = DefineMap.extend({
   newOSProjectName: 'string',
   selectedOSProjectId: {
     type: 'string',
-    value: '__new__'
+    value: null
   },
   allOSProjects: {
     value: function() {
-      return OSProject.connection.getList();
+      return OSProject.getList();
     }
   },
 
   // Derived properties
   creatingNewOSProject: {
     get: function() {
-      return this.selectedOSProjectId === "__new__";
+      return this.selectedOSProjectId === null;
     }
   },
 
@@ -41,17 +40,17 @@ export const ViewModel = DefineMap.extend({
     if (ev) {
       ev.preventDefault();
     }
-    if (this.selectedOSProjectId === '__new__') {
+    if (this.selectedOSProjectId === null) {
       let newOSProject = new OSProject({
         name: this.newOSProjectName
       });
 
-      this.activePromise = newOSProject.save().then((osProject) => {
+	    return newOSProject.save().then((osProject) => {
         this.toggleAddNewMonthlyOSProject();
         return this.contributionMonth.addNewMonthlyOSProject(osProject);
       });
     } else {
-      this.activePromise = this.allOSProjects.then((projects) => {
+	    return this.allOSProjects.then((projects) => {
         projects.each((proj) => {
           if (this.selectedOSProjectId === proj._id) {
             this.contributionMonth.addNewMonthlyOSProject(proj);
@@ -60,23 +59,6 @@ export const ViewModel = DefineMap.extend({
         });
       });
     }
-    return this.activePromise;
-  },
-  removeMonthlyOSProject: function(osProject) {
-    this.contributionMonth.removeMonthlyOSProject(osProject);
-    this.activePromise = this.contributionMonth.save();
-  },
-  updateNameForMonthlyOSProject: function(event, osProject) {
-    osProject.name = event.target.value;
-    this.activePromise = osProject.save();
-  },
-  updateComissionedForMonthlyOSProject: function(monthlyOSProject, commissioned) {
-    monthlyOSProject.commissioned = commissioned;
-    this.activePromise = this.contributionMonth.save();
-  },
-  getTotal: function(osProject) {
-    var fullTotal = this.contributionMonth.calculations.osProjects[osProject._id] || 0.0;
-    return fullTotal;
   }
 });
 

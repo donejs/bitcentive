@@ -12,6 +12,15 @@ const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
   contributionMonth: {
     Type: ContributionMonth,
     serialize: false
+  },
+  getTotal() {
+    // should this implementation be hidden and moved to contributionMonth: `contributionMonth.getOSProjectTotal( this )`?
+    let calculations = this.contributionMonth &&
+      this.contributionMonth.calculations;
+    return calculations && calculations.osProjects[this.osProjectRef._id] || 0.0;
+  },
+  remove() {
+    this.contributionMonth.removeMonthlyOSProject( this );
   }
 });
 
@@ -19,7 +28,7 @@ MonthlyOSProject.List = DefineList.extend("MonthlyOSProjectList", {
   "#": {
     Type: MonthlyOSProject,
     added( items ) {
-      items.forEach( monthlyOSProject => {
+      this.contributionMonth && items.forEach( monthlyOSProject => {
         monthlyOSProject.contributionMonth = this.contributionMonth;
       } );
       return items;

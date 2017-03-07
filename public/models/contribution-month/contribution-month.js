@@ -55,8 +55,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	},
 	sortedMonthlyOSProjects: {
 		get () {
-			// sort a clone so that an infinite loop doesn't happen
-			return this.monthlyOSProjects.slice(0).sort(sortByRefField('osProjectRef', 'name'));
+			var sortedList = new this.monthlyOSProjects.constructor();
+			sortedList.contributionMonth = this.monthlyOSProjects.contributionMonth;
+			sortedList.push.apply(sortedList, this.monthlyOSProjects);
+			sortedList.sort( sortByRefField('osProjectRef', 'name') );
+
+			return sortedList;
 		}
 	},
 	sortedMonthlyClientProjects: {
