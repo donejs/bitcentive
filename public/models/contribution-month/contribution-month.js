@@ -1,3 +1,10 @@
+/**
+ * @module {can-map} bitcentive/models/contribution-month ContributionMonth
+ * @parent bitcentive.clientModels
+ *
+ * @group bitcentive/models/contribution-month.properties 0 properties
+ */
+
 import ClientProject from "../client-project";
 import OSProject from "../os-project";
 import Contributor from "../contributor";

@@ -1,3 +1,10 @@
+/**
+ * @module {can-map} bitcentive/models/algebra Algebra
+ * @parent bitcentive.clientModels
+ *
+ * @group bitcentive/models/algebra.properties 0 properties
+ */
+
 import set from 'can-set';
 import moment from "moment";
 

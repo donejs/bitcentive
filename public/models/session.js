@@ -1,4 +1,11 @@
 /* global window */
+/**
+ * @module {can-map} bitcentive/models/session Session
+ * @parent bitcentive.clientModels
+ *
+ * @group bitcentive/models/session.properties 0 properties
+ */
+
 import feathersSession from 'can-connect-feathers/session/';
 import connect from 'can-connect';
 import dataParse from 'can-connect/data/parse/';

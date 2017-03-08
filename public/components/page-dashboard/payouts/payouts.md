@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-dashboard/payouts <bit-payouts>
 
 Displays a table of payout amounts for the current month, by contributor.

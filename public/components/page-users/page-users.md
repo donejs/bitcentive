@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-users <page-users>
 
 An application users administration page.

@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-home <page-home>
 
 A short description of the page-home component

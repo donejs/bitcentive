@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-dashboard/contributions <bit-contributions>
 
 A short description of the contributions component

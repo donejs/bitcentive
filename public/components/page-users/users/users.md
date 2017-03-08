@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-users/users <bit-users>
 
 Display a list of application users with settings such as admin status.

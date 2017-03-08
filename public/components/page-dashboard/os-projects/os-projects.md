@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-dashboard/os-projects <os-projects>
 
 A short description of the os-projects component

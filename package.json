@@ -22,7 +22,8 @@
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
     "install": "node install.js && npm run db-migrate",
-    "db-migrate": "node migrate.js"
+    "db-migrate": "node migrate.js",
+    "document": "documentjs -d"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -54,6 +55,7 @@
     "npmAlgorithm": "flat"
   },
   "devDependencies": {
+    "documentjs": "^0.4.4",
     "jshint": "^2.9.4",
     "mocha": "^3.2.0",
     "request": "^2.79.0"

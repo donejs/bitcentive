@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/ui/model-edit-property <model-edit-property>
 
 This component takes a model and a property name.

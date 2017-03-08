@@ -1,3 +1,8 @@
+@page bitcentive Bitcentive
+@group bitcentive.clientModels 0 Models
+@group bitcentive.components 1 Components
+@group bitcentive.helpers 2 Helpers
+
 # bitcentive
 
 > Royalties

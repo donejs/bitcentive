@@ -1,0 +1,14 @@
+{
+	"sites" : {
+		"docs": {
+			"glob" : {
+				"ignore": ["{node_modules,public/node_modules,migrations,public/dist,src}/**/*"]
+			},
+			"parent": "bitcentive",
+			"dest": "docs"
+		}
+	},
+	"siteDefaults": {
+		"source": "https://github.com/donejs/bitcentive"
+	}
+}

@@ -1,4 +1,10 @@
 /* global window */
+/**
+ * @module {can-map} bitcentive/app AppViewModel
+ * @parent bitcentive
+ *
+ * @group bitcentive/app.properties 0 properties
+ */
 import DefineMap from 'can-define/map/';
 import route from 'can-route';
 // import 'can-route-pushstate';

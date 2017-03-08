@@ -1,4 +1,4 @@
-@parent bitcentive
+@parent bitcentive.components
 @module {can.Component} bitcentive/components/page-contributors <page-contributors>
 
 A short description of the page-contributors component

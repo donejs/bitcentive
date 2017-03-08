@@ -1,3 +1,10 @@
+/**
+ * @module {can-map} bitcentive/models/user User
+ * @parent bitcentive.clientModels
+ *
+ * @group bitcentive/models/user.properties 0 properties
+ */
+
 import set from "can-set";
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';

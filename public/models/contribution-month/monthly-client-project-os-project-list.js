@@ -1,3 +1,10 @@
+/**
+ * @module {can-map} bitcentive/models/contribution-month/monthly-client-projects-os-project-list MonthlyClientProjectOsProjectList
+ * @parent bitcentive.clientModels
+ *
+ * @group bitcentive/models/contribution-month/monthly-client-projects-os-project-list.properties 0 properties
+ */
+
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import OSProject from "../os-project";
