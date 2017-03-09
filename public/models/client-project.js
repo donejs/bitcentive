@@ -2,6 +2,8 @@
  * @module {can-map} bitcentive/models/client-project ClientProject
  * @parent bitcentive.clientModels
  *
+ * Client project model
+ *
  * @group bitcentive/models/client-project.properties 0 properties
  * @group bitcentive/models/client-project.static 2 static
  */

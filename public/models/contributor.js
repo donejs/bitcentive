@@ -2,6 +2,8 @@
  * @module {can-map} bitcentive/models/contributor Contributor
  * @parent bitcentive.clientModels
  *
+ * Contributor model
+ *
  * @group bitcentive/models/contributor.properties 0 properties
  */
 
