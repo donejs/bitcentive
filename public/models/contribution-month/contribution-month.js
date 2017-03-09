@@ -410,13 +410,13 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList",
 	/**
 	 * @function OSProjectContributionsMap
 	 *
-	 * A function that returns a map of contributors and total points by OS project id.
+	 * Returns a map of contributors and total points by OS project id.
 	 *
 	 * @signature `ContributionMonthList.OSProjectContributionsMap( contributionMonth )`
 	 *
 	 * @param {bitcentive/models/contribution-month} currentContributionMonth
 	 *
-	 * @return {Object} OSProjectContributionsMap
+	 * @return {Object} A map of contributors and total points by OS project id
 	 */
 	OSProjectContributionsMap(currentContributionMonth) {
 		var OSProjectContributionsMap = {};
@@ -487,7 +487,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList",
 	 * @signature `ContributionMonthList.getOSProjectPayoutTotal( contributorRef, contributionMonth )`
 	 *
 	 * @param {bitcentive/models/contributor .Ref} contributorRef A reference to a contributor
-	 * @param {bitcentive/models/contribution-month} contributionMonth 
+	 * @param {bitcentive/models/contribution-month} contributionMonth
 	 *
 	 * @return {Number} A total amount for the payout
 	 */
@@ -613,6 +613,11 @@ ContributionMonth.connection = superModel({
 	algebra
 });
 
+/**
+ * @property {can-set/Algebra} bitcentive/models/contribution-month.static.algebra algebra
+ * @parent bitcentive/models/contribution-month.static
+ * An algebra for the connection. References common [bitcentive/models/algebra]
+ */
 ContributionMonth.algebra = algebra;
 
 export default ContributionMonth;
