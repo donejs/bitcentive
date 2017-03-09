@@ -1,5 +1,5 @@
 /**
- * @module {can-map} bitcentive/models/contribution-month/monthly-os-project MonthlyOSProject
+ * @module {can-map} bitcentive/models/monthly-os-project MonthlyOSProject
  * @parent bitcentive.clientModels
  *
  * @group bitcentive/models/contribution-month/monthly-os-project.properties 0 properties

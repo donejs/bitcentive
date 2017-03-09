@@ -3,6 +3,8 @@
  * @parent bitcentive.clientModels
  *
  * @group bitcentive/models/contribution-month.properties 0 properties
+ * @group bitcentive/models/contribution-month.prototype 1 prototype
+ * @group bitcentive/models/contribution-month.static 2 static
  */
 
 import ClientProject from "../client-project";
@@ -37,8 +39,25 @@ const sortByRefField = (refName, fieldName) => {
 };
 
 var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
+	/**
+	 * @property {String} bitcentive/models/contribution-month.properties.id id
+	 * @parent bitcentive/models/contribution-month.properties
+	 * Id of a contribution month.
+	 */
 	_id: "string",
+
+	/**
+	 * @property {Date} bitcentive/models/contribution-month.properties.date date
+	 * @parent bitcentive/models/contribution-month.properties
+	 * Date of a contribution month.
+	 */
 	date: "date",
+
+	/**
+	 * @property {bitcentive/models/monthly-os-project} bitcentive/models/contribution-month.properties.monthly-os-projects monthlyOSProjects
+	 * @parent bitcentive/models/contribution-month.properties
+	 * A list of [bitcentive/models/monthly-os-project] items.
+	 */
 	monthlyOSProjects: {
 		Type: MonthlyOSProject.List,
 		set: function(monthlyOSProjects){
@@ -46,20 +65,50 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 			return monthlyOSProjects;
 		}
 	},
+
+	/**
+	 * @property {bitcentive/models/monthly-os-project} bitcentive/models/contribution-month.properties.monthly-client-projects monthlyClientProjects
+	 * @parent bitcentive/models/contribution-month.properties
+	 * A list of [bitcentive/models/monthly-client-project] items.
+	 */
 	monthlyClientProjects: MonthlyClientProject.List,
+
+	/**
+	 * @property {bitcentive/models/monthly-contribution} bitcentive/models/contribution-month.properties.monthly-contributions monthlyContributions
+	 * @parent bitcentive/models/contribution-month.properties
+	 * A list of [bitcentive/models/monthly-contributions] items.
+	 */
 	monthlyContributions: MonthlyContribution.List,
+
+	/**
+	 * @property {Number} bitcentive/models/contribution-month.properties.start-rate startRate
+	 * @parent bitcentive/models/contribution-month.properties
+	 * The starting value for the rate. The hourly tax is based on it.
+	 */
 	startRate: {
 		value: 2,
 		set(value) {
 			return value == null ? 2 : value;
 		}
 	},
+
+	/**
+	 * @property {Number} bitcentive/models/contribution-month.properties.end-rate endRate
+	 * @parent bitcentive/models/contribution-month.properties
+	 * The ending value for the rate. The hourly tax is based on it.
+	 */
 	endRate: {
 		value: 4,
 		set(value) {
 			return value == null ? 4: value;
 		}
 	},
+
+	/**
+	 * @property {bitcentive/models/monthly-os-project} bitcentive/models/contribution-month.properties.sorted-monthly-os-projects sortedMonthlyOSProjects
+	 * @parent bitcentive/models/contribution-month.properties
+	 * A sorted list of [bitcentive/models/monthly-os-project] items. By OS project name.
+	 */
 	sortedMonthlyOSProjects: {
 		get () {
 			var sortedList = new this.monthlyOSProjects.constructor();
@@ -70,12 +119,30 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 			return sortedList;
 		}
 	},
+
+	/**
+	 * @property {bitcentive/models/monthly-client-project} bitcentive/models/contribution-month.properties.sorted-monthly-client-projects sortedMonthlyClientProjects
+	 * @parent bitcentive/models/contribution-month.properties
+	 * A sorted list of [bitcentive/models/monthly-client-project] items. By client project name.
+	 */
 	sortedMonthlyClientProjects: {
 		get () {
 			// sort a clone so that an infinite loop doesn't happen
 			return this.monthlyClientProjects.slice(0).sort(sortByRefField('clientProjectRef', 'name'));
 		}
 	},
+
+	/**
+	 * @property {Object} bitcentive/models/contribution-month.properties.calculations calculations
+	 * @parent bitcentive/models/contribution-month.properties
+	 * The calculations
+	 *
+	 * For each client project, calculate out:
+	 * - rate (based on how many commissioned projects it uses) = 4 - 2 * (usedCommissionedSignificance / totalCommissionedSignificance)
+	 * - total = (rate * hours)
+	 * - totalSignificance - the total significance for this project
+	 * - osProjectsUsed - a map of the OS projects used
+	 */
 	calculations: {
 		get: function() {
 			var calculations = {
@@ -166,7 +233,13 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		}
 	},
 
-	// Can add using an osProject or monthlyOSProject
+	/**
+	 * @property {Function} bitcentive/models/contribution-month.prototype.addNewMonthlyOSProject addNewMonthlyOSProject
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Add a project (osProject or monthlyOSProject) to the month.
+	 *
+	 * @param {bitcentive/models/os-project | bitcentive/models/monthly-os-project} project A project
+	 */
 	addNewMonthlyOSProject( project ) {
 		let monthlyOSProject;
 		if (project instanceof MonthlyOSProject) {
