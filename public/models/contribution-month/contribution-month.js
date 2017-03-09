@@ -236,7 +236,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	/**
 	 * @function bitcentive/models/contribution-month.prototype.addNewMonthlyOSProject addNewMonthlyOSProject
 	 * @parent bitcentive/models/contribution-month.prototype
-	 * Add a project (osProject or monthlyOSProject) to the month.
+	 * Adds the given project (osProject or monthlyOSProject) to the month.
 	 *
 	 * @signature `contributionMonth.addNewMonthlyOSProject( project )`
 	 *
@@ -265,11 +265,11 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	/**
 	 * @function bitcentive/models/contribution-month.prototype.removeMonthlyOSProject removeMonthlyOSProject
 	 * @parent bitcentive/models/contribution-month.prototype
-	 * Remove a project from the month.
+	 * Removes the given OS project from the month.
 	 *
-	 * @signature `contributionMonth.removeMonthlyOSProject( monthlyClientProject )`
+	 * @signature `contributionMonth.removeMonthlyOSProject( monthlyOSProject )`
 	 *
-	 * @param {bitcentive/models/monthly-os-project} project A project
+	 * @param {bitcentive/models/monthly-os-project} project An OS project
 	 */
 	removeMonthlyOSProject( monthlyOSProject ) {
 		this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
@@ -316,7 +316,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	/**
 	 * @function bitcentive/models/contribution-month.prototype.removeClientProject removeClientProject
 	 * @parent bitcentive/models/contribution-month.prototype
-	 * Removes client project from the month.
+	 * Removes the given client project from the month.
 	 *
 	 * @signature `contributionMonth.removeClientProject( clientProject )`
 	 *
@@ -380,7 +380,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	/**
 	 * @function bitcentive/models/contribution-month.prototype.removeContribution removeContribution
 	 * @parent bitcentive/models/contribution-month.prototype
-	 * Removes the contribution from the month.
+	 * Removes the given contribution from the month.
 	 *
 	 * @signature `contributionMonth.removeContribution( contribution )`
 	 *
