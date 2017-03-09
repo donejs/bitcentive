@@ -15,14 +15,14 @@ import Contributor from "../contributor";
 
 const MonthlyContribution = DefineMap.extend( "MonthlyContribution", { seal: false }, {
 	/**
-	 * @property {Map.Ref} bitcentive/models/monthly-contribution.properties.contributorRef contributorRef
+	 * @property {Contributor.Ref} bitcentive/models/monthly-contribution.properties.contributorRef contributorRef
 	 * @parent bitcentive/models/monthly-contribution.properties
 	 * A reference to a [bitcentive/models/contributor].
 	 */
   contributorRef: Contributor.Ref,
 
 	/**
-	 * @property {Map.Ref} bitcentive/models/monthly-contribution.properties.osProjectRef osProjectRef
+	 * @property {OSProject.Ref} bitcentive/models/monthly-contribution.properties.osProjectRef osProjectRef
 	 * @parent bitcentive/models/monthly-contribution.properties
 	 * A reference to an [bitcentive/models/os-project].
 	 */
