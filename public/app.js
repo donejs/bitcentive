@@ -3,6 +3,13 @@
  * @module {can-map} bitcentive/app AppViewModel
  * @parent bitcentive
  *
+ * Application view model.
+ *
+ * Usage:
+ * ```
+ * <can-import from="bitcentive/app" export-as="viewModel" />
+ * ```
+ *
  * @group bitcentive/app.properties 0 properties
  */
 import DefineMap from 'can-define/map/';
@@ -35,6 +42,8 @@ const AppViewModel = DefineMap.extend({
 	},
 
 	/**
+	 * @property {bitcentive/models/session} bitcentive/app.session session
+	 * @parent bitcentive/app.properties
 	 * Use Session.get() to see if there's a valid JWT. If one exists,
 	 * a new Session will be created.
 	 */
@@ -47,6 +56,8 @@ const AppViewModel = DefineMap.extend({
 	},
 
 	/**
+	 * @property {String} bitcentive/app.page page
+	 * @parent bitcentive/app.properties
 	 * Page component of the route.
 	 */
 	page: {
@@ -54,6 +65,8 @@ const AppViewModel = DefineMap.extend({
 	},
 
 	/**
+	 * @property {String} bitcentive/app.displayedPage displayedPage
+	 * @parent bitcentive/app.properties
 	 * Determines which page-level component is displayed.
 	 */
 	displayedPage: {
@@ -75,6 +88,8 @@ const AppViewModel = DefineMap.extend({
 	},
 
 	/**
+	 * @property {String} bitcentive/app.title title
+	 * @parent bitcentive/app.properties
 	 * The `title` attribute is used in index.stache as the HTML title.
 	 */
 	title: {
