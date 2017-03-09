@@ -41,7 +41,7 @@ ClientProject.List = DefineList.extend('ClientProjectList', {
 /**
  * @property {can-connect} bitcentive/models/client-project.static.connection connection
  * @parent bitcentive/models/client-project.static
- * A `can-connect/can/super-map/super-map` connection linked to FeathersJS service `/api/client_projects`.
+ * A `can-connect` connection linked to FeathersJS service `/api/client_projects`.
  */
 ClientProject.connection = superModel({
   Map: ClientProject,

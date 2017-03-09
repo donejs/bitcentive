@@ -26,7 +26,7 @@ import MonthlyContribution from "./monthly-contribution";
 
 import algebra from '../algebra';
 
-/**
+/*
  * Builds a sorting function for sorting by a property on a ref field
  */
 const sortByRefField = (refName, fieldName) => {
@@ -397,8 +397,27 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	}
 });
 
-ContributionMonth.List = DefineList.extend("ContributionMonthList", {
+/**
+ * @constructor {List} bitcentive/models/contribution-month.static.List List
+ * @parent bitcentive/models/contribution-month.static
+ * A list of [bitcentive/models/contribution-month].
+ */
+ContributionMonth.List = DefineList.extend("ContributionMonthList",
+/** @prototype */
+{
 	"#": ContributionMonth,
+
+	/**
+	 * @function OSProjectContributionsMap
+	 *
+	 * A function that returns a map of contributors and total points by OS project id.
+	 *
+	 * @signature `ContributionMonthList.OSProjectContributionsMap( contributionMonth )`
+	 *
+	 * @param {bitcentive/models/contribution-month} currentContributionMonth
+	 *
+	 * @return {Object} OSProjectContributionsMap
+	 */
 	OSProjectContributionsMap(currentContributionMonth) {
 		var OSProjectContributionsMap = {};
 		this.forEach(contributionMonth => {
@@ -429,6 +448,20 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return OSProjectContributionsMap;
 	},
+
+	/**
+	 * @function getOSProjectPayoutTotal
+	 *
+	 * Returns a total amount for the payout.
+	 *
+	 * @signature `ContributionMonthList.getOSProjectPayoutTotal( monthlyOSProject, contributor, contributionMonth )`
+	 *
+	 * @param {bitcentive/models/monthly-os-project} monthlyOSProject
+	 * @param {bitcentive/models/contributor} contributor
+	 * @param {bitcentive/models/contribution-month} contributionMonth
+	 *
+	 * @return {Number} A total amount for the payout
+	 */
 	getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth) {
 		let total = 0;
 
@@ -445,6 +478,19 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return total;
 	},
+
+	/**
+	 * @function getTotalForAllPayoutsForContributor
+	 *
+	 * Returns a total amount for the payout.
+	 *
+	 * @signature `ContributionMonthList.getOSProjectPayoutTotal( contributorRef, contributionMonth )`
+	 *
+	 * @param {bitcentive/models/contributor .Ref} contributorRef A reference to a contributor
+	 * @param {bitcentive/models/contribution-month} contributionMonth 
+	 *
+	 * @return {Number} A total amount for the payout
+	 */
 	getTotalForAllPayoutsForContributor(contributorRef, contributionMonth) {
 		let total = 0;
 
@@ -469,13 +515,19 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return total;
 	},
+
 	/**
-	 * @property getMonthlyPayouts
+	 * @function getMonthlyPayouts
 	 *
 	 * Get a map of OS Project payouts per Contributor based on the month passed
 	 * and any previous months.
 	 *
-	 * e.g.
+	 * @param {bitcentive/models/contribution-month} currentMonth
+	 * @return {Object} A map of payouts by [bitcentive/models/contributor] id.
+	 *
+	 * @body
+	 *
+	 * ## Example
 	 * ```
 	 * {
 	 *	 "5873af58cd85b95c3f6285f5": {
@@ -498,8 +550,6 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	 * }
 	 * ```
 	 *
-	 * @param {ContributionMonth} currentMonth
-	 * @return {Map}
 	 */
 	getMonthlyPayouts(currentMonth) {
 		let currentMoment = moment(currentMonth.date);
@@ -550,6 +600,11 @@ var dataMassage = function(oType) {
 	};
 };
 
+/**
+ * @constructor {can-connection} bitcentive/models/contribution-month.static.connection connection
+ * @parent bitcentive/models/contribution-month.static
+ * A `can-connect` connection linked to FeathersJS service `/api/contribution_months`.
+ */
 ContributionMonth.connection = superModel({
 	Map: ContributionMonth,
 	List: ContributionMonth.List,
