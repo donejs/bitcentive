@@ -2,6 +2,8 @@
  * @module {can-map} bitcentive/models/monthly-os-project MonthlyOSProject
  * @parent bitcentive.clientModels
  *
+ * Monthly OS project model
+ *
  * @group bitcentive/models/contribution-month/monthly-os-project.properties 0 properties
  */
 

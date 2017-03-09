@@ -2,6 +2,8 @@
  * @module {can-map} bitcentive/models/contribution-month ContributionMonth
  * @parent bitcentive.clientModels
  *
+ * Contribution month model
+ *
  * @group bitcentive/models/contribution-month.properties 0 properties
  * @group bitcentive/models/contribution-month.prototype 1 prototype
  * @group bitcentive/models/contribution-month.static 2 static

@@ -1,8 +1,11 @@
 /**
- * @module {can-map} bitcentive/models/contribution-month/monthly-contribution MonthlyContribution
+ * @module {can-map} bitcentive/models/monthly-contribution MonthlyContribution
  * @parent bitcentive.clientModels
  *
- * @group bitcentive/models/contribution-month/monthly-contribution.properties 0 properties
+ * A monthly contribution model
+ *
+ * @group bitcentive/models/monthly-contribution.properties 0 properties
+ * @group bitcentive/models/monthly-contribution.static 1 static
  */
 
 import DefineMap from "can-define/map/";
@@ -11,14 +14,49 @@ import OSProject from "../os-project";
 import Contributor from "../contributor";
 
 const MonthlyContribution = DefineMap.extend( "MonthlyContribution", { seal: false }, {
+	/**
+	 * @property {Map.Ref} bitcentive/models/monthly-contribution.properties.contributorRef contributorRef
+	 * @parent bitcentive/models/monthly-contribution.properties
+	 * A reference to a [bitcentive/models/contributor].
+	 */
   contributorRef: Contributor.Ref,
+
+	/**
+	 * @property {Map.Ref} bitcentive/models/monthly-contribution.properties.osProjectRef osProjectRef
+	 * @parent bitcentive/models/monthly-contribution.properties
+	 * A reference to an [bitcentive/models/os-project].
+	 */
   osProjectRef: OSProject.Ref,
+
+	/**
+	 * @property {String} bitcentive/models/monthly-contribution.properties.description description
+	 * @parent bitcentive/models/monthly-contribution.properties
+	 * A description of the contribution.
+	 */
   description: "string",
+
+	/**
+	 * @property {Number} bitcentive/models/monthly-contribution.properties.points points
+	 * @parent bitcentive/models/monthly-contribution.properties
+	 * A number of points for the contribution.
+	 */
   points: "number"
 });
 
-MonthlyContribution.List = DefineList.extend( "MonthlyContributionList", {
+/**
+ * @constructor {List} bitcentive/models/monthly-contribution.static.List List
+ * @parent bitcentive/models/monthly-contribution.static
+ * A list of [bitcentive/models/monthly-contribution].
+ */
+MonthlyContribution.List = DefineList.extend( "MonthlyContributionList",
+/** @prototype **/
+{
   "#": MonthlyContribution,
+
+	/**
+	 * @property {Object} contributorsMap
+	 * A map of [bitcentive/models/contributor]s by id.
+	 */
   get contributorsMap() {
     const map = {};
     this.forEach(contributor => {
