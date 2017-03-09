@@ -28,10 +28,10 @@
 					<td class="os-projects-cell">
 						<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" ($click)="setSelectedClientProject(monthlyClientProject)" >
 							{{! Count of commissioned projects }}
-							{{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
+							{{contributionMonth.countCommissionedProjects(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
 							+
 							{{! Count of uncommisioned projects }}
-							{{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+							{{contributionMonth.countUncommissionedProjects(monthlyClientProject)}}
 						</button>
 					</td>
 					<td>

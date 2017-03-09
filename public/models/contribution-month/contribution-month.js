@@ -234,9 +234,11 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	},
 
 	/**
-	 * @property {Function} bitcentive/models/contribution-month.prototype.addNewMonthlyOSProject addNewMonthlyOSProject
+	 * @function bitcentive/models/contribution-month.prototype.addNewMonthlyOSProject addNewMonthlyOSProject
 	 * @parent bitcentive/models/contribution-month.prototype
 	 * Add a project (osProject or monthlyOSProject) to the month.
+	 *
+	 * @signature `contributionMonth.addNewMonthlyOSProject( project )`
 	 *
 	 * @param {bitcentive/models/os-project | bitcentive/models/monthly-os-project} project A project
 	 */
@@ -259,6 +261,16 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		});
 		return monthlyOSProject;
 	},
+
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.removeMonthlyOSProject removeMonthlyOSProject
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Remove a project from the month.
+	 *
+	 * @signature `contributionMonth.removeMonthlyOSProject( monthlyClientProject )`
+	 *
+	 * @param {bitcentive/models/monthly-os-project} project A project
+	 */
 	removeMonthlyOSProject( monthlyOSProject ) {
 		this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
 		this.monthlyClientProjects.forEach( clientProject => {
@@ -269,21 +281,60 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		});
 	},
 
-	commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.countCommissionedProjects countCommissionedProjects
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Counts commissioned monthly OS projects for the given client project.
+	 *
+	 * @signature `contributionMonth.countCommissionedProjects( monthlyClientProject )`
+	 *
+	 * @param {bitcentive/models/monthly-client-project} monthlyClientProject A client project
+	 */
+	countCommissionedProjects: function(monthlyClientProject) {
 		if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
 			return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].commissionedMonthlyOSProjects.length;
 		}
 		return 0;
 	},
-	uncommissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
+
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.countUncommissionedProjects countUncommissionedProjects
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Counts commissioned monthly OS projects for the given client project.
+	 *
+	 * @signature `contributionMonth.countUncommissionedProjects( monthlyClientProject )`
+	 *
+	 * @param {bitcentive/models/monthly-client-project} monthlyClientProject A client project
+	 */
+	countUncommissionedProjects: function(monthlyClientProject) {
 		if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
 			return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].uncommissionedMonthlyOSProjects.length;
 		}
 		return 0;
 	},
+
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.removeClientProject removeClientProject
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Removes client project from the month.
+	 *
+	 * @signature `contributionMonth.removeClientProject( clientProject )`
+	 *
+	 * @param {bitcentive/models/monthly-client-project} clientProject A client project
+	 */
 	removeClientProject: function(clientProject) {
 		this.monthlyClientProjects.splice(this.monthlyClientProjects.indexOf(clientProject), 1);
 	},
+
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.getRate getRate
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Returns the rate for the given client project.
+	 *
+	 * @signature `contributionMonth.getRate( monthlyClientProject )`
+	 *
+	 * @param {bitcentive/models/monthly-client-project} monthlyClientProject A client project
+	 */
 	getRate: function(monthlyClientProject) {
 
 		if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
@@ -292,6 +343,16 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		return 0;
 
 	},
+
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.getTotal getTotal
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Returns the total amount for the given client project.
+	 *
+	 * @signature `contributionMonth.getTotal( monthlyClientProject )`
+	 *
+	 * @param {bitcentive/models/monthly-client-project} monthlyClientProject A client project
+	 */
 	getTotal: function(monthlyClientProject) {
 		if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
 				return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].totalAmount;
@@ -300,6 +361,15 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 
 	},
 
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.addContribution addContribution
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Adds a new contribution to the month.
+	 *
+	 * @signature `contributionMonth.addContribution( contribution )`
+	 *
+	 * @param {bitcentive/models/contribution} contribution A new contribution
+	 */
 	addContribution(newContribution) {
 		this.monthlyContributions.push(newContribution);
 		this.save().then(function() {}, function() {
@@ -307,6 +377,15 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		});
 	},
 
+	/**
+	 * @function bitcentive/models/contribution-month.prototype.removeContribution removeContribution
+	 * @parent bitcentive/models/contribution-month.prototype
+	 * Removes the contribution from the month.
+	 *
+	 * @signature `contributionMonth.removeContribution( contribution )`
+	 *
+	 * @param {bitcentive/models/contribution} contribution A contribution
+	 */
 	removeContribution(contribution) {
 		const index = this.monthlyContributions.indexOf(contribution);
 		this.monthlyContributions.splice(index, 1);
