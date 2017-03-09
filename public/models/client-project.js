@@ -15,7 +15,7 @@ import feathersClient from './feathers-client';
 
 var ClientProject = DefineMap.extend('ClientProject', { seal: false }, {
 	/**
-	 * @property {String} bitcentive/models/client-project.properties.id id
+	 * @property {String} bitcentive/models/client-project.properties._id _id
 	 * @parent bitcentive/models/client-project.properties
 	 * Id of a client project.
 	 */
@@ -30,7 +30,7 @@ var ClientProject = DefineMap.extend('ClientProject', { seal: false }, {
 });
 
 /**
- * @constructor {can-list} bitcentive/models/client-project.static.List ClientProjectList
+ * @constructor {can-list} bitcentive/models/client-project.static.List List
  * @parent bitcentive/models/client-project.static
  * A list of [bitcentive/models/client-project]
  */
