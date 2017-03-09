@@ -1,7 +1,7 @@
 publish-docs:
 	npm install
 	git checkout -b gh-pages
-	donejs document
+	npm run document
 	git add -f docs/
 	git add -f test/
 	git add -f public/node_modules/can-*
