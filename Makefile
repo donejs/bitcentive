@@ -11,6 +11,7 @@ publish-docs:
 	git add -f public/node_modules/feathers
 	git add -f public/node_modules/feathers-*
 	git add -f public/node_modules/jwt-decode
+	git add -f public/node_modules/socket.io-client
 	git add -f public/node_modules/bootstrap
 	git add -f public/node_modules/rubberduck
 	git add -f public/node_modules/debug
