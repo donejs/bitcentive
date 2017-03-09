@@ -1,0 +1,3 @@
+steal.config({
+	transpiler: "babel"
+});

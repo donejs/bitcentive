@@ -1,0 +1,14 @@
+{
+  "sites": {
+    "docs": {
+      "dest": "docs",
+      "parent": "can-vdom",
+      "pageConfig": {
+        "page": "docs"
+      },
+      "glob": {
+        "pattern": "./**/*.{js,md}"
+      }
+    }
+  }
+}

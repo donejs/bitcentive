@@ -1,0 +1,16 @@
+<body>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<div id="test-element">CSS</div>
+	<div id="test-relative">CSS</div>
+	<div class="btn btn-danger">BUTTON</div>
+	<script>
+		window.QUnit = window.parent.QUnit;
+		window.removeMyself = window.parent.removeMyself;
+	</script>
+	<script type="text/javascript"
+		src="../../node_modules/steal/steal.js"
+		config="./config.js"
+		main="main"
+		env="development">
+	</script>
+</body>

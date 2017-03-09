@@ -1,0 +1,16 @@
+[
+	{"can-view-nodelist":[
+		"can-view-nodelist.id",
+		"can-view-nodelist.update",
+		"can-view-nodelist.nestReplacements",
+		"can-view-nodelist.nestList",
+		"can-view-nodelist.last",
+		"can-view-nodelist.first",
+		"can-view-nodelist.register",
+		"can-view-nodelist.unregisterChildren",
+		"can-view-nodelist.unregister",
+		"can-view-nodelist.after",
+		"can-view-nodelist.remove",
+		"can-view-nodelist.replace"
+	]}
+]

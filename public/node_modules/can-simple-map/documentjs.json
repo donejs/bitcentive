@@ -1,0 +1,14 @@
+{
+  "sites": {
+    "docs": {
+      "dest": "docs",
+      "parent": "can-simple-map",
+      "pageConfig": {
+        "page": "docs"
+      },
+      "glob": {
+        "pattern": "./**/*.{js,md}"
+      }
+    }
+  }
+}

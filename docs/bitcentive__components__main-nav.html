@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<!--####################################################################
+	THIS IS A GENERATED FILE -- ANY CHANGES MADE WILL BE OVERWRITTEN
+
+	INSTEAD CHANGE:
+	source: public/components/main-nav/main-nav.js
+	@module bitcentive/components/main-nav
+######################################################################## -->
+
+<!--[if lt IE 7]>
+<html class="no-js ie lt-ie9 lt-ie8 lt-ie7" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js ie lt-ie9 lt-ie8" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js ie lt-ie9" lang="en">
+<![endif]-->
+<!--[if IE 9]>
+<html class="no-js ie ie9" lang="en">
+<![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>Bitcentive - &lt;main-nav&gt; </title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/static.css">
+	
+	<!--[if lt IE 9]>
+   <script type="text/javascript" src="static/html5shiv.js"></script>
+    <!--<![endif]-->
+</head>
+
+<body class="docs">
+	
+	<header>
+		<nav class="container">
+
+			<div class="logo-menu">
+				<a class="brand" href="./index.html">Bitcentive</a>
+			</div>
+
+			<div class="pull-right">
+				<div class="bitovi-menu">
+					<a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+					<ul class="dropdown-menu">
+						<li><a href="http://bitovi.com">Bitovi.com</a></li>
+						<li><a href="http://bitovi.com/blog/">Blog</a></li>
+						<li><a href="http://bitovi.com/design/">Design</a></li>
+						<li><a href="http://bitovi.com/development/">Development</a></li>
+						<li><a href="http://bitovi.com/training/">Training</a></li>
+						<li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+						<li><a href="http://bitovi.com/people/">People</a></li>
+						<li><a href="http://bitovi.com/contact/">Contact Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+
+	
+<div class="container api">
+
+	
+	<nav class="sidebar">
+		
+		<ul class="api cascading primary-grouping"> 
+	
+		
+		<li class="search-container active parent">
+			<a class="sidebar-title" href="index.html" data-search="Bitcentive">
+				Bitcentive
+			</a>
+			
+		</li>
+		
+		
+			
+			<li class="search-container active">
+			<a class="sidebar-title" href="bitcentive__components__main-nav.html" data-search="&lt;main-nav&gt;">
+				&lt;main-nav&gt;
+			</a>
+			
+	<ul>
+		
+			
+				
+					<li class="heading search-container">
+						<span>properties</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="property" href="bitcentive__components__main-nav.page.html" data-search="page">
+						page
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="property" href="bitcentive__components__main-nav.session.html" data-search="session">
+						session
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+	</ul>
+
+		</li>
+			
+		
+	
+</ul>
+	</nav>
+	
+	
+	
+	<article class="content docs">
+	
+	
+		
+		<section class="title">
+			<div class="heading">
+<h1>&lt;main-nav&gt;</h1>
+	<ul class="tags">
+		<li>module</li>
+	</ul>
+	
+	
+</div>
+
+<div class="sub-heading">
+	
+	
+		<span class="module">bitcentive/components/main-nav</span>
+	
+	
+	
+	<h2><code>{can.Component}</code></h2>
+	
+	<span class="inherits">&nbsp;</span>
+</div>
+
+<ul class="links">
+	
+	
+	
+	
+</ul>
+<br />
+		</section>
+		
+		
+		
+		<section class="contents">
+		</section>
+		
+		
+		
+
+		
+
+		
+			
+				<section class="signature">
+					<h2 id="sig__lt_main_nav__page_____34_page__34___session_____34_session__34__gt__lt__main_nav_gt_">&lt;main-nav {(page)}=&#34;page&#34; {(session)}=&#34;session&#34;&gt;&lt;/main-nav&gt;
+</h2>
+<div class="signature-wrapper">
+<p>Creates the main navigation</p>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>page
+				<code>{String}</code></h4>
+			<div class="description">
+				<p>The name of the active page</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+		<li class="parameter">
+			<h4>session
+				<code>{<a href="bitcentive__models__session.html" >Session</a>}</code></h4>
+			<div class="description">
+				<p>The session of the app</p>
+
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+
+
+
+
+</div>
+
+				</section>
+			
+		
+		
+		
+		
+
+		
+		<section class="comment">
+			<p>Main navigation of the app</p>
+<p>To create a <code>&lt;main-nav&gt;</code> element pass the <a href="bitcentive__models__session.html">Session</a> and <code>page</code>:</p>
+<pre><code>&lt;main-nav
+    {(page)}=&quot;displayedPage&quot;
+    {(session)}=&quot;session&quot;&gt;&lt;/main-nav&gt;
+</code></pre>
+<h2>Example</h2>
+<div class='demo_wrapper' data-demo-src='public/components/main-nav/main-nav.html'></div>
+
+		</section>
+		
+		
+
+		
+
+		
+	
+	
+	</article>
+	
+	
+
+</div>
+
+
+
+
+
+	
+	<footer>
+		<nav class="container">
+			<a class="brand javascriptmvc" href="index.html"></a>
+		</nav>
+	</footer>
+	
+	
+	<script type="text/javascript">
+		var docObject = {"src":"public/components/main-nav/main-nav.js","line":0,"codeLine":32,"type":"module","description":"","title":"<main-nav>","types":[{"type":"can.Component"}],"name":"bitcentive/components/main-nav","parent":"bitcentive.components","signatures":[{"code":"<main-nav {(page)}=\"page\" {(session)}=\"session\"></main-nav>","description":"Creates the main navigation","params":[{"types":[{"type":"String"}],"name":"page","description":"The name of the active page"},{"types":[{"type":"bitcentive/models/session"}],"name":"session","description":"The session of the app"}]}],"comment":" ","source":"https://github.com/donejs/bitcentive","glob":{"ignore":["{node_modules,public/node_modules,migrations,public/dist,src}/**/*"],"pattern":"**/*.{md,js}","cwd":"/Users/ilya/dev/bitcentive"},"dest":"/Users/ilya/dev/bitcentive/docs","debug":true,"generators":["html"],"docConfigDest":"../documentjs.json","project":{}};
+	</script>
+	
+	
+		<script>
+		  steal = {
+		    instantiated: {
+		      "bundles/static.css!$css" : null
+		    }
+		  }
+		</script>
+		<script type='text/javascript' 
+				data-main="static"
+				data-config="./static/config.js"
+				src="./static/steal.production.js"
+	    		bundles-path="bundles"></script>
+	
+</body>
+
+</html>

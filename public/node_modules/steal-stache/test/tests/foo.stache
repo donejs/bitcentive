@@ -1,0 +1,2 @@
+<can-import from="test/tests/bar" {^value}="*bar" />
+<span>{{*bar}}</span>

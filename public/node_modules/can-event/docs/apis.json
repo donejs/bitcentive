@@ -1,0 +1,18 @@
+[
+	{"can-event": [
+		{"static": [
+			"can-event.addEventListener",
+			"can-event.removeEventListener",
+			"can-event.dispatch",
+			"can-event.on",
+			"can-event.off",
+			"can-event.one",
+			"can-event.listenTo",
+			"can-event.stopListening",
+			"can-event.bind",
+			"can-event.unbind",
+			"can-event.delegate",
+			"can-event.undelegate"
+		]}
+	]}
+]
