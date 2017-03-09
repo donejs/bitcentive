@@ -1,8 +1,13 @@
 /**
- * @module {can-map} bitcentive/models/algebra Algebra
+ * @module {can-set/Algebra} bitcentive/models/algebra algebra
  * @parent bitcentive.clientModels
  *
- * @group bitcentive/models/algebra.properties 0 properties
+ * A `can-set` algebra that is used for all models
+ *
+ * Configuration:
+ *   - `_id` id property
+ *   - `$sort` custom sort
+ *   - `$populate` is ignored
  */
 
 import set from 'can-set';
