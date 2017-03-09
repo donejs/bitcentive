@@ -1,8 +1,8 @@
 /**
  * @module {can.Component} bitcentive/components/main-nav <main-nav>
  * @parent bitcentive.components
- * @group bitcentive/components/main-nav.prototype 0 prototype
- * @group bitcentive/components/main-nav.properties 1 properties
+ *
+ * @group bitcentive/components/main-nav.properties 0 properties
  *
  * Main navigation of the app
  *
