@@ -28,7 +28,7 @@
       "service": "/api/users",
       "successRedirect": "/auth/success",
       "callbackURL": "/auth/github/callback",
-      "clientID": "bde52e79b5909a8a830c",
+      "clientID": "dffd2f5a8e30e1f224fe",
       "clientSecret": "GITHUB CLIENT SECRET",
       "permissions": {
         "scope": []
