@@ -74,5 +74,10 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'os-projects',
   ViewModel,
-  view
+  view,
+  helpers: {
+    divide: function(a, b){
+      return a / b;
+    }
+  }
 });
