@@ -10,6 +10,7 @@
 				<th>Commissioned</th>
 				<th class="text-right">Total</th>
 				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,6 +34,7 @@
 						/>
 					</td>
 					<td class="text-right">${{monthlyOSProject.getTotal().toFixed(2)}}</td>
+					<td>{{monthlyOSProject.getTotal() / contributionMonths.getPointsFor(monthlyOSProject._id)}}</td>
 					<td>
 						{{#if isAdmin()}}
 							<button type="button" class="btn btn-danger btn-xs"

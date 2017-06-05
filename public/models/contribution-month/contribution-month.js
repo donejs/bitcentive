@@ -238,6 +238,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 
 ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
+	// get osProjectContributionsMap(){
+	// 	return {ID: {....}}
+	// },
+	// getPointTotalForOSProject(id) {
+	// 	return osProjectContributionsMap[id];
+	// },
 	OSProjectContributionsMap(currentContributionMonth) {
 		var OSProjectContributionsMap = {};
 		this.forEach(contributionMonth => {
@@ -268,6 +274,18 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return OSProjectContributionsMap;
 	},
+	getPointsFor(osProjectRef){
+		var acc = 0;
+		this.forEach((month)=>{
+			month.monthlyContributions.forEach((contribution)=>{
+				acc += contribution.points;
+			});
+		});
+		return acc;
+	},
+	// getDollarPerPoint(osProjectRef){
+	// 	return MonthlyOSProject.getTotal() / this.getPointsFor(osProjectRef);
+	// },
 	getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth) {
 		let total = 0;
 
