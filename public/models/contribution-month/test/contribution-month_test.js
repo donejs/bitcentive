@@ -21,7 +21,7 @@ QUnit.module( 'models/contribution-month', {
 });
 
 
-QUnit.test("ContributionMonth.List should have getPointsFor method", function(){
+QUnit.test("ContributionMonth.List should have getPointTotalForOSProject method", function(){
 
 	const points = new ContributionMonth.List([{
 		monthlyContributions: [
@@ -59,7 +59,7 @@ QUnit.test("ContributionMonth.List should have getPointsFor method", function(){
     ]
   }]).getPointTotalForOSProject("57bc79e3b6a4d67111f6270b");
 
-	QUnit.equal(points, 15);
+	QUnit.equal(points, 16);
 
 });
 
