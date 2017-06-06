@@ -9,7 +9,7 @@
 				<th>Significance</th>
 				<th>Commissioned</th>
 				<th class="text-right">Total</th>
-				<th>$ / point</th>
+				<th class="text-right">$ / point</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -33,8 +33,8 @@
 							{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
-					<td class="text-right">${{monthlyOSProject.getTotal().toFixed(2)}}</td>
-					<td>{{divide(monthlyOSProject.getTotal(), contributionMonths.getPointsFor(monthlyOSProject._id))}}</td>
+					<td class="text-right">{{dollarFormat(monthlyOSProject.getTotal())}}</td>
+					<td class="text-right">{{dollarFormat(divide(monthlyOSProject.getTotal(), contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)))}}</td>
 					<td>
 						{{#if isAdmin()}}
 							<button type="button" class="btn btn-danger btn-xs"

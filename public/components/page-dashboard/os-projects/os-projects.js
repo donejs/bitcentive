@@ -78,6 +78,9 @@ export default Component.extend({
   helpers: {
     divide: function(a, b){
       return a / b;
+    },
+    dollarFormat: function(num){
+      return '$' + num.toFixed(2);
     }
   }
 });

@@ -35,7 +35,7 @@ QUnit.test("ContributionMonth.List should have getPointsFor method", function(){
 			{
 				"points": 5,
 				"description": "Fixed an issue with DELETE sending payload",
-				"osProjectRef": "57bc79e3b6a4d67111f6270b",
+				"osProjectRef": "sapougsadgsadoigaspi",
 				"contributorRef": "57be04cbde5451d4b88e4cf1",
 				"_id": "57c056bf244e90090e7e5420"
 			}
@@ -45,7 +45,7 @@ QUnit.test("ContributionMonth.List should have getPointsFor method", function(){
       {
         "points": 10,
         "description": "Fixed an issue with DELETE sending payload",
-        "osProjectRef": "57bc79e3b6a4d67111f6270b",
+        "osProjectRef": "aihfaipsfsipg",
         "contributorRef": "57be04cbde5451d4b88e4cf1",
         "_id": "57c056bf244e90090e7e5420"
       },
@@ -57,9 +57,9 @@ QUnit.test("ContributionMonth.List should have getPointsFor method", function(){
         "_id": "57c056bf244e90090e7e5420"
       }
     ]
-  }]).getPointsFor("57bc79e3b6a4d67111f6270b");
+  }]).getPointTotalForOSProject("57bc79e3b6a4d67111f6270b");
 
-	QUnit.equal(points, 30);
+	QUnit.equal(points, 15);
 
 });
 
