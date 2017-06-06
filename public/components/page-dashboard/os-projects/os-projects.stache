@@ -9,7 +9,7 @@
 				<th>Significance</th>
 				<th>Commissioned</th>
 				<th class="text-right">Total</th>
-				<th></th>
+				<th>$ / point</th>
 				<th></th>
 			</tr>
 		</thead>
