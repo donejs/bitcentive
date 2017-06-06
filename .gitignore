@@ -33,3 +33,5 @@ config/local.json
 .lock-wscript
 
 data/
+
+public/package-lock.json
