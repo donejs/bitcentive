@@ -34,7 +34,13 @@
 						/>
 					</td>
 					<td class="text-right">{{dollarFormat(monthlyOSProject.getTotal())}}</td>
-					<td class="text-right">{{dollarFormat(divide(monthlyOSProject.getTotal(), contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)))}}</td>
+					<td class="text-right">
+						{{#if contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)}}
+							{{dollarFormat(divide(monthlyOSProject.getTotal(), contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)))}}
+						{{else}}
+							N/A
+						{{/if}}
+					</td>
 					<td>
 						{{#if isAdmin()}}
 							<button type="button" class="btn btn-danger btn-xs"
