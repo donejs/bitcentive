@@ -38,7 +38,7 @@
 						{{#if contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)}}
 							{{dollarFormat(divide(monthlyOSProject.getTotal(), contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)))}}
 						{{else}}
-							N/A
+							{{dollarFormat(monthlyOSProject.getTotal())}}
 						{{/if}}
 					</td>
 					<td>

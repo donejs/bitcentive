@@ -283,7 +283,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		return map;
 	},
 	getPointTotalForOSProject(ref){
-		return this.osProjectPointsMap[ref];
+		return (this.osProjectPointsMap[ref] + 1) || 0;
 	},
 	getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth) {
 		let total = 0;
