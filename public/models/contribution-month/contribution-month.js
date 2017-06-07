@@ -308,6 +308,21 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return total;
 	},
+	getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth) {
+		let total = 0;
+
+		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
+
+		if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
+			const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
+			const points = contributorData.points;
+			const totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
+
+			total = (points / totalPoints);
+		}
+
+		return total;
+	},
 	/**
 	 * @property getMonthlyPayouts
 	 *
@@ -369,6 +384,8 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 				contributorPayout.monthlyOSProjects.push({
 					osProjectRef: monthlyOSProject.osProjectRef,
 					total: this.getOSProjectPayoutTotal(monthlyOSProject,
+						contributorPayout, currentMonth),
+					percent: this.getOwnershipPercentageForContributor(monthlyOSProject,
 						contributorPayout, currentMonth)
 				});
 			});

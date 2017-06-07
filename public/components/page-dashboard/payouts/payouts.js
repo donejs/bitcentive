@@ -88,7 +88,7 @@ export const ViewModel = DefineMap.extend({
 	/**
 	 * @property {Boolean} hasContributionPayouts
 	 *
-	 * Whethere there are any payouts to display.
+	 * Whether there are any payouts to display.
 	 */
   get hasContributionPayouts() {
     return this.payouts && Boolean(Object.keys(this.payouts).length);
