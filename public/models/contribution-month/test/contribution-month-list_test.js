@@ -40,14 +40,15 @@ QUnit.test("ContributionMonth.getList() works", function(assert) {
 
 QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 	let done = assert.async();
-
-
 	ContributionMonth.getList({}).then(contributionMonths => {
 		let contributionMonth = contributionMonths[0];
-		let contributorRef = contributionMonth.monthlyContributions[1].contributorRef;
-		let totalContribtutorPayout = contributionMonths.getTotalForAllPayoutsForContributor(contributionMonth, contributorRef);
+		let contributorRef = contributionMonth.monthlyContributions[0].contributorRef;
 
-		QUnit.equal(totalContribtutorPayout, 350, 'Total contributor payout is correct');
+		let totalContributorPayout = 
+			contributionMonths.getTotalForAllPayoutsForContributor(
+				contributorRef, contributionMonth);
+
+		QUnit.equal(totalContributorPayout, 175, 'Total contributor payout is correct');
 
 		done();
 	}, function(err) {
@@ -65,7 +66,6 @@ QUnit.test('.getOSProjectPayoutTotal', function(assert) {
 		let totalPayout = contributionMonths.getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth);
 
 		QUnit.equal(totalPayout, 350, 'Total payout is correct');
-
 
 		done();
 	}, function(err) {

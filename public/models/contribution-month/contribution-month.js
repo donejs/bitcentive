@@ -288,6 +288,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		let total = 0;
 
 		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
+
 		for (const osProjectID in contributorsMap) {
 			const projectContributors = contributorsMap[osProjectID].contributors;
 

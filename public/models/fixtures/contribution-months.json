@@ -32,5 +32,10 @@
     "description": "I did https://github.com/donejs/done-ssr/issues/5",
     "contributorRef": "2-KyleGifford",
     "osProjectRef": "2-DoneJS"
+  },{
+    "points": 10,
+    "description": "I did https://github.com/canjs/canjs/issues/2000",
+    "contributorRef": "2-KyleGifford",
+    "osProjectRef": "1-CanJS"
   }]
 } ]
