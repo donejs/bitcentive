@@ -189,11 +189,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		});
 	},
 	getTotalDollarsPerPointForOSProject(monthlyOSProject) {
-		return 5.0;
-		// var points = this.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id);
-		// var dollars = monthlyOSProject.getTotal();
+		var points = this.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id);
+		var dollars = monthlyOSProject.getTotal();
 
-		// return points ? (dollars / points) : dollars;
+		return points ? (dollars / points) : dollars;
 	},
 
 	commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
