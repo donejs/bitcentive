@@ -23,7 +23,7 @@ QUnit.test('Load projects from socket fixture', function (assert) {
 
   vm.contributionMonthPromise.then((contributionMonth) => {
     QUnit.equal(contributionMonth.monthlyOSProjects.length, 3, 'Loaded 3 OS projects');
-    QUnit.equal(contributionMonth.monthlyClientProjects.length, 1, 'Loaded 1 client project');
+    QUnit.equal(contributionMonth.monthlyClientProjects.length, 2, 'Loaded 2 client projects');
     done();
   });
 });

@@ -48,7 +48,7 @@ QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 			contributionMonths.getTotalForAllPayoutsForContributor(
 				contributorRef, contributionMonth);
 
-		QUnit.equal(totalContributorPayout, 175, 'Total contributor payout is correct');
+		QUnit.equal(totalContributorPayout, 87.5, 'Total contributor payout is 87.5');
 
 		done();
 	}, function(err) {
@@ -63,9 +63,11 @@ QUnit.test('.getOSProjectPayoutTotal', function(assert) {
 		let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
 		let contributor = contributionMonth.monthlyContributions[0];
 
-		let totalPayout = contributionMonths.getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth);
+		let totalPayout = 
+			contributionMonths.getOSProjectPayoutTotal(
+				monthlyOSProject, contributor, contributionMonth);
 
-		QUnit.equal(totalPayout, 350, 'Total payout is correct');
+		QUnit.equal(totalPayout, 87.5, 'Total payout is 87.5');
 
 		done();
 	}, function(err) {
@@ -84,8 +86,8 @@ QUnit.test('.getOwnershipPercentageForContributor', function(assert) {
 		let firstPercent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth);
 		let secondPercent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor2, contributionMonth);
 
-		QUnit.equal(firstPercent, 1, 'Percent owned is correct');
-		QUnit.equal(secondPercent, 0, 'Percent owned is correct');
+		QUnit.equal(firstPercent, 0.25, 'Percent owned is 0.25');
+		QUnit.equal(secondPercent, 0.75, 'Percent owned is 0.75');
 
 		done();
 	}, function(err) {

@@ -18,9 +18,9 @@ QUnit.test('viewModel.addClient', function(assert){
       contributionMonth: month,
       selectedClientId: "2-Walmart"
     });
-    QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 1, 'should have 1 client project');
+    QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 2, 'should have 2 client project');
     vm.contributionMonth.monthlyClientProjects.on('length', function(){
-      QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 2, 'should have 2 client project after addClient');
+      QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 3, 'should have 3 client project after addClient');
       done();
     });
     vm.addClient(null, vm.contributionMonth.monthlyClientProjects);
