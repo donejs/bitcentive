@@ -70,11 +70,13 @@ QUnit.test('.getOwnershipPercentageForContributor', function(assert) {
 		let contributionMonth = contributionMonths[0];
 		let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
 		let contributor = contributionMonth.monthlyContributions[0];
+		let contributor2 = contributionMonth.monthlyContributions[1];
 
-		let totalPayout = contributionMonths.getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth);
+		let firstPercent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth);
+		let secondPercent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor2, contributionMonth);
 
-		QUnit.equal(totalPayout, 350, 'Total payout is correct');
-
+		QUnit.equal(firstPercent, 1, 'Percent owned is correct');
+		QUnit.equal(secondPercent, 0, 'Percent owned is correct');
 
 		done();
 	}, function(err) {
