@@ -9,12 +9,12 @@ export const ViewModel = DefineMap.extend({
   contributionMonth: ContributionMonth,
   contributionMonthsPromise: {
     value: function(){
-      return ContributionMonth.getList({})
+      return ContributionMonth.getList({});
     }
   },
   contributionMonths: {
     get: function(lastSet, resolve){
-      return this.contributionMonthsPromise.then(resolve)
+      return this.contributionMonthsPromise.then(resolve);
     }
   },
   // Stateful properties
@@ -74,13 +74,5 @@ export const ViewModel = DefineMap.extend({
 export default Component.extend({
   tag: 'os-projects',
   ViewModel,
-  view,
-  helpers: {
-    divide: function(a, b){
-      return a / b;
-    },
-    dollarFormat: function(num){
-      return '$' + num.toFixed(2);
-    }
-  }
+  view
 });

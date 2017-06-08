@@ -34,14 +34,10 @@
 							{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
-					<td class="text-right">{{dollarFormat(monthlyOSProject.getTotal())}}</td>
+					<td class="text-right">{{formatDollarAmount(monthlyOSProject.getTotal())}}</td>
 					<td class="text-right">{{contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)}}</td>
 					<td class="text-right">
-						{{#if contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)}}
-							{{dollarFormat(divide(monthlyOSProject.getTotal(), contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)))}}
-						{{else}}
-							{{dollarFormat(monthlyOSProject.getTotal())}}
-						{{/if}}
+						{{formatDollarAmount(contributionMonths.getTotalDollarsPerPointForOSProject(monthlyOSProject))}}
 					</td>
 					<td>
 						{{#if isAdmin()}}
