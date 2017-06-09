@@ -20,49 +20,6 @@ QUnit.module( 'models/contribution-month', {
 	}
 });
 
-
-QUnit.test("ContributionMonth.List should have getPointTotalForOSProject method", function(){
-
-	const points = new ContributionMonth.List([{
-		monthlyContributions: [
-			{
-				"points": 10,
-				"description": "Fixed an issue with DELETE sending payload",
-				"osProjectRef": "57bc79e3b6a4d67111f6270b",
-				"contributorRef": "57be04cbde5451d4b88e4cf1",
-				"_id": "57c056bf244e90090e7e5420"
-			},
-			{
-				"points": 5,
-				"description": "Fixed an issue with DELETE sending payload",
-				"osProjectRef": "sapougsadgsadoigaspi",
-				"contributorRef": "57be04cbde5451d4b88e4cf1",
-				"_id": "57c056bf244e90090e7e5420"
-			}
-		]
-	},{
-    monthlyContributions: [
-      {
-        "points": 10,
-        "description": "Fixed an issue with DELETE sending payload",
-        "osProjectRef": "aihfaipsfsipg",
-        "contributorRef": "57be04cbde5451d4b88e4cf1",
-        "_id": "57c056bf244e90090e7e5420"
-      },
-      {
-        "points": 5,
-        "description": "Fixed an issue with DELETE sending payload",
-        "osProjectRef": "57bc79e3b6a4d67111f6270b",
-        "contributorRef": "57be04cbde5451d4b88e4cf1",
-        "_id": "57c056bf244e90090e7e5420"
-      }
-    ]
-  }]).getPointTotalForOSProject("57bc79e3b6a4d67111f6270b");
-
-	QUnit.equal(points, 16);
-
-});
-
 QUnit.test( "ContributionMonth basic test", function() {
 
   let contributionMonth = new ContributionMonth( {
