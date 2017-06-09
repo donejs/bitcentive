@@ -22,7 +22,7 @@
 								<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(payout.contributorRef, contributionMonth))}}</span>
 							</td>
 							{{#each payout.monthlyOSProjects as monthlyOSProject}}
-								<td>{{formatDollarAmount(monthlyOSProject.total)}}</td>
+								<td>{{formatDollarAmount(monthlyOSProject.total)}} - {{formatPercentAmount(monthlyOSProject.percent)}}</td>
 							{{/each}}
 						</tr>
 					{{/each}}

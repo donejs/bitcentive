@@ -29,7 +29,7 @@ output, which includes instructions on how to start `mongodb`:
 To have launchd start mongodb now and restart at login:
   ```brew services start mongodb```
 Or, if you don't want/need a background service you can just run:
-  ``mongod --config /usr/local/etc/mongod.conf```
+  ```mongod --config /usr/local/etc/mongod.conf```
 
 We recommend the `brew services` option. If desired, `mongodb` can be
 stopped and uninstalled by running:
@@ -132,4 +132,3 @@ __0.1.0__
 Copyright (c) 2016
 
 Licensed under the [MIT license](LICENSE).
-

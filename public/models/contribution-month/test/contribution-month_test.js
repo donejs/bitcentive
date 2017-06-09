@@ -343,24 +343,6 @@ QUnit.test( "OS Projects and Client Projects are provide sorted clones", functio
   QUnit.equal(sortedClients[1].clientProjectRef.value.name, 'Z');
 });
 
-QUnit.test("getList of ContributionMonth", function(assert) {
-	let done = assert.async();
-	ContributionMonth.getList({}).then(function(contributionMonths) {
-
-		// TODO: check if we need to test against `clientProjectRef.value`.
-		QUnit.ok(contributionMonths[0].monthlyClientProjects[0].clientProjectRef._id === "1-Levis", 'contains a client project');
-		var first = contributionMonths[0].monthlyOSProjects[0].osProjectRef._id,
-			second = contributionMonths[0].monthlyClientProjects[0].monthlyClientProjectsOSProjects[0]._id;
-
-		QUnit.ok(first, 'first exists');
-		QUnit.ok(first === second, 'first and second are equal');
-
-		done();
-	}, function(err) {
-		QUnit.ok(false, err);
-	});
-});
-
 QUnit.test("make type convert able to accept instances (#23)", function() {
 	var osProject = new OSProject({
 		_id: "somethingCrazey",
