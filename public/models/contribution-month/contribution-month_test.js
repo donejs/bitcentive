@@ -14,5 +14,3 @@ QUnit.module("Models: ContributionMonth", {
 		store.reset();
 	}
 });
-
-

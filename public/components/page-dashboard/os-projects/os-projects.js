@@ -7,7 +7,16 @@ import ContributionMonth from '~/models/contribution-month/';
 export const ViewModel = DefineMap.extend({
   // Passed properties
   contributionMonth: ContributionMonth,
-
+  contributionMonthsPromise: {
+    value: function(){
+      return ContributionMonth.getList({});
+    }
+  },
+  contributionMonths: {
+    get: function(lastSet, resolve){
+      return this.contributionMonthsPromise.then(resolve);
+    }
+  },
   // Stateful properties
   adding: {
     type: 'boolean',
