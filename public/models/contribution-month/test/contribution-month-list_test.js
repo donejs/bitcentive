@@ -44,7 +44,7 @@ QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 		let contributionMonth = contributionMonths[0];
 		let contributorRef = contributionMonth.monthlyContributions[0].contributorRef;
 
-		let totalContributorPayout = 
+		let totalContributorPayout =
 			contributionMonths.getTotalForAllPayoutsForContributor(
 				contributorRef, contributionMonth);
 
@@ -63,7 +63,7 @@ QUnit.test('.getOSProjectPayoutTotal', function(assert) {
 		let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
 		let contributor = contributionMonth.monthlyContributions[0];
 
-		let totalPayout = 
+		let totalPayout =
 			contributionMonths.getOSProjectPayoutTotal(
 				monthlyOSProject, contributor, contributionMonth);
 
