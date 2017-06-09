@@ -1,6 +1,8 @@
 import 'bitcentive/models/test';
 // import 'bitcentive/test/functional';
 
+import 'bitcentive/lib/stache-helpers/format-dollar-amount_test';
+
 import 'bitcentive/components/page-dashboard/page-dashboard_test';
 import 'bitcentive/components/page-dashboard/contribution-month/contribution-month_test';
 import 'bitcentive/components/page-dashboard/contributions/contributions_test';

@@ -24,7 +24,7 @@
 
 {{#if isAddingContributor}}
 <div class="panel panel-default">
-  <div class="panel-heading">Add Contributor</div>
+    <div class="panel-heading">Add Contributor</div>
     <div class="panel-body">
       <form ($submit)="addContributor(%event)" id="new-contributor">
         {{#if newContributorError}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
@@ -49,11 +49,11 @@
             <label>Active?</label>
             <input type="checkbox" class="form-control" {($checked)}="newContributorActive" {$disabled}="isSaving" />
           </div>
+        </div>
       </form>
       <button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
       <button class="btn btn-default" ($click)="toggleContributorInput()">Cancel</button>
     </div>
-  </div>
 </div>
 {{else}}
   <a href="javascript://" ($click)="toggleContributorInput()">Add Contributor</a>
