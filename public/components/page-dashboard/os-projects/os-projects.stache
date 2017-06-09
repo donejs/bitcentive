@@ -9,6 +9,8 @@
 				<th>Significance</th>
 				<th>Commissioned</th>
 				<th class="text-right">Total</th>
+				<th class="text-right">Points</th>
+				<th class="text-right">$ / Point</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -16,7 +18,7 @@
 		{{#each contributionMonth.sortedMonthlyOSProjects as monthlyOSProject}}
 			{{#if osProjectRef.value}}
 				<tr>
-					<td class="name-col">{{osProjectRef.value.name}}</td>
+					<td class="name-col">{{monthlyOSProject.osProjectRef.value.name}}</td>
 					<td>
 						<input type="number"
 							class="form-control significance-input"
@@ -32,11 +34,15 @@
 							{$disabled}="or(contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
-					<td class="text-right">${{getTotal(osProjectRef).toFixed(2)}}</td>
+					<td class="text-right">{{formatDollarAmount(monthlyOSProject.getTotal())}}</td>
+					<td class="text-right">{{contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)}}</td>
+					<td class="text-right">
+						{{formatDollarAmount(contributionMonths.getTotalDollarsPerPointForOSProject(monthlyOSProject))}}
+					</td>
 					<td>
 						{{#if isAdmin()}}
 							<button type="button" class="btn btn-danger btn-xs"
-									($click)="contributionMonth.removeMonthlyOSProject(monthlyOSProject)">
+									($click)="monthlyOSProject.remove()">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						{{/if}}
@@ -52,38 +58,37 @@
 	{{#if adding}}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Project</div>
-				<div class="panel-body">
-					<form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
-						<div class="row">
-							<div class="col-xs-6">
-							{{#if allOSProjects.ispending}}
-								<p>Loading...</p>
-							{{else}}
-								<select {($value)}="selectedOSProjectId" class="form-control">
-									<option value="" disabled selected hidden>Select Project...</option>
-									{{#each allOSProjects.value}}
-										{{^if contributionMonth.monthlyOSProjects.has(.)}}
-									<option value="{{_id}}">{{name}}</option>
-										{{/if}}
-									{{/each}}
-									<option value="__new__">Create New Project</option>
-								</select>
-							{{/if}}
-							</div>
-						{{#if creatingNewOSProject}}
-							<div class="col-xs-6">
-								<label>New project name:</label>
-								<input type="text"
-									class="form-control"
-									placeholder="New Project Name..."
-									{($value)}="newOSProjectName"/>
-							</div>
+			<div class="panel-body">
+				<form ($submit)="addNewMonthlyOSProject(%event)" id="new-os-project">
+					<div class="row">
+						<div class="col-xs-6">
+						{{#if allOSProjects.isPending}}
+							<p>Loading...</p>
+						{{else}}
+							<select {($value)}="string-to-any(~selectedOSProjectId)" class="form-control">
+								<option value="" disabled selected hidden>Select Project...</option>
+								{{#each allOSProjects.value}}
+									{{^if contributionMonth.monthlyOSProjects.has(.)}}
+								<option value="{{_id}}">{{name}}</option>
+									{{/if}}
+								{{/each}}
+								<option value="null">Create New Project</option>
+							</select>
 						{{/if}}
 						</div>
-					</form>
-					<button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">Add Project</button>
-					<button class="btn btn-default" ($click)="toggleAddNewMonthlyOSProject()">Cancel</button>
-				</div>
+					{{#if creatingNewOSProject}}
+						<div class="col-xs-6">
+							<label>New project name:</label>
+							<input type="text"
+								class="form-control"
+								placeholder="New Project Name..."
+								{($value)}="newOSProjectName"/>
+						</div>
+					{{/if}}
+					</div>
+				</form>
+				<button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">Add Project</button>
+				<button class="btn btn-default" ($click)="toggleAddNewMonthlyOSProject()">Cancel</button>
 			</div>
 		</div>
 	{{else}}

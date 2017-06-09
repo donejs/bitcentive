@@ -3,7 +3,7 @@ node_js: 6.5
 services:
   - mongodb
 addons:
-  firefox: latest
+  firefox: "51.0"
 install:
   - npm install
 before_install:
@@ -19,8 +19,6 @@ before_deploy:
   - cd public
   - donejs deploy:ci
   - cd ..
-addons:
-  firefox: "latest"
 deploy:
   skip_cleanup: true
   provider: heroku

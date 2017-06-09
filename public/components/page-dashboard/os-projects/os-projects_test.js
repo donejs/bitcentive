@@ -51,12 +51,12 @@ QUnit.test('Can create new OS Project', function(assert) {
   var vm = new ViewModel();
 
   vm.contributionMonth = this.contributionMonth;
-  vm.selectedOSProjectId = "__new__";
+  vm.selectedOSProjectId = null;
   vm.newOSProjectName = "something";
 
   vm.addNewMonthlyOSProject().then(() => {
     QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].osProjectRef.value.name , 'something');
-    QUnit.equal(vm.getTotal(vm.contributionMonth.monthlyOSProjects[1]) , '0.00');
+    QUnit.equal(vm.contributionMonth.monthlyOSProjects[1].getTotal() , 0);
     done();
   });
 });

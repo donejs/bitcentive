@@ -1,6 +1,6 @@
 import stache from 'can-stache';
 
-stache.registerHelper('formatDollarAmount', function(value) {
+stache.registerHelper('formatPercentAmount', function(value) {
 	if (value === undefined) {
 		return value;
 	}
@@ -9,5 +9,5 @@ stache.registerHelper('formatDollarAmount', function(value) {
 		return '--';
 	}
 
-	return '$' + value.toFixed(2);
+	return (value * 100).toFixed() + '%';
 });

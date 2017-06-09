@@ -1,6 +1,9 @@
 import 'bitcentive/models/test';
 // import 'bitcentive/test/functional';
 
+import 'bitcentive/lib/stache-helpers/format-dollar-amount_test';
+import 'bitcentive/lib/stache-helpers/format-percent-amount_test';
+
 import 'bitcentive/components/page-dashboard/page-dashboard_test';
 import 'bitcentive/components/page-dashboard/contribution-month/contribution-month_test';
 import 'bitcentive/components/page-dashboard/contributions/contributions_test';
@@ -19,7 +22,3 @@ import 'bitcentive/components/page-users/page-users_test';
 
 import 'bitcentive/components/ui/alerts/alerts_test';
 import 'bitcentive/components/ui/model-edit-property/model-edit-property_test';
-
-import 'bitcentive/models/os-project_test';
-import 'bitcentive/models/user_test';
-import 'bitcentive/models/contribution-month/test/test';

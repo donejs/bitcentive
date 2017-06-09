@@ -52,60 +52,59 @@
 	{{#if adding}}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contribution</div>
-				<div class="panel-body">
-					<form ($submit)="addContribution(%event)" id="contributions-form">
-						<div class="row">
-							<div class="col-xs-6">
-							{{#if activeContributors.isPending}}
+			<div class="panel-body">
+				<form ($submit)="addContribution(%event)" id="contributions-form">
+					<div class="row">
+						<div class="col-xs-6">
+						{{#if activeContributors.isPending}}
+							<p>Loading...</p>
+						{{else}}
+							<label>User: </label>
+							<select {($value)}="selectedContributorId" class="form-control">
+							{{#each activeContributors.value as contributor}}
+								<option value="{{contributor._id}}">{{contributor.name}}</option>
+							{{/each}}
+							</select>
+						{{/if}}
+						</div>
+
+						<div class="col-xs-6">
+							{{#if osProjects.isPending}}
 								<p>Loading...</p>
 							{{else}}
-								<label>User: </label>
-								<select {($value)}="selectedContributorId" class="form-control">
-								{{#each activeContributors.value as contributor}}
-									<option value="{{contributor._id}}">{{contributor.name}}</option>
+								<label>Open Source Project: </label>
+								<select {($value)}="selectedOSProjectId" class="form-control">
+								{{#each osProjects.value as osProject}}
+									<option value="{{osProject._id}}">
+										{{osProject.name}}
+									</option>
 								{{/each}}
 								</select>
 							{{/if}}
-							</div>
-
-							<div class="col-xs-6">
-								{{#if osProjects.isPending}}
-									<p>Loading...</p>
-								{{else}}
-									<label>Open Source Project: </label>
-									<select {($value)}="selectedOSProjectId" class="form-control">
-									{{#each osProjects.value as osProject}}
-										<option value="{{osProject._id}}">
-											{{osProject.name}}
-										</option>
-									{{/each}}
-									</select>
-								{{/if}}
-							</div>
 						</div>
+					</div>
 
-						<div class="row">
-							<div class="col-xs-9">
-								<label>Description:</label>
-								<input type="textarea" class="form-control" {($value)}="description"/>
-							</div>
-							<div class="col-xs-3">
-								<label>Points:</label>
-								<input type="number" class="form-control" {($value)}="points" min="0"/>
-							</div>
+					<div class="row">
+						<div class="col-xs-9">
+							<label>Description:</label>
+							<input type="textarea" class="form-control" {($value)}="description"/>
 						</div>
-					</form>
+						<div class="col-xs-3">
+							<label>Points:</label>
+							<input type="number" class="form-control" {($value)}="points" min="0"/>
+						</div>
+					</div>
+				</form>
 
-					<button
-						class="btn btn-primary"
-						type="submit"
-						form="contributions-form"
-						value="Submit">Add Contribution</button>
+				<button
+					class="btn btn-primary"
+					type="submit"
+					form="contributions-form"
+					value="Submit">Add Contribution</button>
 
-					<button
-						class="btn btn-default"
-						($click)="toggleAddNewContribution(%event)">Cancel</button>
-				</div>
+				<button
+					class="btn btn-default"
+					($click)="toggleAddNewContribution(%event)">Cancel</button>
 			</div>
 		</div>
 	{{else}}

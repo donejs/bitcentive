@@ -55,8 +55,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	},
 	sortedMonthlyOSProjects: {
 		get () {
-			// sort a clone so that an infinite loop doesn't happen
-			return this.monthlyOSProjects.slice(0).sort(sortByRefField('osProjectRef', 'name'));
+			var sortedList = new this.monthlyOSProjects.constructor();
+			sortedList.contributionMonth = this.monthlyOSProjects.contributionMonth;
+			sortedList.push.apply(sortedList, this.monthlyOSProjects);
+			sortedList.sort( sortByRefField('osProjectRef', 'name') );
+
+			return sortedList;
 		}
 	},
 	sortedMonthlyClientProjects: {
@@ -184,6 +188,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 			console.error("Failed saving the contributionMonth obj: ", err);
 		});
 	},
+	getTotalDollarsPerPointForOSProject(monthlyOSProject) {
+		var points = this.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id);
+		var dollars = monthlyOSProject.getTotal();
+
+		return points ? (dollars / points) : dollars;
+	},
 
 	commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
 		if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
@@ -264,6 +274,23 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return OSProjectContributionsMap;
 	},
+	get osProjectPointsMap(){
+		var map = {};
+		this.forEach((month)=>{
+			month.monthlyContributions.forEach((contribution)=>{
+				var curRef = contribution.osProjectRef._id;
+				if(map[curRef] !== undefined){
+					map[curRef] += contribution.points;
+				}else{
+					map[curRef] = contribution.points;
+				}
+			});
+		});
+		return map;
+	},
+	getPointTotalForOSProject(osProjectRef){
+		return (this.osProjectPointsMap[osProjectRef] + 1) || 0;
+	},
 	getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth) {
 		let total = 0;
 
@@ -284,6 +311,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		let total = 0;
 
 		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
+
 		for (const osProjectID in contributorsMap) {
 			const projectContributors = contributorsMap[osProjectID].contributors;
 
@@ -300,6 +328,21 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					total = total + ( (points / totalPoints) * totalAmountForOSProject );
 				}
 			}
+		}
+
+		return total;
+	},
+	getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth) {
+		let total = 0;
+
+		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
+
+		if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
+			const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
+			const points = contributorData.points;
+			const totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
+
+			total = (points / totalPoints);
 		}
 
 		return total;
@@ -365,6 +408,8 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 				contributorPayout.monthlyOSProjects.push({
 					osProjectRef: monthlyOSProject.osProjectRef,
 					total: this.getOSProjectPayoutTotal(monthlyOSProject,
+						contributorPayout, currentMonth),
+					percent: this.getOwnershipPercentageForContributor(monthlyOSProject,
 						contributorPayout, currentMonth)
 				});
 			});

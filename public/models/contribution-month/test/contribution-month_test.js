@@ -10,8 +10,58 @@ import MonthlyContribution from '../monthly-contribution';
 import MonthlyOSProject from '../monthly-os-project';
 import MonthlyClientProject from '../monthly-client-project';
 import fixture from 'can-fixture';
+import { store } from 'bitcentive/models/fixtures/contribution-months.js';
 
-QUnit.module( 'models/contribution-month' );
+QUnit.module( 'models/contribution-month', {
+	setup: function(){
+		localStorage.clear();
+		// Reset fixture store before every test:
+		store.reset();
+	}
+});
+
+
+QUnit.test("ContributionMonth.List should have getPointTotalForOSProject method", function(){
+
+	const points = new ContributionMonth.List([{
+		monthlyContributions: [
+			{
+				"points": 10,
+				"description": "Fixed an issue with DELETE sending payload",
+				"osProjectRef": "57bc79e3b6a4d67111f6270b",
+				"contributorRef": "57be04cbde5451d4b88e4cf1",
+				"_id": "57c056bf244e90090e7e5420"
+			},
+			{
+				"points": 5,
+				"description": "Fixed an issue with DELETE sending payload",
+				"osProjectRef": "sapougsadgsadoigaspi",
+				"contributorRef": "57be04cbde5451d4b88e4cf1",
+				"_id": "57c056bf244e90090e7e5420"
+			}
+		]
+	},{
+    monthlyContributions: [
+      {
+        "points": 10,
+        "description": "Fixed an issue with DELETE sending payload",
+        "osProjectRef": "aihfaipsfsipg",
+        "contributorRef": "57be04cbde5451d4b88e4cf1",
+        "_id": "57c056bf244e90090e7e5420"
+      },
+      {
+        "points": 5,
+        "description": "Fixed an issue with DELETE sending payload",
+        "osProjectRef": "57bc79e3b6a4d67111f6270b",
+        "contributorRef": "57be04cbde5451d4b88e4cf1",
+        "_id": "57c056bf244e90090e7e5420"
+      }
+    ]
+  }]).getPointTotalForOSProject("57bc79e3b6a4d67111f6270b");
+
+	QUnit.equal(points, 16);
+
+});
 
 QUnit.test( "ContributionMonth basic test", function() {
 
@@ -214,7 +264,7 @@ QUnit.test( "Can add and remove a monthlyOSProject", function() {
       "monthlyOSProject was removed" );
     return Promise.resolve();
   };
-  contributionMonth.removeMonthlyOSProject( monthlyOSProject );
+  monthlyOSProject.remove();
 
   ContributionMonth.prototype.save = oldSave;
 } );
@@ -291,4 +341,35 @@ QUnit.test( "OS Projects and Client Projects are provide sorted clones", functio
   QUnit.equal(sortedProjects[1].osProjectRef.value.name, 'C');
   QUnit.equal(sortedClients[0].clientProjectRef.value.name, 'X');
   QUnit.equal(sortedClients[1].clientProjectRef.value.name, 'Z');
+});
+
+QUnit.test("make type convert able to accept instances (#23)", function() {
+	var osProject = new OSProject({
+		_id: "somethingCrazey",
+		name: "CanJS"
+	});
+
+	var clientProject = new ClientProject({
+		_id: "asl;dfal;sfj ;lakwj",
+		name: "HualHound"
+	});
+
+	var contributionMonth = new ContributionMonth({
+		_id: "aslkfalsjklas",
+		date: 124234211310000,
+		monthlyOSProjects: [{
+			significance: 80,
+			commissioned: true,
+			osProjectRef: osProject._id,
+			osProject: osProject
+		}],
+		monthlyClientProjects: [{
+			monthlyClientProjectsOSProjects: [ osProject ],
+			hours: 100,
+			clientProjectRef: clientProject._id,
+			clientProject: clientProject
+		}]
+	});
+
+	QUnit.equal(contributionMonth.monthlyOSProjects[0].osProject.name , "CanJS");
 });
