@@ -188,12 +188,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 			console.error("Failed saving the contributionMonth obj: ", err);
 		});
 	},
-	getTotalDollarsPerPointForOSProject(monthlyOSProject) {
-		var points = this.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id);
-		var dollars = monthlyOSProject.getTotal();
-
-		return points ? (dollars / points) : dollars;
-	},
 
 	commissionedMonthlyOSProjectsCountFor: function(monthlyClientProject) {
 		if(this.calculations.clientProjects.hasOwnProperty(monthlyClientProject.clientProjectRef._id)) {
@@ -289,7 +283,13 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		return map;
 	},
 	getPointTotalForOSProject(osProjectRef){
-		return (this.osProjectPointsMap[osProjectRef] + 1) || 0;
+		return this.osProjectPointsMap[osProjectRef] || 0;
+	},
+	getTotalDollarsPerPointForOSProject(monthlyOSProject) {
+		var points = this.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id);
+		var dollars = monthlyOSProject.getTotal();
+
+		return points ? (dollars / points) : dollars;
 	},
 	getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth) {
 		let total = 0;
