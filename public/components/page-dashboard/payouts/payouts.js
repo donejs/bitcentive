@@ -1,6 +1,7 @@
 import Component from 'can-component';
 import DefineMap from 'can-define/map/';
 import view from './payouts.stache';
+import Contributor from '~/models/contributor';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 import moment from "moment";
 
@@ -85,11 +86,11 @@ export const ViewModel = DefineMap.extend({
 		return this.contributionMonths &&
 			this.contributionMonths.getMonthlyPayouts(this.contributionMonth);
   },
-	/**
-	 * @property {Boolean} hasContributionPayouts
-	 *
-	 * Whether there are any payouts to display.
-	 */
+  /**
+   * @property {Boolean} hasContributionPayouts
+   *
+   * Whether there are any payouts to display.
+   */
   get hasContributionPayouts() {
     return this.payouts && Boolean(Object.keys(this.payouts).length);
   }

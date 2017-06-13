@@ -59,7 +59,7 @@
 						{{#if activeContributors.isPending}}
 							<p>Loading...</p>
 						{{else}}
-							<label>User: </label>
+							<label>Contributor: </label>
 							<select {($value)}="selectedContributorId" class="form-control">
 							{{#each activeContributors.value as contributor}}
 								<option value="{{contributor._id}}">{{contributor.name}}</option>

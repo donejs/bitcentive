@@ -12,6 +12,7 @@ import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
 import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContribution from "./monthly-contribution";
+import MonthlyContributor from "./monthly-contributor";
 
 import algebra from '../algebra';
 
@@ -41,6 +42,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	},
 	monthlyClientProjects: MonthlyClientProject.List,
 	monthlyContributions: MonthlyContribution.List,
+	monthlyContributors: MonthlyContributor.List,
 	startRate: {
 		value: 2,
 		set(value) {
@@ -67,6 +69,12 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		get () {
 			// sort a clone so that an infinite loop doesn't happen
 			return this.monthlyClientProjects.slice(0).sort(sortByRefField('clientProjectRef', 'name'));
+		}
+	},
+	sortedMonthlyContributors: {
+		get () {
+			// sort a clone so that an infinite loop doesn't happen
+			return this.monthlyContributors.slice(0).sort(sortByRefField('contributorRef', 'name'));
 		}
 	},
 	calculations: {
@@ -159,6 +167,16 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		}
 	},
 
+	get contributorsMap() {
+		let contributorsMap = {};
+
+		this.monthlyContributors.forEach(monthlyContributor => {
+			contributorsMap[monthlyContributor.contributorRef._id] = monthlyContributor.contributorRef;
+		});
+
+		return contributorsMap;
+	},
+
 	// Can add using an osProject or monthlyOSProject
 	addNewMonthlyOSProject( project ) {
 		let monthlyOSProject;
@@ -183,6 +201,34 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
 		this.monthlyClientProjects.forEach( clientProject => {
 			clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef), 1);
+		});
+		this.save().catch(err => {
+			console.error("Failed saving the contributionMonth obj: ", err);
+		});
+	},
+
+	// can add using a contributor or monthlyContributor
+	addNewMonthlyContributor( contributor ) {
+		let monthlyContributor;
+		if (contributor instanceof MonthlyContributor) {
+			monthlyContributor = contributor;
+		}
+		else {
+			monthlyContributor = new MonthlyContributor({
+				contributorRef: contributor.serialize(),
+				contributorID: contributor._id
+			});
+		}
+		this.monthlyContributors.push(monthlyContributor);
+		this.save().catch(err => {
+			console.error("Failed saving the contributionMonth obj: ", err);
+		});
+		return monthlyContributor;
+	},
+	removeMonthlyContributor( monthlyContributor ) {
+		this.monthlyContributors.splice(this.monthlyContributors.indexOf(monthlyContributor), 1);
+		this.monthlyContributions = this.monthlyContributions.filter( contribution => {
+			return contribution.contributorRef._id !== monthlyContributor.contributorRef._id;
 		});
 		this.save().catch(err => {
 			console.error("Failed saving the contributionMonth obj: ", err);
@@ -226,7 +272,6 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 			console.error("Failed saving the contributionMonth obj: ", arguments);
 		});
 	},
-
 	removeContribution(contribution) {
 		const index = this.monthlyContributions.indexOf(contribution);
 		this.monthlyContributions.splice(index, 1);
@@ -240,28 +285,27 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
 	OSProjectContributionsMap(currentContributionMonth) {
 		var OSProjectContributionsMap = {};
+
 		this.forEach(contributionMonth => {
 			if(moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
-				var monthlyContributions = contributionMonth.monthlyContributions;
-				monthlyContributions && monthlyContributions.length && monthlyContributions.forEach( monthlyContribution => {
-					if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
-						OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
-							contributors: {},
-							totalPoints: 0
-						};
-					}
+				contributionMonth.monthlyContributions.forEach(monthlyContribution => {
+					if (currentContributionMonth.contributorsMap[monthlyContribution.contributorRef._id]) {
+						if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
+							OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
+								contributors: {},
+								totalPoints: 0
+							};
+						}
 
-					if(! OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] ) {
-						OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
-							points: monthlyContribution.points
-						};
-					}
-					else {
-						OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points + monthlyContribution.points;
-					}
+						if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] ) {
+							OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
+								points: 0
+							};
+						}
 
-					OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints = OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints + monthlyContribution.points;
-
+						OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints += monthlyContribution.points;
+						OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points += monthlyContribution.points;
+					}
 				});
 			}
 		});
@@ -407,10 +451,10 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 				contributorPayout.monthlyOSProjects.push({
 					osProjectRef: monthlyOSProject.osProjectRef,
-					total: this.getOSProjectPayoutTotal(monthlyOSProject,
-						contributorPayout, currentMonth),
-					percent: this.getOwnershipPercentageForContributor(monthlyOSProject,
-						contributorPayout, currentMonth)
+					total: this.getOSProjectPayoutTotal(
+						monthlyOSProject, contributorPayout, currentMonth),
+					percent: this.getOwnershipPercentageForContributor(
+						monthlyOSProject, contributorPayout, currentMonth)
 				});
 			});
 

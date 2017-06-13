@@ -1,6 +1,77 @@
 [
   {
     "_id":"1",
+    "date":"2015-11-10T17:22:18.251Z",
+    "monthlyOSProjects":[
+      {
+        "significance":10,
+        "commissioned":true,
+        "osProjectRef":"1-CanJS"
+      },
+      {
+        "significance":30,
+        "commissioned":true,
+        "osProjectRef":"2-DoneJS"
+      },
+      {
+        "significance":30,
+        "commissioned":false,
+        "osProjectRef":"3-StealJS"
+      }
+    ],
+    "monthlyClientProjects":[
+      {
+        "hours":100,
+        "clientProjectRef":{
+          "_id":"1-Levis",
+          "name":"Levi's"
+        },
+        "monthlyClientProjectsOSProjects":[
+          "1-CanJS"
+        ]
+      },
+      {
+        "hours":150,
+        "clientProjectRef":{
+          "_id":"2-Nokia",
+          "name":"Nokia"
+        },
+        "monthlyClientProjectsOSProjects":[
+          "1-DoneJS"
+        ]
+      }
+    ],
+    "monthlyContributions":[
+      {
+        "points":10,
+        "description":"I did https://github.com/canjs/canjs/issues/2437",
+        "contributorRef":"1-JustinMeyer",
+        "osProjectRef":"1-CanJS"
+      },
+      {
+        "points":12,
+        "description":"I did https://github.com/donejs/done-ssr/issues/5",
+        "contributorRef":"2-KyleGifford",
+        "osProjectRef":"2-DoneJS"
+      },
+      {
+        "points":30,
+        "description":"I did https://github.com/canjs/canjs/issues/2000",
+        "contributorRef":"2-KyleGifford",
+        "osProjectRef":"1-CanJS"
+      }
+    ],
+    "monthlyContributors":[
+      {
+        "contributorRef":"1-JustinMeyer"
+      },
+      {
+        "contributorRef":"2-KyleGifford"
+      }
+    ]
+  },
+  {
+    "_id":"2",
     "date":"2016-11-10T17:22:18.251Z",
     "monthlyOSProjects":[
       {
@@ -59,6 +130,23 @@
         "description":"I did https://github.com/canjs/canjs/issues/2000",
         "contributorRef":"2-KyleGifford",
         "osProjectRef":"1-CanJS"
+      },
+      {
+        "points":20,
+        "description":"I did https://github.com/donejs/bitcentive/issues/247",
+        "contributorRef":"3-ChristopherBaker",
+        "osProjectRef":"1-CanJS"
+      }
+    ],
+    "monthlyContributors":[
+      {
+        "contributorRef":"1-JustinMeyer"
+      },
+      {
+        "contributorRef":"2-KyleGifford"
+      },
+      {
+        "contributorRef":"3-ChristopherBaker"
       }
     ]
   }

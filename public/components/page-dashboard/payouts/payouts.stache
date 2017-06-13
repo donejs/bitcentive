@@ -15,13 +15,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					{{#each payouts as payout}}
+					{{#each contributionMonth.sortedMonthlyContributors}}
 						<tr>
-							<th>{{payout.contributorRef.value.name}}</th>
+							<th>{{contributorRef.value.name}}</th>
 							<td class="total">
-								<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(payout.contributorRef, contributionMonth))}}</span>
+								<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, contributionMonth))}}</span>
 							</td>
-							{{#each payout.monthlyOSProjects as monthlyOSProject}}
+							{{#each payouts[contributorRef._id].monthlyOSProjects as monthlyOSProject}}
 								<td class="amountDollar">{{formatDollarAmount(monthlyOSProject.total)}}</td>
 								<td class="amountPercent">{{formatPercentAmount(monthlyOSProject.percent)}}</td>
 							{{/each}}
