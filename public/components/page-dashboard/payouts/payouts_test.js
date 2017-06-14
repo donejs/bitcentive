@@ -24,3 +24,58 @@ QUnit.test('viewModel.OSProjectContributionsMap', function(assert){
     });
   });
 });
+
+QUnit.test('viewModel.payoutFor', function(assert){
+    const amounts = {
+        '1-JustinMeyer': {
+            '1-CanJS': {
+                total: 87.5,
+                percent: 0.25,
+            },
+            '2-DoneJS': {
+                total: 0,
+                percent: 0,
+            },
+            '3-StealJS': {
+                total: 0,
+                percent: 0,
+            },
+        },
+        '2-KyleGifford': {
+            '1-CanJS': {
+                total: 262.5,
+                percent: 0.75,
+            },
+            '2-DoneJS': {
+                total: 375,
+                percent: 1,
+            },
+            '3-StealJS': {
+                total: 0,
+                percent: 0,
+            },
+        },
+    };
+
+    let done = assert.async();
+    let vm;
+    ContributionMonth.get("1").then(month => {
+        vm = new ViewModel({ contributionMonth: month });
+        vm.on('contributionMonths', () => {
+            let monthlyContributors = vm.contributionMonth.monthlyContributors
+            let monthlyOSProjects = vm.contributionMonth.monthlyOSProjects
+
+            for (let contributorIndex = 0; contributorIndex < monthlyContributors.length; contributorIndex++) {
+                let { contributorRef } = monthlyContributors[contributorIndex];
+                for (let projectIndex = 0; projectIndex < monthlyOSProjects.length; projectIndex++) {
+                    let { osProjectRef } = monthlyOSProjects[projectIndex];
+
+                    let amount = vm.payoutFor(contributorRef, osProjectRef);
+                    delete amount.osProjectRef;
+                    assert.deepEqual(amount, amounts[contributorRef._id][osProjectRef._id]);
+                }
+            }
+            done();
+        });
+    });
+});

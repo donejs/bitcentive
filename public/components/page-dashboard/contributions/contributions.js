@@ -21,14 +21,6 @@ export const ViewModel = DefineMap.extend({
     value: false
   },
 
-  activeContributors: {
-    get() {
-      return Contributor.getList({
-        active: true
-      });
-    }
-  },
-
   osProjects: {
     get() {
       return OSProject.getList({});

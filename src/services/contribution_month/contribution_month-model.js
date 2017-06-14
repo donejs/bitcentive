@@ -27,12 +27,17 @@ const contributionSchema = new Schema({
   points: Number
 });
 
+const contributorSchema = new Schema({
+  contributorRef: { type: Schema.Types.ObjectId, ref: 'contributor' },
+});
+
 const contributionMonthSchema = new Schema({
   date: { type: Date, default: Date.now },
   startRate: { type: Number, default: 2 },
   endRate: { type: Number, default: 4 },
   monthlyOSProjects: [ osProjectSchema ],
   monthlyClientProjects: [ clientProjectSchema ],
+  monthlyContributors: [ contributorSchema ],
   monthlyContributions: [ contributionSchema ]
 });
 

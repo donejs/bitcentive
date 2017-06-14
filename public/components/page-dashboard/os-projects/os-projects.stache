@@ -69,6 +69,7 @@
 						{{#if allOSProjects.isPending}}
 							<p>Loading...</p>
 						{{else}}
+							<label>Select a project: </label>
 							<select {($value)}="string-to-any(~selectedOSProjectId)" class="form-control">
 								<option value="" disabled selected hidden>Select Project...</option>
 								{{#each allOSProjects.value}}
