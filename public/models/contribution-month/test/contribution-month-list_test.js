@@ -94,7 +94,7 @@ QUnit.test("getTotalDollarsPerPointForOSProject", function(assert){
 
 		let rate = list.getTotalDollarsPerPointForOSProject(monthlyOSProject);
 
-		QUnit.equal(rate, 8.75);
+		QUnit.equal(rate, 3.5);
 
 		done();
 	});
@@ -102,16 +102,16 @@ QUnit.test("getTotalDollarsPerPointForOSProject", function(assert){
 });
 
 QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
+	const amounts = [ 87.5, 70 ];
+
 	let done = assert.async();
 	ContributionMonth.getList({}).then(contributionMonths => {
-		let contributionMonth = contributionMonths[0];
-		let contributorRef = contributionMonth.monthlyContributions[0].contributorRef;
+		contributionMonths.forEach((contributionMonth, index) => {
+			let contributorRef = contributionMonth.monthlyContributors[0].contributorRef;
+			let totalContributorPayout = contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, contributionMonth);
 
-		let totalContributorPayout =
-			contributionMonths.getTotalForAllPayoutsForContributor(
-				contributorRef, contributionMonth);
-
-		QUnit.equal(totalContributorPayout, 87.5, 'Total contributor payout is 87.5');
+			QUnit.equal(totalContributorPayout, amounts[index], 'Total contributor payout is ' + amounts[index]);
+		})
 
 		done();
 	}, function(err) {
@@ -120,17 +120,18 @@ QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 });
 
 QUnit.test('.getOSProjectPayoutTotal', function(assert) {
+	const amounts = [ 87.50, 70 ];
+
 	let done = assert.async();
 	ContributionMonth.getList({}).then(function(contributionMonths) {
-		let contributionMonth = contributionMonths[0];
-		let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
-		let contributor = contributionMonth.monthlyContributions[0];
+		contributionMonths.forEach((contributionMonth, index) => {
+			let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
+			let contributor = contributionMonth.monthlyContributors[0];
 
-		let totalPayout =
-			contributionMonths.getOSProjectPayoutTotal(
-				monthlyOSProject, contributor, contributionMonth);
+			let totalPayout = contributionMonths.getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth);
 
-		QUnit.equal(totalPayout, 87.5, 'Total payout is 87.5');
+			QUnit.equal(totalPayout, amounts[index], 'Total payout is ' + amounts[index]);
+		});
 
 		done();
 	}, function(err) {
@@ -139,18 +140,25 @@ QUnit.test('.getOSProjectPayoutTotal', function(assert) {
 });
 
 QUnit.test('.getOwnershipPercentageForContributor', function(assert) {
+	const amounts = [ [ 0.25, 0.75 ], [ 0.20, 0.60, 0.20 ] ];
+
 	let done = assert.async();
 	ContributionMonth.getList({}).then(function(contributionMonths) {
-		let contributionMonth = contributionMonths[0];
-		let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
-		let contributor = contributionMonth.monthlyContributions[0];
-		let contributor2 = contributionMonth.monthlyContributions[1];
+		contributionMonths.forEach((contributionMonth, index) => {
+			let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
 
-		let firstPercent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth);
-		let secondPercent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor2, contributionMonth);
+			let contributor1 = contributionMonth.monthlyContributors[0];
+			let contributor2 = contributionMonth.monthlyContributors[1];
+			let contributor3 = contributionMonth.monthlyContributors[2];
 
-		QUnit.equal(firstPercent, 0.25, 'Percent owned is 0.25');
-		QUnit.equal(secondPercent, 0.75, 'Percent owned is 0.75');
+			let firstPercent = contributor1 && contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor1, contributionMonth);
+			let secondPercent = contributor2 && contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor2, contributionMonth);
+			let thirdPercent = contributor3 && contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor3, contributionMonth);
+
+			QUnit.equal(firstPercent, amounts[index][0], 'Percent owned is ' + amounts[index][0]);
+			QUnit.equal(secondPercent, amounts[index][1], 'Percent owned is ' + amounts[index][1]);
+			QUnit.equal(thirdPercent, amounts[index][2], 'Percent owned is ' + amounts[index][2]);
+		});
 
 		done();
 	}, function(err) {

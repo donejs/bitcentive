@@ -56,31 +56,21 @@
 				<form ($submit)="addContribution(%event)" id="contributions-form">
 					<div class="row">
 						<div class="col-xs-6">
-						{{#if activeContributors.isPending}}
-							<p>Loading...</p>
-						{{else}}
-							<label>User: </label>
+							<label>Contributor: </label>
 							<select {($value)}="selectedContributorId" class="form-control">
-							{{#each activeContributors.value as contributor}}
-								<option value="{{contributor._id}}">{{contributor.name}}</option>
+							{{#each contributionMonth.sortedMonthlyContributors}}
+								<option value="{{contributorRef.value._id}}">{{contributorRef.value.name}}</option>
 							{{/each}}
 							</select>
-						{{/if}}
 						</div>
 
 						<div class="col-xs-6">
-							{{#if osProjects.isPending}}
-								<p>Loading...</p>
-							{{else}}
-								<label>Open Source Project: </label>
-								<select {($value)}="selectedOSProjectId" class="form-control">
-								{{#each osProjects.value as osProject}}
-									<option value="{{osProject._id}}">
-										{{osProject.name}}
-									</option>
-								{{/each}}
-								</select>
-							{{/if}}
+							<label>Open Source Project: </label>
+							<select {($value)}="selectedOSProjectId" class="form-control">
+							{{#each contributionMonth.sortedMonthlyOSProjects}}
+								<option value="{{osProjectRef.value._id}}">{{osProjectRef.value.name}}</option>
+							{{/each}}
+							</select>
 						</div>
 					</div>
 
