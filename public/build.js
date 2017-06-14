@@ -4,5 +4,4 @@ var buildPromise = stealTools.build({
   config: __dirname + "/package.json!npm"
 }, {
   bundleAssets: true,
-  minify: false
 });

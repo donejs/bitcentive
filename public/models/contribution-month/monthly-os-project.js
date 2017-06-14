@@ -10,7 +10,18 @@ const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
   commissioned: "boolean",
   osProjectRef: OSProject.Ref,
   contributionMonth: {
-    Type: ContributionMonth,
+    type: (data) => {
+        let Constructor = ContributionMonth;
+        if (Constructor.default) {
+            Constructor = Constructor.default;
+        }
+
+        if (data instanceof Constructor) {
+            return data;
+        }
+
+        return new Constructor(data);
+    },
     serialize: false
   },
   getTotal() {
@@ -47,7 +58,18 @@ MonthlyOSProject.List = DefineList.extend("MonthlyOSProjectList", {
       });
       return contributionMonth;
     },
-    Type: ContributionMonth,
+    type: (data) => {
+        let Constructor = ContributionMonth;
+        if (Constructor.default) {
+            Constructor = Constructor.default;
+        }
+
+        if (data instanceof Constructor) {
+            return data;
+        }
+
+        return new Constructor(data);
+    },
     serialize: false
   },
   has( osProject ){
