@@ -86,6 +86,10 @@ export const ViewModel = DefineMap.extend({
 
         for (let contributorId in this.payouts) {
           let current = this.payouts[contributorId].monthlyOSProjects[osProjectRef._id];
+          if (!current) {
+              continue;
+          }
+
           result.total += current.total;
           result.percent += current.percent;
         }

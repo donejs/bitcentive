@@ -200,7 +200,10 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	removeMonthlyOSProject( monthlyOSProject ) {
 		this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
 		this.monthlyClientProjects.forEach( clientProject => {
-			clientProject.monthlyClientProjectsOSProjects.splice(clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef), 1);
+			let index = clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef);
+			if (index > -1) {
+				clientProject.monthlyClientProjectsOSProjects.splice(index, 1);
+			}
 		});
 		this.save().catch(err => {
 			console.error("Failed saving the contributionMonth obj: ", err);
