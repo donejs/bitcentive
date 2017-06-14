@@ -8,25 +8,26 @@ exports.up = function(db) {
 	const ContributionMonth = service.Model;
 	const update = denodeify(ContributionMonth.update.bind(ContributionMonth));
 
-	return service.find({
-		monthlyContributors: { '$exists': false }
-	}).then((results) => {
-		const stack = [];
+	return app.service('/api/contributors').find().then(contributors => {
+		return service.find({
+			monthlyContributors: { '$exists': false }
+		}).then((results) => {
+			const stack = [];
 
-		for (let item of results) {
-			let monthlyContributors = {};
-			for (let { contributorRef } of item.monthlyContributions) {
-				monthlyContributors[contributorRef] = true;
+			for (let item of results) {
+				item.monthlyContributors = contributors.map(contributor => {
+					return {
+						contributorRef: contributor._id,
+					};
+				});
+
+				stack.push(service.update(item._id, item));
 			}
 
-			item.monthlyContributors = Object.keys(monthlyContributors)
-				.map(contributorRef => ({ contributorRef }));
-
-			stack.push(service.update(item._id, item));
-		}
-
-		return Promise.all(stack);
+			return Promise.all(stack);
+		});
 	});
+
 };
 
 exports.down = function(db) {
