@@ -9,8 +9,8 @@
 					<tr>
 						<th>&nbsp;</th>
 						<th class="total"><span>Total</span></th>
-						{{#each monthlyOSProjects as monthlyOSProject}}
-						<th colspan="2">{{monthlyOSProject.osProjectRef.value.name}}</th>
+						{{#each monthlyOSProjects}}
+						<th colspan="2">{{osProjectRef.value.name}}</th>
 						{{/each}}
 					</tr>
 				</thead>
@@ -21,9 +21,11 @@
 							<td class="total">
 								<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, contributionMonth))}}</span>
 							</td>
-							{{#each payouts[contributorRef._id].monthlyOSProjects as monthlyOSProject}}
-								<td class="amountDollar">{{formatDollarAmount(monthlyOSProject.total)}}</td>
-								<td class="amountPercent">{{formatPercentAmount(monthlyOSProject.percent)}}</td>
+							{{#each monthlyOSProjects}}
+								{{#payoutFor(contributorRef, osProjectRef)}}
+									<td class="amountDollar">{{formatDollarAmount(total)}}</td>
+									<td class="amountPercent">{{formatPercentAmount(percent)}}</td>
+								{{/payoutFor}}
 							{{/each}}
 						</tr>
 					{{/each}}
@@ -35,4 +37,73 @@
 	{{/if}}
 {{else}}
 	<h3>Warning: Requires contributionMonth data</h3>
+{{/if}}
+
+{{#if isAdmin()}}
+	{{#if adding}}
+		<div class="panel panel-default">
+			<div class="panel-heading">Add Contributor</div>
+			<div class="panel-body">
+				<form ($submit)="addNewContributor(%event)" id="new-contributor">
+					<div class="row">
+						<div class="col-xs-12">
+						{{#if otherContributors.isPending}}
+							<p>Loading...</p>
+						{{else}}
+							<select {($value)}="string-to-any(~selectedContributorId)" class="form-control">
+								<option value="" disabled selected hidden>Select Contributor...</option>
+								{{#each otherContributors.value}}
+									{{^if contributionMonth.monthlyOSProjects.has(.)}}
+								<option value="{{_id}}">{{name}}</option>
+									{{/if}}
+								{{/each}}
+								<option value="null">Create New Contributor</option>
+							</select>
+						{{/if}}
+						</div>
+					{{#if creatingNewContributor}}
+						<div class="col-xs-12">
+							{{#if newContributorError}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
+							<div class="row">
+								<div class="col-xs-5">
+									<label>Name:</label>
+									<input
+										type="text"
+										class="form-control"
+										placeholder="Name"
+										{($value)}="newContributorName"
+										{$disabled}="isSaving"
+									/>
+								</div>
+								<div class="col-xs-5">
+									<label>Email:</label>
+									<input
+										type="text"
+										class="form-control"
+										placeholder="Email Address"
+										{($value)}="newContributorEmail"
+										{$disabled}="isSaving"
+									/>
+								</div>
+								<div class="col-xs-2">
+									<label>Active?</label>
+									<input
+										type="checkbox"
+										class="form-control"
+										{($checked)}="newContributorActive"
+										{$disabled}="isSaving"
+									/>
+								</div>
+							</div>
+						</div>
+					{{/if}}
+					</div>
+				</form>
+				<button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
+				<button class="btn btn-default" ($click)="toggleAddNewContributor()">Cancel</button>
+			</div>
+		</div>
+	{{else}}
+		<a href="javascript://" ($click)="toggleAddNewContributor()">Add Contributor</a>
+	{{/if}}
 {{/if}}

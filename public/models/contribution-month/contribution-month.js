@@ -444,18 +444,19 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 			let contributorPayout =
 				Object.assign({ }, uniqueContributors[contributorId]);
 
-			contributorPayout.monthlyOSProjects = [];
+			contributorPayout.monthlyOSProjects = {};
 
-			Object.keys(uniqueProjects).forEach(projectId => {
-				let monthlyOSProject = uniqueProjects[projectId];
+			Object.keys(uniqueProjects).forEach(monthlyProjectId => {
+				let monthlyOSProject = uniqueProjects[monthlyProjectId];
+				let projectId = monthlyOSProject.osProjectRef._id;
 
-				contributorPayout.monthlyOSProjects.push({
+				contributorPayout.monthlyOSProjects[projectId] = {
 					osProjectRef: monthlyOSProject.osProjectRef,
 					total: this.getOSProjectPayoutTotal(
 						monthlyOSProject, contributorPayout, currentMonth),
 					percent: this.getOwnershipPercentageForContributor(
 						monthlyOSProject, contributorPayout, currentMonth)
-				});
+				};
 			});
 
 			contributorProjectPayouts[contributorId] = contributorPayout;

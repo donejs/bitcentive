@@ -56,16 +56,12 @@
 				<form ($submit)="addContribution(%event)" id="contributions-form">
 					<div class="row">
 						<div class="col-xs-6">
-						{{#if activeContributors.isPending}}
-							<p>Loading...</p>
-						{{else}}
 							<label>Contributor: </label>
 							<select {($value)}="selectedContributorId" class="form-control">
-							{{#each activeContributors.value as contributor}}
-								<option value="{{contributor._id}}">{{contributor.name}}</option>
+							{{#each contributionMonth.sortedMonthlyContributors}}
+								<option value="{{contributorRef.value._id}}">{{contributorRef.value.name}}</option>
 							{{/each}}
 							</select>
-						{{/if}}
 						</div>
 
 						<div class="col-xs-6">

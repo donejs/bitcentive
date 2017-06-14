@@ -86,6 +86,16 @@ export const ViewModel = DefineMap.extend({
 		return this.contributionMonths &&
 			this.contributionMonths.getMonthlyPayouts(this.contributionMonth);
   },
+  payoutFor(contributorRef, osProjectRef) {
+    if (!this.payouts || !this.payouts[contributorRef._id] || !this.payouts[contributorRef._id].monthlyOSProjects[osProjectRef._id]) {
+      return {
+        total: 0,
+        percent: 0,
+      };
+    }
+
+    return this.payouts[contributorRef._id].monthlyOSProjects[osProjectRef._id];
+  },
   /**
    * @property {Boolean} hasContributionPayouts
    *
@@ -93,6 +103,72 @@ export const ViewModel = DefineMap.extend({
    */
   get hasContributionPayouts() {
     return this.payouts && Boolean(Object.keys(this.payouts).length);
+  },
+
+  // Stateful properties
+  otherContributors: {
+    value: function() {
+      return Contributor.getList().then(contributors => {
+        return contributors.filter(contributor => {
+          return contributor.active && !this.contributionMonth.contributorsMap[contributor._id];
+        });
+      });
+    }
+  },
+
+  adding: {
+    type: 'boolean',
+    value: false
+  },
+  newContributorName: 'string',
+  newContributorEmail: 'string',
+  newContributorActive: 'boolean',
+  newContributorError: 'string',
+  selectedContributorId: {
+    type: 'string',
+    value: null
+  },
+
+  // Derived properties
+  creatingNewContributor: {
+    get: function() {
+      return this.selectedContributorId === null;
+    }
+  },
+
+  // Methods
+  toggleAddNewContributor: function() {
+    this.newContributorError = '';
+    this.newContributorName = '';
+    this.newContributorEmail = '';
+    this.newContributorActive = true;
+    this.adding = !this.adding;
+  },
+  addNewContributor: function(ev) {
+    if (ev) {
+      ev.preventDefault();
+    }
+    if (this.selectedContributorId === null) {
+      return new Contributor({
+        name: this.newContributorName,
+        email: this.newContributorEmail,
+        active: this.newContributorActive,
+      }).save().then((contributor) => {
+        this.contributionMonth.addNewMonthlyContributor(contributor);
+        this.toggleAddNewContributor();
+      }, (e) => {
+        this.newContributorError = e.message;
+      });
+    } else {
+      return this.otherContributors.then((contributors) => {
+        contributors.each((contributor) => {
+          if (this.selectedContributorId === contributor._id) {
+            this.contributionMonth.addNewMonthlyContributor(contributor);
+            this.toggleAddNewContributor();
+          }
+        });
+      });
+    }
   }
 });
 
