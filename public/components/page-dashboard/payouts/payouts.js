@@ -38,22 +38,6 @@ export const ViewModel = DefineMap.extend({
       });
   },
   /**
-   * @property {Map} monthlyOSProjects
-   *
-   * A unique set of OS Projects from the current and previous months.
-   */
-  get monthlyOSProjects() {
-    let uniqueProjects = {};
-
-    this.effectiveMonths && this.effectiveMonths.map(contributionMonth => {
-      contributionMonth.monthlyOSProjects.map(monthlyOSProject => {
-        uniqueProjects[monthlyOSProject._id] = monthlyOSProject;
-      });
-    });
-
-    return uniqueProjects;
-  },
-  /**
    * @property {Map} payouts
    *
    * A map of OS Project payouts per Contributor based on the current month and
@@ -87,7 +71,29 @@ export const ViewModel = DefineMap.extend({
 			this.contributionMonths.getMonthlyPayouts(this.contributionMonth);
   },
   payoutFor(contributorRef, osProjectRef) {
-    if (!this.payouts || !this.payouts[contributorRef._id] || !this.payouts[contributorRef._id].monthlyOSProjects[osProjectRef._id]) {
+    if (!this.payouts) {
+      return {
+        total: 0,
+        percent: 0,
+      };
+    }
+
+    if (contributorRef === null) {
+        let result = {
+          total: 0,
+          percent: 0,
+        };
+
+        for (let contributorId in this.payouts) {
+          let current = this.payouts[contributorId].monthlyOSProjects[osProjectRef._id];
+          result.total += current.total;
+          result.percent += current.percent;
+        }
+
+        return result;
+    }
+
+    if (!this.payouts[contributorRef._id] || !this.payouts[contributorRef._id].monthlyOSProjects[osProjectRef._id]) {
       return {
         total: 0,
         percent: 0,
@@ -96,24 +102,14 @@ export const ViewModel = DefineMap.extend({
 
     return this.payouts[contributorRef._id].monthlyOSProjects[osProjectRef._id];
   },
-  /**
-   * @property {Boolean} hasContributionPayouts
-   *
-   * Whether there are any payouts to display.
-   */
-  get hasContributionPayouts() {
-    return this.payouts && Boolean(Object.keys(this.payouts).length);
-  },
 
   // Stateful properties
-  otherContributors: {
-    value: function() {
-      return Contributor.getList().then(contributors => {
-        return contributors.filter(contributor => {
-          return contributor.active && !this.contributionMonth.contributorsMap[contributor._id];
-        });
+  get otherContributors() {
+    return Contributor.getList().then(contributors => {
+      return contributors.filter(contributor => {
+        return contributor.active && !this.contributionMonth.contributorsMap[contributor._id];
       });
-    }
+    });
   },
 
   adding: {
@@ -169,6 +165,9 @@ export const ViewModel = DefineMap.extend({
         });
       });
     }
+  },
+  removeContributor: function(ev, contributor) {
+    return this.contributionMonth.removeMonthlyContributor(contributor);
   }
 });
 

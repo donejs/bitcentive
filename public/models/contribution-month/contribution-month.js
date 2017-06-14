@@ -351,6 +351,19 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 
 		return total;
 	},
+	getTotalForAllPayouts(contributionMonth) {
+		let total = 0;
+
+		const projectMap = this.OSProjectContributionsMap(contributionMonth);
+		for (const osProjectID in projectMap) {
+			const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
+			if (totalAmountForOSProject !== undefined){
+				total += totalAmountForOSProject;
+			}
+		}
+
+		return total;
+	},
 	getTotalForAllPayoutsForContributor(contributorRef, contributionMonth) {
 		let total = 0;
 
@@ -436,7 +449,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 				contributionMonth.monthlyContributions.contributorsMap);
 
 			contributionMonth.monthlyOSProjects.forEach(monthlyOSProject => {
-				uniqueProjects[monthlyOSProject._id] = monthlyOSProject;
+				uniqueProjects[monthlyOSProject.osProjectRef._id] = monthlyOSProject;
 			});
 		});
 

@@ -65,18 +65,12 @@
 						</div>
 
 						<div class="col-xs-6">
-							{{#if osProjects.isPending}}
-								<p>Loading...</p>
-							{{else}}
-								<label>Open Source Project: </label>
-								<select {($value)}="selectedOSProjectId" class="form-control">
-								{{#each osProjects.value as osProject}}
-									<option value="{{osProject._id}}">
-										{{osProject.name}}
-									</option>
-								{{/each}}
-								</select>
-							{{/if}}
+							<label>Open Source Project: </label>
+							<select {($value)}="selectedOSProjectId" class="form-control">
+							{{#each contributionMonth.sortedMonthlyOSProjects}}
+								<option value="{{osProjectRef.value._id}}">{{osProjectRef.value.name}}</option>
+							{{/each}}
+							</select>
 						</div>
 					</div>
 
