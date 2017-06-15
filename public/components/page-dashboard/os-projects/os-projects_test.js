@@ -77,3 +77,45 @@ QUnit.test('Can add an existing OS Project to Monthly Contribution', function(as
     done();
   });
 });
+
+QUnit.test("getPointTotalForOSProject", function(assert) {
+    var done = assert.async();
+    contributionMonthStore.reset();
+
+    ContributionMonth.get('2').then((contributionMonth) => {
+        var vm = new ViewModel();
+
+        vm.contributionMonth = contributionMonth;
+
+        vm.on('contributionMonths', () => {
+            let monthlyOSProject = vm.contributionMonth.monthlyOSProjects[0];
+            let points = vm.getPointTotalForOSProject(monthlyOSProject);
+
+            QUnit.equal(points, 100);
+            done();
+        })
+
+    });
+
+});
+
+QUnit.test("getTotalDollarsPerPointForOSProject", function(assert){
+    var done = assert.async();
+    contributionMonthStore.reset();
+
+    ContributionMonth.get('2').then((contributionMonth) => {
+        var vm = new ViewModel();
+
+        vm.contributionMonth = contributionMonth;
+
+        vm.on('contributionMonths', () => {
+            let monthlyOSProject = vm.contributionMonth.monthlyOSProjects[0];
+            let rate = vm.getTotalDollarsPerPointForOSProject(monthlyOSProject);
+
+            QUnit.equal(rate, 3.5);
+            done();
+        })
+
+    });
+
+});
