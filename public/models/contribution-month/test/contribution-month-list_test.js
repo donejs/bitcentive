@@ -38,69 +38,6 @@ QUnit.test("ContributionMonth.getList() works", function(assert) {
 	});
 });
 
-QUnit.test("getPointTotalForOSProject", function(){
-
-	const list = new ContributionMonth.List([
-		{
-			monthlyContributions: [
-				{
-					"points": 10,
-					"description": "Fixed an issue with DELETE sending payload",
-					"osProjectRef": "57bc79e3b6a4d67111f6270b",
-					"contributorRef": "57be04cbde5451d4b88e4cf1",
-					"_id": "57c056bf244e90090e7e5420"
-				},
-				{
-					"points": 5,
-					"description": "Fixed an issue with DELETE sending payload",
-					"osProjectRef": "sapougsadgsadoigaspi",
-					"contributorRef": "57be04cbde5451d4b88e4cf1",
-					"_id": "57c056bf244e90090e7e5420"
-				}
-			]
-		},
-		{
-			monthlyContributions: [
-				{
-					"points": 10,
-					"description": "Fixed an issue with DELETE sending payload",
-					"osProjectRef": "aihfaipsfsipg",
-					"contributorRef": "57be04cbde5451d4b88e4cf1",
-					"_id": "57c056bf244e90090e7e5420"
-				},
-				{
-					"points": 5,
-					"description": "Fixed an issue with DELETE sending payload",
-					"osProjectRef": "57bc79e3b6a4d67111f6270b",
-					"contributorRef": "57be04cbde5451d4b88e4cf1",
-					"_id": "57c056bf244e90090e7e5420"
-				}
-			]
-		}
-	]);
-
-	let points = list.getPointTotalForOSProject("57bc79e3b6a4d67111f6270b");
-
-	QUnit.equal(points, 15);
-
-});
-
-QUnit.test("getTotalDollarsPerPointForOSProject", function(assert){
-
-	let done = assert.async();
-	ContributionMonth.getList({}).then(function(list) {
-
-		let monthlyOSProject = list[0].monthlyOSProjects[0];
-
-		let rate = list.getTotalDollarsPerPointForOSProject(monthlyOSProject);
-
-		QUnit.equal(rate, 3.5);
-
-		done();
-	});
-
-});
-
 QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 	const amounts = [ 87.5, 70 ];
 

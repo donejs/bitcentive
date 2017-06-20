@@ -38,10 +38,10 @@
 						{{formatDollarAmount(monthlyOSProject.getTotal())}}
 					</td>
 					<td class="text-right">
-						{{contributionMonths.getPointTotalForOSProject(monthlyOSProject.osProjectRef._id)}}
+						{{getPointTotalForOSProject(monthlyOSProject)}}
 					</td>
 					<td class="text-right">
-						{{formatDollarAmount(contributionMonths.getTotalDollarsPerPointForOSProject(monthlyOSProject))}}
+						{{formatDollarAmount(getTotalDollarsPerPointForOSProject(monthlyOSProject))}}
 					</td>
 					<td>
 						{{#if isAdmin()}}
