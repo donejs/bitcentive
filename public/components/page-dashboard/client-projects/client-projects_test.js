@@ -14,12 +14,14 @@ QUnit.module('bitcentive/components/page-dashboard/client-projects/', {
 QUnit.test('viewModel.addClient', function(assert){
   let done = assert.async();
   ContributionMonth.get("1").then(month => {
+    console.log('Got month');
     let vm = new ClientProjectVM({
       contributionMonth: month,
       selectedClientId: "2-Walmart"
     });
     QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 2, 'should have 2 client project');
     vm.contributionMonth.monthlyClientProjects.on('length', function(){
+      console.log('on length');
       QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 3, 'should have 3 client project after addClient');
       vm.contributionMonth.monthlyClientProjects.off('length');
       done();
