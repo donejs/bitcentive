@@ -15,7 +15,8 @@ const middleware = require('./middleware');
 const services = require('./services');
 //const ssr = require("../public/ssr");
 
-const globalHooks = require('./hooks');
+const { restrictToAuthenticated, requireAdmin } = require('./hooks');
+const { iff } = require('feathers-hooks-common');
 
 const app = feathers();
 
@@ -44,9 +45,13 @@ app.use(compress())
   .configure(middleware);
 
 app.hooks({
-  before: [globalHooks.restrictToAuthenticated(), globalHooks.requireAdmin({
-    ignorePaths: ['authentication']
-  })],
+  before: [
+    iff(
+      hook => hook.path !== 'authentication',
+      restrictToAuthenticated(),
+      requireAdmin()
+    )
+  ],
   after: []
 });
 

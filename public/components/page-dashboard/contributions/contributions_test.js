@@ -24,6 +24,7 @@ QUnit.test('viewModel.addContribution', function(assert){
     QUnit.equal(vm.contributionMonth.monthlyContributions.length, 3, 'should have 3 contributions');
     vm.contributionMonth.monthlyContributions.on('length', function(){
       QUnit.equal(vm.contributionMonth.monthlyContributions.length, 4, 'should have 4 contributions after addContribution');
+      vm.contributionMonth.monthlyContributions.off('length');
       done();
     });
     vm.addContribution();
