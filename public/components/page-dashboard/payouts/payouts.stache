@@ -44,7 +44,7 @@
 				<tr>
 					<th>&nbsp;</th>
 					<td class="total">
-						<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayouts(contributionMonth))}}</span>
+						<span>{{formatDollarAmount(contributionMonth.totalPayouts)}}</span>
 					</td>
 					{{#each contributionMonth.sortedMonthlyOSProjects}}
 						{{#payoutFor(null, osProjectRef)}}
