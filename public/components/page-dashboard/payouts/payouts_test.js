@@ -12,14 +12,28 @@ QUnit.module('bitcentive/components/page-dashboard/payouts', {
   }
 });
 
-QUnit.test('viewModel.OSProjectContributionsMap', function(assert){
+QUnit.test('viewModel.osProjectContributionsMap', function(assert){
   let done = assert.async();
   let vm;
   ContributionMonth.get("1").then(month => {
     vm = new ViewModel({ contributionMonth: month });
     vm.on('contributionMonths', () => {
-      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 10, 'has a contributor for CanJS');
-      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].totalPoints, 40, 'has totalPoints for CanJS as 40');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['2-DoneJS'].contributors['2-KyleGifford'].points, 3, 'has a contributor for DoneJS');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['2-DoneJS'].totalPoints, 8, 'has totalPoints for DoneJS as 6');
+      done();
+    });
+  });
+});
+
+
+QUnit.test('viewModel.osProjectContributionsMap', function (assert) {
+  let done = assert.async();
+  let vm;
+  ContributionMonth.get("3").then(month => {
+    vm = new ViewModel({ contributionMonth: month });
+    vm.on('contributionMonths', () => {
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 17.5, 'has a contributor for CanJS');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].totalPoints, 70, 'has totalPoints for CanJS as 70');
       done();
     });
   });
@@ -59,7 +73,7 @@ QUnit.test('viewModel.payoutFor', function(assert){
 
     let done = assert.async();
     let vm;
-    ContributionMonth.get("1").then(month => {
+    ContributionMonth.get("3").then(month => {
         vm = new ViewModel({ contributionMonth: month });
         vm.on('contributionMonths', () => {
             let monthlyContributors = vm.contributionMonth.monthlyContributors

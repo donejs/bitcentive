@@ -301,15 +301,31 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	}
 });
 
+const monthsUntilDecay = 6;
+const minimumPoints = 1;
+const oneMonth = 1000 * 60 * 60 * 24 * 30;
+
 ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
 	osProjectContributionsMap(currentContributionMonth) {
 		var osProjectContributionsMap = {};
-
+		const today = new Date().getTime();
 		this.forEach(contributionMonth => {
 			if (moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
 				contributionMonth.monthlyContributions.forEach(monthlyContribution => {
 					if (currentContributionMonth.contributorsMap[monthlyContribution.contributorRef._id]) {
+						// Impliment decay
+						const monthsAgo = (today - contributionMonth.date.getTime()) / oneMonth;
+						const decayFactor = Math.floor(monthsAgo / monthsUntilDecay);
+						let points = monthlyContribution.points;
+						
+						if (decayFactor > 0){
+							points = points / Math.pow(2, decayFactor);
+							if(points < minimumPoints){
+								return;
+							}
+						}
+
 						if (!osProjectContributionsMap[monthlyContribution.osProjectRef._id]) {
 							osProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
 								contributors: {},
@@ -323,8 +339,8 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 							};
 						}
 
-						osProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints += monthlyContribution.points;
-						osProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points += monthlyContribution.points;
+						osProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints += points;
+						osProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points += points;
 					}
 				});
 			}

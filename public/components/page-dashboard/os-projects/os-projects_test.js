@@ -82,7 +82,7 @@ QUnit.test("getPointTotalForOSProject", function(assert) {
     var done = assert.async();
     contributionMonthStore.reset();
 
-    ContributionMonth.get('2').then((contributionMonth) => {
+    ContributionMonth.get('4').then((contributionMonth) => {
         var vm = new ViewModel();
 
         vm.contributionMonth = contributionMonth;
@@ -91,7 +91,7 @@ QUnit.test("getPointTotalForOSProject", function(assert) {
             let monthlyOSProject = vm.contributionMonth.monthlyOSProjects[0];
             let points = vm.getPointTotalForOSProject(monthlyOSProject);
 
-            QUnit.equal(points, 100);
+            QUnit.equal(points, 140);
             done();
         })
 
@@ -103,7 +103,7 @@ QUnit.test("getTotalDollarsPerPointForOSProject", function(assert){
     var done = assert.async();
     contributionMonthStore.reset();
 
-    ContributionMonth.get('2').then((contributionMonth) => {
+    ContributionMonth.get('4').then((contributionMonth) => {
         var vm = new ViewModel();
 
         vm.contributionMonth = contributionMonth;
@@ -112,7 +112,7 @@ QUnit.test("getTotalDollarsPerPointForOSProject", function(assert){
             let monthlyOSProject = vm.contributionMonth.monthlyOSProjects[0];
             let rate = vm.getTotalDollarsPerPointForOSProject(monthlyOSProject);
 
-            QUnit.equal(rate, 3.5);
+            QUnit.equal(rate, 2.5);
             done();
         })
 

@@ -1,10 +1,9 @@
-dist: precise
 language: node_js
 node_js: 6.11.0
 services:
   - mongodb
 addons:
-  firefox: "53.0"
+  firefox: "52.3.0"
 install:
   - npm install
 before_install:
