@@ -2,7 +2,7 @@
 	<can-import from="bootstrap/dist/css/bootstrap.css" />
 	<can-import from="bitcentive/styles.less" />
 	<can-import from="bitcentive/components/page-dashboard/payouts/" />
-	<bit-payouts {contribution-month}="contributionMonth"></bit-payouts>
+	<bit-payouts vm:contributionMonth:from="contributionMonth"></bit-payouts>
 </script>
 <style>
 bit-payouts {

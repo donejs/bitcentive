@@ -4,8 +4,8 @@
 <can-import from="~/lib/stache-helpers/" />
 
 <div class="container">
-	<bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId" {is-admin}="isAdmin()"/>
+	<bit-select-contribution-month vm:selectedContributionMonthId:bind="contributionMonthId" vm:isAdmin:from="isAdmin()"/>
 	{{#if contributionMonthId}}
-		<bit-contribution-month {(contribution-month-id)}="contributionMonthId"/>
+		<bit-contribution-month vm:contributionMonthId:bind="contributionMonthId"/>
 	{{/if}}
 </div>

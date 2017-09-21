@@ -14,7 +14,7 @@
 
 	window.vm = new DefineMap({contributionMonthId: "1"})
 
-	var template = stache('<bit-select-contribution-month {(selected-contribution-month-id)}="contributionMonthId"/>')
+	var template = stache('<bit-select-contribution-month vm:selectedContributionMonthId:bind="contributionMonthId"/>')
 	document.body.appendChild( template(vm) );
 
 </script>
