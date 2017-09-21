@@ -8,7 +8,7 @@
 {{#if contributionMonth}}
 	<div class='callout'>
 		<h2>Open Source Projects</h2>
-		<os-projects vm:contributionMonth:from="contributionMonth"/>
+		<os-projects contributionMonth:from="contributionMonth"/>
 	</div>
 	<div class='callout'>
 		<div class="rates">
@@ -16,31 +16,31 @@
 				<input
 					type="number"
 					class="form-control"
-					el:value:bind="contributionMonth.startRate"
-					on:el:change="contributionMonth.save()"
-					el:disabled:from="or(contributionMonth.isSaving(), notAdmin())"
+					value:bind="contributionMonth.startRate"
+					on:change="contributionMonth.save()"
+					disabled:from="or(contributionMonth.isSaving(), notAdmin())"
 				/>
 			</label>
 			<label>End Rate<br/>
 				<input
 					type="number"
 					class="form-control"
-					el:value:bind="contributionMonth.endRate"
-					on:el:change="contributionMonth.save()"
-					el:disabled:from="or(contributionMonth.isSaving(), notAdmin())"
+					value:bind="contributionMonth.endRate"
+					on:change="contributionMonth.save()"
+					disabled:from="or(contributionMonth.isSaving(), notAdmin())"
 				/>
 			</label>
 		</div>
 		<h2>Client Projects</h2>
-		<bit-client-projects vm:contributionMonth:from="contributionMonth"/>
+		<bit-client-projects contributionMonth:from="contributionMonth"/>
 	</div>
 	<div class='callout'>
 		<h2>Contributions</h2>
-		<bit-contributions vm:contributionMonth:from="contributionMonth"/>
+		<bit-contributions contributionMonth:from="contributionMonth"/>
 	</div>
 
 	<div class='callout'>
 		<h2>Payouts</h2>
-		<bit-payouts vm:contributionMonth:from="contributionMonth"/>
+		<bit-payouts contributionMonth:from="contributionMonth"/>
 	</div>
 {{/if}}

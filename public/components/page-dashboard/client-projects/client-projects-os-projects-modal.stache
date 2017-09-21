@@ -16,10 +16,10 @@
 					<li>
 						<input id="os_project_{{osProjectRef._id}}"
 							 type="checkbox"
-							 el:checked:from="selectedClientProject.monthlyClientProjectsOSProjects.has(monthlyOSProject)"
-							 el:value:from="monthlyOSProject.osProjectRef.value.name"
-							 on:el:click="toggleUseProject(selectedClientProject.monthlyClientProjectsOSProjects, monthlyOSProject)"
-							 el:disabled:from="or(contributionMonth.isSaving(), notAdmin())"
+							 checked:from="selectedClientProject.monthlyClientProjectsOSProjects.has(monthlyOSProject)"
+							 value:from="monthlyOSProject.osProjectRef.value.name"
+							 on:click="toggleUseProject(selectedClientProject.monthlyClientProjectsOSProjects, monthlyOSProject)"
+							 disabled:from="or(contributionMonth.isSaving(), notAdmin())"
 						/>
 						<label for="os_project_{{osProjectRef._id}}" {{#if commissioned}} class="commissioned" {{/if}}>
 							{{osProjectRef.value.name}}

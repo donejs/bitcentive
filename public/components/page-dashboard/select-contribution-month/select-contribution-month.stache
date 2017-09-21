@@ -3,7 +3,7 @@
 <can-import from="can-stache-converters" />
 
 {{#if contributionMonths}}
-	<select el:value:bind="string-to-any(~selectedContributionMonthId)" class="form-control">
+	<select value:bind="string-to-any(~selectedContributionMonthId)" class="form-control">
 		{{#each contributionMonths}}
 			<option value="{{_id}}">{{prettyDate(date)}}</option>
 		{{/each}}

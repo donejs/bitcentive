@@ -20,13 +20,13 @@
 					<td>{{monthlyClientProject.clientProjectRef.value.name}}</td>
 					<td>
 						<input type="number" class="form-control hours-input"
-							el:value:bind="monthlyClientProject.hours"
-							on:el:change="contributionMonth.save()"
-							el:disabled:from="or(contributionMonth.isSaving(), notAdmin())"
+							value:bind="monthlyClientProject.hours"
+							on:change="contributionMonth.save()"
+							disabled:from="or(contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
 					<td class="os-projects-cell">
-						<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" on:el:click="setSelectedClientProject(monthlyClientProject)" >
+						<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" on:click="setSelectedClientProject(monthlyClientProject)" >
 							{{! Count of commissioned projects }}
 							{{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
 							+
@@ -42,7 +42,7 @@
 					</td>
 					<td>
 						{{#if isAdmin()}}
-							<button type="button" class="btn btn-danger btn-xs" on:el:click="deleteClientProject(monthlyClientProject)">
+							<button type="button" class="btn btn-danger btn-xs" on:click="deleteClientProject(monthlyClientProject)">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						{{/if}}
@@ -53,7 +53,7 @@
 		</tbody>
 	</table>
 
-	<can-import from="./client-projects-os-projects-modal.stache" vm:@value:to="@*osProjectsModal" />
+	<can-import from="./client-projects-os-projects-modal.stache" @value:to="@*osProjectsModal" />
 	{{>*osProjectsModal}}
 {{/if}}
 
@@ -62,7 +62,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Client</div>
 			<div class="panel-body">
-				<form on:el:submit="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
+				<form on:submit="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
 					<div class="row">
 						<div class="col-xs-6">
 						{{#if projects.pending}}
@@ -70,7 +70,7 @@
 						{{/if}}
 						{{#if projects.isResolved}}
 							<label>Select a client: </label>
-							<select el:value:bind="selectedClientId" class="form-control">
+							<select value:bind="selectedClientId" class="form-control">
 							{{#each projects.value}}
 							{{^if contributionMonth.monthlyClientProjects.has(.)}}
 								<option value="{{_id}}">{{name}}</option>
@@ -86,16 +86,16 @@
 							<input type="text"
 										 class="form-control"
 										 placeholder="Client Name"
-										 el:value:bind="newClientName"/>
+										 value:bind="newClientName"/>
 						</div>
 					{{/if}}
 					</div>
 				</form>
 				<button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>
-				<button class="btn btn-default" on:el:click="toggleClientInput()">Cancel</button>
+				<button class="btn btn-default" on:click="toggleClientInput()">Cancel</button>
 			</div>
 		</div>
 	{{else}}
-		<a href="javascript://" on:el:click="toggleClientInput()">Add Client</a>
+		<a href="javascript://" on:click="toggleClientInput()">Add Client</a>
 	{{/if}}
 {{/if}}
