@@ -1,6 +1,6 @@
 <script type="text/stache" can-autorender id="view">
   <can-import from="bitcentive/components/page-users/" />
-  <page-users {usersPromise}="usersPromise"></page-users>
+  <page-users usersPromise:from="usersPromise"></page-users>
 </script>
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">
   import viewModel from 'can-view-model';

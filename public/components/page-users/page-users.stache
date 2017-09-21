@@ -3,5 +3,5 @@
 <div class="container">
 	<h2>Users</h2>
 	<can-import from="./users/" />
-	<bit-users {users}="users" />
+	<bit-users users:from="users" />
 </div>
