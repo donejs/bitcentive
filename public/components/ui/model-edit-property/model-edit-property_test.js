@@ -70,7 +70,7 @@ QUnit.test('View-only mode', function(){
 		record: { name: 'I am viewOnly'},
 		viewOnly: true
 	});
-	var frag = stache('<model-edit-property {model}="record" property="name" {view-only}="viewOnly" />')(vm);
+	var frag = stache('<model-edit-property model:from="record" property="name" viewOnly:from="viewOnly" />')(vm);
 
 	QUnit.ok(frag.querySelector('span'), 'Should render span for the view-only mode');
 });

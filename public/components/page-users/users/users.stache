@@ -14,7 +14,7 @@
       <td><a href="{{profileUrl}}" title="See profile at {{user.authProvider}}" target="_blank"><img src="{{photoUrl}}" />{{name}}</a></td>
       <td><a href="mailto:{{email}}" title="Send email to {{name}}">{{email}}</a></td>
       <td>
-        <input type="checkbox" {$checked}="user.isAdmin" ($change)="setAdmin(user, %element.checked)" />
+        <input type="checkbox" checked:from="user.isAdmin" on:change="setAdmin(user, %element.checked)" />
       </td>
     </tr>
   {{/each}}
