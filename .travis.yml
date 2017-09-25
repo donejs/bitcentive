@@ -3,12 +3,11 @@ node_js: 6.11.0
 services:
   - mongodb
 addons:
-  firefox: "51.0"
+  firefox: "52.3.0"
 install:
   - npm install
 before_install:
   - "export DISPLAY=:99.0"
-  - "export DEBUG=testee:*"
   - "sh -e /etc/init.d/xvfb start"
 before_deploy:
   - 'git config --global user.email "mike@bitovi.com"'

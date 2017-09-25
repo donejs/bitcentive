@@ -3,5 +3,5 @@
 <div class="container">
 	<h2>Contributors</h2>
 	<can-import from="./contributors/"/>
-	<bit-contributors {(contributors)}="contributors.value" />
+	<bit-contributors contributors:bind="contributors.value" />
 </div>

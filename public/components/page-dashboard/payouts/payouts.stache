@@ -32,7 +32,7 @@
 						{{#if isAdmin()}}
 						<td>
 							<button type="button" class="btn btn-danger btn-xs"
-								($click)="removeContributor(%event, .)">
+								on:click="removeContributor(%event, .)">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						</td>
@@ -55,7 +55,7 @@
 					{{#if isAdmin()}}
 					<td>
 						<button type="button" class="btn btn-danger btn-xs"
-							($click)="removeContributor(%event, .)">
+							on:click="removeContributor(%event, .)">
 							<span class="glyphicon glyphicon-remove"/>
 						</button>
 					</td>
@@ -73,13 +73,13 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contributor</div>
 			<div class="panel-body">
-				<form ($submit)="addNewContributor(%event)" id="new-contributor">
+				<form on:submit="addNewContributor(%event)" id="new-contributor">
 					<div class="row">
 						<div class="col-xs-12">
 						{{#if otherContributors.isPending}}
 							<p>Loading...</p>
 						{{else}}
-							<select {($value)}="string-to-any(~selectedContributorId)" class="form-control">
+							<select value:bind="string-to-any(~selectedContributorId)" class="form-control">
 								<option value="" disabled selected hidden>Select Contributor...</option>
 								{{#each otherContributors.value}}
 									{{^if contributionMonth.monthlyOSProjects.has(.)}}
@@ -100,8 +100,8 @@
 										type="text"
 										class="form-control"
 										placeholder="Name"
-										{($value)}="newContributorName"
-										{$disabled}="isSaving"
+										value:bind="newContributorName"
+										disabled:from="isSaving"
 									/>
 								</div>
 								<div class="col-xs-5">
@@ -110,8 +110,8 @@
 										type="text"
 										class="form-control"
 										placeholder="Email Address"
-										{($value)}="newContributorEmail"
-										{$disabled}="isSaving"
+										value:bind="newContributorEmail"
+										disabled:from="isSaving"
 									/>
 								</div>
 								<div class="col-xs-2">
@@ -119,8 +119,8 @@
 									<input
 										type="checkbox"
 										class="form-control"
-										{($checked)}="newContributorActive"
-										{$disabled}="isSaving"
+										checked:bind="newContributorActive"
+										disabled:from="isSaving"
 									/>
 								</div>
 							</div>
@@ -129,10 +129,10 @@
 					</div>
 				</form>
 				<button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
-				<button class="btn btn-default" ($click)="toggleAddNewContributor()">Cancel</button>
+				<button class="btn btn-default" on:click="toggleAddNewContributor()">Cancel</button>
 			</div>
 		</div>
 	{{else}}
-		<a href="javascript://" ($click)="toggleAddNewContributor()">Add Contributor</a>
+		<a href="javascript://" on:click="toggleAddNewContributor()">Add Contributor</a>
 	{{/if}}
 {{/if}}

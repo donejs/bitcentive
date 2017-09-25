@@ -2,7 +2,7 @@
 	<can-import from="bitcentive/components/ui/model-edit-property/" />
 	<ul>
 		{{#each records as record}}
-			<li><model-edit-property {model}="record" property="name" {view-only}="record.viewOnly" /></li>
+			<li><model-edit-property model:from="record" property="name" viewOnly:from="record.viewOnly" /></li>
 		{{/each}}
 	</ul>
 </script>

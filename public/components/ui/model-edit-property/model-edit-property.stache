@@ -10,12 +10,12 @@
 	{{#if isEditing}}
 		<input class="form-control"
 			type="{{type}}"
-			{$value}="propertyValue"
-		 	{$disabled}="isDisabled"
-			($enter)="commitValue(%element.value)"
-			($keydown)="cancelEdit(%event)"
+			value:from="propertyValue"
+		 	disabled:from="isDisabled"
+			on:enter="commitValue(%element.value)"
+			on:keydown="cancelEdit(%event)"
 		/>
 	{{else}}
-		<a href="javascript://" ($click)="makeEditable()" title="Edit" >{{propertyValue}}</a>
+		<a href="javascript://" on:click="makeEditable()" title="Edit" >{{propertyValue}}</a>
 	{{/if}}
 {{/if}}

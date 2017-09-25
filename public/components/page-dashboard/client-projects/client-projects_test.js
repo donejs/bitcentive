@@ -21,6 +21,7 @@ QUnit.test('viewModel.addClient', function(assert){
     QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 2, 'should have 2 client project');
     vm.contributionMonth.monthlyClientProjects.on('length', function(){
       QUnit.equal(vm.contributionMonth.monthlyClientProjects.length, 3, 'should have 3 client project after addClient');
+      vm.contributionMonth.monthlyClientProjects.off('length');
       done();
     });
     vm.addClient(null, vm.contributionMonth.monthlyClientProjects);

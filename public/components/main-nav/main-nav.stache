@@ -30,7 +30,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				{{#if session}}
-					<li><a href="javascript://" ($click)="session.destroy()">Logout</a></li>
+					<li><a href="javascript://" on:click="session.destroy()">Logout</a></li>
 				{{/if}}
 			</ul>
 		</div><!--/.nav-collapse -->
