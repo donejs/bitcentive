@@ -21,9 +21,9 @@ QUnit.test('viewModel.addContribution', function(assert){
       selectedOSProjectId: "1-CanJS",
       selectedContributorId: "1-JustinMeyer"
     });
-    QUnit.equal(vm.contributionMonth.monthlyContributions.length, 3, 'should have 3 contributions');
+    QUnit.equal(vm.contributionMonth.monthlyContributions.length, 4, 'should have 4 contributions');
     vm.contributionMonth.monthlyContributions.on('length', function(){
-      QUnit.equal(vm.contributionMonth.monthlyContributions.length, 4, 'should have 4 contributions after addContribution');
+      QUnit.equal(vm.contributionMonth.monthlyContributions.length, 5, 'should have 5 contributions after addContribution');
       vm.contributionMonth.monthlyContributions.off('length');
       done();
     });

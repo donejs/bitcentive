@@ -39,7 +39,7 @@ QUnit.test("ContributionMonth.getList() works", function(assert) {
 });
 
 QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
-	const amounts = [ 87.5, 70 ];
+	const amounts = [ 0, 87.5, 65.625, 87.5, 68.75 ];
 
 	let done = assert.async();
 	ContributionMonth.getList({}).then(contributionMonths => {
@@ -57,7 +57,7 @@ QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 });
 
 QUnit.test('.getOSProjectPayoutTotal', function(assert) {
-	const amounts = [ 87.50, 70 ];
+	const amounts = [ 0, 87.5, 65.625, 87.5, 68.75 ];
 
 	let done = assert.async();
 	ContributionMonth.getList({}).then(function(contributionMonths) {
@@ -77,24 +77,23 @@ QUnit.test('.getOSProjectPayoutTotal', function(assert) {
 });
 
 QUnit.test('.getOwnershipPercentageForContributor', function(assert) {
-	const amounts = [ [ 0.25, 0.75 ], [ 0.20, 0.60, 0.20 ] ];
+	const amounts = [
+		[ 0, 0 ],
+		[ 0.25, 0.75, 0 ],
+		[ 0.1875, 0.5625, 0.25 ],
+		[ 0.25, 0.75 ],
+		[ 0.19642857142857142, 0.5892857142857143, 0.21428571428571427 ]
+	];
 
-	let done = assert.async();
+	const done = assert.async();
 	ContributionMonth.getList({}).then(function(contributionMonths) {
-		contributionMonths.forEach((contributionMonth, index) => {
-			let monthlyOSProject = contributionMonth.monthlyOSProjects[0];
+		contributionMonths.forEach((contributionMonth, monthIndex) => {
+			const monthlyOSProject = contributionMonth.monthlyOSProjects[0];
 
-			let contributor1 = contributionMonth.monthlyContributors[0];
-			let contributor2 = contributionMonth.monthlyContributors[1];
-			let contributor3 = contributionMonth.monthlyContributors[2];
-
-			let firstPercent = contributor1 && contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor1, contributionMonth);
-			let secondPercent = contributor2 && contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor2, contributionMonth);
-			let thirdPercent = contributor3 && contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor3, contributionMonth);
-
-			QUnit.equal(firstPercent, amounts[index][0], 'Percent owned is ' + amounts[index][0]);
-			QUnit.equal(secondPercent, amounts[index][1], 'Percent owned is ' + amounts[index][1]);
-			QUnit.equal(thirdPercent, amounts[index][2], 'Percent owned is ' + amounts[index][2]);
+			contributionMonth.monthlyContributors.forEach((contributor, contributorIndex) => {
+				const percent = contributionMonths.getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth);
+				QUnit.equal(percent, amounts[monthIndex][contributorIndex], 'Percent owned is ' + amounts[monthIndex][contributorIndex]);
+			});
 		});
 
 		done();
