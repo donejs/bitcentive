@@ -3,6 +3,7 @@ import OSProject from "../os-project";
 import Contributor from "../contributor";
 
 import set from "can-set";
+import memoize from "can-compute-memoize";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../../lib/super-model';
@@ -76,6 +77,23 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 			// sort a clone so that an infinite loop doesn't happen
 			return this.monthlyContributors.slice(0).sort(sortByRefField('contributorRef', 'name'));
 		}
+	},
+	totalPayouts: {
+	  type: 'number',
+	  get: function() {
+		let total = 0;
+
+		this.monthlyOSProjects.forEach( osProject => {
+			if (osProject.commissioned) {
+				const totalAmountForOSProject = this.calculations.osProjects[osProject.osProjectRef._id];
+				if (totalAmountForOSProject !== undefined){
+					total += totalAmountForOSProject;
+				}
+			}
+		});
+
+		return total;
+	  }
 	},
 	calculations: {
 		get: function() {
@@ -283,105 +301,137 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	}
 });
 
+const monthsUntilDecay = 6;
+const minimumPoints = 1;
+const oneMonth = 1000 * 60 * 60 * 24 * 30;
+
 ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
-	OSProjectContributionsMap(currentContributionMonth) {
-		var OSProjectContributionsMap = {};
-
+	osProjectContributionsMap(currentContributionMonth) {
+		var osProjectContributionsMap = {};
+		const today = new Date().getTime();
 		this.forEach(contributionMonth => {
-			if(moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
+			if (moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
 				contributionMonth.monthlyContributions.forEach(monthlyContribution => {
 					if (currentContributionMonth.contributorsMap[monthlyContribution.contributorRef._id]) {
-						if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id] ) {
-							OSProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
+						// Impliment decay
+						const monthsAgo = (today - contributionMonth.date.getTime()) / oneMonth;
+						const decayFactor = Math.floor(monthsAgo / monthsUntilDecay);
+						let points = monthlyContribution.points;
+						
+						if (decayFactor > 0){
+							points = points / Math.pow(2, decayFactor);
+							if(points < minimumPoints){
+								return;
+							}
+						}
+
+						if (!osProjectContributionsMap[monthlyContribution.osProjectRef._id]) {
+							osProjectContributionsMap[monthlyContribution.osProjectRef._id] = {
 								contributors: {},
 								totalPoints: 0
 							};
 						}
 
-						if( ! OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] ) {
-							OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
+						if (!osProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id]) {
+							osProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id] = {
 								points: 0
 							};
 						}
 
-						OSProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints += monthlyContribution.points;
-						OSProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points += monthlyContribution.points;
+						osProjectContributionsMap[monthlyContribution.osProjectRef._id].totalPoints += points;
+						osProjectContributionsMap[monthlyContribution.osProjectRef._id].contributors[monthlyContribution.contributorRef._id].points += points;
 					}
 				});
 			}
 		});
 
-		return OSProjectContributionsMap;
+		return osProjectContributionsMap;
 	},
 	getOSProjectPayoutTotal(monthlyOSProject, contributor, contributionMonth) {
-		let total = 0;
-
-		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
-
-		if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
-			const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
-			const points = contributorData.points;
-			const totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
-			const totalAmountForOSProject = contributionMonth.calculations.osProjects[monthlyOSProject.osProjectRef._id];
-
-			total = (points / totalPoints) * totalAmountForOSProject;
-		}
-
-		return total;
-	},
-	getTotalForAllPayouts(contributionMonth) {
-		let total = 0;
-
-		const projectMap = this.OSProjectContributionsMap(contributionMonth);
-		for (const osProjectID in projectMap) {
-			const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
-			if (totalAmountForOSProject !== undefined){
-				total += totalAmountForOSProject;
-			}
-		}
-
-		return total;
-	},
-	getTotalForAllPayoutsForContributor(contributorRef, contributionMonth) {
-		let total = 0;
-
-		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
-
-		for (const osProjectID in contributorsMap) {
-			const projectContributors = contributorsMap[osProjectID].contributors;
-
-			if(projectContributors[contributorRef._id]) {
-				const contributorData = contributorsMap[osProjectID].contributors[contributorRef._id];
-				const points = contributorData.points;
-				const totalPoints = contributorsMap[osProjectID].totalPoints;
-				const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
-
-				// TODO: figure out what to do with `OSProjectContributionsMap` if an `OSProject` gets removed from a month:
-				// since `OSProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
-				// which will cause NaN for total. For now just ignore undefined for calculation:
-				if (totalAmountForOSProject !== undefined){
-					total = total + ( (points / totalPoints) * totalAmountForOSProject );
+		const cachedOSProjectPayouts = memoize(this, 'osProjectsPayout', [contributionMonth], function(contributionMonth){
+			const contributorsMap = this.osProjectContributionsMap(contributionMonth);
+			const payouts = {};
+			for(const projectRef in contributorsMap){
+				if(!payouts[projectRef]){
+					payouts[projectRef] = {};
+				}
+				for(const contributorRef in contributorsMap[projectRef].contributors){
+					if(!payouts[projectRef][contributorRef]){
+						payouts[projectRef][contributorRef] = 0;
+					}
+					const contributorData = contributorsMap[projectRef].contributors[contributorRef];
+					const points = contributorData.points;
+					const totalPoints = contributorsMap[projectRef].totalPoints;
+					const totalAmountForOSProject = contributionMonth.calculations.osProjects[projectRef];
+		
+					payouts[projectRef][contributorRef] = (points / totalPoints) * totalAmountForOSProject;
 				}
 			}
-		}
+			return payouts;
+		});
 
-		return total;
+		const payouts = cachedOSProjectPayouts();
+		
+		return payouts[monthlyOSProject.osProjectRef._id] && payouts[monthlyOSProject.osProjectRef._id][contributor.contributorRef._id] || 0;
+	},
+	getTotalForAllPayoutsForContributor(contributorRef, contributionMonth) {
+		const cachedTotals = memoize(this, 'totalForAllPayoutsForContributor', [contributionMonth], function(contributionMonth){
+			const totals = {};
+			const contributorsMap = this.osProjectContributionsMap(contributionMonth);
+			for (const osProjectID in contributorsMap) {
+				const projectContributors = contributorsMap[osProjectID].contributors;
+				for (const contributor in projectContributors) {
+					if (totals[contributor] === undefined) {
+						totals[contributor] = 0;
+					}
+	
+					const contributorData = projectContributors[contributor];
+					const points = contributorData.points;
+					const totalPoints = contributorsMap[osProjectID].totalPoints;
+					const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
+	
+					// TODO: figure out what to do with `osProjectContributionsMap` if an `OSProject` gets removed from a month:
+					// since `osProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
+					// which will cause NaN for total. For now just ignore undefined for calculation:
+					if (totalAmountForOSProject !== undefined){
+						totals[contributor] = totals[contributor] + ((points / totalPoints) * totalAmountForOSProject);
+					}
+				}
+			}
+			return totals;
+		});
+
+		return cachedTotals()[contributorRef._id] || 0;
 	},
 	getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth) {
-		let total = 0;
+		const cachedOwershipPercentages = memoize(this, 'ownershipPercentageForContributor', [contributionMonth], function(contributionMonth){
+			const percentages = {};
+			
+			const contributorsMap = this.osProjectContributionsMap(contributionMonth);
 
-		const contributorsMap = this.OSProjectContributionsMap(contributionMonth);
+			for(const projectRef in contributorsMap){
+				if(!percentages[projectRef]){
+					percentages[projectRef] = {};
+				}
+				for(const contributorRef in contributorsMap[projectRef].contributors){
+					if(!percentages[projectRef][contributorRef]){
+						percentages[projectRef][contributorRef] = 0;
+					}
+					const contributorData = contributorsMap[projectRef].contributors[contributorRef];
+					const points = contributorData.points;
+					const totalPoints = contributorsMap[projectRef].totalPoints;
 
-		if(contributorsMap[monthlyOSProject.osProjectRef._id] && contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id] ) {
-			const contributorData = contributorsMap[monthlyOSProject.osProjectRef._id].contributors[contributor.contributorRef._id];
-			const points = contributorData.points;
-			const totalPoints = contributorsMap[monthlyOSProject.osProjectRef._id].totalPoints;
+					percentages[projectRef][contributorRef] = points / totalPoints;
+				}
+			}
+	
+			return percentages;
+		});
 
-			total = (points / totalPoints);
-		}
+		const percentages = cachedOwershipPercentages();
 
-		return total;
+		return percentages[monthlyOSProject.osProjectRef._id] && percentages[monthlyOSProject.osProjectRef._id][contributor.contributorRef._id] || 0;
 	},
 	/**
 	 * @property getMonthlyPayouts

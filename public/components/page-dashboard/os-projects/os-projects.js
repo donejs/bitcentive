@@ -74,32 +74,17 @@ export const ViewModel = DefineMap.extend({
     if (!this.contributionMonths) {
         return {};
     }
-
-    var map = {};
-    this.contributionMonths.forEach((month) => {
-      month.monthlyContributions.forEach((contribution) => {
-        if (this.contributionMonth.contributorsMap[contribution.contributorRef._id]) {
-          var projectId = contribution.osProjectRef._id;
-          if(map[projectId] !== undefined) {
-            map[projectId] += contribution.points;
-          }
-          else {
-            map[projectId] = contribution.points;
-          }
-        }
-      });
-    });
-
-    return map;
+    return this.contributionMonths.osProjectContributionsMap(this.contributionMonth);
   },
   getPointTotalForOSProject(monthlyOSProject) {
-      return this.osProjectPointsMap[monthlyOSProject.osProjectRef._id] || 0;
+    const osProject = this.osProjectPointsMap[monthlyOSProject.osProjectRef._id];
+    return (osProject && osProject.totalPoints) || 0;
   },
   getTotalDollarsPerPointForOSProject(monthlyOSProject) {
-      var points = this.getPointTotalForOSProject(monthlyOSProject);
-      var dollars = monthlyOSProject.getTotal();
+    const points = this.getPointTotalForOSProject(monthlyOSProject);
+    const dollars = monthlyOSProject.getTotal();
 
-      return points ? (dollars / points) : dollars;
+    return points ? (dollars / points) : dollars;
   },
 });
 
