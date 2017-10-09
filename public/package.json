@@ -18,30 +18,25 @@
     "deploy:ci": "firebase deploy --only hosting --token \"$FIREBASE_TOKEN\""
   },
   "main": "bitcentive/index.stache!done-autorender",
-  "files": [
-    "."
-  ],
-  "keywords": [
-    "Done",
-    "JS"
-  ],
-  "system": {
+  "files": ["."],
+  "keywords": ["Done", "JS"],
+  "steal": {
     "main": "bitcentive/index.stache!done-autorender",
-    "configDependencies": [
-      "node_modules/can-zone/register"
-    ],
-    "npmAlgorithm": "flat",
+    "configDependencies": ["node_modules/can-zone/register"],
     "envs": {
       "server-production": {
         "renderingBaseURL": "https://bitcentive-e208d.firebaseapp.com/"
       }
     },
-    "plugins": [
-      "steal-css",
-      "steal-less",
-      "steal-stache",
-      "done-component"
-    ]
+    "plugins": ["steal-css", "steal-less", "steal-stache", "done-component"],
+    "meta": {
+      "jquery": {
+        "exports": "jQuery"
+      },
+      "bootstrap/js/transition": {
+        "deps": ["jquery"]
+      }
+    }
   },
   "dependencies": {
     "auth-component": "^3.2.1",
@@ -65,7 +60,7 @@
     "can-view-autorender": "^3.0.1",
     "can-view-model": "^3.1.0",
     "can-zone": "^0.6.0",
-    "done-autorender": "^0.9.0-pre.1",
+    "done-autorender": "^1.3.0",
     "done-component": "^0.6.0-pre.2",
     "done-css": "^2.1.0-pre.0",
     "done-serve": "^0.3.0-pre.1",
@@ -98,7 +93,7 @@
     "generator-donejs": "^0.10.0-pre.4",
     "socket.io-client": "^1.7.0",
     "steal-qunit": "^1.0.0",
-    "steal-tools": "^1.0.1",
+    "steal-tools": "^1.9.1",
     "testee": "^0.7.0"
   }
 }
