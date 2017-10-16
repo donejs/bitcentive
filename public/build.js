@@ -5,5 +5,5 @@ stealTools.optimize({
   config: path.join(__dirname, "package.json!npm")
 }, {
 	bundleAssets: false,
-	minify: true
+	//minify: true
 });
