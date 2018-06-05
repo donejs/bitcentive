@@ -8,7 +8,7 @@ const MonthlyClientProject = DefineMap.extend( "MonthlyClientProject", { seal: f
   hours: "number",
   monthlyClientProjectsOSProjects: {
     Type: MonthlyClientProjectOsProjectList,
-    Value: MonthlyClientProjectOsProjectList
+    Default: MonthlyClientProjectOsProjectList
   }
 });
 

@@ -8,7 +8,7 @@ export const ViewModel = DefineMap.extend({
   // Passed properties
   contributionMonth: ContributionMonth,
   contributionMonthsPromise: {
-    value: function(){
+    default() {
       return ContributionMonth.getList({});
     }
   },
@@ -20,15 +20,15 @@ export const ViewModel = DefineMap.extend({
   // Stateful properties
   adding: {
     type: 'boolean',
-    value: false
+    default: false
   },
   newOSProjectName: 'string',
   selectedOSProjectId: {
     type: 'string',
-    value: null
+    default: null
   },
   allOSProjects: {
-    value: function() {
+    default() {
       return OSProject.getList();
     }
   },

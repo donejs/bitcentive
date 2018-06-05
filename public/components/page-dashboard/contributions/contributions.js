@@ -18,7 +18,7 @@ export const ViewModel = DefineMap.extend({
 
   adding: {
     type: 'boolean',
-    value: false
+    default: false
   },
 
   osProjects: {

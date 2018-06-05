@@ -5,7 +5,7 @@
 <can-import from="./contribution-month.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if contributionMonth}}
+{{#if(contributionMonth)}}
 	<div class='callout'>
 		<h2>Open Source Projects</h2>
 		<os-projects contributionMonth:from="contributionMonth"/>

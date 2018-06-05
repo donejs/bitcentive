@@ -1,7 +1,7 @@
 <can-import from="./os-projects.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if contributionMonth.monthlyOSProjects.length}}
+{{#if(contributionMonth.monthlyOSProjects.length)}}
 	<table class='table'>
 		<thead>
 			<tr>
@@ -15,8 +15,8 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#each contributionMonth.sortedMonthlyOSProjects as monthlyOSProject}}
-			{{#if osProjectRef.value}}
+		{{#each(contributionMonth.sortedMonthlyOSProjects monthlyOSProject=value)}}
+			{{#if(osProjectRef.value)}}
 				<tr>
 					<td class="name-col">{{monthlyOSProject.osProjectRef.value.name}}</td>
 					<td>
@@ -44,7 +44,7 @@
 						{{formatDollarAmount(getTotalDollarsPerPointForOSProject(monthlyOSProject))}}
 					</td>
 					<td>
-						{{#if isAdmin()}}
+						{{#if(isAdmin())}}
 							<button type="button" class="btn btn-danger btn-xs"
 									on:click="monthlyOSProject.remove()">
 								<span class="glyphicon glyphicon-remove"/>
@@ -58,22 +58,22 @@
 	</table>
 {{/if}}
 
-{{#if isAdmin()}}
-	{{#if adding}}
+{{#if(isAdmin())}}
+	{{#if(adding)}}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Project</div>
 			<div class="panel-body">
-				<form on:submit="addNewMonthlyOSProject(%event)" id="new-os-project">
+				<form on:submit="addNewMonthlyOSProject(scope.event)" id="new-os-project">
 					<div class="row">
 						<div class="col-xs-6">
-						{{#if allOSProjects.isPending}}
+						{{#if(allOSProjects.isPending)}}
 							<p>Loading...</p>
 						{{else}}
 							<label>Select a project: </label>
 							<select value:bind="string-to-any(~selectedOSProjectId)" class="form-control">
 								<option value="" disabled selected hidden>Select Project...</option>
-								{{#each allOSProjects.value}}
-									{{^if contributionMonth.monthlyOSProjects.has(.)}}
+								{{#each(allOSProjects.value)}}
+									{{^if(contributionMonth.monthlyOSProjects.has(.))}}
 								<option value="{{_id}}">{{name}}</option>
 									{{/if}}
 								{{/each}}
@@ -81,7 +81,7 @@
 							</select>
 						{{/if}}
 						</div>
-					{{#if creatingNewOSProject}}
+					{{#if(creatingNewOSProject)}}
 						<div class="col-xs-6">
 							<label>New project name:</label>
 							<input type="text"

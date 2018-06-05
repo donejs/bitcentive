@@ -1,6 +1,6 @@
-<can-import from='./alerts.less'/>
+<can-import from="~/components/ui/alerts/alerts.less"/>
 <div class="alert-container">
-	{{#each alerts}}
+	{{#each(alerts)}}
 	<div class="alert alert-dismissable alert-{{kind}}">
 	    <button type="button" class="close" on:click="removeAlert(.)">
 	    	<span aria-hidden="true">&times;</span>

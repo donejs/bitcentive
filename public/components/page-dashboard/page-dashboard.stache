@@ -5,7 +5,7 @@
 
 <div class="container">
 	<bit-select-contribution-month selectedContributionMonthId:bind="contributionMonthId" isAdmin:from="isAdmin()"/>
-	{{#if contributionMonthId}}
+	{{#if(contributionMonthId)}}
 		<bit-contribution-month contributionMonthId:bind="contributionMonthId"/>
 	{{/if}}
 </div>

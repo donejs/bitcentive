@@ -1,7 +1,7 @@
 <script type="text/stache" can-autorender id="view">
 	<can-import from="bitcentive/components/ui/model-edit-property/" />
 	<ul>
-		{{#each records as record}}
+		{{#each(records record=value)}}
 			<li><model-edit-property model:from="record" property="name" viewOnly:from="record.viewOnly" /></li>
 		{{/each}}
 	</ul>

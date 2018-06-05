@@ -10,24 +10,24 @@
     </tr>
   </thead>
   <tbody>
-  {{#each contributors as contributor}}
+  {{#each(contributors, contributor=value)}}
     <tr>
       <td><model-edit-property model:from="contributor" property="name" /></td>
       <td><model-edit-property model:from="contributor" property="email" /></td>
       <td>
-        <input type="checkbox" checked:from="active" on:change="setActive(contributor, %element.checked)"{{#if isSaving}} disabled{{/if}} />
+        <input type="checkbox" checked:from="active" on:change="setActive(contributor, scope.element.checked)"{{#if(isSaving)}} disabled{{/if}} />
       </td>
     </tr>
   {{/each}}
   </tbody>
 </table>
 
-{{#if isAddingContributor}}
+{{#if(isAddingContributor)}}
 <div class="panel panel-default">
     <div class="panel-heading">Add Contributor</div>
     <div class="panel-body">
-      <form on:submit="addContributor(%event)" id="new-contributor">
-        {{#if newContributorError}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
+      <form on:submit="addContributor(scope.event)" id="new-contributor">
+        {{#if(newContributorError)}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
         <div class="row">
           <div class="col-xs-5">
             <label>Name:</label>

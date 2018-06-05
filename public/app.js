@@ -72,10 +72,10 @@ const AppViewModel = DefineMap.extend({
 	 * The `title` attribute is used in index.stache as the HTML title.
 	 */
 	title: {
-		value: 'Bitcentive'
+		default: 'Bitcentive'
 	}
 });
 
-route('{page}', {page: 'home'});
+route.register('{page}', {page: 'home'});
 
 export default AppViewModel;

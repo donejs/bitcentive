@@ -1,7 +1,7 @@
 <can-import from="./contributions.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if contributionMonth.monthlyContributions.length}}
+{{#if(contributionMonth.monthlyContributions.length)}}
 	<table class='table'>
 		<thead>
 			<tr>
@@ -13,7 +13,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#each contributionMonth.monthlyContributions as monthlyContribution}}
+		{{#each(contributionMonth.monthlyContributions monthlyContribution=value)}}
 			<tr>
 				<td>
 					{{monthlyContribution.contributorRef.value.name}}
@@ -35,9 +35,9 @@
 						saveModel:from="contributionMonth" />
 				</td>
 				<td>
-					{{#if isAdmin()}}
+					{{#if(isAdmin())}}
 						<button type="button" class="btn btn-danger btn-xs"
-								on:click="removeContribution(%event, monthlyContribution)">
+								on:click="removeContribution(scope.event, monthlyContribution)">
 							<span class="glyphicon glyphicon-remove"/>
 						</button>
 					{{/if}}
@@ -48,8 +48,8 @@
 	</table>
 {{/if}}
 
-{{#if isAdmin()}}
-	{{#if adding}}
+{{#if(isAdmin())}}
+	{{#if(adding)}}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contribution</div>
 			<div class="panel-body">
@@ -58,7 +58,7 @@
 						<div class="col-xs-6">
 							<label>Contributor: </label>
 							<select value:bind="selectedContributorId" class="form-control">
-							{{#each contributionMonth.sortedMonthlyContributors}}
+							{{#each(contributionMonth.sortedMonthlyContributors)}}
 								<option value="{{contributorRef.value._id}}">{{contributorRef.value.name}}</option>
 							{{/each}}
 							</select>
@@ -67,7 +67,7 @@
 						<div class="col-xs-6">
 							<label>Open Source Project: </label>
 							<select value:bind="selectedOSProjectId" class="form-control">
-							{{#each contributionMonth.sortedMonthlyOSProjects}}
+							{{#each(contributionMonth.sortedMonthlyOSProjects)}}
 								<option value="{{osProjectRef.value._id}}">{{osProjectRef.value.name}}</option>
 							{{/each}}
 							</select>

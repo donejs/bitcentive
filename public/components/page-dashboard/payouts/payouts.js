@@ -17,7 +17,7 @@ export const ViewModel = DefineMap.extend({
     return this.contributionMonth && moment(this.contributionMonth.date);
   },
   contributionMonthsPromise: {
-		value() {
+		default() {
 			return ContributionMonth.getList({});
 		}
   },
@@ -118,7 +118,7 @@ export const ViewModel = DefineMap.extend({
 
   adding: {
     type: 'boolean',
-    value: false
+    default: false
   },
   newContributorName: 'string',
   newContributorEmail: 'string',
@@ -126,7 +126,7 @@ export const ViewModel = DefineMap.extend({
   newContributorError: 'string',
   selectedContributorId: {
     type: 'string',
-    value: null
+    default: null
   },
 
   // Derived properties

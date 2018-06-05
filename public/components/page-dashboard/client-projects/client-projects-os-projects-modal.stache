@@ -2,7 +2,7 @@
 
 <div class="modal fade" id="os-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog valign-center" role="document">
-		{{#if selectedClientProject}}
+		{{#if(selectedClientProject)}}
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -12,7 +12,7 @@
 			</div>
 			<div class="modal-body">
 				<ul class="os-project-list">
-				{{#each contributionMonth.monthlyOSProjects as monthlyOSProject}}
+				{{#each(contributionMonth.monthlyOSProjects, monthlyOSProject=value)}}
 					<li>
 						<input id="os_project_{{osProjectRef._id}}"
 							 type="checkbox"
@@ -21,7 +21,7 @@
 							 on:click="toggleUseProject(selectedClientProject.monthlyClientProjectsOSProjects, monthlyOSProject)"
 							 disabled:from="or(contributionMonth.isSaving(), notAdmin())"
 						/>
-						<label for="os_project_{{osProjectRef._id}}" {{#if commissioned}} class="commissioned" {{/if}}>
+						<label for="os_project_{{osProjectRef._id}}" {{#if(commissioned)}} class="commissioned" {{/if}}>
 							{{osProjectRef.value.name}}
 						</label>
 					</li>

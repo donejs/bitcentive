@@ -3,7 +3,6 @@
   "port": 3030,
   "mongodb": "mongodb://localhost:27017/bitcentive",
   "public": "../public/",
-  "main": "development.html",
   "auth": {
     "cookie": {
       "enabled": true,

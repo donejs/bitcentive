@@ -16,7 +16,7 @@ var User = DefineMap.extend("User", {
 	 */
 	isAdmin: {
 		type: "boolean",
-		value: false
+		default: false
 	},
 	/**
 	 * @property {Any} github

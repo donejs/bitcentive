@@ -1,19 +1,16 @@
 <can-import from="./model-edit-property.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if viewOnly}}
-
+{{#if(viewOnly)}}
 	<span>{{propertyValue}}</span>
-
 {{else}}
-
-	{{#if isEditing}}
+	{{#if(isEditing)}}
 		<input class="form-control"
 			type="{{type}}"
 			value:from="propertyValue"
 		 	disabled:from="isDisabled"
-			on:enter="commitValue(%element.value)"
-			on:keydown="cancelEdit(%event)"
+			on:enter="commitValue(scope.element.value)"
+			on:keydown="cancelEdit(scope.event)"
 		/>
 	{{else}}
 		<a href="javascript://" on:click="makeEditable()" title="Edit" >{{propertyValue}}</a>

@@ -45,13 +45,13 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	monthlyContributions: MonthlyContribution.List,
 	monthlyContributors: MonthlyContributor.List,
 	startRate: {
-		value: 2,
+		default: 2,
 		set(value) {
 			return value == null ? 2 : value;
 		}
 	},
 	endRate: {
-		value: 4,
+		default: 4,
 		set(value) {
 			return value == null ? 4: value;
 		}
@@ -318,7 +318,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 						const monthsAgo = (today - contributionMonth.date.getTime()) / oneMonth;
 						const decayFactor = Math.floor(monthsAgo / monthsUntilDecay);
 						let points = monthlyContribution.points;
-						
+
 						if (decayFactor > 0){
 							points = points / Math.pow(2, decayFactor);
 							if(points < minimumPoints){
@@ -364,7 +364,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					const points = contributorData.points;
 					const totalPoints = contributorsMap[projectRef].totalPoints;
 					const totalAmountForOSProject = contributionMonth.calculations.osProjects[projectRef];
-		
+
 					payouts[projectRef][contributorRef] = (points / totalPoints) * totalAmountForOSProject;
 				}
 			}
@@ -372,7 +372,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		});
 
 		const payouts = cachedOSProjectPayouts();
-		
+
 		return payouts[monthlyOSProject.osProjectRef._id] && payouts[monthlyOSProject.osProjectRef._id][contributor.contributorRef._id] || 0;
 	},
 	getTotalForAllPayoutsForContributor(contributorRef, contributionMonth) {
@@ -385,12 +385,12 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					if (totals[contributor] === undefined) {
 						totals[contributor] = 0;
 					}
-	
+
 					const contributorData = projectContributors[contributor];
 					const points = contributorData.points;
 					const totalPoints = contributorsMap[osProjectID].totalPoints;
 					const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
-	
+
 					// TODO: figure out what to do with `osProjectContributionsMap` if an `OSProject` gets removed from a month:
 					// since `osProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
 					// which will cause NaN for total. For now just ignore undefined for calculation:
@@ -407,7 +407,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth) {
 		const cachedOwershipPercentages = memoize(this, 'ownershipPercentageForContributor', [contributionMonth], function(contributionMonth){
 			const percentages = {};
-			
+
 			const contributorsMap = this.osProjectContributionsMap(contributionMonth);
 
 			for(const projectRef in contributorsMap){
@@ -425,7 +425,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					percentages[projectRef][contributorRef] = points / totalPoints;
 				}
 			}
-	
+
 			return percentages;
 		});
 

@@ -1,5 +1,5 @@
-<can-import from="can-stache/helpers/route" />
-<can-import from="./main-nav.less!" />
+<can-import from="can-stache-route-helpers" />
+<can-import from="~/components/main-nav/main-nav.less" />
 <can-import from="~/lib/stache-helpers/" />
 
 <nav class="navbar navbar-default navbar-static-top">
@@ -18,9 +18,9 @@
 
 		<div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
 			<ul class="nav navbar-nav">
-				{{#if session}}
+				{{#if(session)}}
 					<li {{#routeCurrent page="dashboard"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page='dashboard'}}" class="">Dashboard</a></li>
-					{{#if isAdmin()}}
+					{{#if(isAdmin())}}
 						<li {{#routeCurrent page="contributors"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="contributors"}}">Contributors</a></li>
 						<li {{#routeCurrent page="users"}}class="active"{{/routeCurrent}}><a href="{{routeUrl page="users"}}">Users</a></li>
 					{{/if}}
@@ -29,7 +29,7 @@
 				{{/if}}
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				{{#if session}}
+				{{#if(session)}}
 					<li><a href="javascript://" on:click="session.destroy()">Logout</a></li>
 				{{/if}}
 			</ul>
