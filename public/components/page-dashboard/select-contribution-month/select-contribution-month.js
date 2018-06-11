@@ -5,64 +5,88 @@ import view from './select-contribution-month.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 
 export const ViewModel = DefineMap.extend({
-  selectedContributionMonthId: {
-    get: function(lastSet){
-      if(lastSet) {
-        return lastSet;
-      }
-      if(this.lastMonth) {
-        return this.lastMonth._id;
-      }
-    },
-    set: function(newVal, setVal) {
-      if(newVal === null) {
-        var last = this.lastMonth.serialize();
-        last.date = this.nextMonth;
-        last.monthlyContributions = [];
-        delete last._id;
-        new ContributionMonth(last).save((newContributionMonth) => {
-          setVal(newContributionMonth._id);
-        });
 
-      } else {
-        setVal(newVal);
-      }
-    }
-  },
+    // Stateful properties
 	isAdmin: {
 		type: 'boolean',
 		default: true
 	},
-  contributionMonthsPromise: {
-    default() {
-      return ContributionMonth.getList({ $sort: { date: 1 } });
-    }
-  },
+    contributionMonthsPromise: {
+		default () {
+			return ContributionMonth.getList({
+				$sort: {
+					date: 1
+				}
+			});
+		}
+	},
 
-  contributionMonths: {
-    get: function(initial, resolve){
-      this.contributionMonthsPromise.then(resolve);
-    }
-  },
-  get lastMonth() {
-    if(this.contributionMonths && this.contributionMonths.length) {
-      return this.contributionMonths[this.contributionMonths.length - 1];
-    } else {
-      return new ContributionMonth({
-        monthlyClientProjects: [],
-        monthlyOSProjects:[],
-        monthlyContributions: [],
-        date: moment.utc().add(-1,'months').startOf('month').toDate()
-      });
-    }
-  },
-  get nextMonth() {
-		return moment.utc( this.lastMonth.date ).add(1, 'months').startOf('month').toDate();
-  }
+    // stateful and derived properties
+	selectedContributionMonthId: {
+        value({resolve, listenTo,lastSet}){
+            listenTo("lastMonth", function(ev, lastMonth) {
+                if (this.lastMonth) {
+        			resolve( this.lastMonth._id);
+        		}
+            });
+            listenTo(lastSet, resolve);
+        }
+    },
+
+    // Derived properties
+	contributionMonths: {
+		get: function(initial, resolve) {
+			this.contributionMonthsPromise.then(resolve);
+		}
+	},
+	get lastMonth() {
+        console.log("calculating lastMonth", this.contributionMonths && this.contributionMonths.length);
+		if (this.contributionMonths && this.contributionMonths.length) {
+			return this.contributionMonths[this.contributionMonths.length - 1];
+		} else {
+			return new ContributionMonth({
+				monthlyClientProjects: [],
+				monthlyOSProjects: [],
+				monthlyContributions: [],
+				date: moment.utc().add(-1, 'months').startOf('month').toDate()
+			});
+		}
+	},
+	get nextMonth() {
+		return moment.utc(this.lastMonth.date).add(1, 'months').startOf('month').toDate();
+	},
+
+    // side effects
+	connectedCallback() {
+		// side effectually listen to when selectedContributionMonthId is set to `null` or is null
+		// after we have the contribution months
+		this.listenTo("contributionMonths", (ev, contributionMonths) => {
+			this.stopListening("selectedContributionMonthId")
+			this.listenTo("selectedContributionMonthId", (ev, selectedContributionMonthId) => {
+				if (selectedContributionMonthId == null) {
+					var last = this.lastMonth.serialize();
+					last.date = this.nextMonth;
+					last.monthlyContributions = [];
+					delete last._id;
+					new ContributionMonth(last).save();
+				}
+			});
+
+			if (this.selectedContributionMonthId == null) {
+				// Creating a contribution for this month.
+				new ContributionMonth({
+					monthlyClientProjects: [],
+					monthlyOSProjects: [],
+					monthlyContributions: [],
+					date: moment.utc().add(-1, 'months').startOf('month').toDate()
+				}).save();
+			}
+		});
+	}
 });
 
 export default Component.extend({
-  tag: 'bit-select-contribution-month',
-  ViewModel: ViewModel,
-  view
+	tag: 'bit-select-contribution-month',
+	ViewModel: ViewModel,
+	view
 });

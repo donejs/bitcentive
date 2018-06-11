@@ -12,11 +12,7 @@ export const ViewModel = DefineMap.extend({
       return ContributionMonth.getList({});
     }
   },
-  contributionMonths: {
-    get: function(lastSet, resolve){
-      this.contributionMonthsPromise.then(resolve);
-    }
-  },
+
   // Stateful properties
   adding: {
     type: 'boolean',
@@ -34,6 +30,11 @@ export const ViewModel = DefineMap.extend({
   },
 
   // Derived properties
+  contributionMonths: {
+    get: function(lastSet, resolve){
+      this.contributionMonthsPromise.then(resolve);
+    }
+  },
   creatingNewOSProject: {
     get: function() {
       return this.selectedOSProjectId === null;

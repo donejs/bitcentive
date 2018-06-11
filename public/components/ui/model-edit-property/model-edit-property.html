@@ -1,9 +1,9 @@
 <script type="text/stache" can-autorender id="view">
 	<can-import from="bitcentive/components/ui/model-edit-property/" />
 	<ul>
-		{{#each(records record=value)}}
+		{{# each(records,record=value) }}
 			<li><model-edit-property model:from="record" property="name" viewOnly:from="record.viewOnly" /></li>
-		{{/each}}
+		{{/ each }}
 	</ul>
 </script>
 <script src="../../../node_modules/steal/steal.js" main="can-view-autorender">

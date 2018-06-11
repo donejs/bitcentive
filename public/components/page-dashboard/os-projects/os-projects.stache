@@ -1,7 +1,7 @@
 <can-import from="./os-projects.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if(contributionMonth.monthlyOSProjects.length)}}
+{{# if(contributionMonth.monthlyOSProjects.length) }}
 	<table class='table'>
 		<thead>
 			<tr>
@@ -15,10 +15,10 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#each(contributionMonth.sortedMonthlyOSProjects monthlyOSProject=value)}}
-			{{#if(osProjectRef.value)}}
+		{{# each(contributionMonth.sortedMonthlyOSProjects, monthlyOSProject=value) }}
+			{{# if(osProjectRef.value) }}
 				<tr>
-					<td class="name-col">{{monthlyOSProject.osProjectRef.value.name}}</td>
+					<td class="name-col">{{ monthlyOSProject.osProjectRef.value.name }}</td>
 					<td>
 						<input type="number"
 							class="form-control significance-input"
@@ -35,53 +35,53 @@
 						/>
 					</td>
 					<td class="text-right">
-						{{formatDollarAmount(monthlyOSProject.getTotal())}}
+						{{ formatDollarAmount(monthlyOSProject.getTotal()) }}
 					</td>
 					<td class="text-right">
-						{{getPointTotalForOSProject(monthlyOSProject)}}
+						{{ ../getPointTotalForOSProject(monthlyOSProject) }}
 					</td>
 					<td class="text-right">
-						{{formatDollarAmount(getTotalDollarsPerPointForOSProject(monthlyOSProject))}}
+						{{ formatDollarAmount( ../getTotalDollarsPerPointForOSProject(monthlyOSProject) ) }}
 					</td>
 					<td>
-						{{#if(isAdmin())}}
+						{{# if(isAdmin()) }}
 							<button type="button" class="btn btn-danger btn-xs"
 									on:click="monthlyOSProject.remove()">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
-						{{/if}}
+						{{/ if }}
 					</td>
 				</tr>
-			{{/if}}
-		{{/each}}
+			{{/ if }}
+		{{/ each }}
 		</tbody>
 	</table>
-{{/if}}
+{{/ if }}
 
-{{#if(isAdmin())}}
-	{{#if(adding)}}
+{{# if(isAdmin()) }}
+	{{# if(adding) }}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Project</div>
 			<div class="panel-body">
 				<form on:submit="addNewMonthlyOSProject(scope.event)" id="new-os-project">
 					<div class="row">
 						<div class="col-xs-6">
-						{{#if(allOSProjects.isPending)}}
+						{{# if(allOSProjects.isPending) }}
 							<p>Loading...</p>
-						{{else}}
+						{{ else }}
 							<label>Select a project: </label>
-							<select value:bind="string-to-any(~selectedOSProjectId)" class="form-control">
+							<select value:bind="string-to-any(selectedOSProjectId)" class="form-control">
 								<option value="" disabled selected hidden>Select Project...</option>
-								{{#each(allOSProjects.value)}}
-									{{^if(contributionMonth.monthlyOSProjects.has(.))}}
-								<option value="{{_id}}">{{name}}</option>
-									{{/if}}
-								{{/each}}
+								{{# each(allOSProjects.value) }}
+									{{^ if(contributionMonth.monthlyOSProjects.has(.)) }}
+										<option value="{{ _id }}">{{ name }}</option>
+									{{/ if }}
+								{{/ each }}
 								<option value="null">Create New Project</option>
 							</select>
-						{{/if}}
+						{{/ if }}
 						</div>
-					{{#if(creatingNewOSProject)}}
+					{{# if(creatingNewOSProject) }}
 						<div class="col-xs-6">
 							<label>New project name:</label>
 							<input type="text"
@@ -89,14 +89,14 @@
 								placeholder="New Project Name..."
 								value:bind="newOSProjectName"/>
 						</div>
-					{{/if}}
+					{{/ if }}
 					</div>
 				</form>
 				<button class="btn btn-primary" type="submit" form="new-os-project" value="Submit">Add Project</button>
 				<button class="btn btn-default" on:click="toggleAddNewMonthlyOSProject()">Cancel</button>
 			</div>
 		</div>
-	{{else}}
+	{{ else }}
 		<a href="javascript://" on:click="toggleAddNewMonthlyOSProject()">Add Project</a>
-	{{/if}}
-{{/if}}
+	{{/ if }}
+{{/ if }}

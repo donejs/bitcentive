@@ -2,15 +2,15 @@
 <can-import from="~/lib/stache-helpers/" />
 <can-import from="can-stache-converters" />
 
-{{#if(contributionMonths)}}
-	<select value:bind="string-to-any(~selectedContributionMonthId)" class="form-control">
-		{{#each(contributionMonths)}}
-			<option value="{{_id}}">{{prettyDate(date)}}</option>
-		{{/each}}
-		{{#if(isAdmin)}}
-			<option value="null">+ Create {{prettyDate(nextMonth)}}</option>
-		{{/if}}
+{{# if(contributionMonths) }}
+	<select value:bind="string-to-any(selectedContributionMonthId)" class="form-control">
+		{{# each(contributionMonths) }}
+			<option value="{{ _id }}">{{ prettyDate(date) }}</option>
+		{{/ each }}
+		{{# if(isAdmin) }}
+			<option value="null">+ Create {{ prettyDate(nextMonth) }}</option>
+		{{/ if }}
 	</select>
-{{else}}
+{{ else }}
 	Loading...
-{{/if}}
+{{/ if }}

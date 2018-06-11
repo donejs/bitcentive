@@ -1,98 +1,98 @@
 <can-import from="./payouts.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if(contributionMonthsPromise.isResolved)}}
+{{# if(contributionMonthsPromise.isResolved) }}
 	<div class="table-scroller">
 		<table class='table'>
 			<thead>
 				<tr>
 					<th>&nbsp;</th>
 					<th class="total"><span>Total</span></th>
-					{{#each(contributionMonth.sortedMonthlyOSProjects)}}
-					<th colspan="2">{{osProjectRef.value.name}}</th>
-					{{/each}}
-					{{#if(isAdmin())}}
+					{{# each(contributionMonth.sortedMonthlyOSProjects) }}
+					<th colspan="2">{{ osProjectRef.value.name }}</th>
+					{{/ each }}
+					{{# if(isAdmin()) }}
 					<th></th>
-					{{/if}}
+					{{/ if }}
 				</tr>
 			</thead>
 			<tbody>
-				{{#each(contributionMonth.sortedMonthlyContributors)}}
+				{{# each(contributionMonth.sortedMonthlyContributors) }}
 					<tr>
-						<th>{{contributorRef.value.name}}</th>
+						<th>{{ contributorRef.value.name }}</th>
 						<td class="total">
-							<span>{{formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, contributionMonth))}}</span>
+							<span>{{ formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, contributionMonth)) }}</span>
 						</td>
-						{{#each(contributionMonth.sortedMonthlyOSProjects)}}
-							{{#payoutFor(contributorRef, osProjectRef)}}
-								<td class="amountDollar">{{formatDollarAmount(total)}}</td>
-								<td class="amountPercent">{{formatPercentAmount(percent)}}</td>
-							{{/payoutFor}}
-						{{/each}}
-						{{#if(isAdmin())}}
+						{{# each(contributionMonth.sortedMonthlyOSProjects) }}
+							{{# payoutFor(contributorRef, osProjectRef) }}
+								<td class="amountDollar">{{ formatDollarAmount(total) }}</td>
+								<td class="amountPercent">{{ formatPercentAmount(percent) }}</td>
+							{{/ payoutFor }}
+						{{/ each }}
+						{{# if(isAdmin()) }}
 						<td>
 							<button type="button" class="btn btn-danger btn-xs"
 								on:click="removeContributor(scope.event, .)">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						</td>
-						{{/if}}
+						{{/ if }}
 					</tr>
-				{{/each}}
+				{{/ each }}
 			</tbody>
 			<tfoot>
 				<tr>
 					<th>&nbsp;</th>
 					<td class="total">
-						<span>{{formatDollarAmount(contributionMonth.totalPayouts)}}</span>
+						<span>{{ formatDollarAmount(contributionMonth.totalPayouts) }}</span>
 					</td>
-					{{#each(contributionMonth.sortedMonthlyOSProjects)}}
-						{{#payoutFor(null, osProjectRef)}}
-							<td class="amountDollar">{{formatDollarAmount(total)}}</td>
-							<td class="amountPercent">{{formatPercentAmount(percent)}}</td>
-						{{/payoutFor}}
-					{{/each}}
-					{{#if(isAdmin())}}
+					{{# each(contributionMonth.sortedMonthlyOSProjects) }}
+						{{# payoutFor(null, osProjectRef) }}
+							<td class="amountDollar">{{ formatDollarAmount(total) }}</td>
+							<td class="amountPercent">{{ formatPercentAmount(percent) }}</td>
+						{{/ payoutFor }}
+					{{/ each }}
+					{{# if(isAdmin()) }}
 					<td>
 						<button type="button" class="btn btn-danger btn-xs"
 							on:click="removeContributor(%event, .)">
 							<span class="glyphicon glyphicon-remove"/>
 						</button>
 					</td>
-					{{/if}}
+					{{/ if }}
 				</tr>
 			</tfoot>
 		</table>
 	</div>
-{{else}}
+{{ else }}
 	<h3>Warning: Requires contributionMonth data</h3>
-{{/if}}
+{{/ if }}
 
-{{#if(isAdmin())}}
-	{{#if(adding)}}
+{{# if(isAdmin()) }}
+	{{# if(adding) }}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contributor</div>
 			<div class="panel-body">
 				<form on:submit="addNewContributor(%event)" id="new-contributor">
 					<div class="row">
 						<div class="col-xs-12">
-						{{#if(otherContributors.isPending)}}
+						{{# if(otherContributors.isPending) }}
 							<p>Loading...</p>
-						{{else}}
+						{{ else }}
 							<select value:bind="string-to-any(~selectedContributorId)" class="form-control">
 								<option value="" disabled selected hidden>Select Contributor...</option>
-								{{#each(otherContributors.value)}}
-									{{^if contributionMonth.monthlyOSProjects.has(.)}}
-								<option value="{{_id}}">{{name}}</option>
-									{{/if}}
-								{{/each}}
+								{{# each(otherContributors.value) }}
+									{{^ if(contributionMonth.monthlyOSProjects.has(.)) }}
+										<option value="{{ _id }}">{{ name }}</option>
+									{{/ if }}
+								{{/ each }}
 								<option value="null">Create New Contributor</option>
 							</select>
-						{{/if}}
+						{{/ if }}
 						</div>
-					{{#if(creatingNewContributor)}}
+					{{# if(creatingNewContributor) }}
 						<div class="col-xs-12">
-							{{#if(newContributorError)}}<div class="alert alert-danger" role="alert">{{newContributorError}}</div>{{/if}}
+							{{# if(newContributorError) }}<div class="alert alert-danger" role="alert">{{ newContributorError }}</div>{{/ if }}
 							<div class="row">
 								<div class="col-xs-5">
 									<label>Name:</label>
@@ -125,14 +125,14 @@
 								</div>
 							</div>
 						</div>
-					{{/if}}
+					{{/ if }}
 					</div>
 				</form>
 				<button class="btn btn-primary" type="submit" form="new-contributor" value="Submit">Add Contributor</button>
 				<button class="btn btn-default" on:click="toggleAddNewContributor()">Cancel</button>
 			</div>
 		</div>
-	{{else}}
+	{{ else }}
 		<a href="javascript://" on:click="toggleAddNewContributor()">Add Contributor</a>
-	{{/if}}
-{{/if}}
+	{{/ if }}
+{{/ if }}

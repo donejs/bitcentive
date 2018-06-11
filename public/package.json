@@ -46,9 +46,10 @@
     "bootstrap": "^3.3.7",
     "can-cid": "^1.0.0",
     "can-component": "^4.1.0",
-    "can-compute-memoize": "github:canjs/can-compute-memoize#can-4",
+    "can-compute-memoize": "^2.0.0",
     "can-connect": "^2.0.4",
     "can-connect-feathers": "^4.1.0",
+    "can-debug": "^1.0.4",
     "can-define": "^2.3.2",
     "can-define-stream-kefir": "^1.0.0",
     "can-event-queue": "^1.0.1",
@@ -83,7 +84,7 @@
     "steal-css": "^1.0.0",
     "steal-less": "^1.0.1",
     "steal-socket.io": "^4.0.8",
-    "steal-stache": "github:canjs/steal-stache#fix-relative-imports",
+    "steal-stache": "^4.1.1",
     "superagent": "^2.3.0"
   },
   "devDependencies": {

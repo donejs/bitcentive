@@ -6,9 +6,9 @@ import Session from 'bitcentive/models/session';
 // import 'bitcentive/models/fixtures/';
 import zone from 'can-zone';
 
-// viewmodel debugging
-import viewModel from 'can-view-model';
-window.viewModel = viewModel;
+//!steal-remove-start
+import "can-debug";
+//!steal-remove-end
 
 var pages = {
 	home: 'public',
