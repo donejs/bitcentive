@@ -280,7 +280,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	},
 	getTotal: function(monthlyClientProject) {
 		if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
-				return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].totalAmount;
+				return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].totalAmount || 0;
 		}
 		return 0;
 

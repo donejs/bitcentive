@@ -9,7 +9,7 @@
 					<th>&nbsp;</th>
 					<th class="total"><span>Total</span></th>
 					{{# each(contributionMonth.sortedMonthlyOSProjects) }}
-					<th colspan="2">{{ osProjectRef.value.name }}</th>
+						<th colspan="2">{{ osProjectRef.value.name }}</th>
 					{{/ each }}
 					{{# if(isAdmin()) }}
 					<th></th>
@@ -21,13 +21,13 @@
 					<tr>
 						<th>{{ contributorRef.value.name }}</th>
 						<td class="total">
-							<span>{{ formatDollarAmount(contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, contributionMonth)) }}</span>
+							<span>{{ formatDollarAmount(scope.vm.contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, scope.vm.contributionMonth)) }}</span>
 						</td>
-						{{# each(contributionMonth.sortedMonthlyOSProjects) }}
-							{{# payoutFor(contributorRef, osProjectRef) }}
+						{{# each(scope.vm.contributionMonth.sortedMonthlyOSProjects) }}
+							{{# scope.vm.payoutFor(../contributorRef, osProjectRef) }}
 								<td class="amountDollar">{{ formatDollarAmount(total) }}</td>
 								<td class="amountPercent">{{ formatPercentAmount(percent) }}</td>
-							{{/ payoutFor }}
+							{{/ scope.vm.payoutFor }}
 						{{/ each }}
 						{{# if(isAdmin()) }}
 						<td>
@@ -47,10 +47,10 @@
 						<span>{{ formatDollarAmount(contributionMonth.totalPayouts) }}</span>
 					</td>
 					{{# each(contributionMonth.sortedMonthlyOSProjects) }}
-						{{# payoutFor(null, osProjectRef) }}
+						{{# scope.vm.payoutFor(null, osProjectRef) }}
 							<td class="amountDollar">{{ formatDollarAmount(total) }}</td>
 							<td class="amountPercent">{{ formatPercentAmount(percent) }}</td>
-						{{/ payoutFor }}
+						{{/ scope.vm.payoutFor }}
 					{{/ each }}
 					{{# if(isAdmin()) }}
 					<td>

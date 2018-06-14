@@ -53,8 +53,7 @@
 		</tbody>
 	</table>
 
-	<can-import from="./client-projects-os-projects-modal.stache" value:to="scope.vars.osProjectsModal" />
-	{{ >scope.vars.osProjectsModal }}
+
 {{/ if }}
 
 {{# if(isAdmin()) }}
