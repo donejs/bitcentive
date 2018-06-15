@@ -40,7 +40,6 @@ export const ViewModel = DefineMap.extend({
 		}
 	},
 	get lastMonth() {
-        console.log("calculating lastMonth", this.contributionMonths && this.contributionMonths.length);
 		if (this.contributionMonths && this.contributionMonths.length) {
 			return this.contributionMonths[this.contributionMonths.length - 1];
 		} else {
