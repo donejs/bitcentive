@@ -73,7 +73,7 @@
 							<select value:bind="string-to-any(selectedOSProjectId)" class="form-control">
 								<option value="" disabled selected hidden>Select Project...</option>
 								{{# each(allOSProjects.value) }}
-									{{^ if(contributionMonth.monthlyOSProjects.has(.)) }}
+									{{^ if(../contributionMonth.monthlyOSProjects.has(.)) }}
 										<option value="{{ _id }}">{{ name }}</option>
 									{{/ if }}
 								{{/ each }}

@@ -61,7 +61,7 @@ export const ViewModel = DefineMap.extend({
       });
     } else {
 	    return this.allOSProjects.then((projects) => {
-        projects.each((proj) => {
+        projects.forEach((proj) => {
           if (this.selectedOSProjectId === proj._id) {
             this.contributionMonth.addNewMonthlyOSProject(proj);
             this.toggleAddNewMonthlyOSProject();

@@ -8,6 +8,7 @@ import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../../lib/super-model';
 import feathersClient from '../feathers-client';
+import queues from "can-queues";
 
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
@@ -215,6 +216,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		return monthlyOSProject;
 	},
 	removeMonthlyOSProject( monthlyOSProject ) {
+		queues.batch.start();
 		this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
 		this.monthlyClientProjects.forEach( clientProject => {
 			let index = clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef);
@@ -222,6 +224,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 				clientProject.monthlyClientProjectsOSProjects.splice(index, 1);
 			}
 		});
+		queues.batch.stop();
 		this.save().catch(err => {
 			console.error("Failed saving the contributionMonth obj: ", err);
 		});
