@@ -21,7 +21,7 @@
 					<td>
 						<input type="number" class="form-control hours-input"
 							value:bind="monthlyClientProject.hours"
-							on:change="contributionMonth.save()"
+							on:change="../contributionMonth.save()"
 							disabled:from="or(../contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
@@ -42,7 +42,7 @@
 					</td>
 					<td>
 						{{# if(isAdmin()) }}
-							<button type="button" class="btn btn-danger btn-xs" on:click="deleteClientProject(monthlyClientProject)">
+							<button type="button" class="btn btn-danger btn-xs" on:click="../deleteClientProject(monthlyClientProject)">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						{{/ if }}
@@ -65,14 +65,14 @@
 				<form on:submit="addClient(scope.event, contributionMonth.monthlyClientProjects)" id="new-client">
 					<div class="row">
 						<div class="col-xs-6">
-						{{# if(projects.pending) }}
+						{{# if(projects.isPending) }}
 							<p>Loading...</p>
 						{{/ if }}
 						{{# if(projects.isResolved) }}
 							<label>Select a client: </label>
 							<select value:bind="selectedClientId" class="form-control">
 							{{# each(projects.value) }}
-							{{^ if(contributionMonth.monthlyClientProjects.has(.)) }}
+							{{^ if(scope.vm.contributionMonth.monthlyClientProjects.has(.)) }}
 								<option value="{{ _id }}">{{ name }}</option>
 							{{/ if }}
 							{{/ each }}

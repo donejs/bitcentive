@@ -55,7 +55,7 @@
 					{{# if(isAdmin()) }}
 					<td>
 						<button type="button" class="btn btn-danger btn-xs"
-							on:click="removeContributor(%event, .)">
+							on:click="removeContributor(scope.event, .)">
 							<span class="glyphicon glyphicon-remove"/>
 						</button>
 					</td>
@@ -73,7 +73,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contributor</div>
 			<div class="panel-body">
-				<form on:submit="addNewContributor(%event)" id="new-contributor">
+				<form on:submit="addNewContributor(scope.event)" id="new-contributor">
 					<div class="row">
 						<div class="col-xs-12">
 						{{# if(otherContributors.isPending) }}

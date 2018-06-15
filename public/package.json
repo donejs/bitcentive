@@ -52,6 +52,7 @@
     "can-debug": "^1.0.4",
     "can-define": "^2.3.2",
     "can-define-stream-kefir": "^1.0.0",
+    "can-event-dom-enter": "^2.1.2",
     "can-event-queue": "^1.0.1",
     "can-observation": "^4.0.1",
     "can-queues": "^1.1.0",

@@ -311,6 +311,9 @@ const oneMonth = 1000 * 60 * 60 * 24 * 30;
 ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
 	osProjectContributionsMap(currentContributionMonth) {
+		// TODO: see how many times this runs after 5.0
+		//console.log("calculations ------- \n");
+		//can.queues.logStack();
 		var osProjectContributionsMap = {};
 		const today = new Date().getTime();
 		this.forEach(contributionMonth => {

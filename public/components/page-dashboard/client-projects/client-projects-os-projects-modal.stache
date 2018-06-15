@@ -18,14 +18,14 @@
 							 type="checkbox"
 							 checked:from="../selectedClientProject.monthlyClientProjectsOSProjects.has(monthlyOSProject)"
 							 value:from="monthlyOSProject.osProjectRef.value.name"
-							 on:click="toggleUseProject(selectedClientProject.monthlyClientProjectsOSProjects, monthlyOSProject)"
+							 on:click="../toggleUseProject(../selectedClientProject.monthlyClientProjectsOSProjects, monthlyOSProject)"
 							 disabled:from="or(../contributionMonth.isSaving(), notAdmin())"
 						/>
 						<label for="os_project_{{ osProjectRef._id }}" {{# if(commissioned) }} class="commissioned" {{/ if }}>
 							{{ osProjectRef.value.name }}
 						</label>
 					</li>
-					{{/ each }}
+				{{/ each }}
 				</ul>
 			</div>
 		</div>

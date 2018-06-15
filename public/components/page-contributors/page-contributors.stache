@@ -1,7 +1,7 @@
 <can-import from="./page-contributors.less" />
+<can-import from="./contributors/"/>
 
 <div class="container">
 	<h2>Contributors</h2>
-	<can-import from="./contributors/"/>
 	<bit-contributors contributors:bind="contributors.value" />
 </div>

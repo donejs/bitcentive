@@ -29,15 +29,15 @@
 				</td>
 				<td>
 					<model-edit-property model:from="monthlyContribution"
-						property="'points'"
-						type="'number'"
+						property:from="'points'"
+						type:from="'number'"
 						viewOnly:from="notAdmin()"
 						saveModel:from="../contributionMonth" />
 				</td>
 				<td>
 					{{# if(isAdmin()) }}
 						<button type="button" class="btn btn-danger btn-xs"
-								on:click="removeContribution(scope.event, monthlyContribution)">
+								on:click="../removeContribution(scope.event, monthlyContribution)">
 							<span class="glyphicon glyphicon-remove"/>
 						</button>
 					{{/ if }}
@@ -53,7 +53,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contribution</div>
 			<div class="panel-body">
-				<form on:submit="addContribution(%event)" id="contributions-form">
+				<form on:submit="addContribution(scope.event)" id="contributions-form">
 					<div class="row">
 						<div class="col-xs-6">
 							<label>Contributor: </label>
@@ -94,10 +94,10 @@
 
 				<button
 					class="btn btn-default"
-					on:click="toggleAddNewContribution(%event)">Cancel</button>
+					on:click="toggleAddNewContribution(scope.event)">Cancel</button>
 			</div>
 		</div>
 	{{ else }}
-		<a href="javascript://" on:click="toggleAddNewContribution(%event)">Add Contribution</a>
+		<a href="javascript://" on:click="toggleAddNewContribution(scope.event)">Add Contribution</a>
 	{{/ if }}
 {{/ if }}

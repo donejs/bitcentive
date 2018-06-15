@@ -12,10 +12,10 @@
   <tbody>
   {{# each(contributors, contributor=value) }}
     <tr>
-      <td><model-edit-property model:from="contributor" property="name" /></td>
-      <td><model-edit-property model:from="contributor" property="email" /></td>
+      <td><model-edit-property model:from="contributor" property:from="'name'" /></td>
+      <td><model-edit-property model:from="contributor" property:From="'email'" /></td>
       <td>
-        <input type="checkbox" checked:from="active" on:change="setActive(contributor, scope.element.checked)"{{# if(isSaving) }} disabled{{/ if }} />
+        <input type="checkbox" checked:from="active" on:change="../setActive(contributor, scope.element.checked)"{{# if(isSaving()) }} disabled{{/ if }} />
       </td>
     </tr>
   {{/ each }}
