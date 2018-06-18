@@ -35,6 +35,7 @@ const ViewModel = DefineMap.extend({
         .merge(this.autoHideStream)
         .merge(this.stream('remove'))
         .scan((alerts, ev) => {
+            console.log("GOt event", ev.type);
           switch (ev.type) {
             case 'alert':
               return [ev, ...alerts.slice()];
@@ -54,7 +55,7 @@ const ViewModel = DefineMap.extend({
 });
 canDefineStreamKefir(ViewModel);
 
-export { ViewModel };
+export { ViewModel, hubStream };
 export default Component.extend({
   tag: 'bit-alerts',
   ViewModel,

@@ -33,7 +33,15 @@
     "envs": {
       "server-production": {
         "renderingBaseURL": "https://bitcentive-e208d.firebaseapp.com/"
+      },
+      "test": {
+        "map": {
+          "@fixture-socket-hook": "bitcentive/models/fixtures/fixture-socket-server"
+        }
       }
+    },
+    "map": {
+      "@fixture-socket-hook": "@empty"
     },
     "plugins": [
       "steal-css",
@@ -84,7 +92,7 @@
     "jwt-decode": "^2.1.0",
     "kefir": "^3.6.1",
     "moment": "^2.17.0",
-    "steal": "^1.0.4",
+    "steal": "^1.12.1",
     "steal-css": "^1.0.0",
     "steal-less": "^1.0.1",
     "steal-socket.io": "^4.0.8",
