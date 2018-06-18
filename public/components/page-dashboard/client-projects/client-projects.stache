@@ -1,7 +1,7 @@
 <can-import from='./client-projects.less'/>
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if contributionMonth.monthlyClientProjects.length}}
+{{# if(contributionMonth.monthlyClientProjects.length) }}
 	<table class="table">
 		<thead>
 			<tr>
@@ -14,73 +14,73 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#each contributionMonth.sortedMonthlyClientProjects as monthlyClientProject}}
-			{{#if monthlyClientProject.clientProjectRef.value}}
+		{{# each(contributionMonth.sortedMonthlyClientProjects, monthlyClientProject=value) }}
+			{{# if(monthlyClientProject.clientProjectRef.value) }}
 				<tr>
-					<td>{{monthlyClientProject.clientProjectRef.value.name}}</td>
+					<td>{{ monthlyClientProject.clientProjectRef.value.name }}</td>
 					<td>
 						<input type="number" class="form-control hours-input"
 							value:bind="monthlyClientProject.hours"
-							on:change="contributionMonth.save()"
-							disabled:from="or(contributionMonth.isSaving(), notAdmin())"
+							on:change="../contributionMonth.save()"
+							disabled:from="or(../contributionMonth.isSaving(), notAdmin())"
 						/>
 					</td>
 					<td class="os-projects-cell">
-						<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" on:click="setSelectedClientProject(monthlyClientProject)" >
+						<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#os-project-modal" on:click="../setSelectedClientProject(monthlyClientProject)" >
 							{{! Count of commissioned projects }}
-							{{contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject)}} / {{contributionMonth.monthlyOSProjects.commissioned.length}}
+							{{ scope.vm.contributionMonth.commissionedMonthlyOSProjectsCountFor(monthlyClientProject) }} / {{ scope.vm.contributionMonth.monthlyOSProjects.commissioned.length }}
 							+
 							{{! Count of uncommisioned projects }}
-							{{contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject)}}
+							{{ scope.vm.contributionMonth.uncommissionedMonthlyOSProjectsCountFor(monthlyClientProject) }}
 						</button>
 					</td>
 					<td>
-						 <span class="rate">${{contributionMonth.getRate(monthlyClientProject)}}</span>
+						 <span class="rate">${{ scope.vm.contributionMonth.getRate(monthlyClientProject) }}</span>
 					</td>
 					<td class="text-right">
-						<span class="total">${{contributionMonth.getTotal(monthlyClientProject).toFixed(2)}}</span>
+						<span class="total">${{ scope.vm.contributionMonth.getTotal(monthlyClientProject).toFixed(2) }}</span>
 					</td>
 					<td>
-						{{#if isAdmin()}}
-							<button type="button" class="btn btn-danger btn-xs" on:click="deleteClientProject(monthlyClientProject)">
+						{{# if(isAdmin()) }}
+							<button type="button" class="btn btn-danger btn-xs" on:click="../deleteClientProject(monthlyClientProject)">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
-						{{/if}}
+						{{/ if }}
 					</td>
 				</tr>
-			{{/if}}
-		{{/each}}
+			{{/ if }}
+		{{/ each }}
 		</tbody>
 	</table>
 
-	<can-import from="./client-projects-os-projects-modal.stache" @value:to="@*osProjectsModal" />
-	{{>*osProjectsModal}}
-{{/if}}
+	<can-import from="./client-projects-os-projects-modal.stache" value:to="scope.vars.osProjectsModal" />
+	{{ >scope.vars.osProjectsModal }}
+{{/ if }}
 
-{{#if isAdmin()}}
-	{{#if isAddingClients}}
+{{# if(isAdmin()) }}
+	{{# if(isAddingClients) }}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Client</div>
 			<div class="panel-body">
-				<form on:submit="addClient(%event, contributionMonth.monthlyClientProjects)" id="new-client">
+				<form on:submit="addClient(scope.event, contributionMonth.monthlyClientProjects)" id="new-client">
 					<div class="row">
 						<div class="col-xs-6">
-						{{#if projects.pending}}
+						{{# if(projects.isPending) }}
 							<p>Loading...</p>
-						{{/if}}
-						{{#if projects.isResolved}}
+						{{/ if }}
+						{{# if(projects.isResolved) }}
 							<label>Select a client: </label>
 							<select value:bind="selectedClientId" class="form-control">
-							{{#each projects.value}}
-							{{^if contributionMonth.monthlyClientProjects.has(.)}}
-								<option value="{{_id}}">{{name}}</option>
-							{{/if}}
-							{{/each}}
+							{{# each(projects.value) }}
+							{{^ if(scope.vm.contributionMonth.monthlyClientProjects.has(.)) }}
+								<option value="{{ _id }}">{{ name }}</option>
+							{{/ if }}
+							{{/ each }}
 								<option value="__new__">Add New Client</option>
 							</select>
-						{{/if}}
+						{{/ if }}
 						</div>
-					{{#if creatingNewClientProject}}
+					{{# if(creatingNewClientProject) }}
 						<div class="col-xs-6">
 							<label>New client name:</label>
 							<input type="text"
@@ -88,14 +88,14 @@
 										 placeholder="Client Name"
 										 value:bind="newClientName"/>
 						</div>
-					{{/if}}
+					{{/ if }}
 					</div>
 				</form>
 				<button class="btn btn-primary" type="submit" form="new-client" value="Submit">Add Client</button>
 				<button class="btn btn-default" on:click="toggleClientInput()">Cancel</button>
 			</div>
 		</div>
-	{{else}}
+	{{ else }}
 		<a href="javascript://" on:click="toggleClientInput()">Add Client</a>
-	{{/if}}
-{{/if}}
+	{{/ if }}
+{{/ if }}

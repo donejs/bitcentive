@@ -1,7 +1,8 @@
 import QUnit from 'steal-qunit';
 import stache from 'can-stache';
+import "./format-percent-amount";
 
-const formatPercentAmount = stache.getHelper('formatPercentAmount').fn;
+const formatPercentAmount = stache.getHelper('formatPercentAmount');
 
 QUnit.module('bitcentive/lib/stache-helpers/format-percent-amount');
 

@@ -1,9 +1,20 @@
 import QUnit from 'steal-qunit';
-import { ViewModel } from './alerts';
+import { ViewModel, hubStream } from './alerts';
 import hub from 'bitcentive/lib/event-hub';
 
+function hubStreamHandler(){
+
+}
+
 // ViewModel unit tests
-QUnit.module('bitcentive/components/ui/alerts');
+QUnit.module('bitcentive/components/ui/alerts',{
+	setup(){
+		hubStream.onValue(hubStreamHandler);
+	},
+	teardown(){
+		hubStream.offValue(hubStreamHandler);
+	}
+});
 
 QUnit.test('Hub alerts are added and removed', assert => {
 	const done = assert.async();

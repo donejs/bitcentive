@@ -1,7 +1,8 @@
 import QUnit from 'steal-qunit';
 import stache from 'can-stache';
+import "./format-dollar-amount";
 
-const formatDollarAmount = stache.getHelper('formatDollarAmount').fn;
+const formatDollarAmount = stache.getHelper('formatDollarAmount');
 
 QUnit.module('bitcentive/lib/stache-helpers/format-dollar-amount');
 

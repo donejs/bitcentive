@@ -11,27 +11,27 @@ export const ContributorsVM = DefineMap.extend({
   },
   isAddingContributor: {
     type: "boolean",
-    value: false
+    default: false
   },
   isSaving: {
     type: "boolean",
-    value: false
+    default: false
   },
   newContributorName: {
     type: "string",
-    value: "",
+    default: "",
   },
   newContributorEmail: {
     type: "string",
-    value: "",
+    default: "",
   },
   newContributorActive: {
     type: "boolean",
-    value: true,
+    default: true,
   },
   newContributorError: {
     type: "string",
-    value: "",
+    default: "",
   },
   // Methods
   resetNewContributorFields() {

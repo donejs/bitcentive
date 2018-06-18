@@ -11,6 +11,9 @@ const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
   osProjectRef: OSProject.Ref,
   contributionMonth: {
     type: (data) => {
+        if(!data) {
+            return data;
+        }
         let Constructor = ContributionMonth;
         if (Constructor.default) {
             Constructor = Constructor.default;

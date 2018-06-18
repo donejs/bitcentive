@@ -4,7 +4,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>{{title}}</title>
+		<title>{{ title }}</title>
 	</head>
 	<body>
 		<can-import from="bootstrap" />
@@ -22,36 +22,36 @@
 
 		<main-nav session:bind="session" page:bind="displayedPage"></main-nav>
 
-		{{#switch displayedPage}}
-			{{#case 'loading'}}
+		{{# switch(displayedPage) }}
+			{{# case 'loading' }}
 				<page-loading></page-loading>
-			{{/case}}
-			{{#case 'home'}}
+			{{/ case }}
+			{{# case 'home' }}
 				<page-home></page-home>
-			{{/case}}
-			{{#case 'dashboard'}}
+			{{/ case }}
+			{{# case 'dashboard' }}
 				<page-dashboard></page-dashboard>
-			{{/case}}
-			{{#case 'contributors'}}
+			{{/ case }}
+			{{# case 'contributors' }}
 				<page-contributors/>
-			{{/case}}
-			{{#case 'users'}}
+			{{/ case }}
+			{{# case 'users' }}
 				<page-users/>
-			{{/case}}
-			{{#case 'four-oh-four'}}
+			{{/ case }}
+			{{# case 'four-oh-four' }}
 				<page-four-oh-four></page-four-oh-four>
-			{{/case}}
-		{{/switch}}
+			{{/ case }}
+		{{/ switch }}
 
 		<bit-alerts></bit-alerts>
 
-		{{#switch env.NODE_ENV}}
-			{{#case "production"}}
-				<script src="{{joinBase 'node_modules/steal/steal.production.js'}}"  main="bitcentive/index.stache!done-autorender"></script>
-			{{/case}}
-			{{#default}}
+		{{# switch(env.NODE_ENV) }}
+			{{# case "production" }}
+				<script src="{{ joinBase 'node_modules/steal/steal.production.js' }}"  main="bitcentive/index.stache!done-autorender"></script>
+			{{/ case }}
+			{{# default }}
 				<script src="/node_modules/steal/steal.js"></script>
-			{{/default}}
-		{{/switch}}
+			{{/ default }}
+		{{/ switch }}
 	</body>
 </html>

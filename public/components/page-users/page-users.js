@@ -5,7 +5,7 @@ import User from 'bitcentive/models/user';
 
 export const ViewModel = DefineMap.extend({
   usersPromise: {
-    value() {
+    default() {
       return User.getList({ });
     }
   },
