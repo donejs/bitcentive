@@ -3,7 +3,7 @@ import DefineMap from 'can-define/map/';
 import view from './contribution-month.stache';
 import ContributionMonth from 'bitcentive/models/contribution-month/';
 
-export const ViewModel = DefineMap.extend({
+export const ViewModel = DefineMap.extend("BitContributionMonthVM",{
   // Passed props
   contributionMonthId: "string",
 

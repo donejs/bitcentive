@@ -1,5 +1,5 @@
 import fixture from 'can-fixture';
-import algebra from '../algebra';
+import Contributor from '../contributor';
 
 var store = fixture.store([{
     _id: "1-JustinMeyer",
@@ -9,7 +9,7 @@ var store = fixture.store([{
     _id: "2-KyleGifford",
     name: "Kyle Gifford",
     active: false
-  }], algebra);
+}], Contributor.connection.queryLogic);
 
 
 export default function(mockServer){

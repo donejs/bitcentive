@@ -1,12 +1,12 @@
-import set from "can-set";
+import QueryLogic from 'can-query-logic';
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../lib/super-model';
-import algebra from './algebra';
+import feathersQuery from './feathers-query';
 import feathersClient from './feathers-client';
 
 var OSProject = DefineMap.extend("OSProject", { seal: false }, {
-  _id: "string",
+  _id: {type: "string", identity: true},
   name: "string"
 });
 
@@ -19,9 +19,7 @@ OSProject.connection = superModel({
   List: OSProject.List,
   feathersService: feathersClient.service("/api/os_projects"),
   name: "osProject",
-  algebra
+  queryLogic: new QueryLogic(OSProject, feathersQuery)
 });
-
-OSProject.algebra = algebra;
 
 export default OSProject;

@@ -24,10 +24,10 @@
 							<span>{{ formatDollarAmount(scope.vm.contributionMonths.getTotalForAllPayoutsForContributor(contributorRef, scope.vm.contributionMonth)) }}</span>
 						</td>
 						{{# each(scope.vm.contributionMonth.sortedMonthlyOSProjects) }}
-							{{# scope.vm.payoutFor(../contributorRef, osProjectRef) }}
+							{{# with( scope.vm.payoutFor(../contributorRef, osProjectRef) ) }}
 								<td class="amountDollar">{{ formatDollarAmount(total) }}</td>
 								<td class="amountPercent">{{ formatPercentAmount(percent) }}</td>
-							{{/ scope.vm.payoutFor }}
+							{{/ with }}
 						{{/ each }}
 						{{# if(isAdmin()) }}
 						<td>

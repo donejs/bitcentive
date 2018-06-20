@@ -11,12 +11,14 @@ import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
-import set from 'can-set';
+import QueryLogic from 'can-query-logic';
+import feathersQuery from './feathers-query';
 
 import feathersClient from './feathers-client';
 import User from 'bitcentive/models/user';
 
 export const Session = DefineMap.extend('Session', {
+	exp: {type: 'any', identity: true},
 	userId: 'any',
 	user: {
 		Type: User,
@@ -35,8 +37,6 @@ Session.List = DefineList.extend({
 	'#': Session
 });
 
-Session.algebra = new set.Algebra(set.comparators.id('exp'));
-
 Session.connection = connect(
 	[
 		feathersSession,
@@ -54,7 +54,7 @@ Session.connection = connect(
 		Map: Session,
 		List: Session.List,
 		name: 'session',
-		algebra: Session.algebra
+	    queryLogic: new QueryLogic(Session, feathersQuery)
 	}
 );
 

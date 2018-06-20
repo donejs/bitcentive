@@ -2,7 +2,7 @@ import ClientProject from "../client-project";
 import OSProject from "../os-project";
 import Contributor from "../contributor";
 
-import set from "can-set";
+import QueryLogic from "can-query-logic";
 import memoize from "can-compute-memoize";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
@@ -16,7 +16,7 @@ import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContribution from "./monthly-contribution";
 import MonthlyContributor from "./monthly-contributor";
 
-import algebra from '../algebra';
+import feathersQuery from '../feathers-query';
 
 /**
  * Builds a sorting function for sorting by a property on a ref field
@@ -33,7 +33,7 @@ const sortByRefField = (refName, fieldName) => {
 };
 
 var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
-	_id: "string",
+	_id: {type: "string", identity: true},
 	date: "date",
 	monthlyOSProjects: {
 		Type: MonthlyOSProject.List,
@@ -528,9 +528,8 @@ ContributionMonth.connection = superModel({
 	List: ContributionMonth.List,
 	feathersService: feathersClient.service("/api/contribution_months"),
 	name: "contributionMonth",
-	algebra
+	queryLogic: new QueryLogic(ContributionMonth, feathersQuery)
 });
 
-ContributionMonth.algebra = algebra;
 
 export default ContributionMonth;

@@ -1,12 +1,12 @@
-import set from "can-set";
+import QueryLogic from 'can-query-logic';
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/list';
 import feathersClient from './feathers-client';
 import superModel from '../lib/super-model';
-import algebra from './algebra';
+import feathersQuery from './feathers-query';
 
 var User = DefineMap.extend("User", {
-	_id: "string",
+	_id: {type: "string", identity: true},
 	email: "string",
 	password: "string",
 	/**
@@ -84,9 +84,8 @@ User.connection = superModel({
 	List: User.List,
 	feathersService: feathersClient.service("/api/users"),
 	name: "users",
-	algebra
+    queryLogic: new QueryLogic(User, feathersQuery)
 });
 
-User.algebra = algebra;
 
 export default User;
