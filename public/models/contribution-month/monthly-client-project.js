@@ -4,6 +4,7 @@ import MonthlyClientProjectOsProjectList from "./monthly-client-project-os-proje
 import ClientProject from "../client-project";
 
 const MonthlyClientProject = DefineMap.extend( "MonthlyClientProject", { seal: false }, {
+  _id: {type: "string", identity: true},
   clientProjectRef: ClientProject.Ref,
   hours: "number",
   monthlyClientProjectsOSProjects: {

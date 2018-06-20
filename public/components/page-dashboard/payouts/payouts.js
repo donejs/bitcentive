@@ -77,7 +77,7 @@ export const ViewModel = DefineMap.extend({
         percent: 0,
       };
     }
-
+    // calculate for all contributors
     if (contributorRef === null) {
         let result = {
           total: 0,

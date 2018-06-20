@@ -1,8 +1,8 @@
 import fixture from 'can-fixture';
 import json from './contribution-months-data';
-import algebra from '../algebra';
+import ContributionMonth from '../contribution-month/';
 
-export var store = fixture.store(json, algebra);
+export var store = fixture.store(json, ContributionMonth.connection.queryLogic);
 
 export default function (mockServer) {
 	mockServer.onFeathersService("api/contribution_months", store, { id: "_id" });
