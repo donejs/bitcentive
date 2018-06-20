@@ -1,11 +1,11 @@
 import fixture from 'can-fixture';
-import algebra from '../algebra';
+import User from '../user';
 
 var store = fixture.store([
   {
     "_id": "5877a57f810a6b19008720ba",
     "githubId": 798836,
-		"isAdmin": true,
+	"isAdmin": true,
     "github": {
       "accessToken": "accessToken123456789accessToken123456789",
       "profile": {
@@ -64,7 +64,7 @@ var store = fixture.store([
   {
     "_id": "2",
     "githubId": 12345,
-		"isAdmin": true,
+	"isAdmin": true,
     "github": {
       "accessToken": "accessToken123456789",
       "profile": {
@@ -77,7 +77,7 @@ var store = fixture.store([
     },
     "__v": 1
   }
-], algebra);
+], User.connection.queryLogic);
 
 export default function(mockServer) {
   mockServer.onFeathersService('api/users', store, { id: '_id' });

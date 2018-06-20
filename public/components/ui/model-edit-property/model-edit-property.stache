@@ -1,21 +1,19 @@
 <can-import from="./model-edit-property.less" />
 <can-import from="~/lib/stache-helpers/" />
+<can-import from="can-event-dom-enter/add-global/add-global"/>
 
-{{#if viewOnly}}
-
-	<span>{{propertyValue}}</span>
-
-{{else}}
-
-	{{#if isEditing}}
+{{# if(viewOnly) }}
+	<span>{{ propertyValue }}</span>
+{{ else }}
+	{{# if(isEditing) }}
 		<input class="form-control"
-			type="{{type}}"
+			type="{{ type }}"
 			value:from="propertyValue"
 		 	disabled:from="isDisabled"
-			on:enter="commitValue(%element.value)"
-			on:keydown="cancelEdit(%event)"
+			on:enter="commitValue(scope.element.value)"
+			on:keydown="cancelEdit(scope.event)"
 		/>
-	{{else}}
-		<a href="javascript://" on:click="makeEditable()" title="Edit" >{{propertyValue}}</a>
-	{{/if}}
-{{/if}}
+	{{ else }}
+		<a href="javascript://" on:click="makeEditable()" title="Edit" >{{ propertyValue }}</a>
+	{{/ if }}
+{{/ if }}

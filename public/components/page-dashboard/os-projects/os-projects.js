@@ -8,32 +8,33 @@ export const ViewModel = DefineMap.extend({
   // Passed properties
   contributionMonth: ContributionMonth,
   contributionMonthsPromise: {
-    value: function(){
+    default() {
       return ContributionMonth.getList({});
     }
   },
-  contributionMonths: {
-    get: function(lastSet, resolve){
-      this.contributionMonthsPromise.then(resolve);
-    }
-  },
+
   // Stateful properties
   adding: {
     type: 'boolean',
-    value: false
+    default: false
   },
   newOSProjectName: 'string',
   selectedOSProjectId: {
     type: 'string',
-    value: null
+    default: null
   },
   allOSProjects: {
-    value: function() {
+    default() {
       return OSProject.getList();
     }
   },
 
   // Derived properties
+  contributionMonths: {
+    get: function(lastSet, resolve){
+      this.contributionMonthsPromise.then(resolve);
+    }
+  },
   creatingNewOSProject: {
     get: function() {
       return this.selectedOSProjectId === null;
@@ -60,7 +61,7 @@ export const ViewModel = DefineMap.extend({
       });
     } else {
 	    return this.allOSProjects.then((projects) => {
-        projects.each((proj) => {
+        projects.forEach((proj) => {
           if (this.selectedOSProjectId === proj._id) {
             this.contributionMonth.addNewMonthlyOSProject(proj);
             this.toggleAddNewMonthlyOSProject();

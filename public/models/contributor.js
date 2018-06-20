@@ -1,12 +1,12 @@
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
-import set from "can-set";
+import QueryLogic from "can-query-logic";
 import superModel from '../lib/super-model';
-import algebra from './algebra';
+import feathersQuery from './feathers-query';
 import feathersClient from './feathers-client';
 
 var Contributor = DefineMap.extend("Contributor", { seal: false }, {
-  _id: "string",
+  _id: {type: "string", identity: true},
   name: "string",
   email: "string",
   active: "boolean"
@@ -21,9 +21,8 @@ Contributor.connection = superModel({
   List: Contributor.List,
   feathersService: feathersClient.service("/api/contributors"),
   name: "contributor",
-  algebra
+  queryLogic: new QueryLogic(Contributor, feathersQuery)
 });
 
-Contributor.algebra = algebra;
 
 export default Contributor;

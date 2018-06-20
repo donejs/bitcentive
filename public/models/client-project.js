@@ -1,12 +1,12 @@
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
-import set from 'can-set';
 import superModel from '../lib/super-model';
-import algebra from './algebra';
 import feathersClient from './feathers-client';
+import QueryLogic from 'can-query-logic';
+import feathersQuery from './feathers-query';
 
 var ClientProject = DefineMap.extend('ClientProject', { seal: false }, {
-  _id: 'string',
+  _id: {type: 'string', identity: true},
   name: 'string'
 });
 
@@ -19,9 +19,8 @@ ClientProject.connection = superModel({
   List: ClientProject.List,
   feathersService: feathersClient.service('/api/client_projects'),
   name: "client-projects",
-  algebra
+  queryLogic: new QueryLogic(ClientProject, feathersQuery)
 });
 
-ClientProject.algebra = algebra;
 
 export default ClientProject;

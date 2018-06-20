@@ -10,45 +10,52 @@ import callbacksOnce from 'can-connect/constructor/callbacks-once/';
 import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 import DefineMap from 'can-define/map/';
-import set from 'can-set';
+import DefineList from 'can-define/list/';
+import QueryLogic from 'can-query-logic';
+import feathersQuery from './feathers-query';
 
 import feathersClient from './feathers-client';
 import User from 'bitcentive/models/user';
 
 export const Session = DefineMap.extend('Session', {
-  userId: 'any',
-  user: {
-    Type: User,
-    get (lastSetVal, resolve) {
-      if (lastSetVal) {
-        return lastSetVal;
-      }
-      if (this.userId) {
-        User.get({_id: this.userId}).then(resolve);
-      }
-    }
-  }
+	exp: {type: 'any', identity: true},
+	userId: 'any',
+	user: {
+		Type: User,
+		get(lastSetVal, resolve) {
+			if (lastSetVal) {
+				return lastSetVal;
+			}
+			if (this.userId) {
+				User.get({ _id: this.userId }).then(resolve);
+			}
+		}
+	}
 });
 
-Session.algebra =  new set.Algebra(
-  set.comparators.id('exp')
+Session.List = DefineList.extend({
+	'#': Session
+});
+
+Session.connection = connect(
+	[
+		feathersSession,
+		construct,
+		canMap,
+		canRef,
+		constructStore,
+		dataCallbacks,
+		dataParse,
+		realtime,
+		callbacksOnce
+	],
+	{
+		feathersClient,
+		Map: Session,
+		List: Session.List,
+		name: 'session',
+	    queryLogic: new QueryLogic(Session, feathersQuery)
+	}
 );
-
-Session.connection = connect([
-    feathersSession,
-    construct,
-    canMap,
-    canRef,
-    constructStore,
-    dataCallbacks,
-    dataParse,
-    realtime,
-    callbacksOnce
-], {
-  feathersClient,
-  Map: Session,
-  name: 'session',
-  algebra: Session.algebra
-});
 
 export default Session;

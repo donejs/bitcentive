@@ -1,7 +1,7 @@
 <can-import from="./contributions.less" />
 <can-import from="~/lib/stache-helpers/" />
 
-{{#if contributionMonth.monthlyContributions.length}}
+{{# if(contributionMonth.monthlyContributions.length) }}
 	<table class='table'>
 		<thead>
 			<tr>
@@ -13,63 +13,63 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#each contributionMonth.monthlyContributions as monthlyContribution}}
+		{{# each(contributionMonth.monthlyContributions, monthlyContribution=value) }}
 			<tr>
 				<td>
-					{{monthlyContribution.contributorRef.value.name}}
+					{{ monthlyContribution.contributorRef.value.name }}
 				</td>
 				<td>
-					{{monthlyContribution.osProjectRef.value.name}}
-				</td>
-				<td>
-					<model-edit-property model:from="monthlyContribution"
-						property="description"
-						viewOnly:from="nonAdmin()"
-						saveModel:from="contributionMonth" />
+					{{ monthlyContribution.osProjectRef.value.name }}
 				</td>
 				<td>
 					<model-edit-property model:from="monthlyContribution"
-						property="points"
-						type="number"
-						viewOnly:from="nonAdmin()"
-						saveModel:from="contributionMonth" />
+						property:from="'description'"
+						viewOnly:from="notAdmin()"
+						saveModel:from="../contributionMonth" />
 				</td>
 				<td>
-					{{#if isAdmin()}}
+					<model-edit-property model:from="monthlyContribution"
+						property:from="'points'"
+						type:from="'number'"
+						viewOnly:from="notAdmin()"
+						saveModel:from="../contributionMonth" />
+				</td>
+				<td>
+					{{# if(isAdmin()) }}
 						<button type="button" class="btn btn-danger btn-xs"
-								on:click="removeContribution(%event, monthlyContribution)">
+								on:click="../removeContribution(scope.event, monthlyContribution)">
 							<span class="glyphicon glyphicon-remove"/>
 						</button>
-					{{/if}}
+					{{/ if }}
 				</td>
 			</tr>
-		{{/each}}
+		{{/ each }}
 		</tbody>
 	</table>
-{{/if}}
+{{/ if }}
 
-{{#if isAdmin()}}
-	{{#if adding}}
+{{# if(isAdmin()) }}
+	{{# if(adding) }}
 		<div class="panel panel-default">
 			<div class="panel-heading">Add Contribution</div>
 			<div class="panel-body">
-				<form on:submit="addContribution(%event)" id="contributions-form">
+				<form on:submit="addContribution(scope.event)" id="contributions-form">
 					<div class="row">
 						<div class="col-xs-6">
 							<label>Contributor: </label>
 							<select value:bind="selectedContributorId" class="form-control">
-							{{#each contributionMonth.sortedMonthlyContributors}}
-								<option value="{{contributorRef.value._id}}">{{contributorRef.value.name}}</option>
-							{{/each}}
+							{{# each(contributionMonth.sortedMonthlyContributors) }}
+								<option value="{{ contributorRef.value._id }}">{{ contributorRef.value.name }}</option>
+							{{/ each }}
 							</select>
 						</div>
 
 						<div class="col-xs-6">
 							<label>Open Source Project: </label>
 							<select value:bind="selectedOSProjectId" class="form-control">
-							{{#each contributionMonth.sortedMonthlyOSProjects}}
-								<option value="{{osProjectRef.value._id}}">{{osProjectRef.value.name}}</option>
-							{{/each}}
+							{{# each(contributionMonth.sortedMonthlyOSProjects) }}
+								<option value="{{ osProjectRef.value._id }}">{{ osProjectRef.value.name }}</option>
+							{{/ each }}
 							</select>
 						</div>
 					</div>
@@ -94,10 +94,10 @@
 
 				<button
 					class="btn btn-default"
-					on:click="toggleAddNewContribution(%event)">Cancel</button>
+					on:click="toggleAddNewContribution(scope.event)">Cancel</button>
 			</div>
 		</div>
-	{{else}}
-		<a href="javascript://" on:click="toggleAddNewContribution(%event)">Add Contribution</a>
-	{{/if}}
-{{/if}}
+	{{ else }}
+		<a href="javascript://" on:click="toggleAddNewContribution(scope.event)">Add Contribution</a>
+	{{/ if }}
+{{/ if }}

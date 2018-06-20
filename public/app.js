@@ -6,9 +6,9 @@ import Session from 'bitcentive/models/session';
 // import 'bitcentive/models/fixtures/';
 import zone from 'can-zone';
 
-// viewmodel debugging
-import viewModel from 'can-view-model';
-window.viewModel = viewModel;
+//!steal-remove-start
+import "can-debug";
+//!steal-remove-end
 
 var pages = {
 	home: 'public',
@@ -72,10 +72,10 @@ const AppViewModel = DefineMap.extend({
 	 * The `title` attribute is used in index.stache as the HTML title.
 	 */
 	title: {
-		value: 'Bitcentive'
+		default: 'Bitcentive'
 	}
 });
 
-route('{page}', {page: 'home'});
+route.register('{page}', {page: 'home'});
 
 export default AppViewModel;

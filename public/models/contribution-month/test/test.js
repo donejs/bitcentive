@@ -1,4 +1,4 @@
-require('./contribution-month_test');
-require('./monthly-os-project_test');
-require('./monthly-client-project_test');
-require('./contribution-month-list_test');
+import './contribution-month_test';
+import './monthly-os-project_test';
+import './monthly-client-project_test';
+import './contribution-month-list_test';

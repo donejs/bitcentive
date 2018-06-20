@@ -6,11 +6,15 @@ import ContributionMonth from "./contribution-month";
 import OSProject from "../os-project";
 
 const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
+  _id: {type: "string", identity: true},
   significance: "number",
   commissioned: "boolean",
   osProjectRef: OSProject.Ref,
   contributionMonth: {
     type: (data) => {
+        if(!data) {
+            return data;
+        }
         let Constructor = ContributionMonth;
         if (Constructor.default) {
             Constructor = Constructor.default;

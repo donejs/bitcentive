@@ -9,7 +9,6 @@ import dataCallbacks from 'can-connect/data/callbacks/';
 import realtime from 'can-connect/real-time/';
 import errorHandler from './behaviors/error-handler';
 import feathersBehavior from 'can-connect-feathers/service';
-import smartMergeBehavior from './behaviors/smart-merge';
 
 const superModel = function(options) {
 	// TODO: remove this when this issue is closed:
@@ -23,7 +22,6 @@ const superModel = function(options) {
 		constructStore,
 		constructOnce,
 		canMap,
-		smartMergeBehavior,
 		canRef,
 		dataCallbacks,
 		realtime,

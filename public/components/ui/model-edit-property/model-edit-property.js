@@ -28,7 +28,7 @@ export const ViewModel = DefineMap.extend({
    */
   type: {
 	  type: 'string',
-	  value: 'text'
+	  default: 'text'
   },
   /**
    * @property {Boolean} viewOnly
@@ -37,7 +37,7 @@ export const ViewModel = DefineMap.extend({
    */
   viewOnly: {
 	  type: 'boolean',
-	  value: false
+	  default: false
   },
   /**
    * @property {String} propertyValue
@@ -53,7 +53,7 @@ export const ViewModel = DefineMap.extend({
    * Whether we're currently editing the property.
    */
   isEditing: {
-    value: false
+    default: false
   },
 	/**
 	 * @property {Boolean} isDisabled

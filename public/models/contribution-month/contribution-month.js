@@ -2,12 +2,13 @@ import ClientProject from "../client-project";
 import OSProject from "../os-project";
 import Contributor from "../contributor";
 
-import set from "can-set";
+import QueryLogic from "can-query-logic";
 import memoize from "can-compute-memoize";
 import DefineMap from "can-define/map/";
 import DefineList from "can-define/list/";
 import superModel from '../../lib/super-model';
 import feathersClient from '../feathers-client';
+import queues from "can-queues";
 
 import moment from "moment";
 import MonthlyOSProject from "./monthly-os-project";
@@ -15,7 +16,7 @@ import MonthlyClientProject from "./monthly-client-project";
 import MonthlyContribution from "./monthly-contribution";
 import MonthlyContributor from "./monthly-contributor";
 
-import algebra from '../algebra';
+import feathersQuery from '../feathers-query';
 
 /**
  * Builds a sorting function for sorting by a property on a ref field
@@ -32,7 +33,7 @@ const sortByRefField = (refName, fieldName) => {
 };
 
 var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
-	_id: "string",
+	_id: {type: "string", identity: true},
 	date: "date",
 	monthlyOSProjects: {
 		Type: MonthlyOSProject.List,
@@ -45,13 +46,13 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	monthlyContributions: MonthlyContribution.List,
 	monthlyContributors: MonthlyContributor.List,
 	startRate: {
-		value: 2,
+		default: 2,
 		set(value) {
 			return value == null ? 2 : value;
 		}
 	},
 	endRate: {
-		value: 4,
+		default: 4,
 		set(value) {
 			return value == null ? 4: value;
 		}
@@ -215,6 +216,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		return monthlyOSProject;
 	},
 	removeMonthlyOSProject( monthlyOSProject ) {
+		queues.batch.start();
 		this.monthlyOSProjects.splice(this.monthlyOSProjects.indexOf(monthlyOSProject), 1);
 		this.monthlyClientProjects.forEach( clientProject => {
 			let index = clientProject.monthlyClientProjectsOSProjects.indexOf(monthlyOSProject.osProjectRef);
@@ -222,6 +224,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 				clientProject.monthlyClientProjectsOSProjects.splice(index, 1);
 			}
 		});
+		queues.batch.stop();
 		this.save().catch(err => {
 			console.error("Failed saving the contributionMonth obj: ", err);
 		});
@@ -280,7 +283,7 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	},
 	getTotal: function(monthlyClientProject) {
 		if(this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id]) {
-				return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].totalAmount;
+				return this.calculations.clientProjects[monthlyClientProject.clientProjectRef._id].totalAmount || 0;
 		}
 		return 0;
 
@@ -308,6 +311,9 @@ const oneMonth = 1000 * 60 * 60 * 24 * 30;
 ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	"#": ContributionMonth,
 	osProjectContributionsMap(currentContributionMonth) {
+		// TODO: see how many times this runs after 5.0
+		//console.log("calculations ------- \n");
+		//can.queues.logStack();
 		var osProjectContributionsMap = {};
 		const today = new Date().getTime();
 		this.forEach(contributionMonth => {
@@ -318,7 +324,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 						const monthsAgo = (today - contributionMonth.date.getTime()) / oneMonth;
 						const decayFactor = Math.floor(monthsAgo / monthsUntilDecay);
 						let points = monthlyContribution.points;
-						
+
 						if (decayFactor > 0){
 							points = points / Math.pow(2, decayFactor);
 							if(points < minimumPoints){
@@ -364,7 +370,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					const points = contributorData.points;
 					const totalPoints = contributorsMap[projectRef].totalPoints;
 					const totalAmountForOSProject = contributionMonth.calculations.osProjects[projectRef];
-		
+
 					payouts[projectRef][contributorRef] = (points / totalPoints) * totalAmountForOSProject;
 				}
 			}
@@ -372,7 +378,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		});
 
 		const payouts = cachedOSProjectPayouts();
-		
+
 		return payouts[monthlyOSProject.osProjectRef._id] && payouts[monthlyOSProject.osProjectRef._id][contributor.contributorRef._id] || 0;
 	},
 	getTotalForAllPayoutsForContributor(contributorRef, contributionMonth) {
@@ -385,12 +391,12 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					if (totals[contributor] === undefined) {
 						totals[contributor] = 0;
 					}
-	
+
 					const contributorData = projectContributors[contributor];
 					const points = contributorData.points;
 					const totalPoints = contributorsMap[osProjectID].totalPoints;
 					const totalAmountForOSProject = contributionMonth.calculations.osProjects[osProjectID];
-	
+
 					// TODO: figure out what to do with `osProjectContributionsMap` if an `OSProject` gets removed from a month:
 					// since `osProjectContributionsMap` will still have the removed project whereas `contributionMonth.calculations.osProjects` won't
 					// which will cause NaN for total. For now just ignore undefined for calculation:
@@ -407,7 +413,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 	getOwnershipPercentageForContributor(monthlyOSProject, contributor, contributionMonth) {
 		const cachedOwershipPercentages = memoize(this, 'ownershipPercentageForContributor', [contributionMonth], function(contributionMonth){
 			const percentages = {};
-			
+
 			const contributorsMap = this.osProjectContributionsMap(contributionMonth);
 
 			for(const projectRef in contributorsMap){
@@ -425,7 +431,7 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 					percentages[projectRef][contributorRef] = points / totalPoints;
 				}
 			}
-	
+
 			return percentages;
 		});
 
@@ -522,9 +528,8 @@ ContributionMonth.connection = superModel({
 	List: ContributionMonth.List,
 	feathersService: feathersClient.service("/api/contribution_months"),
 	name: "contributionMonth",
-	algebra
+	queryLogic: new QueryLogic(ContributionMonth, feathersQuery)
 });
 
-ContributionMonth.algebra = algebra;
 
 export default ContributionMonth;

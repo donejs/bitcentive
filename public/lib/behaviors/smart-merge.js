@@ -1,6 +1,6 @@
 import canMap from 'can-connect/can/map/map';
 import smartMerge from 'can-connect/helpers/map-deep-merge';
-import canBatch from 'can-event/batch/batch';
+import queues from 'can-queues';
 
 export default {
   updatedInstance: function(instance, props){
@@ -8,8 +8,8 @@ export default {
     canMap.callbackInstanceEvents('updated', instance);
   },
   updatedList: function(list, listData){
-  	canBatch.start();
+  	queues.batch.start();
     smartMerge( list, listData.data );
-    canBatch.stop();
+    queues.batch.stop();
   }
 }

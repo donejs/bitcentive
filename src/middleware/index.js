@@ -14,12 +14,15 @@ module.exports = function() {
 
   // For the root, load the html `main` file from the environment config.
   app.use('/', function (req, res, next) {
-    var main = app.get('main'); 
-    var filePath = path.join(process.cwd(), 'public', main);
-    if (fs.existsSync(filePath)) {
-      return res.sendFile(filePath);
+    if(req.url === "/") {
+      var main = app.get('main');
+      var filePath = path.join(process.cwd(), 'public', main);
+      if (fs.existsSync(filePath)) {
+        return res.sendFile(filePath);
+      } else {
+        console.log('no environment configured for ' + process.env.NODE_ENV);
+      }
     }
-    console.log('no environment configured for ' + process.env.NODE_ENV);
     return next();
   });
   app.use(notFound());

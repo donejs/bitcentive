@@ -12,28 +12,28 @@ export const ClientProjectVM = DefineMap.extend({
   },
   // Stateful Props
   projects: {
-    value() {
+    default() {
       return ClientProject.getList({});
     }
   },
   selectedClientProject: ClientProject,
   editingClientProjectIds: {
-    Value: DefineMap.extend({seal: false},{}),
+    Default: DefineMap.extend({seal: false},{}),
   },
   isAddingClients: {
     type: "boolean",
-    value: false
+    default: false
   },
   activeOSProjectList: {
     type: '*',
   },
   selectedClientId: {
     type: 'string',
-    value: '__new__'
+    default: '__new__'
   },
   newClientName: {
     type: "string",
-    value: ""
+    default: ""
   },
 
   // Derived props

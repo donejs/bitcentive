@@ -1,34 +1,10 @@
 import DefineMap from 'can-define/map/';
 import DefineList from 'can-define/list/';
-import superModel from 'can-connect/can/super-map/';
+import superModel from 'can-super-model';
 import fixture from 'can-fixture/fixture';
 
-let mockData = fixture.store([
-  {
-    id: 1,
-    name: 'Project'
-  },
-  {
-    id: 2,
-    name: 'Contributor'
-  },
-	{
-		id: 3,
-		name: 'View only option',
-		viewOnly: true
-	}
-]);
-
-fixture({
-  'GET /entities': mockData.getListData,
-  'GET /entities/{id}': mockData.getData,
-  'POST /entities': mockData.createData,
-  'PUT /entities/{id}': mockData.updateData,
-  'DELETE /entities/{id}': mockData.destroyData
-});
-
 let Entity = DefineMap.extend({
-  id: 'number',
+  id: {type: 'number', identity: true},
   name: 'string'
 });
 
@@ -36,14 +12,28 @@ Entity.List = DefineList.extend({
   '#': Entity
 });
 
-Entity.connection = superModel({
-  url: {
-    getListData: 'GET /entities',
-    getData: 'GET /entities/{id}',
-    createData: 'POST /entities',
-    updateData: 'PUT /entities/{id}',
-    destroyData: 'DELETE /entities/{id}'
+
+let mockData = fixture.store([{
+    id: 1,
+    name: 'Project'
   },
+  {
+    id: 2,
+    name: 'Contributor'
+  },
+  {
+    id: 3,
+    name: 'View only option',
+    viewOnly: true
+  }
+], Entity);
+
+fixture('/entities/{id}', mockData );
+
+
+
+Entity.connection = superModel({
+  url: '/entities/{id}',
   Map: Entity,
   List: Entity.List,
   name: 'entity'
