@@ -5,6 +5,7 @@ const port = app.get('port');
 const server = app.listen(process.env.PORT || port);
 const path = require("path");
 const exec = require( "child_process" ).exec;
+const killOnExit = require('kill-on-exit');
 
 server.on('listening', () =>
   console.log(`DoneJS and Feathers application started on ${app.get('host')}:${port}`)
@@ -18,4 +19,6 @@ if ( process.argv.indexOf( "--develop" ) !== -1 ) {
 
   child.stdout.pipe( process.stdout );
   child.stderr.pipe( process.stderr );
+
+  killOnExit(child);
 }
