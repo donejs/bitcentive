@@ -26,7 +26,6 @@
     "JS"
   ],
   "steal": {
-    "main": "bitcentive/index.stache!done-autorender",
     "configDependencies": [
       "node_modules/can-zone/register"
     ],
