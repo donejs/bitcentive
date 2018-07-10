@@ -28,6 +28,7 @@
   "steal": {
     "main": "bitcentive/index.stache!done-autorender",
     "configDependencies": [
+      "live-reload",
       "node_modules/can-zone/register"
     ],
     "envs": {
