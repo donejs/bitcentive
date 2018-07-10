@@ -4,7 +4,6 @@ import view from './main-nav.stache!';
 import Session from 'bitcentive/models/session';
 
 export const ViewModel = DefineMap.extend('MainNav', {
-	page: 'string',
 	session: Session
 });
 
