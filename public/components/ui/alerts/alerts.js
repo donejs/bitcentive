@@ -1,4 +1,4 @@
-import Kefir from 'kefir';
+import Kefir from 'can-kefir';
 import canStream from 'can-stream-kefir';
 import canDefineStreamKefir from 'can-define-stream-kefir';
 import Component from 'can-component';
@@ -35,7 +35,6 @@ const ViewModel = DefineMap.extend({
         .merge(this.autoHideStream)
         .merge(this.stream('remove'))
         .scan((alerts, ev) => {
-            console.log("GOt event", ev.type);
           switch (ev.type) {
             case 'alert':
               return [ev, ...alerts.slice()];

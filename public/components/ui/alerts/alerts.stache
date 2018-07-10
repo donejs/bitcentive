@@ -2,11 +2,11 @@
 <div class="alert-container">
 	{{# each(alerts) }}
 	<div class="alert alert-dismissable alert-{{ kind }}">
-	    <button type="button" class="close" on:click="removeAlert(.)">
+	    <button type="button" class="close" on:click="../removeAlert(.)">
 	    	<span aria-hidden="true">&times;</span>
 	    </button>
 	    {{# title }}<h3 class="title">{{ . }}</h3>{{/ title }}
-	    {{# message }}<div class="message">{{ {. }}}</div>{{/ message }}
+	    {{# message }}<div class="message">{{{ . }}}</div>{{/ message }}
 	</div>
 	{{/ each }}
 </div>
