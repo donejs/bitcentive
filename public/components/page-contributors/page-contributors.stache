@@ -3,5 +3,7 @@
 
 <div class="container">
 	<h2>Contributors</h2>
+	{{# if contributors.isResolved }}
 	<bit-contributors contributors:bind="contributors.value" />
+	{{/ if }}
 </div>
