@@ -32,7 +32,7 @@
 						{{# if(isAdmin()) }}
 						<td>
 							<button type="button" class="btn btn-danger btn-xs"
-								on:click="removeContributor(scope.event, .)">
+								on:click="../removeContributor(scope.event, .)">
 								<span class="glyphicon glyphicon-remove"/>
 							</button>
 						</td>
