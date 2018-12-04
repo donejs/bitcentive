@@ -55,6 +55,20 @@
 			{{/ if }}
 		{{/ each }}
 		</tbody>
+		<tfoot>
+			<tr>
+				<td>Total/Avg</td>
+				<td>
+					{{ scope.vm.sumOSProjectSignifances() }}
+					(Avg {{ scope.vm.avgOSProjectSignifances() }})
+				</td>
+				<td>&nbsp;</td>
+				<td>{{ formatDollarAmount(scope.vm.contributionMonth.calculations.totalDollarForAllClientProjects) }}</td>
+				<td>{{ scope.vm.sumPointsForMonthlyProjects() }}</td>
+				<td>Avg {{ formatDollarAmount(scope.vm.avgTotalDollarsPerPointForOSProjects()) }}</td>
+				<td>&nbsp;</td>
+			</tr>
+		</tfoot>
 	</table>
 {{/ if }}
 
