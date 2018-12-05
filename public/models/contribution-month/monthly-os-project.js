@@ -6,7 +6,7 @@ import ContributionMonth from "./contribution-month";
 import OSProject from "../os-project";
 
 const MonthlyOSProject = DefineMap.extend("MonthlyOSProject", { seal: false }, {
-  _id: {type: "string", identity: true},
+  _id: {type: "string"},
   significance: "number",
   commissioned: "boolean",
   osProjectRef: OSProject.Ref,

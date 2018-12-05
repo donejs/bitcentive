@@ -84,17 +84,16 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 	  get: function() {
 		let total = 0;
 
-		this.monthlyOSProjects.forEach( osProject => {
-			if (osProject.commissioned) {
+			this.monthlyOSProjects.forEach( osProject => {
 				const totalAmountForOSProject = this.calculations.osProjects[osProject.osProjectRef._id];
+
 				if (totalAmountForOSProject !== undefined){
 					total += totalAmountForOSProject;
 				}
-			}
-		});
+			});
 
 		return total;
-	  }
+		}
 	},
 	calculations: {
 		get: function() {
@@ -287,6 +286,24 @@ var ContributionMonth = DefineMap.extend("ContributionMonth", { seal: false }, {
 		}
 		return 0;
 
+	},
+	sumRatesAcrossMonthlyProjects: function() {
+		var sum = 0;
+
+		for (const id in this.calculations.clientProjects) {
+			sum += this.calculations.clientProjects[id].rate;
+		}
+
+		return sum;
+	},
+	sumTotalsAcrossMonthlyProjects: function() {
+		var sum = 0;
+
+		for (const id in this.calculations.clientProjects) {
+			sum += this.calculations.clientProjects[id].totalAmount || 0;
+		}
+
+		return sum;
 	},
 
 	addContribution(newContribution) {
