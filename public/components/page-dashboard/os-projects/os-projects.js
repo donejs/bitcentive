@@ -81,6 +81,43 @@ export const ViewModel = DefineMap.extend({
     const osProject = this.osProjectPointsMap[monthlyOSProject.osProjectRef._id];
     return (osProject && osProject.totalPoints) || 0;
   },
+	sumOSProjectSignifances() {
+		let sum = 0;
+
+    this.contributionMonth.monthlyOSProjects.forEach(project => {
+			if (project.osProjectRef.value) {
+			  sum += project.significance;
+			}
+		});
+
+		return sum;
+	},
+	avgOSProjectSignifances() {
+		return (this.sumOSProjectSignifances() / this.contributionMonth.monthlyOSProjects.length).toFixed(2);
+	},
+  sumPointsForMonthlyProjects() {
+		var sum = 0;
+
+		for (const id in this.osProjectPointsMap) {
+      sum += this.osProjectPointsMap[id].totalPoints || 0;
+		}
+
+		return sum.toFixed(4);
+  },
+  avgTotalDollarsPerPointForOSProjects() {
+		let points = 0;
+		let dollars = 0;
+    let projectCount = this.contributionMonth.monthlyOSProjects.length || 1;
+
+    this.contributionMonth.monthlyOSProjects.forEach(project => {
+			if (project.osProjectRef.value) {
+			  dollars += project.getTotal();
+			  points += this.getPointTotalForOSProject(project);
+			}
+		});
+
+    return points ? (dollars / points) : dollars;
+  },
   getTotalDollarsPerPointForOSProject(monthlyOSProject) {
     const points = this.getPointTotalForOSProject(monthlyOSProject);
     const dollars = monthlyOSProject.getTotal();
