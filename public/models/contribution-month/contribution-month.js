@@ -332,13 +332,12 @@ ContributionMonth.List = DefineList.extend("ContributionMonthList", {
 		//console.log("calculations ------- \n");
 		//can.queues.logStack();
 		var osProjectContributionsMap = {};
-		const today = new Date().getTime();
 		this.forEach(contributionMonth => {
 			if (moment(contributionMonth.date).isBefore(moment(currentContributionMonth.date).add(1, 'day'))) {
 				contributionMonth.monthlyContributions.forEach(monthlyContribution => {
 					if (currentContributionMonth.contributorsMap[monthlyContribution.contributorRef._id]) {
 						// Impliment decay
-						const monthsAgo = (today - contributionMonth.date.getTime()) / oneMonth;
+						const monthsAgo = (currentContributionMonth.date.getTime() - contributionMonth.date.getTime()) / oneMonth;
 						const decayFactor = Math.floor(monthsAgo / monthsUntilDecay);
 						let points = monthlyContribution.points;
 
