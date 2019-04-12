@@ -18,8 +18,8 @@ QUnit.test('viewModel.osProjectContributionsMap', function(assert){
   ContributionMonth.get("1").then(month => {
     vm = new ViewModel({ contributionMonth: month });
     vm.on('contributionMonths', () => {
-      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['2-DoneJS'].contributors['2-KyleGifford'].points, 3, 'has a contributor for DoneJS');
-      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['2-DoneJS'].totalPoints, 8, 'has totalPoints for DoneJS as 6');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['2-DoneJS'].contributors['2-KyleGifford'].points, 13, 'has a contributor for DoneJS');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['2-DoneJS'].totalPoints, 33, 'has totalPoints for DoneJS as 6');
       done();
     });
   });
@@ -32,8 +32,21 @@ QUnit.test('viewModel.osProjectContributionsMap', function (assert) {
   ContributionMonth.get("3").then(month => {
     vm = new ViewModel({ contributionMonth: month });
     vm.on('contributionMonths', () => {
-      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 17.5, 'has a contributor for CanJS');
-      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].totalPoints, 70, 'has totalPoints for CanJS as 70');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 25, 'has a contributor for CanJS');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].totalPoints, 100, 'has totalPoints for CanJS as 100');
+      done();
+    });
+  });
+});
+
+QUnit.test('viewModel.osProjectContributionsMap decay is based on month being viewed', function (assert) {
+  let done = assert.async();
+  let vm;
+  ContributionMonth.get("0").then(month => {
+    vm = new ViewModel({ contributionMonth: month });
+    vm.on('contributionMonths', () => {
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].contributors['1-JustinMeyer'].points, 4, 'has a contributor for CanJS');
+      QUnit.equal(vm.contributionMonths.osProjectContributionsMap(month)['1-CanJS'].totalPoints, 8, 'has totalPoints for CanJS as 100');
       done();
     });
   });
