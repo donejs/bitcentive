@@ -39,7 +39,7 @@ QUnit.test("ContributionMonth.getList() works", function(assert) {
 });
 
 QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
-	const amounts = [ 0, 87.5, 65.625, 87.5, 68.75 ];
+	const amounts = [ 175, 91.66666666666667, 65.625, 87.5, 68.75 ];
 
 	let done = assert.async();
 	ContributionMonth.getList({}).then(contributionMonths => {
@@ -57,7 +57,7 @@ QUnit.test('.getTotalForAllPayoutsForContributor', assert => {
 });
 
 QUnit.test('.getOSProjectPayoutTotal', function(assert) {
-	const amounts = [ 0, 87.5, 65.625, 87.5, 68.75 ];
+	const amounts = [ 175, 91.66666666666667, 65.625, 87.5, 68.75 ];
 
 	let done = assert.async();
 	ContributionMonth.getList({}).then(function(contributionMonths) {
@@ -78,8 +78,8 @@ QUnit.test('.getOSProjectPayoutTotal', function(assert) {
 
 QUnit.test('.getOwnershipPercentageForContributor', function(assert) {
 	const amounts = [
-		[ 0, 0 ],
-		[ 0.25, 0.75, 0 ],
+		[ 0.5, 0.5 ],
+		[ 0.2619047619047619, 0.7380952380952381, 0 ],
 		[ 0.1875, 0.5625, 0.25 ],
 		[ 0.25, 0.75 ],
 		[ 0.19642857142857142, 0.5892857142857143, 0.21428571428571427 ]
