@@ -1,3 +1,4 @@
+<can-import from="can-stache-route-helpers" />
 <can-import from="./page-home.less" />
 
 <div class="auth">
@@ -9,7 +10,7 @@
 
 			<ul class="sso-providers one">
 				<li class="sso-github one" title="Login with GitHub">
-					<a href="javascript://" on:click="openLoginPopup('/auth/github')">
+					<a href="{{ routeUrl(page='dashboard') }}" on:click="openLoginPopup('/auth/github')">
 						<img src="/img/github.svg" alt="GitHub logo">
 						<span>Login with GitHub</span>
 					</a>
