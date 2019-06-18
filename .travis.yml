@@ -1,14 +1,11 @@
 language: node_js
 node_js: 6.11.0
 services:
-  - mongodb
+  - xvfb
 addons:
   firefox: 52.3.0
 install:
   - npm install
-before_install:
-  - 'export DISPLAY=:99.0'
-  - sh -e /etc/init.d/xvfb start
 before_deploy:
   - git config --global user.email "mike@bitovi.com"
   - git config --global user.name "Bitcentive Deploy Bot"
@@ -29,3 +26,4 @@ env:
   global:
     - secure: >-
         bBWGA/rxlmg/O+kjBXPguXNoRHb110bUl1GgbDHV5O6tgr3JH4EZTJnWk15lU4Yf195POSkSpPNUCH2NthCzE7Ddvi6lyRxfPUKM5wYZCaiy8uJTFUNEIjo5dgTIiHaKLJRLi3DjfmEab3V+cZhzbK8vVUx0ztUhPReERzXjjCbYhUFmVRPt8rCfBZi6YODyGy5FJjGgv1pdNGD3V62eCWy08tuO28Btqi3ORfEa5kjmaezX05qUlo2fI84zp5RANW0F2IKaBzcRB8sr+qvGwL8pOv29VdOYqydterMgN54vqtaz2SAfTJ2ffCzSYrSksIHWJdobDFj5tx/tFCE2N2fqvI7fEPC9Jt7LRm9lnSKdp4eQljVJMDBfDelsShv1ZCOx7zgzRyCVD5yq+Kg/OFvRzHafo7KESgb8H2hKALzcXcGQDe3FT7up+ycMg5y2Q0BkjLhPCfyl9xVSMSo9eL38wCKPhNnxmvQDEHzSlDUX29LZ2bxmx8Vpug4n3Kd7Ab9ziLa/vE3/r/DiFwOxY717Eg/wEiqIfl9PX7U9A7wEb0vOSt17LzX7e9bnhPJnUMwBr9QP3yyG0dSj2eXKzxoS4HPGvrvYm8kg0Qb+00ngvbhu3IrpTH/6b/FckOm+29LVtb1jSRa2+CckGC2OWmLR5QrOndKCHS8W5YZFHRI=
+dist: xenial
