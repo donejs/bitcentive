@@ -161,7 +161,7 @@ export const ViewModel = DefineMap.extend({
       });
     } else {
       return this.otherContributors.then((contributors) => {
-        contributors.each((contributor) => {
+        contributors.forEach((contributor) => {
           if (this.selectedContributorId === contributor._id) {
             this.contributionMonth.addNewMonthlyContributor(contributor);
             this.toggleAddNewContributor();
