@@ -6,9 +6,9 @@ addons:
   firefox: 52.3.0
 install:
   - npm install
-before_install:
-  - 'export DISPLAY=:99.0'
-  - sh -e /etc/init.d/xvfb start
+dist: xenial
+services:
+ - xvfb
 before_deploy:
   - git config --global user.email "mike@bitovi.com"
   - git config --global user.name "Bitcentive Deploy Bot"
