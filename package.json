@@ -22,7 +22,7 @@
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
     "install": "node install.js && npm run db-migrate",
-    "db-migrate": "sleep 15 && node migrate.js"
+    "db-migrate": "node migrate.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
