@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
 // Connect to the db
-MongoClient.connect("mongodb://127.0.0.1/foo", function (err, db) {
+MongoClient.connect("mongodb://127.0.0.1", function (err, db) {
 	if(!db) {
 		console.log(err);
 		return;
