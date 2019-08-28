@@ -7,7 +7,7 @@ addons:
 install:
   - npm install
 before_script:
-  - node db-connect.js
+  - sleep 15 && node db-connect.js
 dist: xenial
 services:
  - xvfb
