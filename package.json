@@ -21,7 +21,7 @@
     "develop": "node src/ --develop",
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
-    "install": "node db-connect.js && npm run db-migrate",
+    "install-old": "node db-connect.js && npm run db-migrate",
     "db-migrate": "sleep 1 && node migrate.js"
   },
   "dependencies": {

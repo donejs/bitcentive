@@ -6,6 +6,8 @@ addons:
   firefox: 52.3.0
 install:
   - npm install
+before_scripts:
+  - node db-connect.js
 dist: xenial
 services:
  - xvfb
