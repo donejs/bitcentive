@@ -2,13 +2,12 @@ language: node_js
 node_js: 6.11.0
 services:
   - mongodb
+  - xvfb
 addons:
   firefox: 52.3.0
 install:
   - npm install
 dist: xenial
-services:
- - xvfb
 before_deploy:
   - git config --global user.email "mike@bitovi.com"
   - git config --global user.name "Bitcentive Deploy Bot"
