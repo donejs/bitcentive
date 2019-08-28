@@ -27,6 +27,8 @@ const options = {
 	}
 };
 
+console.log("\nDB MIGRATE CONFIG\n", options.config);
+
 // Travis runs db-migrate without passing NODE_ENV
 options.env = process.env.NODE_ENV
 	? (process.env.NODE_ENV === 'prod' ? 'production' : process.env.NODE_ENV)

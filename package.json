@@ -21,35 +21,14 @@
     "develop": "node src/ --develop",
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
-    "install": "node install.js && npm run db-migrate",
-    "db-migrate": "sleep 15 && node migrate.js"
+    "install": "node db-connect.js && npm run db-migrate",
+    "db-migrate": "sleep 1 && node migrate.js"
   },
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "compression": "^1.6.2",
-    "cors": "^2.8.1",
     "db-migrate": "^0.10.0-beta.20",
     "db-migrate-mongodb": "^1.1.4",
-    "denodeify": "^1.2.1",
-    "feathers": "^2.0.2",
-    "feathers-authentication": "^1.0.2",
-    "feathers-authentication-jwt": "^0.3.0",
-    "feathers-authentication-popups": "^0.1.2",
-    "feathers-authentication-popups-github": "^1.0.2",
-    "feathers-configuration": "^0.4.1",
-    "feathers-errors": "^2.5.0",
-    "feathers-hooks": "^1.6.1",
-    "feathers-hooks-common": "^3.7.2",
-    "feathers-legacy-authentication-hooks": "^1.0.0",
-    "feathers-mongoose": "^3.6.1",
-    "feathers-rest": "^1.5.2",
-    "feathers-socketio": "^1.4.2",
-    "mongoose": "^4.7.0",
-    "passport": "^0.3.2",
-    "passport-github": "^1.1.0",
-    "passport-github-token": "^2.1.0",
-    "serve-favicon": "^2.3.2",
-    "winston": "^2.3.0"
+    "mongodb": "^2.0.0",
+    "mongoose": "^4.7.0"
   },
   "system": {
     "npmAlgorithm": "flat"
