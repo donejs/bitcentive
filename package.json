@@ -44,7 +44,7 @@
     "feathers-mongoose": "^3.6.1",
     "feathers-rest": "^1.5.2",
     "feathers-socketio": "^1.4.2",
-    "mongoose": "^4.7.0",
+    "mongoose": "^5.7.6",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "passport-github-token": "^2.1.0",
