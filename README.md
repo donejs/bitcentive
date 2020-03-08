@@ -1,5 +1,7 @@
 # bitcentive
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/donejs/bitcentive.svg)](https://greenkeeper.io/)
+
 > Royalties
 
 [![Build Status](https://travis-ci.org/donejs/bitcentive.svg?branch=staging)](https://travis-ci.org/donejs/bitcentive)
