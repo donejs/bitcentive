@@ -113,6 +113,6 @@
     "socket.io-client": "^1.7.0",
     "steal-qunit": "^1.0.0",
     "steal-tools": "^1.11.3",
-    "testee": "^0.7.0"
+    "testee": "^0.9.1"
   }
 }
