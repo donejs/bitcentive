@@ -99,7 +99,7 @@
     "steal-less": "^1.0.1",
     "steal-socket.io": "^4.0.8",
     "steal-stache": "^4.1.1",
-    "superagent": "^2.3.0"
+    "superagent": "^5.2.2"
   },
   "devDependencies": {
     "can-fixture": "^3.0.0-pre.11",
