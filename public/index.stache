@@ -20,7 +20,7 @@
 		<can-import from="bitcentive/pages/four-oh-four.component"/>
 		<can-import from="bitcentive/pages/loading.component"/>
 
-		<main-nav session:bind="session" page:bind="displayedPage"></main-nav>
+		<main-nav session:from="session"></main-nav>
 
 		{{# switch(displayedPage) }}
 			{{# case 'loading' }}
