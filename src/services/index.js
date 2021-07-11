@@ -13,7 +13,7 @@ module.exports = function() {
   const app = this;
 
   if (process.env.TESTING !== 'true'){
-    mongoose.connect(app.get('mongodb'));
+    mongoose.connect(app.get('mongodb'), { useNewUrlParser: true });
   }
   mongoose.Promise = global.Promise;
 
